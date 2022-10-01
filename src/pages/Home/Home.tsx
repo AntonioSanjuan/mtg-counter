@@ -1,12 +1,8 @@
 import './Home.scss';
 
 function HomePage() {
-
-
   return (
-    <>
-      <p>hola</p>
-    </>
+    <p>hola</p>
   );
 }
 
