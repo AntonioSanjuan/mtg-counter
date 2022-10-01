@@ -9,19 +9,12 @@ import { SearchInput } from '../common/searchInput/searchInput';
 import { ProfileSection } from '../common/profileSection/profileSection';
 import { useUser } from '../../hooks/user/userHook';
 
-function Topnav({ displayLoginButton, hideSidenavButton, hideSearchButton } :
-  {displayLoginButton: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
-  const [loginButtonHidden, setLoginButtonHidden] = useState<boolean|undefined>(!displayLoginButton);
-
+function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
+  {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
+  console.log('hideLoginButton', hideLoginButton);
   const { switchSidenavStatus } = useSidenavLayer();
   const { logout } = useUser();
-
-  useEffect(() => {
-    if (displayLoginButton) {
-      setLoginButtonHidden(isLoggedIn);
-    }
-  }, [displayLoginButton, isLoggedIn]);
 
   const handleSidenavChange = (e: any) => {
     e.preventDefault();
@@ -70,22 +63,21 @@ function Topnav({ displayLoginButton, hideSidenavButton, hideSearchButton } :
           </Link>
         </div>
         <div className="TopNav_Rightcontainer">
-          { loginButtonHidden && (
-          <>
-            <ProfileSection />
-            <button type="button" className="btn btn-danger" onClick={() => logout()}>
-              Logout
-            </button>
-          </>
+          {isLoggedIn && !hideLoginButton && (
+            <>
+              <ProfileSection />
+              <button type="button" className="btn btn-danger" onClick={() => logout()}>
+                Logout
+              </button>
+            </>
           )}
-          { !loginButtonHidden && (
-          <Link to="/Login">
-            <button type="button" className="btn btn-primary">
-              Login
-            </button>
-          </Link>
+          {!isLoggedIn && !hideLoginButton && (
+            <Link to="/Login">
+              <button type="button" className="btn btn-primary">
+                Login
+              </button>
+            </Link>
           )}
-
         </div>
       </div>
     </div>

@@ -38,7 +38,7 @@ describe('Topnav', () => {
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
           <Topnav
-            displayLoginButton={false}
+            hideLoginButton={false}
             hideSidenavButton
             hideSearchButton
           />
@@ -53,7 +53,7 @@ describe('Topnav', () => {
     const { rerender } = render(
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
-          <Topnav displayLoginButton={false} />
+          <Topnav hideLoginButton={false} />
         </Router>
       </Provider>,
     );
@@ -61,7 +61,7 @@ describe('Topnav', () => {
     rerender(
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
-          <Topnav displayLoginButton />
+          <Topnav hideLoginButton />
         </Router>
       </Provider>,
     );
@@ -74,7 +74,7 @@ describe('Topnav', () => {
     render(
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
-          <Topnav displayLoginButton />
+          <Topnav hideLoginButton />
         </Router>
       </Provider>,
     );
@@ -93,7 +93,7 @@ describe('Topnav', () => {
     render(
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
-          <Topnav displayLoginButton />
+          <Topnav hideLoginButton />
         </Router>
       </Provider>,
     );

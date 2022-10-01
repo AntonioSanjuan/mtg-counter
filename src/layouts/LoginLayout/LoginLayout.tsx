@@ -8,7 +8,7 @@ function LoginLayout() {
     <div className="LoginLayout_MainContainer">
       <div className="LoginLayout_HeaderContainer">
         <Topnav
-          displayLoginButton={false}
+          hideLoginButton
           hideSidenavButton
           hideSearchButton
         />

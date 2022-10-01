@@ -19,7 +19,7 @@ function Layout() {
   return (
     <div className="Layout_MainContainer">
       <div className="Layout_HeaderContainer">
-        <Topnav displayLoginButton />
+        <Topnav />
       </div>
       <div className="Layout_ContentContainer">
         <div className="Layout_ContentSidenav" style={useAnimation.stateTransition ? getLayoutSidenavAnimation() : undefined}>
