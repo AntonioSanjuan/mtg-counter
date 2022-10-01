@@ -1,0 +1,32 @@
+.app_font_xs {
+  color: var(--small-fontColor);
+  font-size: 10px;
+}
+
+.app_font_s {
+    color: var(--small-fontColor);
+    font-size: 12px;
+}
+
+.app_font_m {
+    color: var(--normal-fontColor);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.app_font_error {
+    color: var(--error-fontColor);
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.app_font_l {
+    color: var(--big-fontColor);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1.2em;
+}
+
+.app_font_noMargin {
+    margin: 0
+}

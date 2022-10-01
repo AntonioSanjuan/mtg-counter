@@ -1,0 +1,17 @@
+node_modules
+coverage
+build
+public
+
+# styles & images
+*.css
+*.scss
+*.svg
+
+# tests & mocks
+*.mock.tsx
+*.test.tsx
+setupTest.ts
+
+# reducers
+*.reducer.tsx

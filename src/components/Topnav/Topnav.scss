@@ -1,0 +1,102 @@
+.TopNav_Maincontainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+
+    background-color: var(--app-content-background-color);
+    height: 100%;
+}
+
+.TopNav_Subcontainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: space-between;
+    align-items: center;
+    height: inherit;
+    width: var(--app-width);
+    border-color: var(--app-low-contrast);
+    border-bottom-width: 2px;
+    border-bottom-style: ridge;
+    // box-shadow: var(--app-low-contrast) 0px 3px 8px;
+    box-shadow:  var(--app-low-contrast) 0px 25px 20px -15px;
+}
+
+.TopNav_Centercontainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+
+    cursor: pointer;
+    height: 100%;
+    width: 20%;
+    text-align: center;
+
+    img {
+        height: 100%;
+        width: 220px;
+    }
+
+    svg {
+        display: none
+    }
+    
+    a {
+      color: var(--);
+    }
+}
+
+.TopNav_Leftcontainer,
+.TopNav_Rightcontainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    height: 40px;
+}
+
+.TopNav_Rightcontainer {
+  place-content: flex-end;
+}
+
+.TopNav_Leftcontainer {
+  place-content: flex-start;
+
+  button {
+    margin-right: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .TopNav_Maincontainer {
+    background-color: var(--app-topnav-mobile-background);
+  }
+
+  .TopNav_Centercontainer {
+    img { display: none; }
+    svg {
+      display: inherit;
+      color: var(-app-card-background-color)
+    }
+  }
+
+  .TopNav_Subcontainer {
+    border-bottom-style: none;
+    border-top-style: ridge;
+
+    border-bottom-width: 0px;
+    border-top-width: 2px;
+
+    width: 95%;
+    box-shadow: var(--app-low-contrast) 0px -25px 20px -15px;
+  }
+
+  .TopNav_Search {
+    display: none;
+  }
+}

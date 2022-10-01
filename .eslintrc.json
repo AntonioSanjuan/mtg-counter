@@ -1,0 +1,79 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "settings": {
+        "import/resolver": {
+        "typescript": {}
+        }
+    },
+    "rules": {
+        "no-unused-expressions": [
+            "warn",
+            {
+                "allowTernary": true
+            }
+        ],
+        "camelcase": [
+            "warn",
+            {
+                "ignoreImports": true
+            }
+        ],
+        "react/require-default-props": [
+            "warn", 
+            { 
+                "forbidDefaultForRequired": false, 
+                "ignoreFunctionalComponents": true 
+            }
+        ],
+        "import/prefer-default-export":"off",
+        "no-shadow": "off",
+        "no-use-before-define": "off",
+        "linebreak-style":"off",
+        "react/jsx-filename-extension": [ 
+            "warn", 
+            {
+                "extensions": [".tsx"]
+            } 
+        ],
+        "max-len": [
+            "warn", 
+            { 
+                "code": 120,
+                "ignorePattern": "^import [^,]+ from"
+            }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never",
+                "js": "never",
+                "jsx": "never"
+            }
+        ]
+    }
+}

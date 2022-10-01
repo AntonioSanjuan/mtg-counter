@@ -1,0 +1,38 @@
+
+.searchInput_MainContainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start;
+    align-items: center;
+    
+    button {
+        height: 100% !important;
+        margin: 0;
+    }
+
+    .form-group {
+        overflow: hidden;
+        .form-control {
+            max-width: 180px;
+        }
+        
+        /*basic behaviour of slide status*/
+        width: 0%;
+        
+    }
+}
+
+.searchInput_MobileButton {
+    display: none;
+}
+
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .searchInput_MobileButton {
+        display: inherit;
+        width: 100%;
+        margin-top: 5px;
+    }
+}

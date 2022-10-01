@@ -1,0 +1,34 @@
+.ProfileSettings_MainContainer {
+    display: flex;
+    flex-direction: 'row';
+    flex-direction: column;
+    place-content: center;
+    align-items: center; 
+
+    form {
+        width: 100%;
+    }
+}
+
+.ProfileSettings_Settings {
+    display: flex;
+    place-content: space-between;
+    align-items: center;
+}
+
+.ProfileSettings_Setting {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center; 
+
+    width: 100%;
+    padding: 0px 10px;
+
+    .form-check {
+        width: fit-content;
+    }
+    .form-select {
+        width: 180px;
+    }
+}

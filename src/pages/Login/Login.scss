@@ -1,0 +1,41 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.Login_MainContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.Login_CardContainer {
+  form > div {
+    padding-bottom: 10px;
+  }
+  width: 300px;
+  padding:25px;
+
+  border-radius: 1vh;
+  background-color: var(--app-card-background-color);
+}
+
+.Login_Logo {
+  padding-bottom: 20px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.Login_ActionContainer {
+  padding-top: 30px;
+
+  button:last-child {
+    margin-top: 10px;
+  }
+}
+

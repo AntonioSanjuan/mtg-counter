@@ -1,0 +1,17 @@
+@keyframes openSearchAnimationKeyframe {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+  }
+  
+  @keyframes closeSearchAnimationKeyframe {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+  }

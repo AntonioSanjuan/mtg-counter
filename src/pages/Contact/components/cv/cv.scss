@@ -1,0 +1,73 @@
+.CV_MainContainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: flex-start;
+
+    height: 100%;
+}
+
+.CV_Sections {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
+
+.CV_Summary {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+  
+    margin: 0 10px;
+    padding: 5px 15px;
+
+    width: 250px;
+
+    position: sticky;
+    top: calc(var(--app-topnav-desktop-height) + 30px);
+    background-color: var(--app-card-background-color);
+    border-radius: 10px;
+}
+
+.CV_SummaryEle {
+    margin: 5px 0;
+    cursor: pointer;
+
+    &:hover {
+        background-color: var(--app-card-background-hover-color);
+    }
+}
+
+.CV_WorkExperience, 
+.CV_Education,
+.CV_Description {
+    padding: 0px 30px 30px 30px;
+}
+
+.CV_WorkExperiences_Company {
+    border-bottom: 1px solid grey;
+}
+
+.CV_AboutMe, 
+.CV_WorkExperiences,
+.CV_Educations,
+.CV_Skills {
+    scroll-margin-top: calc(var(--app-topnav-desktop-height) + 20px);
+    padding-bottom: 10px;
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .CV_Summary {
+      display: none;
+    }
+}
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .CV_Summary {
+      display: none;
+    }
+}

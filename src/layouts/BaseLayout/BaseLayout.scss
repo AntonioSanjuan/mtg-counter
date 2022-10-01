@@ -1,0 +1,94 @@
+.Layout_MainContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start;
+    align-items: flex-end;
+
+    overflow-x: hidden;
+    height: 100%;
+}
+
+.Layout_HeaderContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start;
+    align-items: center;
+  
+    position: fixed;
+    top: 0;
+    bottom: auto;
+  
+    min-height: var(--app-topnav-desktop-height);
+    height: var(--app-topnav-desktop-height);
+  
+    z-index: 3;
+}
+  
+.Layout_ContentContainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start;
+    align-items: center;
+  
+    margin-top: var(--app-topnav-desktop-height);
+  }
+
+.Layout_ContentSidenav {
+  height: 100%;
+  width: var(--app-sidenav-desktop-width);
+  min-width: var(--app-sidenav-desktop-width);
+  // background-color: var(--app-sidenav-background-color);
+  // box-shadow: var(--app-low-contrast) 0px 0px 20px;
+  /*basic behaviour of slide status*/
+  transform: translateX(-100%);
+  margin-left: -200px;
+  // z-index: 5;
+}
+
+.Layout_Content {
+  flex-direction: column;
+  box-sizing: border-box;
+  display: flex;
+  place-content: center;
+  align-items: center;
+
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 30px 60px;
+}
+  
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .Layout_MainContainer {
+    // overflow-x: hidden;
+  }
+  .Layout_HeaderContainer {
+    // order: 2;
+
+    position: fixed;
+    top: auto;
+    bottom: 0;
+
+    min-height: var(--app-topnav-mobile-height);
+    height: var(--app-topnav-mobile-height);
+    // z-index: 7;
+  }
+  .Layout_ContentContainer {
+    // order: 1;
+    margin-top: 0;
+    margin-bottom: var(--app-topnav-mobile-height);
+  }
+
+  .Layout_Content {
+    place-content: center;
+    padding: 10px 15px;
+  }
+}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+}

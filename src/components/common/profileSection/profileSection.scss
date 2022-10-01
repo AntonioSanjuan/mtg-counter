@@ -1,0 +1,52 @@
+
+.ProfileSection_MainContainer {
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: flex-start;
+    align-items: flex-start;
+
+    height: 100%;
+    padding: 1%;
+
+}
+
+.ProfileSection_ImageContainer, 
+.ProfileSection_DataContainer {
+    height: 100%;
+}
+
+.ProfileSection_ImageContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    width: 35%;
+
+    svg {
+        height: 100%;
+        width: 50px;
+
+        padding-left: 15px;
+    }
+}
+
+.ProfileSection_DataContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: flex-start;
+
+    padding-left: 10px;
+    p {
+        margin-bottom: 6px;
+    }
+    a {
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+}
+

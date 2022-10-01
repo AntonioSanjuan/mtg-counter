@@ -1,0 +1,17 @@
+@keyframes inBlurAnimationKeyframe {
+    0% {
+        filter: blur(0px);
+    }
+    100% {
+        filter: blur(10px);
+    }
+  }
+  
+  @keyframes outBlurAnimationKeyframe {
+    0% {
+        filter: blur(10px);
+    }
+    100% {
+        filter: blur(0px);
+    }
+  }

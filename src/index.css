@@ -1,0 +1,15 @@
+@import url('./colors.css');
+@import url('./sizes.css');
+@import url('./fonts.css');
+
+html, body,#root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--app-content-background-color);
+}
+
+div {
+  width: 100%;
+}

@@ -1,0 +1,59 @@
+.Loading_MainContainer {
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: 3;
+
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(10px);
+}
+
+.Loading_SubContainer {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    padding: 10px 0px;
+    align-items: center;
+    gap: 25px;
+
+    background-color: var(--app-hight-contrast);
+    
+    p {
+        margin: 0;
+    }
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 6px solid var(--app-low-contrast);
+    border-color: var(--app-low-contrast) transparent var(--app-low-contrast);
+    animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}

@@ -1,0 +1,21 @@
+@keyframes inSlideAnimationKeyframe {
+    0% {
+        transform: translateX(-100%);
+        margin-left: -200px;
+    }
+    100% {
+        transform: translateX(0%);
+        margin-left: 0px;
+    }
+  }
+  
+  @keyframes outSlideAnimationKeyframe {
+    0% {
+        transform: translateX(0%);
+        margin-left: 0px;
+    }
+    100% {
+        transform: translateX(-100%);
+        margin-left: '-200px';
+    }
+  }
