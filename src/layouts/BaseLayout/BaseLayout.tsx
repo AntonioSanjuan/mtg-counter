@@ -22,10 +22,16 @@ function Layout() {
         <Topnav />
       </div>
       <div className="Layout_ContentContainer">
-        <div className="Layout_ContentSidenav" style={useAnimation.stateTransition ? getLayoutSidenavAnimation() : undefined}>
+        <div
+          className="Layout_ContentSidenav"
+          style={useAnimation.stateTransition ? getLayoutSidenavAnimation() : undefined}
+        >
           <Sidenav />
         </div>
-        <div className="Layout_Content" style={useAnimation.stateTransition ? getLayoutContentAnimation() : undefined}>
+        <div
+          className="Layout_Content"
+          style={useAnimation.stateTransition ? getLayoutContentAnimation() : undefined}
+        >
           <Outlet />
         </div>
       </div>

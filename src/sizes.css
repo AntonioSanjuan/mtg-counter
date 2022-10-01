@@ -2,7 +2,7 @@
     --app-topnav-height: 80px;
 
     --app-sidenav-width: 100%;
-    --app-sidenav-height: 126px;
+    --app-sidenav-height: 90px;
     
     --app-sidenav-closed-position: calc(var(--app-sidenav-height)* -1);
     --app-sidenav-opened-position: 0%;
@@ -23,7 +23,7 @@
     :root {
         --app-topnav-height: 50px;
 
-        --app-sidenav-height: 126px;
+        --app-sidenav-height: 70px;
 
         --app-modal-width: 90vw;
         --app-modal-height: 90vh;

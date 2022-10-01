@@ -41,7 +41,7 @@ function Sidenav() {
           <Section
             sectionName="New Game"
           >
-            <i className="bi bi-book-fill" />
+            <i className="bi bi-plus" />
           </Section>
         </div>
         <div

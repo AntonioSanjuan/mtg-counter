@@ -43,8 +43,12 @@
 .sidenav_Section {
     height: 50px;
     cursor: pointer;
+    width: fit-content;
     &:hover {
         background-color: var(--app-sidenav-section-hover-color);
+    }
+    i{
+        font-size: 20px;
     }
 }
 
