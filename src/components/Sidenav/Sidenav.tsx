@@ -1,11 +1,8 @@
 import './Sidenav.scss';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../hooks/user/userHook';
 import { useSidenavLayer } from '../../hooks/sidenav/sidenavHook';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
-import { ProfileSection } from '../common/profileSection/profileSection';
-import { SearchInput } from '../common/searchInput/searchInput';
 import { Section } from '../common/section/section';
 import { useAlert } from '../../hooks/alert/alertHook';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';

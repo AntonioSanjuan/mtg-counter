@@ -39,7 +39,7 @@
 
 .Layout_ContentSidenav {
   display: flex;
-  position: absolute;
+  position: fixed;
   transform: translateY(var(--app-sidenav-closed-position));
 }
 
