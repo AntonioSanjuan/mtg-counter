@@ -2,16 +2,33 @@
     --app-topnav-desktop-height: 80px;
     --app-topnav-mobile-height: 50px;
 
+    --app-sidenav-desktop-width: 100%;
     --app-sidenav-desktop-height: 200px;
     --app-sidenav-mobile-height: 200px;
+    
+    --app-sidenav-closed-position: -100%;
+    --app-sidenav-opened-position: 0%;
+
+    --app-sidenav-closed-margin: 0%;
+    --app-sidenav-opened-margin: var(--app-sidenav-desktop-height);
 
     --app-modal-desktop-width: 400px;
     --app-modal-mobile-width: 90vw;
     --app-modal-desktop-height: 50vh;
     --app-modal-mobile-height: 90vh;
 
-    --app-sidenav-desktop-width: 100%;
 
     --app-width: 85%;
 
+
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+:root {
+    --app-sidenav-closed-position: calc(100vh - var(--app-topnav-desktop-height));
+    --app-sidenav-opened-position: calc(100vh - var(--app-topnav-desktop-height) - var(--app-sidenav-mobile-height));
+    
+    --app-sidenav-closed-margin: 0%;
+    --app-sidenav-opened-margin: calc(var(--app-sidenav-desktop-height) * -1);
+}
 }

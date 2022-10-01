@@ -2,7 +2,8 @@ import './Home.scss';
 
 function HomePage() {
   return (
-    <p>hola</p>
+    <button type="button" className="btn btn-link app_font_s">Profile</button>
+
   );
 }
 

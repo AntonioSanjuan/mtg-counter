@@ -35,22 +35,6 @@
     height: 100%;
 }
 
-
-
-.sidenav_Search {
-  label {
-    margin-bottom: 5px;
-  }
-
-    margin-bottom: 10px;
-    border-bottom: 1px solid;
-}
-
-
-.sidenav_Search {
-    display: none;
-}
-
 .sidenav_Section {
     height: 50px;
     cursor: pointer;
@@ -64,13 +48,11 @@
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .sidenav_MainContainer {
+        place-content: flex-end;
+    }
     .sidenav_NavContainer {
         top: 0;
         // height: calc(100vh - #{var(--app-topnav-mobile-height)});
-    }
-    
-    .sidenav_Search {
-        display: inherit;
-        padding-bottom: 10px;
     }
 }

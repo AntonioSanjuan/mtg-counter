@@ -34,16 +34,18 @@
     align-items: center;
   
     margin-top: var(--app-topnav-desktop-height);
+    min-height: calc(100vh - #{var(--app-topnav-desktop-height)});
   }
 
 .Layout_ContentSidenav {
+  display: flex;
   width: var(--app-sidenav-desktop-width);
   min-width: var(--app-sidenav-desktop-width);
   height: var(--app-sidenav-desktop-height);
   // background-color: var(--app-sidenav-background-color);
   // box-shadow: var(--app-low-contrast) 0px 0px 20px;
   /*basic behaviour of slide status*/
-  transform: translateY(-100%);
+  transform: translateY(var(--app-sidenav-closed-position));
   // z-index: 5;
 }
 
@@ -79,7 +81,8 @@
   .Layout_ContentContainer {
     // order: 1;
     margin-top: 0;
-    margin-bottom: var(--app-topnav-mobile-height);
+    height: calc(100vh - #{var(--app-topnav-mobile-height)});
+    overflow: hidden;
   }
 
   .Layout_Content {

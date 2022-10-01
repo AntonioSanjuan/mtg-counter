@@ -19,7 +19,7 @@ function App() {
 }
         >
           <Route
-            path="contact"
+            path=""
             element={(
               <React.Suspense fallback={<>...</>}>
                 <HomePage />
