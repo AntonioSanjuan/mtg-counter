@@ -39,12 +39,8 @@
 
 .Layout_ContentSidenav {
   display: flex;
-
-  // background-color: var(--app-sidenav-background-color);
-  // box-shadow: var(--app-low-contrast) 0px 0px 20px;
-  /*basic behaviour of slide status*/
+  position: absolute;
   transform: translateY(var(--app-sidenav-closed-position));
-  // z-index: 5;
 }
 
 .Layout_Content {

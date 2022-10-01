@@ -6,6 +6,7 @@ import { AuthRouteGuard } from './guards/authGuard/auth.guard';
 import Alert from './components/Alert/Alert';
 import HomePage from './pages/Home/Home';
 import LoginPage from './pages/Login/Login';
+import ProfilePage from './pages/Profile/Profile';
 
 function App() {
   return (
@@ -23,6 +24,14 @@ function App() {
             element={(
               <React.Suspense fallback={<>...</>}>
                 <HomePage />
+              </React.Suspense>
+                  )}
+          />
+          <Route
+            path="profile"
+            element={(
+              <React.Suspense fallback={<>...</>}>
+                <ProfilePage />
               </React.Suspense>
                   )}
           />

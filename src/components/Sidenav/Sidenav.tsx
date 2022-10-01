@@ -14,7 +14,6 @@ function Sidenav() {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
   const navigate = useNavigate();
 
-  const { logout } = useUser();
   const { openAlert } = useAlert();
   const { switchSidenavStatus } = useSidenavLayer();
 
@@ -35,82 +34,32 @@ function Sidenav() {
   return (
     <div className="sidenav_MainContainer">
       <div className="sidenav_NavContainer">
-        <div>
-          <div
-            role="button"
-            tabIndex={0}
-            className="sidenav_Section"
-            onKeyPress={() => { handleNavigation('/'); }}
-            onClick={() => { handleNavigation('/'); }}
+        <div
+          role="button"
+          tabIndex={0}
+          className="sidenav_Section"
+          onKeyPress={() => { handleNavigation('/'); }}
+          onClick={() => { handleNavigation('/'); }}
+        >
+          <Section
+            sectionName="New Game"
           >
-            <Section
-              sectionName="Popular Articles"
-            >
-              <i className="bi bi-book-fill" />
-            </Section>
-          </div>
-          <div
-            role="button"
-            tabIndex={0}
-            className="sidenav_Section"
-            style={{ display: isLoggedIn ? 'inherit' : 'none' }}
-            onKeyPress={() => { handleNavigation('/storedArticles'); }}
-            onClick={() => { handleNavigation('/storedArticles'); }}
-          >
-            <Section
-              sectionName="Stored Articles"
-            >
-              <i className="bi bi-bookmark-star-fill" />
-            </Section>
-          </div>
-          <div className="sidenav_Section">
-            <Section sectionName="to-do">
-              <i className="bi bi-clock-fill" />
-            </Section>
-          </div>
+            <i className="bi bi-book-fill" />
+          </Section>
         </div>
-        <div className="sidenav_FooterSection">
-          <div
-            role="button"
-            tabIndex={0}
-            className="sidenav_Section"
-            onKeyPress={() => { handleOpenSettings(); }}
-            onClick={() => { handleOpenSettings(); }}
+        <div
+          role="button"
+          tabIndex={0}
+          className="sidenav_Section"
+          style={{ display: isLoggedIn ? 'inherit' : 'none' }}
+          onKeyPress={() => { handleNavigation('/storedArticles'); }}
+          onClick={() => { handleNavigation('/storedArticles'); }}
+        >
+          <Section
+            sectionName="History"
           >
-            <Section
-              sectionName="Settings"
-            >
-              <i className="bi bi-gear-fill" />
-            </Section>
-          </div>
-          <div
-            role="button"
-            tabIndex={0}
-            className="sidenav_Section"
-            onKeyPress={() => { handleNavigation('/contact'); }}
-            onClick={() => { handleNavigation('/contact'); }}
-          >
-            <Section
-              sectionName="Contact"
-            >
-              <i className="bi bi-chat-left-dots-fill" />
-            </Section>
-          </div>
-          <div
-            role="button"
-            tabIndex={0}
-            style={{ display: isLoggedIn ? 'inherit' : 'none' }}
-            onKeyPress={logout}
-            onClick={logout}
-            className="sidenav_Section"
-          >
-            <Section
-              sectionName="Exit"
-              color="var(--app-error-color)"
-            >
-              <i className="bi bi-box-arrow-right" />
-            </Section>
-          </div>
+            <i className="bi bi-bookmark-star-fill" />
+          </Section>
         </div>
       </div>
     </div>

@@ -1,21 +1,17 @@
 @keyframes inSlideAnimationKeyframe {
     0% {
         transform: translateY(var(--app-sidenav-closed-position));
-        margin-bottom: var(--app-sidenav-closed-margin);
     }
     100% {
         transform: translateY(var(--app-sidenav-opened-position));
-        margin-bottom: var(--app-sidenav-opened-margin);
     }
   }
   
   @keyframes outSlideAnimationKeyframe {
     0% {
         transform: translateY(var(--app-sidenav-opened-position));
-        margin-bottom: var(--app-sidenav-opened-margin);
     }
     100% {
         transform: translateY(var(--app-sidenav-closed-position));
-        margin-bottom: var(--app-sidenav-closed-margin);
     }
   }

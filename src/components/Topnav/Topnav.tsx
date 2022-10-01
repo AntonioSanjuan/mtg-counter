@@ -6,6 +6,8 @@ import { selectUserIsLogged } from '../../state/user/user.selectors';
 import { useSidenavLayer } from '../../hooks/sidenav/sidenavHook';
 import './Topnav.scss';
 import { SearchInput } from '../common/searchInput/searchInput';
+import { ProfileSection } from '../common/profileSection/profileSection';
+import { useUser } from '../../hooks/user/userHook';
 
 function Topnav({ displayLoginButton, hideSidenavButton, hideSearchButton } :
   {displayLoginButton: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
@@ -13,6 +15,7 @@ function Topnav({ displayLoginButton, hideSidenavButton, hideSearchButton } :
 
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
   const { switchSidenavStatus } = useSidenavLayer();
+  const { logout } = useUser();
 
   useEffect(() => {
     if (displayLoginButton) {
@@ -67,11 +70,22 @@ function Topnav({ displayLoginButton, hideSidenavButton, hideSearchButton } :
           </Link>
         </div>
         <div className="TopNav_Rightcontainer">
-          <Link to="/Login" style={{ visibility: loginButtonHidden ? 'hidden' : 'visible' }}>
+          { loginButtonHidden && (
+          <>
+            <ProfileSection />
+            <button type="button" className="btn btn-danger" onClick={() => logout()}>
+              Logout
+            </button>
+          </>
+          )}
+          { !loginButtonHidden && (
+          <Link to="/Login">
             <button type="button" className="btn btn-primary">
               Login
             </button>
           </Link>
+          )}
+
         </div>
       </div>
     </div>

@@ -7,12 +7,10 @@ import './profileSection.scss';
 
 function ProfileSection() {
   const user = useAppSelector<UserState>(selectUser);
-  const { switchSidenavStatus } = useSidenavLayer();
   const navigate = useNavigate();
 
   const goToProfile = () => {
     navigate('/Profile');
-    switchSidenavStatus();
   };
 
   return (
@@ -28,11 +26,6 @@ function ProfileSection() {
                 </svg>
               </div>
               <div className="ProfileSection_DataContainer">
-                <p className="app_font_l">
-                  <span>
-                    {user.userData?.email}
-                  </span>
-                </p>
                 <button type="button" className="btn btn-link app_font_s" onClick={() => goToProfile()}>Profile</button>
               </div>
             </>
