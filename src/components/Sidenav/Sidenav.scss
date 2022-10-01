@@ -5,9 +5,9 @@
     place-content: flex-start;
     align-items: flex-start;
 
-    width: var(--app-sidenav-desktop-width);
-    min-width: var(--app-sidenav-desktop-width);
-    height: var(--app-sidenav-desktop-height);
+    width: var(--app-sidenav-width);
+    min-width: var(--app-sidenav-width);
+    height: var(--app-sidenav-height);
 }
 
 .sidenav_NavContainer {
@@ -20,7 +20,7 @@
     position: sticky;
 
     height: 100%;
-    top: var(--app-topnav-desktop-height);
+    top: var(--app-topnav-height);
     left: 0;
 
     padding: 1% 5%;
@@ -55,6 +55,5 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     .sidenav_NavContainer {
         top: 0;
-        // height: calc(100vh - #{var(--app-topnav-mobile-height)});
     }
 }

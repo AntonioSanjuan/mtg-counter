@@ -1,21 +1,17 @@
 :root {
-    --app-topnav-desktop-height: 80px;
-    --app-topnav-mobile-height: 50px;
+    --app-topnav-height: 80px;
 
-    --app-sidenav-desktop-width: 100%;
-    --app-sidenav-desktop-height: 126px;
-    --app-sidenav-mobile-height: 126px;
+    --app-sidenav-width: 100%;
+    --app-sidenav-height: 126px;
     
-    --app-sidenav-closed-position: calc(var(--app-sidenav-desktop-height)* -1);
+    --app-sidenav-closed-position: calc(var(--app-sidenav-height)* -1);
     --app-sidenav-opened-position: 0%;
 
     --app-sidenav-closed-margin: 0%;
-    --app-sidenav-opened-margin: var(--app-sidenav-desktop-height);
+    --app-sidenav-opened-margin: var(--app-sidenav-height);
 
-    --app-modal-desktop-width: 400px;
-    --app-modal-mobile-width: 90vw;
-    --app-modal-desktop-height: 50vh;
-    --app-modal-mobile-height: 90vh;
+    --app-modal-width: 400px;
+    --app-modal-height: 50vh;
 
 
     --app-width: 85%;
@@ -25,10 +21,16 @@
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     :root {
-        --app-sidenav-closed-position: calc(100vh - var(--app-topnav-mobile-height));
-        --app-sidenav-opened-position: calc(100vh - var(--app-topnav-mobile-height) - var(--app-sidenav-mobile-height));
+        --app-topnav-height: 50px;
+
+        --app-sidenav-height: 126px;
+
+        --app-modal-width: 90vw;
+        --app-modal-height: 90vh;
+        --app-sidenav-closed-position: calc(100vh - var(--app-topnav-height));
+        --app-sidenav-opened-position: calc(100vh - var(--app-topnav-height) - var(--app-sidenav-height));
         
         --app-sidenav-closed-margin: 0%;
-        --app-sidenav-opened-margin: calc(var(--app-sidenav-desktop-height) * -1);
+        --app-sidenav-opened-margin: calc(var(--app-sidenav-height) * -1);
     }
 }
