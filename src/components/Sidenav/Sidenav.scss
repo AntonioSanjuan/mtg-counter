@@ -4,6 +4,10 @@
     display: flex;
     place-content: flex-start;
     align-items: flex-start;
+
+    width: var(--app-sidenav-desktop-width);
+    min-width: var(--app-sidenav-desktop-width);
+    height: var(--app-sidenav-desktop-height);
 }
 
 .sidenav_NavContainer {
@@ -15,6 +19,7 @@
 
     position: sticky;
 
+    height: 100%;
     top: var(--app-topnav-desktop-height);
     left: 0;
 
@@ -48,9 +53,6 @@
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-    .sidenav_MainContainer {
-        place-content: flex-end;
-    }
     .sidenav_NavContainer {
         top: 0;
         // height: calc(100vh - #{var(--app-topnav-mobile-height)});

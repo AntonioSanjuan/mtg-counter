@@ -3,10 +3,10 @@
     --app-topnav-mobile-height: 50px;
 
     --app-sidenav-desktop-width: 100%;
-    --app-sidenav-desktop-height: 200px;
-    --app-sidenav-mobile-height: 200px;
+    --app-sidenav-desktop-height: 126px;
+    --app-sidenav-mobile-height: 126px;
     
-    --app-sidenav-closed-position: -100%;
+    --app-sidenav-closed-position: calc(var(--app-sidenav-desktop-height)* -1);
     --app-sidenav-opened-position: 0%;
 
     --app-sidenav-closed-margin: 0%;
@@ -24,11 +24,11 @@
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
-:root {
-    --app-sidenav-closed-position: calc(100vh - var(--app-topnav-desktop-height));
-    --app-sidenav-opened-position: calc(100vh - var(--app-topnav-desktop-height) - var(--app-sidenav-mobile-height));
-    
-    --app-sidenav-closed-margin: 0%;
-    --app-sidenav-opened-margin: calc(var(--app-sidenav-desktop-height) * -1);
-}
+    :root {
+        --app-sidenav-closed-position: calc(100vh - var(--app-topnav-mobile-height));
+        --app-sidenav-opened-position: calc(100vh - var(--app-topnav-mobile-height) - var(--app-sidenav-mobile-height));
+        
+        --app-sidenav-closed-margin: 0%;
+        --app-sidenav-opened-margin: calc(var(--app-sidenav-desktop-height) * -1);
+    }
 }
