@@ -4,13 +4,8 @@ import { Layout } from './layouts/BaseLayout/BaseLayout';
 import { LoginLayout } from './layouts/LoginLayout/LoginLayout';
 import { AuthRouteGuard } from './guards/authGuard/auth.guard';
 import Alert from './components/Alert/Alert';
-import SearchPage from './pages/Search/Search';
-
-const Home = React.lazy(() => import('./pages/Home/Home'));
-const Login = React.lazy(() => import('./pages/Login/Login'));
-const Contact = React.lazy(() => import('./pages/Contact/Contact'));
-const StoredArticles = React.lazy(() => import('./pages/StoredArticles/StoredArticles'));
-const Profile = React.lazy(() => import('./pages/Profile/Profile'));
+import HomePage from './pages/Home/Home';
+import LoginPage from './pages/Login/Login';
 
 function App() {
   return (
@@ -27,45 +22,9 @@ function App() {
             path="contact"
             element={(
               <React.Suspense fallback={<>...</>}>
-                <Contact />
+                <HomePage />
               </React.Suspense>
                   )}
-          />
-          <Route
-            path="storedArticles"
-            element={(
-              <AuthRouteGuard>
-                <React.Suspense fallback={<>...</>}>
-                  <StoredArticles />
-                </React.Suspense>
-              </AuthRouteGuard>
-                )}
-          />
-          <Route
-            path="profile"
-            element={(
-              <AuthRouteGuard>
-                <React.Suspense fallback={<>...</>}>
-                  <Profile />
-                </React.Suspense>
-              </AuthRouteGuard>
-                )}
-          />
-          <Route
-            path="search"
-            element={(
-              <React.Suspense fallback={<>...</>}>
-                <SearchPage />
-              </React.Suspense>
-                )}
-          />
-          <Route
-            index
-            element={(
-              <React.Suspense fallback={<>...</>}>
-                <Home />
-              </React.Suspense>
-          )}
           />
         </Route>
         <Route
@@ -78,7 +37,7 @@ function App() {
             index
             element={(
               <React.Suspense fallback={<>...</>}>
-                <Login />
+                <LoginPage />
               </React.Suspense>
           )}
           />
