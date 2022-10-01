@@ -36,9 +36,6 @@ function Sidenav() {
     <div className="sidenav_MainContainer">
       <div className="sidenav_NavContainer">
         <div>
-          <div className="sidenav_ProfileSection">
-            <ProfileSection />
-          </div>
           <div className="sidenav_Search">
             <p className="app_font_m">Search content</p>
             <SearchInput

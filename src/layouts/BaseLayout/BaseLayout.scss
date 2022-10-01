@@ -27,7 +27,7 @@
 }
   
 .Layout_ContentContainer {
-    flex-direction: row;
+    flex-direction: column;
     box-sizing: border-box;
     display: flex;
     place-content: flex-start;
@@ -37,14 +37,13 @@
   }
 
 .Layout_ContentSidenav {
-  height: 100%;
   width: var(--app-sidenav-desktop-width);
   min-width: var(--app-sidenav-desktop-width);
+  height: var(--app-sidenav-desktop-height);
   // background-color: var(--app-sidenav-background-color);
   // box-shadow: var(--app-low-contrast) 0px 0px 20px;
   /*basic behaviour of slide status*/
-  transform: translateX(-100%);
-  margin-left: -200px;
+  transform: translateY(-100%);
   // z-index: 5;
 }
 

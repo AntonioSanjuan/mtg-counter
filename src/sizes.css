@@ -2,15 +2,15 @@
     --app-topnav-desktop-height: 80px;
     --app-topnav-mobile-height: 50px;
 
-    --app-sidenav-desktop-height: 70%;
-    --app-sidenav-mobile-height: 100%;
+    --app-sidenav-desktop-height: 200px;
+    --app-sidenav-mobile-height: 200px;
 
     --app-modal-desktop-width: 400px;
     --app-modal-mobile-width: 90vw;
     --app-modal-desktop-height: 50vh;
     --app-modal-mobile-height: 90vh;
 
-    --app-sidenav-desktop-width: 200px;
+    --app-sidenav-desktop-width: 100%;
 
     --app-width: 85%;
 

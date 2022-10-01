@@ -4,18 +4,16 @@
     display: flex;
     place-content: flex-start;
     align-items: flex-start;
-    height: 100%;
 }
 
 .sidenav_NavContainer {
-    flex-direction: column;
+    flex-direction: row;
     box-sizing: border-box;
     display: flex;
     place-content: space-between;
     align-items: center;
 
     position: sticky;
-    height: calc(100vh - #{var(--app-topnav-desktop-height)});
 
     top: var(--app-topnav-desktop-height);
     left: 0;
@@ -39,7 +37,6 @@
 
 
 
-.sidenav_ProfileSection, 
 .sidenav_Search {
   label {
     margin-bottom: 5px;
@@ -49,9 +46,6 @@
     border-bottom: 1px solid;
 }
 
-.sidenav_ProfileSection {
-    height: 80px;
-}
 
 .sidenav_Search {
     display: none;
@@ -72,7 +66,7 @@
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
     .sidenav_NavContainer {
         top: 0;
-        height: calc(100vh - #{var(--app-topnav-mobile-height)});
+        // height: calc(100vh - #{var(--app-topnav-mobile-height)});
     }
     
     .sidenav_Search {

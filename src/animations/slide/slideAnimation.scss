@@ -1,21 +1,28 @@
+.inSlideAnimation {
+
+}
+
+.outSlideAnimation {
+
+}
+
 @keyframes inSlideAnimationKeyframe {
     0% {
-        transform: translateX(-100%);
-        margin-left: -200px;
+        transform: translateY(-100%);
     }
     100% {
-        transform: translateX(0%);
-        margin-left: 0px;
+        transform: translateY(0%);
     }
   }
   
   @keyframes outSlideAnimationKeyframe {
     0% {
-        transform: translateX(0%);
-        margin-left: 0px;
+        transform: translateY(0%);
     }
     100% {
-        transform: translateX(-100%);
-        margin-left: '-200px';
+        transform: translateY(-100%);
     }
+  }
+
+  @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   }
