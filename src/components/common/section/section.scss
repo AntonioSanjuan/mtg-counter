@@ -14,6 +14,22 @@
     height: 100%;
 }
 
+.Section_Button {
+    display: flex;
+    height: 50px;
+    cursor: pointer;
+    width: fit-content;
+    align-items: center;
+
+    :hover {
+        background-color: var(--app-sidenav-section-hover-color);
+    }
+    
+    i{
+        font-size: 20px;
+    }
+}
+
 .Section_ImageContainer {
     flex-direction: column;
     box-sizing: border-box;

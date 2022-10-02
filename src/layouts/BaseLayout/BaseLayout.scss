@@ -23,7 +23,7 @@
     min-height: var(--app-topnav-height);
     height: var(--app-topnav-height);
   
-    z-index: 3;
+    z-index: 7;
 }
   
 .Layout_ContentContainer {
@@ -41,6 +41,8 @@
   display: flex;
   position: fixed;
   transform: translateY(var(--app-sidenav-closed-position));
+  z-index: 5;
+
 }
 
 .Layout_Content {

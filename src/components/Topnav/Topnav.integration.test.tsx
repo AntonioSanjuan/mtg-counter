@@ -49,46 +49,6 @@ describe('Topnav', () => {
     expect(container).toBeDefined();
   });
 
-  it('Topnav change properties should trigger setLoginButtonHidden status change', () => {
-    const { rerender } = render(
-      <Provider store={topnavStore}>
-        <Router location={history.location} navigator={history}>
-          <Topnav hideLoginButton={false} />
-        </Router>
-      </Provider>,
-    );
-
-    rerender(
-      <Provider store={topnavStore}>
-        <Router location={history.location} navigator={history}>
-          <Topnav hideLoginButton />
-        </Router>
-      </Provider>,
-    );
-    expect(setLoginButtonHiddenMock).toHaveBeenLastCalledWith(
-      topnavStore.getState().user.isLogged,
-    );
-  });
-
-  it('Topnav isLoggedIn observable value changes should trigger setLoginButtonHidden status change', async () => {
-    render(
-      <Provider store={topnavStore}>
-        <Router location={history.location} navigator={history}>
-          <Topnav hideLoginButton />
-        </Router>
-      </Provider>,
-    );
-    // expect(setLoginButtonHiddenMock).toHaveBeenCalledTimes(1);
-    expect(setLoginButtonHiddenMock).toHaveBeenCalledWith(false);
-
-    await act(async () => {
-      topnavStore.dispatch(setUserAction({} as User));
-    });
-
-    expect(setLoginButtonHiddenMock).toHaveBeenCalledWith(true);
-    // expect(setLoginButtonHiddenMock).toHaveBeenCalledTimes(2);
-  });
-
   it('Topnav `login` button change should trigger', () => {
     render(
       <Provider store={topnavStore}>

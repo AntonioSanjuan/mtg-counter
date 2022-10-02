@@ -46,19 +46,14 @@ describe('ProfileSection', () => {
       </Provider>,
     );
 
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
-
     await act(async () => {
       profileSectionStore.dispatch(setUserAction({} as User));
     });
 
     fireEvent.click(
-      screen.getAllByRole('button', {
-        name: /Profile/i,
-      })[0],
+      screen.getAllByRole('button')[0],
     );
 
     expect(history.location.pathname).toEqual('/Profile');
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
   });
 });

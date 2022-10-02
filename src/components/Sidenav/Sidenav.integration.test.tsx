@@ -44,7 +44,7 @@ describe('Sidenav', () => {
     expect(container).toBeDefined();
   });
 
-  it('Sidenav `navigateToHomeAction` secction should trigger navigation to home', () => {
+  it('Sidenav `newGame` secction should trigger navigation to home', () => {
     render(
       <Provider store={sidenavStore}>
         <Router location={history.location} navigator={history}>
@@ -56,85 +56,10 @@ describe('Sidenav', () => {
     expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
 
     fireEvent.click(
-      screen.getByText('Popular Articles'),
+      screen.getByText('New Game'),
     );
 
     expect(history.location.pathname).toEqual('/');
     expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
-  });
-
-  it('Sidenav `navigateToStoredArticlesAction` secction should trigger navigation to storedArticles', () => {
-    render(
-      <Provider store={sidenavStore}>
-        <Router location={history.location} navigator={history}>
-          <Sidenav />
-        </Router>
-      </Provider>,
-    );
-
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
-
-    fireEvent.click(
-      screen.getByText('Stored Articles'),
-    );
-
-    expect(history.location.pathname).toEqual('/storedArticles');
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
-  });
-
-  it('Sidenav `openSettingsModal` secction should trigger openAlert with DynamicModalTypes.ProfileSettings', () => {
-    render(
-      <Provider store={sidenavStore}>
-        <Router location={history.location} navigator={history}>
-          <Sidenav />
-        </Router>
-      </Provider>,
-    );
-
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
-
-    fireEvent.click(
-      screen.getByText('Settings'),
-    );
-
-    expect(useAlertMock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.ProfileSettings);
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalledWith();
-  });
-
-  it('Sidenav `navigateToContactAction` secction should trigger navigation to contact', () => {
-    render(
-      <Provider store={sidenavStore}>
-        <Router location={history.location} navigator={history}>
-          <Sidenav />
-        </Router>
-      </Provider>,
-    );
-
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
-
-    fireEvent.click(
-      screen.getByText('Contact'),
-    );
-
-    expect(history.location.pathname).toEqual('/contact');
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalledWith();
-  });
-
-  it('Sidenav `exit` secction should trigger logout from useUser', () => {
-    render(
-      <Provider store={sidenavStore}>
-        <Router location={history.location} navigator={history}>
-          <Sidenav />
-        </Router>
-      </Provider>,
-    );
-
-    expect(useUserMock().logout).not.toHaveBeenCalled();
-
-    fireEvent.click(
-      screen.getByText('Exit'),
-    );
-
-    expect(useUserMock().logout).toHaveBeenCalled();
   });
 });

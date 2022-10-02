@@ -2,8 +2,10 @@ import './Home.scss';
 
 function HomePage() {
   return (
-    <button type="button" className="btn btn-link app_font_s">Profile</button>
+    <button type="button" className="btn btn-link HomePage_Settings">
+      <i className="bi bi-box-fill" />
 
+    </button>
   );
 }
 

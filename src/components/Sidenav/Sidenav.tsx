@@ -23,41 +23,28 @@ function Sidenav() {
     switchSidenavStatus();
   };
 
-  const handleOpenSettings = () => {
-    switchSidenavStatus();
-    openAlert(DynamicModalTypes.ProfileSettings);
-  };
+  // const handleOpenSettings = () => {
+  //   switchSidenavStatus();
+  //   openAlert(DynamicModalTypes.ProfileSettings);
+  // };
 
   return (
     <div className="sidenav_MainContainer">
       <div className="sidenav_NavContainer">
-        <div
-          role="button"
-          tabIndex={0}
-          className="sidenav_Section"
-          onKeyPress={() => { handleNavigation('/'); }}
-          onClick={() => { handleNavigation('/'); }}
+        <Section
+          sectionName="New Game"
+          onClickCallback={() => { handleNavigation('/'); }}
         >
-          <Section
-            sectionName="New Game"
-          >
-            <i className="bi bi-plus" />
-          </Section>
-        </div>
-        <div
-          role="button"
-          tabIndex={0}
-          className="sidenav_Section"
-          style={{ display: isLoggedIn ? 'inherit' : 'none' }}
-          onKeyPress={() => { handleNavigation('/storedArticles'); }}
-          onClick={() => { handleNavigation('/storedArticles'); }}
-        >
+          <i className="bi bi-plus" />
+        </Section>
+        {isLoggedIn && (
           <Section
             sectionName="History"
+            onClickCallback={() => { handleNavigation('/storedArticles'); }}
           >
             <i className="bi bi-bookmark-star-fill" />
           </Section>
-        </div>
+        )}
       </div>
     </div>
   );
