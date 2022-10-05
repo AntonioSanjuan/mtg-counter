@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory } from 'history';
 
-import HomePage from './SettingsButtons';
+import HomePage from './GameButton';
 
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import SettingButton from './SettingsButtons';
+import GameButton from './GameButton';
 
 describe('HomePage', () => {
   let settingButtonStore: any;
@@ -22,7 +22,7 @@ describe('HomePage', () => {
     const { container } = render(
       <Provider store={settingButtonStore}>
         <Router location={history.location} navigator={history}>
-          <SettingButton />
+          <GameButton />
         </Router>
       </Provider>,
     );
