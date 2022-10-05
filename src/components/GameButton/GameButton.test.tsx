@@ -9,7 +9,7 @@ import HomePage from './GameButton';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import GameButton from './GameButton';
 
-describe('HomePage', () => {
+describe('GameButton', () => {
   let settingButtonStore: any;
   let history: any;
 
