@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import logo from '../../assets/images/Logo.png';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
@@ -12,7 +11,7 @@ import { useUser } from '../../hooks/user/userHook';
 function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
   {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
-  console.log('hideLoginButton', hideLoginButton);
+
   const { switchSidenavStatus } = useSidenavLayer();
   const { logout } = useUser();
 
@@ -28,14 +27,26 @@ function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
   return (
     <div className="TopNav_Maincontainer">
       <div className="TopNav_Subcontainer">
-        <div className="TopNav_Leftcontainer" style={{ visibility: hideSidenavButton ? 'hidden' : 'visible' }}>
-          <button type="button" className="btn btn-dark" aria-label="switchSidenavButton" onClick={handleSidenavChange}>
-            <i className="bi bi-list" />
-          </button>
-          <div className="TopNav_Search" style={{ visibility: hideSearchButton ? 'hidden' : 'visible' }}>
-            <SearchInput onSearch={handleSearch} />
-          </div>
+        <div className="TopNav_Leftcontainer">
+          { !hideSidenavButton && (
+          <>
+            <button
+              type="button"
+              className="btn btn-dark"
+              aria-label="switchSidenavButton"
+              onClick={handleSidenavChange}
+            >
+              <i className="bi bi-list" />
+            </button>
+            { !hideSearchButton && (
+            <div className="TopNav_Search">
+              <SearchInput onSearch={handleSearch} />
+            </div>
+            )}
+          </>
+          )}
         </div>
+
         <div className="TopNav_Centercontainer">
           <Link to="/">
             <img src={logo} alt="logo" />
@@ -66,14 +77,23 @@ function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
           {isLoggedIn && !hideLoginButton && (
             <>
               <ProfileSection />
-              <button type="button" className="btn btn-danger" onClick={() => logout()}>
+              <button
+                type="button"
+                className="btn btn-danger"
+                aria-label="logout"
+                onClick={() => logout()}
+              >
                 Logout
               </button>
             </>
           )}
           {!isLoggedIn && !hideLoginButton && (
             <Link to="/Login">
-              <button type="button" className="btn btn-primary">
+              <button
+                type="button"
+                className="btn btn-primary"
+                aria-label="login"
+              >
                 Login
               </button>
             </Link>

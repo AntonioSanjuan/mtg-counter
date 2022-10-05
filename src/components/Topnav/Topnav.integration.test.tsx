@@ -2,7 +2,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 
 import { act } from 'react-dom/test-utils';
-
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -67,5 +66,37 @@ describe('Topnav', () => {
     );
 
     expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
+  });
+
+  it('Topnav `Login` button should appear if !hideLoginButton and user isn`t logged', () => {
+    render(
+      <Provider store={topnavStore}>
+        <Router location={history.location} navigator={history}>
+          <Topnav />
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getAllByRole('button', {
+      name: /login/i,
+    })[0]).toBeInTheDocument();
+  });
+
+  it('Topnav `Logout` button should appear if !hideLoginButton and user is logged', () => {
+    topnavStore.dispatch(
+      setUserAction({} as User),
+    );
+
+    render(
+      <Provider store={topnavStore}>
+        <Router location={history.location} navigator={history}>
+          <Topnav />
+        </Router>
+      </Provider>,
+    );
+
+    expect(screen.getAllByRole('button', {
+      name: /logout/i,
+    })[0]).toBeInTheDocument();
   });
 });
