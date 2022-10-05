@@ -1,11 +1,12 @@
+import SettingButton from '../../components/SettingsButton/SettingsButtons';
 import './Home.scss';
 
 function HomePage() {
   return (
-    <button type="button" className="btn btn-link HomePage_Settings">
-      <i className="bi bi-box-fill" />
+    <div className="HomePage_MainContainer">
+      <SettingButton />
 
-    </button>
+    </div>
   );
 }
 

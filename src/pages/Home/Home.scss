@@ -1,8 +1,10 @@
-.HomePage_Settings {
-  position: absolute;
-  i {
-    font-size: 20px;
-  }
+.HomePage_MainContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
