@@ -49,7 +49,7 @@ describe('Topnav', () => {
     expect(container).toBeDefined();
   });
 
-  it('Topnav `login` button change should trigger', () => {
+  it('Topnav `burguerMenu` button click should trigger switchSidenavStatus', () => {
     render(
       <Provider store={topnavStore}>
         <Router location={history.location} navigator={history}>
