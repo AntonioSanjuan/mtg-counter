@@ -1,5 +1,6 @@
 import React from 'react';
 import ProfileSettings from '../../components/common/profileSettings/profileSettings';
+import GameSettings from '../../components/common/gameSettings/gameSettings';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 import { closeAlertAction, openAlertAction } from '../../state/layout/layout.actions';
 import { selectLayoutAlertContent } from '../../state/layout/layout.selectors';
@@ -15,6 +16,9 @@ export function useAlert() {
     switch (alertContent) {
       case DynamicModalTypes.ProfileSettings:
         MyComponent = ProfileSettings;
+        break;
+      case DynamicModalTypes.GameSettings:
+        MyComponent = GameSettings;
         break;
       default:
         break;
