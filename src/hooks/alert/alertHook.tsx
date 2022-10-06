@@ -1,6 +1,6 @@
 import React from 'react';
 import ProfileSettings from '../../components/common/profileSettings/profileSettings';
-import BoardSettings from '../../components/common/boardSettings/boardSettings';
+import BoardSettings from '../../components/common/gameSettings/gameSettings';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 import { closeAlertAction, openAlertAction } from '../../state/layout/layout.actions';
 import { selectLayoutAlertContent } from '../../state/layout/layout.selectors';

@@ -4,11 +4,12 @@ import { gameInitialState } from './models/appGame.initialState';
 
 // eslint-disable-next-line default-param-last
 const gameReducer = (state: GameState = gameInitialState, action: any) => {
+  console.log("payload", action.payload)
   switch (action.type) {
-    case GameActions.setBoardSettings:
+    case GameActions.setGameSettings:
       return {
         ...state,
-        board: action.payload.boardSettings
+        board: action.payload.board
       };
     default:
       return state;

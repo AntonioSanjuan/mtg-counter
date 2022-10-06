@@ -4,9 +4,9 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import * as hooks from '../state/appStateHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useBoardSettings } from './boardSettingsHook';
+import { useGameSettings } from './gameSettingsHook';
 
-describe('<useBoardSettings />', () => {
+describe('<useGameSettings />', () => {
   let useBoardSettingsStore: any;
   let wrapper: any;
 
@@ -26,7 +26,7 @@ describe('<useBoardSettings />', () => {
   });
 
   it('should create', () => {
-    const { result } = renderHook(() => useBoardSettings(), { wrapper });
+    const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     expect(result.current).toBeDefined();
   });

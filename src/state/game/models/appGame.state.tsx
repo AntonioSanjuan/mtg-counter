@@ -1,5 +1,3 @@
-import { Game } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 
-export interface GameState {
-  currentGame: Game
-}
+export type GameState = FirebaseGameDto

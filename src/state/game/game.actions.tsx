@@ -1,10 +1,10 @@
-import { Board } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 
 export enum GameActions {
-  setBoardSettings = '@action/setBoardSettings',
+  setGameSettings = '@action/setGameSettings',
 }
 
-export const setBoardSettingsAction = (boardSettings: Board) => ({
-  type: GameActions.setBoardSettings,
-  payload: boardSettings,
+export const setGameSettingsAction = (gameSettings: FirebaseGameDto) => ({
+  type: GameActions.setGameSettings,
+  payload: gameSettings,
 });

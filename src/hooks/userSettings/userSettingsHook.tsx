@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useAppDispatch } from '../state/appStateHook';
-import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import * as userService from '../../services/firebaseStore/user/user.service';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { auth } from '../../utils/firebase.util';
@@ -15,12 +15,13 @@ export function useUserSettings() {
 
   const getUserSettings = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
-    return userSettingsService.getUserSettings()
-      .then((userSettings) => {
-        dispatch(setUserSettingsAction(userSettings.data() as FirebaseUserSettingsDto));
+    return userService.getUser()
+      .then((userResp) => {
+        const user = userResp.data() as FirebaseUserDto;
+        dispatch(setUserSettingsAction(user.userSettings));
         setLoading(false);
         setError(false);
-        return userSettings;
+        return userResp;
       }).catch((e) => {
         setLoading(false);
         setError(true);
@@ -30,7 +31,7 @@ export function useUserSettings() {
 
   const setUserSettings = async (userSettings: FirebaseUserSettingsDto): Promise<any> => {
     setLoading(true);
-    return userSettingsService.setUserSettings(userSettings).then(() => {
+    return userService.setUserSettings(userSettings).then(() => {
       dispatch(setUserSettingsAction(userSettings));
       setLoading(false);
       setError(false);
@@ -45,7 +46,7 @@ export function useUserSettings() {
   const updateUserSettings = async (settings: FirebaseUserSettingsDto): Promise<any> => {
     setLoading(true);
     if (auth.currentUser) {
-      return userSettingsService.updateUserSettings(settings)
+      return userService.updateUserSettings(settings)
         .then(() => {
           dispatch(setUserSettingsAction(settings));
           setLoading(false);

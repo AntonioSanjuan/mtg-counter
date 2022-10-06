@@ -13,6 +13,7 @@ import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { TRANSLATIONS_EN } from '../../locales/en';
 import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
+import { useGameSettings } from '../gameSettings/gameSettingsHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
@@ -36,6 +37,7 @@ const changeLanguage = (lang: Language) => {
 export function useApp() {
   const dispatch = useAppDispatch();
   const { getUserSettings, setAnonymousUserSettings } = useUserSettings();
+  const { getGameSettings, setAnonymousGameSettings } = useGameSettings();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
 
@@ -43,14 +45,16 @@ export function useApp() {
   const [theme, setTheme] = useState<Theme>(getBrowserTheme());
   const [language, setLanguage] = useState<Language>(getBrowserLanguage());
 
-  const initializeAthenticateUser = async () => {
+  const initializeAthenticatedUser = async () => {
     dispatch(setUserAction(auth.currentUser));
     await getUserSettings();
+    await getGameSettings();
   };
 
   const initializeAnonymousUser = () => {
     dispatch(unsetUserAction());
     setAnonymousUserSettings(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
+    setAnonymousGameSettings();
   };
 
   const initializeLanguage = () => {
@@ -83,7 +87,7 @@ export function useApp() {
     auth.onAuthStateChanged(async () => {
       setLoading(true);
       (auth.currentUser)
-        ? await initializeAthenticateUser()
+        ? await initializeAthenticatedUser()
         : initializeAnonymousUser();
       setLoading(false);
     });

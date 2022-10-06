@@ -1,6 +1,4 @@
-.GameSettings_MainContainer {}
-
-.BoardSettings_MainContainer {
+.GameSettings_MainContainer {
     display: flex;
     flex-direction: 'row';
     flex-direction: column;
@@ -12,13 +10,13 @@
     }
 }
 
-.BoardSettings_Settings {
+.GameSettings_Settings {
     display: flex;
     place-content: space-between;
     align-items: center;
 }
 
-.BoardSettings_Setting {
+.GameSettings_Setting {
     display: flex;
     flex-direction: column;
     place-content: center;

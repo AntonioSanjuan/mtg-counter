@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useUserSettings } from './userSettingsHook';
 import * as hooks from '../state/appStateHook';
-import * as userSettingsServiceMock from '../../services/firebaseStore/userSettings/userSettings.service.mock';
+import * as userSettingsServiceMock from '../../services/firebaseStore/user/user.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
@@ -40,10 +40,10 @@ describe('<useUserSettings />', () => {
   });
 
   it('getUserSettings should request getUserSettings', async () => {
-    expect(userSettingsServiceMock.getUserSettingsSpy).not.toHaveBeenCalled();
+    expect(userSettingsServiceMock.getUserSpy).not.toHaveBeenCalled();
 
     const getUserSettingsOutput: FirebaseUserSettingsDto = { darkMode: true, lang: Language.French };
-    userSettingsServiceMock.getUserSettingsSpy.mockResolvedValue(
+    userSettingsServiceMock.getUserSpy.mockResolvedValue(
             {
               data: () => getUserSettingsOutput as DocumentData,
             } as DocumentSnapshot,
@@ -55,7 +55,7 @@ describe('<useUserSettings />', () => {
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(getUserSettingsOutput));
-    expect(userSettingsServiceMock.getUserSettingsSpy).toHaveBeenCalled();
+    expect(userSettingsServiceMock.getUserSpy).toHaveBeenCalled();
   });
 
   it('setUserSettings should request setUserSettings', async () => {

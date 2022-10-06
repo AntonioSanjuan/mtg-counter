@@ -6,6 +6,9 @@ import { useUserSettings } from '../userSettings/userSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { selectUserSettings } from '../../state/user/user.selectors';
+import { setGameSettings } from '../../services/firebaseStore/user/user.service';
+import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { selectGame } from '../../state/game/game.selectors';
 
 export function useUser() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -13,6 +16,7 @@ export function useUser() {
   const { setUserSettings } = useUserSettings();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
+  const gameSettings = useAppSelector<FirebaseGameDto | undefined>(selectGame);
 
   const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
@@ -33,6 +37,7 @@ export function useUser() {
     return firebaseSignUp(username, password)
       .then(async (resp) => {
         await setUserSettings(userSettings as FirebaseUserSettingsDto);
+        await setGameSettings(gameSettings as FirebaseGameDto);
         setLoading(false);
         setError(false);
         return resp;

@@ -2,28 +2,28 @@ import { CounterTypes } from '../../internal/types/CounterTypes.model';
 import { Lifes } from '../../internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../internal/types/NumberOfPlayerEnum.model';
 
-export interface Counter {
+export interface FirebaseCounterDto {
   type: CounterTypes
   value: number
 }
 
-export interface Player {
+export interface FirebasePlayerDto {
   id: string;
   name: string;
-  userId?: string;
+  userId: string|null;
   commanderName: string;
-  counters: Counter[];
+  counters: FirebaseCounterDto[];
 }
 
-export interface Board {
+export interface FirebaseBoardDto {
   initialLifes: Lifes;
   numberOfPlayers: NumberOfPlayers;
 
-  players: Player[]
+  players: FirebasePlayerDto[]
 }
 
-export interface Game {
+export interface FirebaseGameDto {
     finished: boolean;
 
-    board: Board;
+    board: FirebaseBoardDto;
 }
