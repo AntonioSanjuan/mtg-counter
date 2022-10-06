@@ -7,20 +7,20 @@ import { useUserSettings } from './userSettingsHook';
 import * as hooks from '../state/appStateHook';
 import * as userSettingsServiceMock from '../../services/firebaseStore/userSettings/userSettings.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { setUserAction, setUserSettingsAction } from '../../state/user/user.actions';
+import { setUserSettingsAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 
 describe('<useUserSettings />', () => {
-  let useStoredArticleStore: any;
+  let useUserSettingsStore: any;
   let wrapper: any;
 
   const useAppDispatchMockResponse = jest.fn((action) => {}) as Dispatch<any>;
 
   beforeEach(() => {
-    useStoredArticleStore = createTestStore();
+    useUserSettingsStore = createTestStore();
     wrapper = function ({ children }: { children: any }) {
-      return <Provider store={useStoredArticleStore}>{children}</Provider>;
+      return <Provider store={useUserSettingsStore}>{children}</Provider>;
     };
 
     jest.spyOn(hooks, 'useAppDispatch')

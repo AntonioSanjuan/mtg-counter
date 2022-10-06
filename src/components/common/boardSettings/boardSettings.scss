@@ -1,0 +1,36 @@
+.GameSettings_MainContainer {}
+
+.BoardSettings_MainContainer {
+    display: flex;
+    flex-direction: 'row';
+    flex-direction: column;
+    place-content: center;
+    align-items: center; 
+
+    form {
+        width: 100%;
+    }
+}
+
+.BoardSettings_Settings {
+    display: flex;
+    place-content: space-between;
+    align-items: center;
+}
+
+.BoardSettings_Setting {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center; 
+
+    width: 100%;
+    padding: 0px 10px;
+
+    .form-check {
+        width: fit-content;
+    }
+    .form-select {
+        width: 180px;
+    }
+}
