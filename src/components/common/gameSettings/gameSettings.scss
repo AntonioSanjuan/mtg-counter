@@ -1,17 +1,18 @@
 .GameSettings_MainContainer {
     display: flex;
-    flex-direction: 'row';
     flex-direction: column;
     place-content: center;
     align-items: center; 
-
+    height: 100%;
     form {
+        height: 100%;
         width: 100%;
     }
 }
 
 .GameSettings_Settings {
     display: flex;
+    flex-direction: column;
     place-content: space-between;
     align-items: center;
 }
