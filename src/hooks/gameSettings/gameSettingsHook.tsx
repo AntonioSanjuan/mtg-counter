@@ -6,6 +6,7 @@ import { setGameSettingsAction } from '../../state/game/game.actions';
 import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
 import * as userService from '../../services/firebaseStore/user/user.service';
+import * as gameService from '../../services/firebaseStore/game/game.service';
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Lifes } from '../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
@@ -34,7 +35,7 @@ export function useGameSettings() {
 
   const setGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
     setLoading(true);
-    return userService.setGameSettings(gameSettings).then(() => {
+    return gameService.setGameSettings(gameSettings).then(() => {
       dispatch(setGameSettingsAction(gameSettings));
       setLoading(false);
       setError(false);
@@ -49,7 +50,7 @@ export function useGameSettings() {
   const updateGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
     setLoading(true);
     if (auth.currentUser) {
-      return userService.updateGameSettings(gameSettings)
+      return gameService.updateGameSettings(gameSettings)
         .then(() => {
           dispatch(setGameSettingsAction(gameSettings));
           setLoading(false);

@@ -19,13 +19,3 @@ export function updateUserSettings(settings: FirebaseUserSettingsDto): Promise<a
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, { userSettings: settings }, { merge: true });
 }
-
-export function setGameSettings(settings: FirebaseGameDto): Promise<any> {
-  const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
-  return setDoc(docRef, { game: settings }, { merge: true });
-}
-
-export function updateGameSettings(settings: FirebaseGameDto): Promise<any> {
-  const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
-  return setDoc(docRef, { game: settings }, { merge: true });
-}

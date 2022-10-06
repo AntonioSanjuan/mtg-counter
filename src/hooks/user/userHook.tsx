@@ -6,7 +6,7 @@ import { useUserSettings } from '../userSettings/userSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { selectUserSettings } from '../../state/user/user.selectors';
-import { setGameSettings } from '../../services/firebaseStore/user/user.service';
+import { setGameSettings } from '../../services/firebaseStore/game/game.service';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { selectGame } from '../../state/game/game.selectors';
 
