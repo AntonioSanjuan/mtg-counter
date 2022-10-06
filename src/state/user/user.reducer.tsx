@@ -10,7 +10,6 @@ const userReducer = (state: UserState = userInitialState, action: any) => {
         ...state,
         isLogged: true,
         userData: action.payload,
-        userStoredArticles: undefined,
       };
     case UserActions.setUserSettings:
       return {
@@ -23,12 +22,6 @@ const userReducer = (state: UserState = userInitialState, action: any) => {
         isLogged: false,
         userData: undefined,
         userSettings: undefined,
-        userStoredArticles: undefined,
-      };
-    case UserActions.setStoredArticles:
-      return {
-        ...state,
-        userStoredArticles: action.payload,
       };
     default:
       return state;

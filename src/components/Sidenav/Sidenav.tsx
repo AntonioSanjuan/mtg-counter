@@ -16,10 +16,6 @@ function Sidenav() {
     switchSidenavStatus();
   };
 
-  const handleSearch = () => {
-    switchSidenavStatus();
-  };
-
   return (
     <div className="sidenav_MainContainer">
       <div className="sidenav_NavContainer">
@@ -32,7 +28,7 @@ function Sidenav() {
         {isLoggedIn && (
           <Section
             sectionName="History"
-            onClickCallback={() => { handleNavigation('/storedArticles'); }}
+            onClickCallback={() => { handleNavigation('/'); }}
           >
             <i className="bi bi-bookmark-star-fill" />
           </Section>
