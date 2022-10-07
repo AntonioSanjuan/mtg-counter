@@ -5,6 +5,8 @@
 
 .GameButton_Button {
     position: absolute;
+    top: calc(50% - 23px);
+    left: calc(50% - 22px);
     i {
       font-size: 20px;
     }
