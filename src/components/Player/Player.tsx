@@ -1,11 +1,12 @@
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import './Player.scss';
 
 function Player({ player } : {player: FirebasePlayerDto}) {
   return (
     <div className="Player_MainContainer">
-      {player.counters[0].type}
-      {player.counters[0].value}
+      <CounterCarrousel player={player} />
+
     </div>
   );
 }

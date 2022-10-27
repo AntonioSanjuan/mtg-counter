@@ -62,6 +62,7 @@ function LoginPage() {
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="form-floating">
+
               <input
                 type="email"
                 id="username"
@@ -72,7 +73,10 @@ function LoginPage() {
                 className="form-control"
                 placeholder="name@example.com"
               />
-              <label>Username</label>
+              <label htmlFor="username">
+                Username
+
+              </label>
               {
               formik.touched.username && formik.errors.username
                   && <span className="app_font_error">{formik.errors.username}</span>
@@ -89,7 +93,9 @@ function LoginPage() {
                 className="form-control"
                 placeholder="****"
               />
-              <label>Password</label>
+              <label htmlFor="password">
+                Password
+              </label>
               {
               formik.touched.password && formik.errors.password
               && <span className="app_font_error">{formik.errors.password}</span>

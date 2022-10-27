@@ -1,0 +1,35 @@
+.CounterCarrousel_MainContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CounterCarrousel_ActionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+}
+
+
+.CounterCarrousel_Carrousel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+}
+
+.CounterCarrousel_TemporaryCount {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CounterCarrousel_CarrouselItem {
+    p {
+        margin: 0;
+    }
+}

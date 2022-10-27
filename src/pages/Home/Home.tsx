@@ -1,5 +1,4 @@
 import Board from '../../components/Board/Board';
-import GameButton from '../../components/GameButton/GameButton';
 import './Home.scss';
 
 function HomePage() {
