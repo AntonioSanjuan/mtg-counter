@@ -1,3 +1,15 @@
 .Board_MainContainer {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    height: 100%;
+    position: relative;
+}
+
+.Board_PlayerContainer {
+    height: 50%;
+    width: 50%;
+    flex:1 0 auto;
+    padding: 10px;
 }

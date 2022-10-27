@@ -11,7 +11,7 @@ import './gameSettings.scss';
 
 function BoardSettings() {
   const boardSettings = useAppSelector<FirebaseBoardDto>(selectGameBoard);
-  console.log('boardSettings', boardSettings);
+
   const { updateGameSettings, loading } = useGameSettings();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
     initialValues: boardSettings as FirebaseBoardDto,

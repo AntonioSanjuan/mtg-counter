@@ -36,8 +36,9 @@ export function useUser() {
     setLoading(true);
     return firebaseSignUp(username, password)
       .then(async (resp) => {
-        await setUserSettings(userSettings as FirebaseUserSettingsDto);
         await setGameSettings(gameSettings as FirebaseGameDto);
+        await setUserSettings(userSettings as FirebaseUserSettingsDto);
+
         setLoading(false);
         setError(false);
         return resp;
