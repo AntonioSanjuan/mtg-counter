@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { FirebaseCounterDto, FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import {
+  FirebaseCounterDto,
+  FirebaseGameDto,
+  FirebasePlayerDto,
+} from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { useGameSettings } from '../gameSettings/gameSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
@@ -38,9 +42,6 @@ export function useCounterHook(player: FirebasePlayerDto, currentCounter: Fireba
     await updateGameSettings(newGameSettings);
     setTemporaryCount(0);
   };
-
-  // useEffect(() => () => {
-  // }, []);
 
   useEffect(() => {
     if (temporaryCount) {

@@ -33,7 +33,10 @@ function CounterCarrousel({ player } : { player: FirebasePlayerDto}) {
           centerMode
           onChange={handleCarrouselChange}
           showStatus={false}
-          verticalSwipe="natural"
+          showThumbs={false}
+          swipeable={temporaryCount === 0}
+          verticalSwipe="standard"
+          emulateTouch
           showIndicators={false}
           showArrows={false}
           preventMovementUntilSwipeScrollTolerance
