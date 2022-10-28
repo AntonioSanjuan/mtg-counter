@@ -14,28 +14,21 @@
     padding: 10px;
 }
 
-.Board_PlayerContainer:first-child:nth-last-child(1){
-    background-color: red;
-    border: 2px solid red;
-}
-
-
-.Board_PlayerContainer:first-child:nth-last-child(2),
-.Board_PlayerContainer:first-child:nth-last-child(2) ~ .Board_PlayerContainer{
+.Board_PlayerContainer:nth-last-child(2),
+.Board_PlayerContainer:nth-last-child(2) ~ .Board_PlayerContainer{
     background-color: yellow;
     border: 2px solid yellow;
 }
 
-
-.Board_PlayerContainer:first-child:nth-last-child(3),
-.Board_PlayerContainer:first-child:nth-last-child(3) ~ .Board_PlayerContainer{
+.Board_PlayerContainer:nth-last-child(3),
+.Board_PlayerContainer:nth-last-child(3) ~ .Board_PlayerContainer{
     background-color: green;
     border: 2px solid green;
 }
 
 
-.Board_PlayerContainer:first-child:nth-last-child(4),
-.Board_PlayerContainer:first-child:nth-last-child(4) ~ .Board_PlayerContainer{
+.Board_PlayerContainer:nth-last-child(4),
+.Board_PlayerContainer:nth-last-child(4) ~ .Board_PlayerContainer{
     background-color: blue;
     border: 2px solid blue;
 }
