@@ -18,14 +18,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
-    width: fit-content;
 }
 
 .CounterCarrousel_TemporaryCount {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.CounterCarrousel_CarrouselItemContainer {
+
 }
 
 .CounterCarrousel_CarrouselItem {
