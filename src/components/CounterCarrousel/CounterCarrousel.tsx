@@ -28,14 +28,13 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
           )}
         </div>
         <Carousel
-          axis="vertical"
+          axis={isRotated ? 'horizontal' : 'vertical'}
           dynamicHeight
-          centerMode
           onChange={handleCarrouselChange}
           showStatus={false}
           showThumbs={false}
           swipeable={temporaryCount === 0}
-          verticalSwipe="standard"
+          verticalSwipe={isRotated ? 'natural' : 'standard'}
           emulateTouch
           showIndicators={false}
           showArrows={false}
