@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { useCounterHook } from '../../hooks/counter/counterHook';
 
-function CounterCarrousel({ player } : { player: FirebasePlayerDto}) {
+function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, isRotated: boolean}) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
   const { temporaryCount, addCounters, removeCounters } = useCounterHook(player, currentCounter);
 

@@ -13,22 +13,3 @@
     flex:1 0 auto;
     padding: 10px;
 }
-
-.Board_PlayerContainer:nth-last-child(2),
-.Board_PlayerContainer:nth-last-child(2) ~ .Board_PlayerContainer{
-    background-color: yellow;
-    border: 2px solid yellow;
-}
-
-.Board_PlayerContainer:nth-last-child(3),
-.Board_PlayerContainer:nth-last-child(3) ~ .Board_PlayerContainer{
-    background-color: green;
-    border: 2px solid green;
-}
-
-
-.Board_PlayerContainer:nth-last-child(4),
-.Board_PlayerContainer:nth-last-child(4) ~ .Board_PlayerContainer{
-    background-color: blue;
-    border: 2px solid blue;
-}
