@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { useCounterHook } from '../../hooks/counter/counterHook';
 
-function CounterCarrousel({ player } : { player: FirebasePlayerDto}) {
+function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, isRotated: boolean}) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
   const { temporaryCount, addCounters, removeCounters } = useCounterHook(player, currentCounter);
 
@@ -28,21 +28,19 @@ function CounterCarrousel({ player } : { player: FirebasePlayerDto}) {
           )}
         </div>
         <Carousel
-          axis="vertical"
-          dynamicHeight
-          centerMode
+          axis={isRotated ? 'horizontal' : 'vertical'}
           onChange={handleCarrouselChange}
           showStatus={false}
           showThumbs={false}
           swipeable={temporaryCount === 0}
-          verticalSwipe="standard"
+          verticalSwipe={isRotated ? 'natural' : 'standard'}
           emulateTouch
           showIndicators={false}
           showArrows={false}
           preventMovementUntilSwipeScrollTolerance
         >
           { player.counters.map((counter: FirebaseCounterDto) => (
-            <div>
+            <div className="CounterCarrousel_CarrouselItemContainer">
               <div className="CounterCarrousel_CarrouselItem">
                 <p>
                   {counter.type}
