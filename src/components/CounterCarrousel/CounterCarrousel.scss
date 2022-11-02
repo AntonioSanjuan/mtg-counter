@@ -2,6 +2,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    height: 100%;
 }
 
 .CounterCarrousel_ActionContainer {
@@ -18,16 +20,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    width: 70%;
 }
 
 .CounterCarrousel_TemporaryCount {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.CounterCarrousel_CarrouselItemContainer {
-
 }
 
 .CounterCarrousel_CarrouselItem {

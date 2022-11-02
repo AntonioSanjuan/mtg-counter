@@ -23,6 +23,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
           transform: `rotate(${rotation}deg)`,
           transformOrigin: 'center',
           height: sizes.width,
+          width: sizes.height,
         }
       }
       className="Player_MainContainer"
