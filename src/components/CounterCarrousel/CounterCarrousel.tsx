@@ -29,7 +29,6 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
         </div>
         <Carousel
           axis={isRotated ? 'horizontal' : 'vertical'}
-          dynamicHeight
           onChange={handleCarrouselChange}
           showStatus={false}
           showThumbs={false}
