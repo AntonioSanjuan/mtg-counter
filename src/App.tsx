@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Layout } from './layouts/BaseLayout/BaseLayout';
 import { LoginLayout } from './layouts/LoginLayout/LoginLayout';
-import { AuthRouteGuard } from './guards/authGuard/auth.guard';
 import Alert from './components/Alert/Alert';
 import HomePage from './pages/Home/Home';
 import LoginPage from './pages/Login/Login';
