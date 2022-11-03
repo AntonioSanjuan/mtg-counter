@@ -10,7 +10,11 @@
     place-content: center;
     align-items: center;
 
-    height: 100vh;
+    height: 100vh;            /* fall-back */
+    height: -moz-available;
+    height: -webkit-fill-available;
+    height: fill-available;
+    
     width: 100vw;
     backdrop-filter: blur(10px);
 }

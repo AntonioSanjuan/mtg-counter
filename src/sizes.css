@@ -27,10 +27,18 @@
 
         --app-modal-width: 90vw;
         --app-modal-height: 90vh;
+        
         --app-sidenav-closed-position: calc(100vh - var(--app-topnav-height));
         --app-sidenav-opened-position: calc(100vh - var(--app-topnav-height) - var(--app-sidenav-height));
         
         --app-sidenav-closed-margin: 0%;
         --app-sidenav-opened-margin: calc(var(--app-sidenav-height) * -1);
     }
+
+    @supports (-webkit-appearance:none) {
+        :root {
+            --app-sidenav-closed-position: calc(100vh - var(--app-topnav-height) - 56px);
+            --app-sidenav-opened-position: calc(100vh - var(--app-topnav-height) - var(--app-sidenav-height) - 56px);
+        }
+      }
 }
