@@ -74,18 +74,17 @@ function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
           </Link>
         </div>
         <div className="TopNav_Rightcontainer">
+
+          <ProfileSection />
           {isLoggedIn && !hideLoginButton && (
-            <>
-              <ProfileSection />
-              <button
-                type="button"
-                className="btn btn-danger"
-                aria-label="logout"
-                onClick={() => logout()}
-              >
-                Logout
-              </button>
-            </>
+          <button
+            type="button"
+            className="btn btn-danger"
+            aria-label="logout"
+            onClick={() => logout()}
+          >
+            Logout
+          </button>
           )}
           {!isLoggedIn && !hideLoginButton && (
             <Link to="/Login">
