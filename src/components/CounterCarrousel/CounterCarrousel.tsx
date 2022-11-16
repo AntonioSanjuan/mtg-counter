@@ -40,7 +40,10 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
           preventMovementUntilSwipeScrollTolerance
         >
           { player.counters.map((counter: FirebaseCounterDto) => (
-            <div className="CounterCarrousel_CarrouselItemContainer">
+            <div
+              className="CounterCarrousel_CarrouselItemContainer"
+              key={counter.type}
+            >
               <div className="CounterCarrousel_CarrouselItem">
                 <p className="app_font_m">
                   {counter.type}

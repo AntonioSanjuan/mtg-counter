@@ -15,7 +15,6 @@ export function useCounterHook(player: FirebasePlayerDto, currentCounter: Fireba
   const temporaryCountTimeout = useRef<NodeJS.Timeout>();
 
   const updateCounter = async () => {
-    console.log('updateCounter');
     const newPlayers = gameSettings.board.players.map((boardPlayer) => {
       if (player.id === boardPlayer.id) {
         const targetPlayer = player;

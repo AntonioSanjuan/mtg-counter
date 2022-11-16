@@ -10,10 +10,6 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [sizes, setSizes] = useState({ height: NaN, width: NaN });
 
-  if (!Number.isNaN(sizes.height)) {
-    console.log('calculationg sizes for player: ', player.id, playerRef.current?.offsetHeight);
-  }
-
   const calculateSizes = () => {
     if (playerRef.current) {
       setSizes({
