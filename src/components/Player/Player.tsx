@@ -1,4 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import {
+  useRef, useEffect, useLayoutEffect, useState,
+} from 'react';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
@@ -8,12 +10,18 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [sizes, setSizes] = useState({ height: NaN, width: NaN });
 
-  useEffect(() => {
-    console.log('🚀 ~ file: Player.tsx ~ line 8 ~ Player ~ playerRef', playerRef);
+  const calculateSizes = () => {
     if (playerRef.current) {
-      setSizes({ height: playerRef.current.offsetHeight, width: playerRef.current.offsetWidth });
+      setSizes({
+        height: rotation ? playerRef.current.offsetHeight : playerRef.current.offsetWidth,
+        width: rotation ? playerRef.current.offsetWidth : playerRef.current.offsetHeight,
+      });
     }
-  }, [playerRef]);
+  };
+
+  useLayoutEffect(() => {
+    calculateSizes();
+  }, []);
 
   return (
     <div

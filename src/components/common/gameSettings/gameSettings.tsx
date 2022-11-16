@@ -59,6 +59,8 @@ function BoardSettings() {
                 <option value={NumberOfPlayers.Two}>2</option>
                 <option value={NumberOfPlayers.Three}>3</option>
                 <option value={NumberOfPlayers.Four}>4</option>
+                <option value={NumberOfPlayers.Five}>5</option>
+                <option value={NumberOfPlayers.Six}>6</option>
               </select>
             </div>
             <div className="GameSettings_Setting">
