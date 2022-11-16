@@ -24,7 +24,7 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
       <div className="CounterCarrousel_Carrousel">
         <div className="CounterCarrousel_TemporaryCount">
           { temporaryCount !== 0 && (
-            <p className="app_font_s">{temporaryCount}</p>
+            <p className="app_font_">{temporaryCount}</p>
           )}
         </div>
         <Carousel

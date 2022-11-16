@@ -10,15 +10,15 @@ function GameButton() {
   };
 
   return (
-    <div className="GameButton_Maincontainer">
-      <button
-        type="button"
-        className="btn btn-link GameButton_Button"
-        onClick={() => openGameSettings()}
-      >
-        <i className="bi bi-box" />
-      </button>
-    </div>
+  // <div className="GameButton_Maincontainer">
+    <button
+      type="button"
+      className="btn btn-link GameButton_Button"
+      onClick={() => openGameSettings()}
+    >
+      <i className="bi bi-box" />
+    </button>
+  // </div>
   );
 }
 
