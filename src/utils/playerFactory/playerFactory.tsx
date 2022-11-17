@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
+import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 
 const getDefaultPlayerCounters = (initialLifes: Lifes): FirebaseCounterDto[] => [
   { type: 'Life', value: initialLifes },
@@ -15,8 +16,9 @@ const getDefaultPlayer = (
   id: uuidv4(),
   name: '',
   userId: null,
-  commanderName: '',
+  deckName: '',
   counters: getDefaultPlayerCounters(initialLifes),
+  color: PlayerColors.default,
 });
 
 export const getDefaultPlayers = (

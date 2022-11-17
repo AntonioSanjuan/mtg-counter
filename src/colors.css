@@ -22,6 +22,13 @@
 --small-fontColor: #888888;
 --normal-fontColor: #545454;
 --error-fontColor: var(--app-error-color);
+
+
+/* PlayerBackgroundColor */
+--PlayerBackgroundColorRed: red;
+--PlayerBackgroundColorBlue: blue;
+--PlayerBackgroundColorWhite: white;
+--PlayerBackgroundColorDefault: inherit;
 }
 
 [data-theme='dark'] {

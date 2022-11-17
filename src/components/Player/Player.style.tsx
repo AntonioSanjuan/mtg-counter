@@ -1,17 +1,18 @@
 import styled from 'styled-components';
-import { PlayerBackgroundColor } from '../../models/internal/types/PlayerBackgroundColor.model';
+import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 
 export interface PlayerStyleProps {
     rotation: number,
     playerHeight: number,
     playerWidth: number,
-    backgroundColor?: PlayerBackgroundColor
+    backgroundColor?: PlayerColors
 }
 
-const backgroundColors: Record<PlayerBackgroundColor, string> = {
-  [PlayerBackgroundColor.red]: 'var(--PlayerBackgroundColorRed)',
-  [PlayerBackgroundColor.blue]: 'var(--PlayerBackgroundColorBlue)',
-  [PlayerBackgroundColor.white]: 'var(--PlayerBackgroundColorWhite)',
+const backgroundColors: Record<PlayerColors, string> = {
+  [PlayerColors.red]: 'var(--PlayerBackgroundColorRed)',
+  [PlayerColors.blue]: 'var(--PlayerBackgroundColorBlue)',
+  [PlayerColors.white]: 'var(--PlayerBackgroundColorWhite)',
+  [PlayerColors.default]: 'var(--PlayerBackgroundColorDefault)',
 };
 
 const SCPlayer = styled.div.attrs<
@@ -22,7 +23,7 @@ Required<PlayerStyleProps> // What comes out of .attrs()
     rotation: props.rotation ?? 0,
     playerHeight: props.playerHeight ?? 0,
     playerWidth: props.playerWidth ?? 0,
-    backgroundColor: props.backgroundColor ?? PlayerBackgroundColor.white,
+    backgroundColor: props.backgroundColor ?? PlayerColors.default,
   } as Required<PlayerStyleProps>
 ))`
 display: flex;
