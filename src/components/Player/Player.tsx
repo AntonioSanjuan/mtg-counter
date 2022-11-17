@@ -4,7 +4,7 @@ import {
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
-import './Player.scss';
+import SCPlayer from './Player.style';
 
 function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: number}) {
   const playerRef = useRef<HTMLDivElement | null>(null);
@@ -25,17 +25,11 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   }, []);
 
   return (
-    <div
+    <SCPlayer
+      rotation={rotation}
+      playerHeight={sizes.width}
+      playerWidth={sizes.height}
       ref={playerRef}
-      style={
-        {
-          transform: `rotate(${rotation}deg)`,
-          transformOrigin: 'center',
-          height: sizes.width,
-          minWidth: sizes.height,
-        }
-      }
-      className="Player_MainContainer"
     >
       <button
         type="button"
@@ -50,7 +44,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       {!isPlayerConfigOpened && (
         <CounterCarrousel player={player} isRotated={rotation !== 0} />
       )}
-    </div>
+    </SCPlayer>
   );
 }
 
