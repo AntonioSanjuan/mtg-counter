@@ -4,5 +4,16 @@
     align-items: center;
     justify-content: center;
 
+    position: relative;
     // width: inherit;
+}
+
+.Player_ConfigButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 3;
+    i {
+      font-size: 20px;
+    }
 }

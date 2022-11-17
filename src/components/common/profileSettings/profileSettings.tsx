@@ -12,7 +12,6 @@ function ProfileSettings() {
   const formik: FormikProps<FirebaseUserSettingsDto> = useFormik<FirebaseUserSettingsDto>({
     initialValues: userSettings as FirebaseUserSettingsDto,
     onSubmit: async () => {
-      console.log('epa');
       await updateSettings();
     },
   });
