@@ -38,6 +38,7 @@ transform: ${(props) => (`rotate(${props.rotation}deg)`)};
 transform-origin: center;
 height: ${(props) => (props.playerHeight)}px;
 min-width: ${(props) => (props.playerWidth)}px;
+width: ${(props) => (props.playerWidth)}px;
 
 .Player_ConfigButton {
   position: absolute;
