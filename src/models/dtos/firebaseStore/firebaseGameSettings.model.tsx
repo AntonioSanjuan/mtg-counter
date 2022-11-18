@@ -1,6 +1,7 @@
 import { CounterTypes } from '../../internal/types/CounterTypes.model';
 import { Lifes } from '../../internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../internal/types/NumberOfPlayerEnum.model';
+import { PlayerColors } from '../../internal/types/PlayerColorEnum.model';
 
 export interface FirebaseCounterDto {
   type: CounterTypes
@@ -11,8 +12,9 @@ export interface FirebasePlayerDto {
   id: string;
   name: string;
   userId: string|null;
-  commanderName: string;
+  deckName: string;
   counters: FirebaseCounterDto[];
+  color: PlayerColors;
 }
 
 export interface FirebaseBoardDto {

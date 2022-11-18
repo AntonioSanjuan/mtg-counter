@@ -1,15 +1,17 @@
 import {
   useRef, useEffect, useLayoutEffect, useState,
 } from 'react';
+import { usePlayerHook } from '../../hooks/player/playerHook';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import ColorPicker from '../ColorPicker/ColorPicker';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
-import './Player.scss';
+import SCPlayer from './Player.style';
 
 function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: number}) {
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [sizes, setSizes] = useState({ height: NaN, width: NaN });
-
+  const [isPlayerConfigOpened, setIsPlayerConfigOpened] = useState(false);
   const calculateSizes = () => {
     if (playerRef.current) {
       setSizes({
@@ -24,20 +26,29 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   }, []);
 
   return (
-    <div
+    <SCPlayer
+      rotation={rotation}
+      playerHeight={sizes.width}
+      playerWidth={sizes.height}
+      backgroundColor={player.color}
       ref={playerRef}
-      style={
-        {
-          transform: `rotate(${rotation}deg)`,
-          transformOrigin: 'center',
-          height: sizes.width,
-          width: sizes.height,
-        }
-      }
-      className="Player_MainContainer"
     >
-      <CounterCarrousel player={player} isRotated={rotation !== 0} />
-    </div>
+      <button
+        type="button"
+        className="btn btn-link Player_ConfigButton"
+        onClick={() => {
+          setIsPlayerConfigOpened(!isPlayerConfigOpened);
+        }}
+      >
+        <i className="bi bi-gear-fill" />
+      </button>
+      {isPlayerConfigOpened && (
+        <ColorPicker player={player} />
+      )}
+      {!isPlayerConfigOpened && (
+        <CounterCarrousel player={player} isRotated={rotation !== 0} />
+      )}
+    </SCPlayer>
   );
 }
 
