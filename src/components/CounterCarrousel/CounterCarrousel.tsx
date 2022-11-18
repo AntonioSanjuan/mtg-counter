@@ -16,20 +16,21 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
   return (
     <div className="CounterCarrousel_MainContainer">
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" onClick={addCounters}>
-          <i className="bi bi-plus" />
+        <button type="button" className="btn btn-link" onClick={removeCounters}>
+          <i className="bi bi-dash-circle-fill" />
         </button>
       </div>
 
       <div className="CounterCarrousel_Carrousel">
         <div className="CounterCarrousel_TemporaryCount">
           { temporaryCount !== 0 && (
-            <p className="app_font_m">{temporaryCount}</p>
+            <p className="app_font_m app_font_noMargin">{temporaryCount}</p>
           )}
         </div>
         <Carousel
           axis={isRotated ? 'horizontal' : 'vertical'}
           onChange={handleCarrouselChange}
+          infiniteLoop
           showStatus={false}
           showThumbs={false}
           swipeable={temporaryCount === 0}
@@ -46,7 +47,13 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
             >
               <div className="CounterCarrousel_CarrouselItem">
                 <p className="app_font_m">
-                  {counter.type}
+                  {counter.type === 'Poison'
+                    && (<i className="bi bi-radioactive" />)}
+                  {counter.type === 'Life'
+                    && (<i className="bi bi-heart-fill" />)}
+                  {counter.type === 'CommanderDamage'
+                    && (<i className="bi bi-lightning-charge-fill" />
+                    ) }
                 </p>
                 <p className="app_font_xl">
                   {counter.value}
@@ -57,8 +64,8 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
         </Carousel>
       </div>
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" onClick={removeCounters}>
-          <i className="bi bi-dash" />
+        <button type="button" className="btn btn-link" onClick={addCounters}>
+          <i className="bi bi-plus-circle-fill" />
 
         </button>
       </div>

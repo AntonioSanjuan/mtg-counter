@@ -25,7 +25,7 @@ flex-direction: row;
 flex-wrap: wrap;
 align-items: center;
 justify-content: center;
-align-content: flex-end;
+align-content: center;
 padding-bottom: 5%;
 
 gap: 10px;

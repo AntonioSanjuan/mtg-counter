@@ -7,12 +7,11 @@
   background: var(--app-card-background-color);
   position: absolute;
   top: calc(50% - 23px);
-  left: calc(50% - 22px);
+  left: calc(50% - 25px);
   z-index: 3;
 }
 
 .GameButton_Button {
-
     i {
       font-size: 20px;
     }

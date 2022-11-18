@@ -21,3 +21,12 @@ html {
   height: fill-available;
   height: -webkit-fill-available;
 }
+
+/* override */
+.btn:focus,
+.form-select:focus {
+  box-shadow: none;
+}
+
+
+
