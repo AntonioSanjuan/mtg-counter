@@ -9,7 +9,6 @@ function ColorPicker({ player }: {player: FirebasePlayerDto}) {
   const playerColors = Object.keys(PlayerColors);
 
   const handleColorChange = async (selectedColor: PlayerColors) => {
-    console.log('🚀 ~ file: ColorPicker.tsx ~ line 12 ~ handleColorChange ~ selectedColor', selectedColor);
     if (selectedColor !== player.color) {
       await updatePlayerColor(selectedColor);
     }
