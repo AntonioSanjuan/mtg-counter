@@ -1,8 +1,10 @@
 import {
   useRef, useEffect, useLayoutEffect, useState,
 } from 'react';
+import { usePlayerHook } from '../../hooks/player/playerHook';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import ColorPicker from '../ColorPicker/ColorPicker';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import SCPlayer from './Player.style';
 
@@ -10,7 +12,6 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [sizes, setSizes] = useState({ height: NaN, width: NaN });
   const [isPlayerConfigOpened, setIsPlayerConfigOpened] = useState(false);
-
   const calculateSizes = () => {
     if (playerRef.current) {
       setSizes({
@@ -29,6 +30,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       rotation={rotation}
       playerHeight={sizes.width}
       playerWidth={sizes.height}
+      backgroundColor={player.color}
       ref={playerRef}
     >
       <button
@@ -40,7 +42,9 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       >
         <i className="bi bi-gear-fill" />
       </button>
-      {isPlayerConfigOpened && (<p>configuring</p>)}
+      {isPlayerConfigOpened && (
+        <ColorPicker player={player} />
+      )}
       {!isPlayerConfigOpened && (
         <CounterCarrousel player={player} isRotated={rotation !== 0} />
       )}

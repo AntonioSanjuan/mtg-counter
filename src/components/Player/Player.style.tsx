@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
+import backgroundColors from '../../utils/playerBackgroundColors/playerBackgroundColors';
 
 export interface PlayerStyleProps {
     rotation: number,
@@ -7,13 +8,6 @@ export interface PlayerStyleProps {
     playerWidth: number,
     backgroundColor?: PlayerColors
 }
-
-const backgroundColors: Record<PlayerColors, string> = {
-  [PlayerColors.red]: 'var(--PlayerBackgroundColorRed)',
-  [PlayerColors.blue]: 'var(--PlayerBackgroundColorBlue)',
-  [PlayerColors.white]: 'var(--PlayerBackgroundColorWhite)',
-  [PlayerColors.default]: 'var(--PlayerBackgroundColorDefault)',
-};
 
 const SCPlayer = styled.div.attrs<
 PlayerStyleProps, // What is consumed by .attrs()

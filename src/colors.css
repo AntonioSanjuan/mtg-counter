@@ -23,12 +23,11 @@
 --normal-fontColor: #545454;
 --error-fontColor: var(--app-error-color);
 
-
-/* PlayerBackgroundColor */
---PlayerBackgroundColorRed: red;
---PlayerBackgroundColorBlue: blue;
---PlayerBackgroundColorWhite: white;
---PlayerBackgroundColorDefault: inherit;
+  /* PlayerBackgroundColor */
+  --PlayerBackgroundColorRed: red;
+  --PlayerBackgroundColorBlue: blue;
+  --PlayerBackgroundColorWhite: white;
+  --PlayerBackgroundColorDefault: var(--app-card-background-color);
 }
 
 [data-theme='dark'] {
@@ -55,4 +54,10 @@
     --small-fontColor: #777777;
     --normal-fontColor: #ABABAB;
     --error-fontColor: var(--app-error-color);
+
+    /* PlayerBackgroundColor */
+    --PlayerBackgroundColorRed: red;
+    --PlayerBackgroundColorBlue: blue;
+    --PlayerBackgroundColorWhite: white;
+    --PlayerBackgroundColorDefault: var(--app-card-background-color);
   }
