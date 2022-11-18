@@ -21,7 +21,7 @@ export function useCounterHook(player: FirebasePlayerDto, currentCounter: Fireba
       if (temporaryCountTimeout.current) {
         clearTimeout(temporaryCountTimeout.current);
       }
-      temporaryCountTimeout.current = setTimeout(updateCounter, 5000);
+      temporaryCountTimeout.current = setTimeout(updateCounter, 2000);
     }
   }, [temporaryCount]);
 
