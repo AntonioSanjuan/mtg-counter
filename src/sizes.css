@@ -25,8 +25,8 @@
 
         --app-sidenav-height: 70px;
 
-        --app-modal-width: 90vw;
-        --app-modal-height: 90vh;
+        --app-modal-width: 80vw;
+        --app-modal-height: fit-content;
         
         --app-sidenav-closed-position: calc(100vh - var(--app-topnav-height));
         --app-sidenav-opened-position: calc(100vh - var(--app-topnav-height) - var(--app-sidenav-height));

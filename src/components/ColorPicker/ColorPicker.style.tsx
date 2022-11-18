@@ -26,7 +26,7 @@ flex-wrap: wrap;
 align-items: center;
 justify-content: center;
 align-content: flex-end;
-margin-bottom: 10%;
+padding-bottom: 5%;
 
 gap: 10px;
 `;

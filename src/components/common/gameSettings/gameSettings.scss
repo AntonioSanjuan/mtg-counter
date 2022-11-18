@@ -4,8 +4,12 @@
     place-content: center;
     align-items: center; 
     height: 100%;
+
+    h3 {
+        margin-bottom: 40px;
+    }
+
     form {
-        height: 100%;
         width: 100%;
     }
 }
@@ -15,6 +19,11 @@
     flex-direction: column;
     place-content: space-between;
     align-items: center;
+    justify-content: center;
+    align-content: center;
+
+    gap: 20px;
+    height: 100%;
 }
 
 .GameSettings_Setting {

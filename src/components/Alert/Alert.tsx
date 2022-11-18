@@ -13,7 +13,7 @@ function Alert() {
       { isModalOpened
         && (
         <Modal
-          showHeader
+          canBeClosed
         >
           {getAlertContent()}
         </Modal>

@@ -43,6 +43,9 @@ function BoardSettings() {
       { loading
             && <Loading />}
       <div className="GameSettings_MainContainer">
+        <h3 className="app_font_l">
+          Configure your game
+        </h3>
         <form onChange={formik.handleSubmit}>
           <div className="GameSettings_Settings">
             <div className="GameSettings_Setting">

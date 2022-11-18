@@ -27,6 +27,13 @@
     line-height: 1.2em;
 }
 
+.app_font_xl {
+    color: var(--big-fontColor);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.2em;
+}
+
 .app_font_noMargin {
     margin: 0
 }

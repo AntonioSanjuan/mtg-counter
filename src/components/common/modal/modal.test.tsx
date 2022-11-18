@@ -40,7 +40,7 @@ describe('Modal', () => {
       <Provider store={modalStore}>
         <Router location={history.location} navigator={history}>
           <Modal
-            showHeader
+            canBeClosed
           >
             <p>test</p>
           </Modal>

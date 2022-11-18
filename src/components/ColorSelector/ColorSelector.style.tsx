@@ -18,6 +18,8 @@ background: ${(props) => (backgroundColors[props.color])};
 width: 30px;
 height: 30px;
 border-radius: 50vh;
+border: 1px solid var(--app-low-contrast);
+box-shadow: var(--app-low-contrast) 0px 0px 10px;
 
 `;
 
