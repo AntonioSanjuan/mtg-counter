@@ -1,11 +1,18 @@
 .GameButton_Maincontainer {
+  display: flex;
+  flex-direction: column;
+  border-radius: 50vh;
+  border: 2px solid var(--app-topnav-mobile-background);
+  width: fit-content;
+  background: var(--app-card-background-color);
+  position: absolute;
+  top: calc(50% - 23px);
+  left: calc(50% - 22px);
+  z-index: 3;
 }
 
 .GameButton_Button {
-    position: absolute;
-    top: calc(50% - 23px);
-    left: calc(50% - 22px);
-    z-index: 3;
+
     i {
       font-size: 20px;
     }

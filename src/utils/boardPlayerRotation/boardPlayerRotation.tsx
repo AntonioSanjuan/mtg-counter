@@ -21,7 +21,7 @@ export const getPlayerWidthPercentage = (numberOfPlayers: number): number => {
       return 50;
     case NumberOfPlayers.Five:
     case NumberOfPlayers.Six:
-      return 33;
+      return 33.33;
     default:
       return 0;
   }

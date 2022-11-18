@@ -18,7 +18,7 @@ function Board() {
           <div
             key={player.id}
             className="Board_PlayerContainer"
-            style={{ height: `calc(${getPlayerWidthPercentage(boardSettings.numberOfPlayers)}% - 35px)` }}
+            style={{ height: `calc(${getPlayerWidthPercentage(boardSettings.numberOfPlayers)}%)` }}
           >
             <Player player={player} rotation={getPlayerRotation(index, boardSettings.numberOfPlayers)} />
           </div>
