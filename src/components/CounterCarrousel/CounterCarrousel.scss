@@ -44,6 +44,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    p {
+        text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
+        1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
+    }
 }
 
 .CounterCarrousel_CarrouselItem {
