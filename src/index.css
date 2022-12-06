@@ -28,7 +28,6 @@ html {
   box-shadow: none;
 }
 
-.btn:hover,
 .btn-link:hover {
   color: var(--app-low-contrast);
 }
