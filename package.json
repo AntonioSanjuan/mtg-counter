@@ -17,6 +17,7 @@
     "bootstrap-icons": "^1.7.2",
     "firebase": "^9.6.7",
     "formik": "^2.2.9",
+    "gh-pages": "^4.0.0",
     "i18next": "^21.6.14",
     "i18next-browser-languagedetector": "^6.1.4",
     "react": "^17.0.2",
@@ -43,7 +44,9 @@
     "test:coverage": "react-scripts test --watchAll=false --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src/** --quiet",
-    "lint:fix": "eslint src/** --fix"
+    "lint:fix": "eslint src/** --fix",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
