@@ -1,7 +1,7 @@
 {
-  "name": "react-test",
+  "name": "mtg-counter",
+  "homepage": "https://github.com/AntonioSanjuan/microFrontCounter",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",
