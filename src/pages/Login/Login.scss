@@ -16,11 +16,17 @@
   form > div {
     padding-bottom: 10px;
   }
+  
   width: 300px;
   padding:25px;
 
   border-radius: 1vh;
   background-color: var(--app-card-background-color);
+
+  .form-floating>label {
+    position: inherit;
+    padding: 0;
+  }
 }
 
 .Login_Logo {

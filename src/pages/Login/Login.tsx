@@ -63,19 +63,18 @@ function LoginPage() {
           <form onSubmit={formik.handleSubmit}>
             <div className="form-floating">
 
-              <input
-                type="email"
-                id="username"
-                name="username"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.username}
-                className="form-control"
-                placeholder="name@example.com"
-              />
               <label htmlFor="username">
                 Username
-
+                <input
+                  type="email"
+                  id="username"
+                  name="username"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.username}
+                  className="form-control"
+                  placeholder="name@example.com"
+                />
               </label>
               {
               formik.touched.username && formik.errors.username
@@ -83,18 +82,18 @@ function LoginPage() {
             }
             </div>
             <div className="form-floating">
-              <input
-                type="password"
-                id="password"
-                name="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                className="form-control"
-                placeholder="****"
-              />
               <label htmlFor="password">
                 Password
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  className="form-control"
+                  placeholder="****"
+                />
               </label>
               {
               formik.touched.password && formik.errors.password
