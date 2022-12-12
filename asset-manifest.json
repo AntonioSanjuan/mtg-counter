@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/AntonioSanjuan/microFrontCounter/static/css/main.c3d1b247.css",
+    "main.js": "/AntonioSanjuan/microFrontCounter/static/js/main.e30c27c1.js",
+    "static/js/787.8eeb87bb.chunk.js": "/AntonioSanjuan/microFrontCounter/static/js/787.8eeb87bb.chunk.js",
+    "static/media/bootstrap-icons.woff?": "/AntonioSanjuan/microFrontCounter/static/media/bootstrap-icons.38c4d2499557ae0379fd.woff",
+    "static/media/bootstrap-icons.woff2?": "/AntonioSanjuan/microFrontCounter/static/media/bootstrap-icons.2b56e79ae5013246de29.woff2",
+    "index.html": "/AntonioSanjuan/microFrontCounter/index.html",
+    "main.c3d1b247.css.map": "/AntonioSanjuan/microFrontCounter/static/css/main.c3d1b247.css.map",
+    "main.e30c27c1.js.map": "/AntonioSanjuan/microFrontCounter/static/js/main.e30c27c1.js.map",
+    "787.8eeb87bb.chunk.js.map": "/AntonioSanjuan/microFrontCounter/static/js/787.8eeb87bb.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3d1b247.css",
+    "static/js/main.e30c27c1.js"
+  ]
+}
