@@ -7,7 +7,6 @@ function ColorSelector({ color, onSelect }: {color: PlayerColors, onSelect: any}
       // eslint-disable-next-line react/jsx-props-no-spreading
       color={color}
       onClick={() => { onSelect(color); }}
-      disabled={disabled}
     />
   );
 }
