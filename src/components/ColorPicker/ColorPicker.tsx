@@ -6,7 +6,7 @@ import SCColorPicker from './ColorPicker.style';
 
 function ColorPicker({ player }: {player: FirebasePlayerDto}) {
   const { updatePlayerColor } = usePlayerHook(player);
-  const playerColors = Object.keys(PlayerColors);
+  const playerColors = Object.keys(PlayerColors).filter((color) => color !== player.color);
 
   const handleColorChange = async (selectedColor: PlayerColors) => {
     if (selectedColor !== player.color) {
