@@ -62,41 +62,40 @@ function LoginPage() {
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="form-floating">
+
               <label htmlFor="username">
                 Username
+                <input
+                  type="email"
+                  id="username"
+                  name="username"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.username}
+                  className="form-control"
+                  placeholder="name@example.com"
+                />
               </label>
-              <input
-                type="email"
-                id="username"
-                name="username"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.username}
-                className="form-control"
-                placeholder="name@example.com"
-              />
-
               {
               formik.touched.username && formik.errors.username
                   && <span className="app_font_error">{formik.errors.username}</span>
             }
             </div>
             <div className="form-floating">
+
               <label htmlFor="password">
                 Password
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  className="form-control"
+                  placeholder="****"
+                />
               </label>
-
-              <input
-                type="password"
-                id="password"
-                name="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                className="form-control"
-                placeholder="****"
-              />
-
               {
               formik.touched.password && formik.errors.password
               && <span className="app_font_error">{formik.errors.password}</span>
