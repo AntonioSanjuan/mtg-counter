@@ -1,6 +1,6 @@
 {
   "name": "mtg-counter",
-  "homepage": "https://github.com/AntonioSanjuan/microFrontCounter",
+  "homepage": "https://antoniosanjuan.github.io/microFrontCounter",
   "version": "0.1.0",
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
