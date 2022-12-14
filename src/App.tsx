@@ -34,6 +34,14 @@ function App() {
               </React.Suspense>
                   )}
           />
+          <Route
+            path="*"
+            element={(
+              <React.Suspense fallback={<>...</>}>
+                <HomePage />
+              </React.Suspense>
+                  )}
+          />
         </Route>
         <Route
           path="login"
