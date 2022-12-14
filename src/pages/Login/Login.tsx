@@ -13,7 +13,7 @@ interface LoginFormModel {
 
 function LoginPage() {
   const {
-    login, signUp, loading, error,
+    login, loginWithGoogle, signUp, loading, error,
   } = useUser();
   const navigate = useNavigate();
 
@@ -36,6 +36,15 @@ function LoginPage() {
 
   const handleSubmit = async (form: LoginFormModel) => {
     await login({ username: form.username, password: form.password });
+  };
+
+  const handleLoginWithGoogle = async () => {
+    try {
+      await loginWithGoogle();
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSignUp = (async () => {
@@ -109,13 +118,27 @@ function LoginPage() {
               >
                 Login
               </button>
+
               <button
                 disabled={!formik.dirty || !formik.isValid}
-                className="btn btn-secondary  w-100"
+                className="btn btn-secondary w-100"
                 type="button"
                 onClick={handleSignUp}
               >
                 Sign Up
+              </button>
+
+              <button
+                className="btn btn-dark w-100"
+                type="button"
+                onClick={handleLoginWithGoogle}
+              >
+                <img
+                  width="20px"
+                  alt="Google sign-in"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
+                />
+                Login with Google
               </button>
             </div>
           </form>

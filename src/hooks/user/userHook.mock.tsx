@@ -12,6 +12,9 @@ let errorResponseMock: boolean;
 const useUser_LoginMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
   loginResponseMock as UserCredential,
 )));
+const useUser_LoginWithGoogleMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
+  loginResponseMock as UserCredential,
+)));
 const useUser_SignUpMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
   loginResponseMock as UserCredential,
 )));
@@ -20,6 +23,7 @@ const useUser_KeepUserLoggedMock = jest.fn(() => new Promise<void>((resolve) => 
 
 export const useUserMock = () => ({
   login: useUser_LoginMock,
+  loginWithGoogle: useUser_LoginWithGoogleMock,
   logout: useUser_LogoutMock,
   signUp: useUser_SignUpMock,
   keepUserStateUpdated: useUser_KeepUserLoggedMock,

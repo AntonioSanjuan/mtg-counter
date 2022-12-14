@@ -1,7 +1,9 @@
 import { useCallback, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { UserCredential } from '@firebase/auth';
-import { firebaseLogin, firebaseLogout, firebaseSignUp } from '../../services/firebaseAuth/firebaseAuth.service';
+import {
+  firebaseGoogleLogin, firebaseLogin, firebaseLogout, firebaseSignUp,
+} from '../../services/firebaseAuth/firebaseAuth.service';
 import { useUserSettings } from '../userSettings/userSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
@@ -21,6 +23,20 @@ export function useUser() {
   const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
     return firebaseLogin(username, password)
+      .then((resp) => {
+        setLoading(false);
+        setError(false);
+        return resp;
+      }).catch((e) => {
+        setLoading(false);
+        setError(true);
+        throw e;
+      });
+  };
+
+  const loginWithGoogle = async (): Promise<UserCredential> => {
+    setLoading(true);
+    return firebaseGoogleLogin()
       .then((resp) => {
         setLoading(false);
         setError(false);
@@ -55,6 +71,7 @@ export function useUser() {
 
   return {
     login,
+    loginWithGoogle,
     logout,
     signUp,
     loading,

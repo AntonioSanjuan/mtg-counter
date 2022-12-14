@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { browserLocalPersistence, getAuth, setPersistence } from 'firebase/auth';
+import {
+  browserLocalPersistence, getAuth, setPersistence,
+} from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID } from '../environment/environment';
 
