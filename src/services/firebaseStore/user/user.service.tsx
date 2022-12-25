@@ -1,7 +1,6 @@
 import {
   doc, DocumentData, DocumentSnapshot, getDoc, setDoc,
 } from 'firebase/firestore';
-import { FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { auth, db } from '../../../utils/firebase.util';
 
