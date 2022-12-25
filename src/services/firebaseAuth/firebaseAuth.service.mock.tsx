@@ -9,10 +9,12 @@ export const firebaseResponseObjMock = {
 
 const firebaseSignUpMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
 const firebaseLoginMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
+const firebaseGoogleLoginMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
 const firebaseLogoutMock = () => new Promise<void>((resolve) => resolve());
 
 export const firebaseSignUpSpy = jest.spyOn(firebaseAuthService, 'firebaseSignUp');
 export const firebaseLoginSpy = jest.spyOn(firebaseAuthService, 'firebaseLogin');
+export const firebaseGoogleLoginSpy = jest.spyOn(firebaseAuthService, 'firebaseGoogleLogin');
 export const firebaseLogoutSpy = jest.spyOn(firebaseAuthService, 'firebaseLogout');
 
 //
@@ -21,6 +23,8 @@ export const initializeMock = () => {
     .mockImplementation(firebaseSignUpMock);
   firebaseLoginSpy
     .mockImplementation(firebaseLoginMock);
+  firebaseGoogleLoginSpy
+    .mockImplementation(firebaseGoogleLoginMock);
   firebaseLogoutSpy
     .mockImplementation(firebaseLogoutMock);
 };
@@ -28,5 +32,6 @@ export const initializeMock = () => {
 export const reset = () => {
   firebaseSignUpSpy.mockClear();
   firebaseLoginSpy.mockClear();
-  firebaseLogoutSpy.mockClear();
+  firebaseGoogleLoginSpy.mockClear();
+  firebaseGoogleLoginSpy.mockClear();
 };
