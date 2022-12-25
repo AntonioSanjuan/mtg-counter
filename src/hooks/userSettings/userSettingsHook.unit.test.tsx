@@ -8,7 +8,7 @@ import * as hooks from '../state/appStateHook';
 import * as userSettingsServiceMock from '../../services/firebaseStore/user/user.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { setUserSettingsAction } from '../../state/user/user.actions';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 
 describe('<useUserSettings />', () => {
@@ -40,13 +40,21 @@ describe('<useUserSettings />', () => {
   });
 
   it('getUserSettings should request getUserSettings', async () => {
-    expect(userSettingsServiceMock.getUserSpy).not.toHaveBeenCalled();
+    expect(userSettingsServiceMock.getUserSettingSpy).not.toHaveBeenCalled();
 
-    const getUserSettingsOutput: FirebaseUserSettingsDto = { darkMode: true, lang: Language.French };
-    userSettingsServiceMock.getUserSpy.mockResolvedValue(
-            {
-              data: () => getUserSettingsOutput as DocumentData,
-            } as DocumentSnapshot,
+    const getUserSettingsOutput: FirebaseUserDto = 
+    { 
+      userSettings:  { darkMode: true, lang: Language.French }, 
+      game: { finished: false, board: {
+        initialLifes: 0,
+        numberOfPlayers: 2,
+        players: []
+      }}
+    }
+    userSettingsServiceMock.getUserSettingSpy.mockResolvedValue(
+      {
+        data: () => getUserSettingsOutput as DocumentData,
+      } as DocumentSnapshot,
     );
     const { result } = renderHook(() => useUserSettings(), { wrapper });
 
@@ -54,8 +62,8 @@ describe('<useUserSettings />', () => {
       await result.current.getUserSettings();
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(getUserSettingsOutput));
-    expect(userSettingsServiceMock.getUserSpy).toHaveBeenCalled();
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(getUserSettingsOutput.userSettings));
+    expect(userSettingsServiceMock.getUserSettingSpy).toHaveBeenCalled();
   });
 
   it('setUserSettings should request setUserSettings', async () => {

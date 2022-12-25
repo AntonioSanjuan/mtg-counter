@@ -4,7 +4,7 @@ import {
 import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { auth, db } from '../../../utils/firebase.util';
 
-export function getUser(): Promise<DocumentSnapshot<DocumentData>> {
+export function getUserSettings(): Promise<DocumentSnapshot<DocumentData>> {
   const userRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return getDoc(userRef);
 }

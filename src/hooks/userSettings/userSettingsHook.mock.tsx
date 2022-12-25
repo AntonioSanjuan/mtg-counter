@@ -22,8 +22,8 @@ const useUserSettings_SetAnonymousUserSettings = jest.fn(() => {});
 export const useUserSettingsMock = () => ({
   getUserSettings: useUserSettings_GetUserSettings,
   setUserSettings: useUserSettings_SetUserSettings,
-  updateUserSettings: useUserSettings_UpdateUserSettings,
   setAnonymousUserSettings: useUserSettings_SetAnonymousUserSettings,
+  updateUserSettings: useUserSettings_UpdateUserSettings,
   loading: loadingResponseMock,
   error: errorResponseMock,
 });

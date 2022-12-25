@@ -49,7 +49,7 @@ describe('Login', () => {
     fireEvent.change(usernameInput, { target: { value: username } });
     const passwordInput = screen.getByPlaceholderText('****');
     fireEvent.change(passwordInput, { target: { value: password } });
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const loginButton = screen.getByRole('button', { name: 'Login' });
     expect(loginButton).not.toBeDisabled();
 
     await act(async () => {
@@ -72,7 +72,7 @@ describe('Login', () => {
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     fireEvent.change(usernameInput, { target: { value: username } });
 
-    const loginButton = screen.getByRole('button', { name: /Login/i });
+    const loginButton = screen.getByRole('button', { name: 'Login' });
 
     await act(async () => {
       fireEvent.click(loginButton);
