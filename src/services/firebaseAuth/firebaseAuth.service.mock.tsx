@@ -7,7 +7,7 @@ export const firebaseResponseObjMock = {
   user: { uid: 'test_uid' },
 } as UserCredential;
 
-const firebaseSignUpMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
+const firebaseSignUpMock = () => new Promise<UserCredential>((resolve) => {resolve(firebaseResponseObjMock)});
 const firebaseLoginMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
 const firebaseGoogleLoginMock = () => new Promise<UserCredential>((resolve) => resolve(firebaseResponseObjMock));
 const firebaseLogoutMock = () => new Promise<void>((resolve) => resolve());
@@ -33,5 +33,5 @@ export const reset = () => {
   firebaseSignUpSpy.mockClear();
   firebaseLoginSpy.mockClear();
   firebaseGoogleLoginSpy.mockClear();
-  firebaseGoogleLoginSpy.mockClear();
+  firebaseLogoutSpy.mockClear();
 };

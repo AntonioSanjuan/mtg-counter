@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { useUser } from './userHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as firebaseAuthServiceMock from '../../services/firebaseAuth/firebaseAuth.service.mock';
+import * as GameServiceMock from '../../services/firebaseStore/game/game.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
@@ -28,12 +29,17 @@ describe('<useUser />', () => {
 
     jest.spyOn(useUserSettings, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
+      
+    jest.spyOn(useUserSettings, 'useUserSettings')
+      .mockImplementation(useUserSettingsMock);
 
     firebaseAuthServiceMock.initializeMock();
+    GameServiceMock.initializeMock();
   });
 
   afterAll(() => {
     firebaseAuthServiceMock.reset();
+    GameServiceMock.reset();
   });
 
   it('should create', () => {
