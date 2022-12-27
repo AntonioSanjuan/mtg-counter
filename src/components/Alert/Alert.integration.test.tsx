@@ -48,6 +48,7 @@ describe('Alert', () => {
       alertStore.dispatch(openAlertAction(DynamicModalTypes.ProfileSettings));
     });
 
+    
     expect(useAlertMock().getAlertContent).toHaveBeenCalled();
   });
 

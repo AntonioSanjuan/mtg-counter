@@ -17,6 +17,8 @@
     
     width: 100vw;
     backdrop-filter: blur(10px);
+
+    cursor:auto;
 }
 
 .Modal_SubContainer {
@@ -31,6 +33,8 @@
     background-color: var(--app-hight-contrast);
     border-radius: 10px;
     border: 1px solid var(--app-low-contrast);
+
+    cursor:auto;
 }
 
 .Modal_HeaderContainer {

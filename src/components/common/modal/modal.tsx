@@ -18,7 +18,6 @@ function Modal({ children, canBeClosed }: {children: any, canBeClosed?: boolean}
       onClick={() => { handleClose(); }}
       onKeyDown={() => { handleClose(); }}
     >
-      {() => { handleClose(); }}
       <div
         className="Modal_SubContainer"
         role="button"

@@ -9,7 +9,7 @@ let themeResponseMock: Theme;
 let languageResponseMock: Language;
 let loadingResponseMock: boolean;
 
-export const usAlertMock = () => ({
+export const usAppMock = () => ({
   theme: themeResponseMock,
   language: languageResponseMock,
   loading: loadingResponseMock,

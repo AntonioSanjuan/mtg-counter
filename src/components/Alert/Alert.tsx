@@ -6,7 +6,6 @@ import Modal from '../common/modal/modal';
 function Alert() {
   const { getAlertContent } = useAlert();
   const isModalOpened = useAppSelector<boolean>(selectLayoutIsAlertOpened);
-
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
     <>
