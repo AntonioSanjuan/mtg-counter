@@ -2,6 +2,8 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
+
+/* eslint-disable camelcase */
 import '@testing-library/jest-dom';
 
 jest.mock('react-i18next', () => ({
@@ -15,10 +17,11 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.mock('firebase/auth', () => ({
-  ...jest.requireActual('react-i18next'),
-  getAuth: () => ({
+  ...jest.requireActual('firebase/auth'),
+  getAuth: jest.fn(() => ({
     onAuthStateChanged: jest.fn(),
-  }),
+    currentUser: undefined,
+  })),
   getFirestore: () => ({}),
   setPersistence: () => ({}),
 }));

@@ -3,11 +3,11 @@ import './CounterCarrousel.scss';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState } from 'react';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { useCounterHook } from '../../hooks/counter/counterHook';
+import { useCounter } from '../../hooks/counter/counterHook';
 
 function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, isRotated: boolean}) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
-  const { temporaryCount, addCounters, removeCounters } = useCounterHook(player, currentCounter);
+  const { temporaryCount, addCounters, removeCounters } = useCounter(player, currentCounter);
 
   const handleCarrouselChange = (index: any, element: any) => {
     setCurrentCounter(player.counters[index]);

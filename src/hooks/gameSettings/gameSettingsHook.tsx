@@ -5,7 +5,7 @@ import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSet
 import { setGameSettingsAction } from '../../state/game/game.actions';
 import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
-import * as userService from '../../services/firebaseStore/user/user.service';
+import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
 import * as gameService from '../../services/firebaseStore/game/game.service';
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Lifes } from '../../models/internal/types/LifeEnum.model';
@@ -19,7 +19,7 @@ export function useGameSettings() {
 
   const getGameSettings = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
-    return userService.getUserSettings()
+    return userSettingsService.getUserSettings()
       .then((userResp) => {
         const user = userResp.data() as FirebaseUserDto;
         dispatch(setGameSettingsAction(user.game));
@@ -49,6 +49,7 @@ export function useGameSettings() {
 
   const updateGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
     setLoading(true);
+
     if (auth.currentUser) {
       return gameService.updateGameSettings(gameSettings)
         .then(() => {

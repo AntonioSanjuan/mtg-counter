@@ -5,7 +5,7 @@ import {
 } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { usePlayerHook } from '../player/playerHook';
 
-export function useCounterHook(player: FirebasePlayerDto, currentCounter: FirebaseCounterDto) {
+export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCounterDto) {
   const { updatePlayerCounter } = usePlayerHook(player);
 
   const [temporaryCount, setTemporaryCount] = useState<number>(0);

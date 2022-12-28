@@ -5,11 +5,13 @@ import { Provider } from 'react-redux';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useUserSettings } from './userSettingsHook';
 import * as hooks from '../state/appStateHook';
-import * as userSettingsServiceMock from '../../services/firebaseStore/user/user.service.mock';
+import * as userSettingsServiceMock from '../../services/firebaseStore/userSettings/userSettings.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
+import { mockCurrentUser } from '../../utils/testsUtils/firebaseAuth.util';
+import { User } from 'firebase/auth';
 
 describe('<useUserSettings />', () => {
   let useUserSettingsStore: any;
@@ -95,6 +97,27 @@ describe('<useUserSettings />', () => {
       await result.current.updateUserSettings(inputSettings);
     });
 
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
     expect(userSettingsServiceMock.updateUserSettingsSpy).not.toHaveBeenCalled();
+  });
+
+  it('updateUserSettings should request updateUserSettings if user is logged', async () => {
+    //auth.currentUser = {}
+    mockCurrentUser({} as User)
+
+    expect(userSettingsServiceMock.setUserSettingsSpy).not.toHaveBeenCalled();
+    const inputSettings = {
+      darkMode: true,
+      lang: Language.English,
+    } as FirebaseUserSettingsDto;
+
+    const { result } = renderHook(() => useUserSettings(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateUserSettings(inputSettings);
+    });
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
+    expect(userSettingsServiceMock.updateUserSettingsSpy).toHaveBeenCalled();
   });
 });

@@ -3,7 +3,7 @@
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
-import * as userService from './user.service';
+import * as userSettingsService from './userSettings.service';
 
 export const getUserResponseObjMock = {
   data: () => {},
@@ -17,9 +17,9 @@ const getUserSettingsMock = () => new Promise<DocumentSnapshot<DocumentData>>((r
 const setUserSettingsMock = () => new Promise<any>((resolve) => resolve(setUserSettingsResponseObjMock));
 const updateUserSettingsMock = () => new Promise<any>((resolve) => resolve(updateUserSettingsResponseMock));
 
-export const getUserSettingSpy = jest.spyOn(userService, 'getUserSettings');
-export const setUserSettingsSpy = jest.spyOn(userService, 'setUserSettings');
-export const updateUserSettingsSpy = jest.spyOn(userService, 'updateUserSettings');
+export const getUserSettingSpy = jest.spyOn(userSettingsService, 'getUserSettings');
+export const setUserSettingsSpy = jest.spyOn(userSettingsService, 'setUserSettings');
+export const updateUserSettingsSpy = jest.spyOn(userSettingsService, 'updateUserSettings');
 
 export const initializeMock = () => {
   getUserSettingSpy

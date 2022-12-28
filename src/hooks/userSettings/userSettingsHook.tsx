@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useAppDispatch } from '../state/appStateHook';
-import * as userService from '../../services/firebaseStore/user/user.service';
+import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
 import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
@@ -15,7 +15,7 @@ export function useUserSettings() {
 
   const getUserSettings = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
-    return userService.getUserSettings()
+    return userSettingsService.getUserSettings()
       .then((userResp) => {
         const user = userResp.data() as FirebaseUserDto;
         dispatch(setUserSettingsAction(user.userSettings));
@@ -31,7 +31,7 @@ export function useUserSettings() {
 
   const setUserSettings = async (userSettings: FirebaseUserSettingsDto): Promise<any> => {
     setLoading(true);
-    return userService.setUserSettings(userSettings).then(() => {
+    return userSettingsService.setUserSettings(userSettings).then(() => {
       dispatch(setUserSettingsAction(userSettings));
       setLoading(false);
       setError(false);
@@ -46,7 +46,7 @@ export function useUserSettings() {
   const updateUserSettings = async (settings: FirebaseUserSettingsDto): Promise<any> => {
     setLoading(true);
     if (auth.currentUser) {
-      return userService.updateUserSettings(settings)
+      return userSettingsService.updateUserSettings(settings)
         .then(() => {
           dispatch(setUserSettingsAction(settings));
           setLoading(false);
