@@ -13,6 +13,7 @@ function GameButton() {
     <div className="GameButton_Maincontainer">
       <button
         type="button"
+        aria-label="gameButton"
         className="btn btn-link GameButton_Button"
         onClick={() => openGameSettings()}
       >

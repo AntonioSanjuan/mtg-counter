@@ -1,18 +1,17 @@
-import { usePlayerHook } from '../../hooks/player/playerHook';
+import { usePlayer } from '../../hooks/player/playerHook';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import SCColorPicker from './ColorPicker.style';
 
 function ColorPicker({ player }: {player: FirebasePlayerDto}) {
-  const { updatePlayerColor } = usePlayerHook(player);
+  const { updatePlayerColor } = usePlayer(player);
   const playerColors = Object.keys(PlayerColors).filter((color) => color !== player.color);
 
   const handleColorChange = async (selectedColor: PlayerColors) => {
-    if (selectedColor !== player.color) {
-      await updatePlayerColor(selectedColor);
-    }
+    await updatePlayerColor(selectedColor);
   };
+
   return (
     <SCColorPicker>
       {playerColors.map((color) => (

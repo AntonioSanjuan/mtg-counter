@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import {
   FirebaseCounterDto,
   FirebaseGameDto,
@@ -9,7 +8,7 @@ import { selectGame } from '../../state/game/game.selectors';
 import { useGameSettings } from '../gameSettings/gameSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 
-export function usePlayerHook(player: FirebasePlayerDto) {
+export function usePlayer(player: FirebasePlayerDto) {
   const { updateGameSettings } = useGameSettings();
   const gameSettings = useAppSelector<FirebaseGameDto>(selectGame);
 

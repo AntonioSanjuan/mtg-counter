@@ -5,6 +5,7 @@ function ColorSelector({ color, onSelect }: {color: PlayerColors, onSelect: any}
   return (
     <SCColorSelector
       // eslint-disable-next-line react/jsx-props-no-spreading
+      aria-label={color}
       color={color}
       onClick={() => { onSelect(color); }}
     />

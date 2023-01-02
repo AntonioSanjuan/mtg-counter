@@ -16,7 +16,7 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
   return (
     <div className="CounterCarrousel_MainContainer">
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" className="btn btn-link" onClick={removeCounters}>
+        <button type="button" aria-label="removeCounters" className="btn btn-link" onClick={removeCounters}>
           <i className="bi bi-dash-circle-fill" />
         </button>
       </div>
@@ -64,9 +64,8 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
         </Carousel>
       </div>
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" className="btn btn-link" onClick={addCounters}>
+        <button type="button" aria-label="addCounters" className="btn btn-link" onClick={addCounters}>
           <i className="bi bi-plus-circle-fill" />
-
         </button>
       </div>
 

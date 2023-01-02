@@ -6,7 +6,7 @@ import { setGameSettingsAction } from '../../state/game/game.actions';
 import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
 import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
-import * as gameService from '../../services/firebaseStore/game/game.service';
+import * as gameService from '../../services/firebaseStore/gameSettings/gameSettings.service';
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Lifes } from '../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';

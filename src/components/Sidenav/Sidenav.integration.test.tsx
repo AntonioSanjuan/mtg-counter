@@ -13,6 +13,9 @@ import { useUserMock } from '../../hooks/user/userHook.mock';
 import { useSidenavMock } from '../../hooks/sidenav/sidenavHook.mock';
 import { useAlertMock } from '../../hooks/alert/alertHook.mock';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { setUserAction } from '../../state/user/user.actions';
+import { User } from 'firebase/auth';
+import { Section } from '../common/section/section';
 
 describe('Sidenav', () => {
   let sidenavStore: any;
@@ -61,5 +64,58 @@ describe('Sidenav', () => {
 
     expect(history.location.pathname).toEqual('/');
     expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
+  });
+
+  it('Sidenav History should not appear if user is not logged', () => {
+    const { container } = render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+          <Sidenav />
+        </Router>
+      </Provider>,
+    );
+
+    // sidenavStore.dispatch(
+    //   setUserAction({} as User),
+    // );
+    expect(container).not.toContainHTML(render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+        <Section
+            sectionName="History"
+            onClickCallback={() => {} }
+          >
+            <i className="bi bi-bookmark-star-fill" />
+          </Section>        
+        </Router>
+      </Provider>,
+    ).container.innerHTML)
+  });
+
+  it('Sidenav History should appear if user is logged', () => {
+    const { container } = render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+          <Sidenav />
+        </Router>
+      </Provider>,
+    );
+
+    sidenavStore.dispatch(
+      setUserAction({} as User),
+    );
+
+    expect(container).toContainHTML(render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+        <Section
+            sectionName="History"
+            onClickCallback={() => {} }
+          >
+            <i className="bi bi-bookmark-star-fill" />
+          </Section>        
+        </Router>
+      </Provider>,
+    ).container.innerHTML)
   });
 });

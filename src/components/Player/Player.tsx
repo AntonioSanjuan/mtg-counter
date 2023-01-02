@@ -1,7 +1,7 @@
 import {
   useRef, useEffect, useLayoutEffect, useState,
 } from 'react';
-import { usePlayerHook } from '../../hooks/player/playerHook';
+import { usePlayer } from '../../hooks/player/playerHook';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import ColorPicker from '../ColorPicker/ColorPicker';
@@ -12,6 +12,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
   const playerRef = useRef<HTMLDivElement | null>(null);
   const [sizes, setSizes] = useState({ height: NaN, width: NaN });
   const [isPlayerConfigOpened, setIsPlayerConfigOpened] = useState(false);
+
   const calculateSizes = () => {
     if (playerRef.current) {
       setSizes({
@@ -35,6 +36,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
     >
       <button
         type="button"
+        aria-label="configButton"
         className="btn btn-link Player_ConfigButton"
         onClick={() => {
           setIsPlayerConfigOpened(!isPlayerConfigOpened);

@@ -8,15 +8,15 @@ import { useUserSettings } from '../userSettings/userSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { selectUserSettings } from '../../state/user/user.selectors';
-import { setGameSettings } from '../../services/firebaseStore/game/game.service';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { selectGame } from '../../state/game/game.selectors';
+import { useGameSettings } from '../gameSettings/gameSettingsHook';
 
 export function useUser() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { setUserSettings } = useUserSettings();
-
+  const { setGameSettings } = useGameSettings();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<FirebaseGameDto | undefined>(selectGame);
 

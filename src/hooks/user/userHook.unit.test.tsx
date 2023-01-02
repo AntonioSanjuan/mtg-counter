@@ -5,13 +5,16 @@ import { Provider } from 'react-redux';
 import { useUser } from './userHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as firebaseAuthServiceMock from '../../services/firebaseAuth/firebaseAuth.service.mock';
-import * as GameServiceMock from '../../services/firebaseStore/game/game.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
+import * as useGameSettings from '../gameSettings/gameSettingsHook';
+import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
+import { setGameSettingsAction } from '../../state/game/game.actions';
+import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 
 describe('<useUser />', () => {
   let useUserStore: any;
@@ -29,17 +32,15 @@ describe('<useUser />', () => {
 
     jest.spyOn(useUserSettings, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
-      
-    jest.spyOn(useUserSettings, 'useUserSettings')
-      .mockImplementation(useUserSettingsMock);
+
+    jest.spyOn(useGameSettings, 'useGameSettings')
+      .mockImplementation(useGameSettingsMock);
 
     firebaseAuthServiceMock.initializeMock();
-    GameServiceMock.initializeMock();
   });
 
   afterAll(() => {
     firebaseAuthServiceMock.reset();
-    GameServiceMock.reset();
   });
 
   it('should create', () => {
@@ -67,6 +68,33 @@ describe('<useUser />', () => {
 
     await act(async () => {
       await result.current.login({ username: 'a@b.com', password: '' }).catch((e) => {
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(e).toEqual(error);
+      });
+    });
+    expect(result.current.error).toBeTruthy();
+    expect(result.current.loading).toBeFalsy();
+  });
+
+  it('loginWithGoogle should request firebaseGoogleLogin', async () => {
+    expect(firebaseAuthServiceMock.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    await act(async () => {
+      await result.current.loginWithGoogle();
+    });
+
+    expect(firebaseAuthServiceMock.firebaseGoogleLoginSpy).toHaveBeenCalled();
+  });
+
+  it('loginWithGoogle failure should set error flag true value', async () => {
+    const error = { errorDesc: 'test_errorDEsc' };
+    firebaseAuthServiceMock.firebaseGoogleLoginSpy.mockRejectedValue(error);
+
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    await act(async () => {
+      await result.current.loginWithGoogle().catch((e) => {
         // eslint-disable-next-line jest/no-conditional-expect
         expect(e).toEqual(error);
       });
@@ -114,5 +142,17 @@ describe('<useUser />', () => {
     });
 
     expect(useUserSettingsMock().setUserSettings).toHaveBeenCalledWith(userSettings);
+  });
+
+    it('signUp should request setGameSettings hook function with default value', async () => {
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await result.current.signUp({ username: '', password: '' });
+    });
+
+    expect(useGameSettingsMock().setGameSettings).toHaveBeenCalled();
   });
 });
