@@ -8,6 +8,7 @@ function Section({
       role="button"
       tabIndex={0}
       className="Section_Button"
+      aria-label="SectionButton"
       onKeyPress={() => { onClickCallback(); }}
       onClick={() => { onClickCallback(); }}
     >

@@ -48,13 +48,17 @@ describe('ProfileSettings', () => {
     );
 
     expect(useUserSettingsMock().updateUserSettings).not.toHaveBeenCalled();
+
     const radioButton = screen.getByLabelText('Dark Mode');
+    expect(radioButton).toBeChecked();
 
     await act(async () => {
       fireEvent.click(radioButton);
     });
 
     expect(useUserSettingsMock().updateUserSettings).toHaveBeenCalled();
+    expect(radioButton).not.toBeChecked();
+
   });
 
   it('ProfileSettings on submit should request to useUserSettings updateUserSettings', async () => {

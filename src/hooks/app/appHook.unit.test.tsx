@@ -4,14 +4,20 @@ import { Provider } from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as appStatehooks from '../state/appStateHook';
 import * as userSettingshooks from '../userSettings/userSettingsHook';
+import * as gameSettingshooks from '../gameSettings/gameSettingsHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
-import { setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
+import { setUserAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { createJsDomUnsupportedMethods } from '../../utils/testsUtils/jsDomUnsupportedMethods.util';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
+import { auth } from '../../utils/firebase.util';
+import { BehaviorSubject, of, Subject } from 'rxjs';
+import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
+import { Unsubscribe, User } from 'firebase/auth';
+import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 
 describe('<useApp />', () => {
   let useAppStore: any;
@@ -36,6 +42,9 @@ describe('<useApp />', () => {
 
     jest.spyOn(userSettingshooks, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
+
+    jest.spyOn(gameSettingshooks, 'useGameSettings')
+      .mockImplementation(useGameSettingsMock);
   });
 
   it('should create', async () => {
@@ -75,5 +84,36 @@ describe('<useApp />', () => {
 
     expect(result.current.language).toEqual(browserLanguage);
     expect(result.current.theme).toEqual(browserTheme);
+  });
+
+  it('once auth.onAuthStateChanged is triggered and exists auth.currentUser, initializeAthenticatedUser should be called ', async () => {
+    //exists auth.currentUser
+    const sut = {emailVerified: true} as User
+    mockFirebaseAuthUser(sut as User, true);
+
+    await act(async () => {
+
+      renderHook(() => useApp(), { wrapper });
+    });
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAction(sut));
+    expect(useUserSettingsMock().getUserSettings).toHaveBeenCalled()
+    expect(useGameSettingsMock().getGameSettings).toHaveBeenCalled()
+  });
+
+
+
+  it('once auth.onAuthStateChanged is triggered and not exists auth.currentUser, initializeAnonymousUser should called ', async () => {
+     //doesnt exists auth.currentUser
+     const sut = undefined
+     mockFirebaseAuthUser(sut, true);
+ 
+     await act(async () => {
+       renderHook(() => useApp(), { wrapper });
+     });
+ 
+     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
+     expect(useUserSettingsMock().setAnonymousUserSettings).toHaveBeenCalled()
+     expect(useGameSettingsMock().setAnonymousGameSettings).toHaveBeenCalled()
   });
 });

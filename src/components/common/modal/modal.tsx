@@ -15,6 +15,7 @@ function Modal({ children, canBeClosed }: {children: any, canBeClosed?: boolean}
       role="button"
       tabIndex={0}
       className="Modal_MainContainer"
+      aria-label="outsideModal"
       onClick={() => { handleClose(); }}
       onKeyDown={() => { handleClose(); }}
     >

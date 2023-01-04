@@ -8,7 +8,6 @@ function SearchInput({ onSearch } : {onSearch: any}) {
   const [opened, setOpened] = useState<boolean>(false);
   const [value, setValue] = useState<string|undefined>(undefined);
 
-  const navigate = useNavigate();
   const useAnimation = useAnimationByStateTransition(opened);
 
   const clear = () => {
@@ -21,7 +20,6 @@ function SearchInput({ onSearch } : {onSearch: any}) {
     if (value) {
       clear();
       onSearch(value);
-      navigate(`/search?filterText=${value}`);
     }
   };
 
@@ -35,6 +33,7 @@ function SearchInput({ onSearch } : {onSearch: any}) {
         <button
           onClick={() => { setOpened(!opened); }}
           type="button"
+          aria-label="SearchInput_OpenCloseButton"
           className="btn btn-dark"
         >
           <i className="bi bi-search" />
@@ -47,6 +46,7 @@ function SearchInput({ onSearch } : {onSearch: any}) {
             <input
               type="text"
               className="form-control"
+              aria-label="SearchInput_Input"
               placeholder="Search..."
               onChange={(e) => setValue(e.target.value)}
               value={value || ''}
@@ -57,6 +57,7 @@ function SearchInput({ onSearch } : {onSearch: any}) {
       <button
         type="button"
         onClick={search}
+        aria-label="SearchInput SearchButton"
         style={{ visibility: value ? 'visible' : 'hidden' }}
         className="btn btn-dark searchInput_MobileButton app_font_s"
       >

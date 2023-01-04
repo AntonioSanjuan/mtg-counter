@@ -34,7 +34,7 @@ describe('GameButton', () => {
     expect(container).toBeDefined();
   });
 
-  it('button click should create openAlert with DynamicModalTypes.BoardSettings value', async () => {
+  it('button click should create openAlert with DynamicModalTypes.GameSettings value', async () => {
     render(
       <Provider store={settingButtonStore}>
         <Router location={history.location} navigator={history}>
@@ -49,6 +49,6 @@ describe('GameButton', () => {
       fireEvent.click(button);
     });
 
-    expect(useAlertMock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.BoardSettings)
+    expect(useAlertMock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.GameSettings)
   });
 });

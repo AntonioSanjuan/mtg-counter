@@ -13,7 +13,7 @@ import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
 import Player from './Player';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import ColorPicker from '../ColorPicker/ColorPicker';
-
+import React from 'react';
 describe('Player', () => {
   let playerStore: any;
   let history: any;

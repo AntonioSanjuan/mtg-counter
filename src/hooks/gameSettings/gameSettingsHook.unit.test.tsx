@@ -11,7 +11,7 @@ import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSet
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { setGameSettingsAction } from '../../state/game/game.actions';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { mockCurrentUser } from '../../utils/testsUtils/firebaseAuth.util';
+import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 
 describe('<useGameSettings />', () => {
@@ -100,7 +100,7 @@ describe('<useGameSettings />', () => {
   });
   it('updateGameSettings should not request updateUserSettings if user is logged', async () => {
     //auth.currentUser = {}
-    mockCurrentUser({} as User)
+    mockFirebaseAuthUser({} as User)
 
     expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalled();
     const inputSettings = { finished: true} as FirebaseGameDto;

@@ -10,7 +10,7 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
-import { mockCurrentUser } from '../../utils/testsUtils/firebaseAuth.util';
+import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 
 describe('<useUserSettings />', () => {
@@ -103,7 +103,7 @@ describe('<useUserSettings />', () => {
 
   it('updateUserSettings should request updateUserSettings if user is logged', async () => {
     //auth.currentUser = {}
-    mockCurrentUser({} as User)
+    mockFirebaseAuthUser({} as User)
 
     expect(userSettingsServiceMock.setUserSettingsSpy).not.toHaveBeenCalled();
     const inputSettings = {

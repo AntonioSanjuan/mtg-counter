@@ -8,6 +8,7 @@ import { createTestStore } from '../../../utils/testsUtils/createTestStore.util'
 import * as alertHooks from '../../../hooks/alert/alertHook';
 import { useAlertMock } from '../../../hooks/alert/alertHook.mock';
 import Modal from './modal';
+import { act } from '@testing-library/react-hooks';
 
 describe('Modal', () => {
   let modalStore: any;
@@ -35,25 +36,49 @@ describe('Modal', () => {
     expect(container).toBeDefined();
   });
 
-  // it('Modal `closeButton` should trigger useAlert() closeAlert functionality', async () => {
-  //   render(
-  //     <Provider store={modalStore}>
-  //       <Router location={history.location} navigator={history}>
-  //         <Modal
-  //           canBeClosed
-  //         >
-  //           <p>test</p>
-  //         </Modal>
-  //       </Router>
-  //     </Provider>,
-  //   );
+  it('Modal `closeButton` should trigger useAlert() closeAlert functionality if can be closed', async () => {
+    render(
+      <Provider store={modalStore}>
+        <Router location={history.location} navigator={history}>
+          <Modal
+            canBeClosed
+          >
+            <p>test</p>
+          </Modal>
+        </Router>
+      </Provider>,
+    );
 
-  //   expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
 
-  //   fireEvent.click(
-  //     screen.getAllByRole('button')[0],
-  //   );
 
-  //   expect(useAlertMock().closeAlert).toHaveBeenCalled();
-  // });
+    const button = screen.getByRole('button', { name: 'outsideModal' });
+
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(useAlertMock().closeAlert).toHaveBeenCalled();
+  });
+
+  it('Modal `closeButton` should not trigger useAlert() closeAlert functionality if can not be closed', async () => {
+    render(
+      <Provider store={modalStore}>
+        <Router location={history.location} navigator={history}>
+          <Modal>
+            <p>test</p>
+          </Modal>
+        </Router>
+      </Provider>,
+    );
+
+    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+
+
+    const button = screen.getByRole('button', { name: 'outsideModal' });
+
+    await act(async () => {
+      fireEvent.click(button);
+    });
+    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+  });
 });

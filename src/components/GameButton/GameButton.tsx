@@ -6,7 +6,7 @@ function GameButton() {
   const { openAlert } = useAlert();
 
   const openGameSettings = () => {
-    openAlert(DynamicModalTypes.BoardSettings);
+    openAlert(DynamicModalTypes.GameSettings);
   };
 
   return (

@@ -17,9 +17,10 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.mock('firebase/auth', () => ({
+
   ...jest.requireActual('firebase/auth'),
   getAuth: jest.fn(() => ({
-    onAuthStateChanged: jest.fn(),
+    onAuthStateChanged: jest.fn((cb) => cb(undefined)),
     currentUser: undefined,
   })),
   getFirestore: () => ({}),

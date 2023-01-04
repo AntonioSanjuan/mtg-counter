@@ -84,6 +84,7 @@ export function useApp() {
   useEffect(() => {
     initializeLanguage();
     initializeTheme();
+
     auth.onAuthStateChanged(async () => {
       setLoading(true);
       (auth.currentUser)

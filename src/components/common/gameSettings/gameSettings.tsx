@@ -9,7 +9,7 @@ import { getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
 
-function BoardSettings() {
+function GameSettings() {
   const boardSettings = useAppSelector<FirebaseBoardDto>(selectGameBoard);
 
   const { updateGameSettings, loading } = useGameSettings();
@@ -71,7 +71,7 @@ function BoardSettings() {
               <select
                 className="form-select"
                 id="initialLifes"
-                aria-label="Language"
+                aria-label="InitialLifes"
                 name="initialLifes"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -89,4 +89,4 @@ function BoardSettings() {
   );
 }
 
-export default BoardSettings;
+export default GameSettings;
