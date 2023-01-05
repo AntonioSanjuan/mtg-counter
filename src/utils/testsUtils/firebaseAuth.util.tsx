@@ -5,6 +5,6 @@ export async function mockFirebaseAuthUser(user: User | undefined, triggerOnAuth
   Object.defineProperty(auth, 'currentUser', { value: user });
 
   if (triggerOnAuthStateChanged) {
-    auth.onAuthStateChanged = await jest.fn((cb) => cb(user));
+    auth.onAuthStateChanged = jest.fn((cb) => cb(user));
   }
 }

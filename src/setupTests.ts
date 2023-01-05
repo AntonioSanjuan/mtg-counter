@@ -2,7 +2,7 @@
 // allows you to do things like:
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
-
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable camelcase */
 import '@testing-library/jest-dom';
 
@@ -11,7 +11,7 @@ jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: (str: any) => str,
     i18n: {
-      changeLanguage: () => new Promise(() => {}),
+      changeLanguage: () => jest.fn(() => new Promise<void>((resolve) => resolve())),
     },
   }),
 }));
