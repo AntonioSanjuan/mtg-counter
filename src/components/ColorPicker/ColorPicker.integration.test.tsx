@@ -33,7 +33,7 @@ describe('ColorPicker', () => {
     const { container } = render(
       <Provider store={colorPickerStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} />
+          <ColorPicker player={inputPlayer}  onPick={() => {}}/>
         </Router>
       </Provider>,
     );
@@ -41,16 +41,18 @@ describe('ColorPicker', () => {
     expect(container).toBeDefined();
   });
 
-  it('ColorSelector select should request to updatePlayerColor if selected color is not equal to playerColor', async () => {
-    expect(usePlayerMock().updatePlayerColor).not.toHaveBeenCalled()
-
+  it('ColorSelector select should request to updatePlayerColor', async () => {
+    const onPickFn = jest.fn()
     const { container } = render(
       <Provider store={colorPickerStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} />
+          <ColorPicker player={inputPlayer} onPick={onPickFn} />
         </Router>
       </Provider>,
     );
+    expect(usePlayerMock().updatePlayerColor).not.toHaveBeenCalled()
+    expect(onPickFn).not.toHaveBeenCalled()
+    
     const colorButton = screen.getByRole('button', { name: PlayerColors.green });
 
     await act(async () => {
@@ -58,6 +60,7 @@ describe('ColorPicker', () => {
     });
 
     expect(usePlayerMock().updatePlayerColor).toHaveBeenCalled()
+    expect(onPickFn).toHaveBeenCalled()
   });
 
   it('ColorSelector select should not show player color', async () => {
@@ -66,7 +69,7 @@ describe('ColorPicker', () => {
     const { container } = render(
       <Provider store={colorPickerStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} />
+          <ColorPicker player={inputPlayer} onPick={() => {}}/>
         </Router>
       </Provider>,
     );

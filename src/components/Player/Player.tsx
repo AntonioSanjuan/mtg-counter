@@ -45,7 +45,13 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
         <i className="bi bi-gear-fill" />
       </button>
       {isPlayerConfigOpened && (
-        <ColorPicker player={player} />
+        <ColorPicker
+          player={player}
+          onPick={() => {
+            console.log('llegamos!');
+            setIsPlayerConfigOpened(!isPlayerConfigOpened);
+          }}
+        />
       )}
       {!isPlayerConfigOpened && (
         <CounterCarrousel player={player} isRotated={rotation !== 0} />

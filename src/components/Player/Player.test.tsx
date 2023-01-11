@@ -73,10 +73,25 @@ describe('Player', () => {
       fireEvent.click(button);
     });
 
+    const onPickFn = jest.fn();
+
     expect(container).toContainHTML(render(
       <Provider store={playerStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} />
+          <ColorPicker player={inputPlayer} onPick={onPickFn}/>
+        </Router>
+      </Provider>,
+    ).container.innerHTML)
+
+
+    await act(async () => {
+      onPickFn.mockReturnValue({})
+    });
+
+    expect(container).not.toContainHTML(render(
+      <Provider store={playerStore}>
+        <Router location={history.location} navigator={history}>
+          <ColorPicker player={inputPlayer} onPick={() => {}}/>
         </Router>
       </Provider>,
     ).container.innerHTML)

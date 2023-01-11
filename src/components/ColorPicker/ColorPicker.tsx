@@ -4,12 +4,13 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import ColorSelector from '../ColorSelector/ColorSelector';
 import SCColorPicker from './ColorPicker.style';
 
-function ColorPicker({ player }: {player: FirebasePlayerDto}) {
+function ColorPicker({ player, onPick }: {player: FirebasePlayerDto, onPick: any}) {
   const { updatePlayerColor } = usePlayer(player);
   const playerColors = Object.keys(PlayerColors).filter((color) => color !== player.color);
 
   const handleColorChange = async (selectedColor: PlayerColors) => {
     await updatePlayerColor(selectedColor);
+    onPick();
   };
 
   return (
