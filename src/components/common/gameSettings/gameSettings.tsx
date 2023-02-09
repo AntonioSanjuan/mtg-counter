@@ -5,7 +5,7 @@ import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebase
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { selectGameBoard } from '../../../state/game/game.selectors';
-import { getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
+import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
 
@@ -32,6 +32,25 @@ function GameSettings() {
             Number(formik.values.initialLifes),
             Number(formik.values.numberOfPlayers),
           ),
+        },
+      };
+      await updateGameSettings(newGameSettings);
+    }
+  };
+
+  const restartBoard = async () => {
+    // TO-DO
+    // save it? using modals
+
+    if (boardSettings) {
+      const newGameSettings: FirebaseGameDto = {
+        finished: false,
+        board: {
+          ...boardSettings,
+          players: boardSettings.players.map((player) => ({
+            ...player,
+            counters: getDefaultPlayerCounters(boardSettings.initialLifes),
+          })),
         },
       };
       await updateGameSettings(newGameSettings);
@@ -82,6 +101,14 @@ function GameSettings() {
                 <option value={Lifes.Fourty}>40</option>
               </select>
             </div>
+            <button
+              type="button"
+              className="btn btn-danger"
+              aria-label="restartGameSettings"
+              onClick={restartBoard}
+            >
+              Restart
+            </button>
           </div>
         </form>
       </div>

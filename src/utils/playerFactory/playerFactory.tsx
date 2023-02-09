@@ -4,7 +4,7 @@ import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../models/inter
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 
-const getDefaultPlayerCounters = (initialLifes: Lifes): FirebaseCounterDto[] => [
+export const getDefaultPlayerCounters = (initialLifes: Lifes): FirebaseCounterDto[] => [
   { type: 'Life', value: initialLifes },
   { type: 'Poison', value: MaxPoisonCounters },
   { type: 'CommanderDamage', value: MaxCommanderDamage },
