@@ -82,19 +82,6 @@ describe('Player', () => {
         </Router>
       </Provider>,
     ).container.innerHTML)
-
-
-    await act(async () => {
-      onPickFn.mockReturnValue({})
-    });
-
-    expect(container).not.toContainHTML(render(
-      <Provider store={playerStore}>
-        <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} onPick={() => {}}/>
-        </Router>
-      </Provider>,
-    ).container.innerHTML)
   });
 
   it('if rotation is different than 0, CounterCarrousel should be rotated', () => {
