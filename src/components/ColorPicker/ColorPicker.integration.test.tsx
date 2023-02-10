@@ -7,7 +7,7 @@ import * as usePlayerHooks from '../../hooks/player/playerHook'
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import ColorPicker from './ColorPicker';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
+import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { usePlayerMock } from '../../hooks/player/playerHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { act } from 'react-dom/test-utils';

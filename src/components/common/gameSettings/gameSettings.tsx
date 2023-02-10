@@ -5,8 +5,8 @@ import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebase
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { selectGameBoard } from '../../../state/game/game.selectors';
-import { getNewGame } from '../../../utils/gameFactory/gameFactory';
-import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
+import { getNewGame } from '../../../utils/factories/gameFactory/gameFactory';
+import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/factories/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
 

@@ -9,7 +9,7 @@ import { act } from 'react-dom/test-utils';
 import * as useCounterHooks from '../../hooks/counter/counterHook'
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { useCounterMock } from '../../hooks/counter/counterHook.mock';
-import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
+import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import Player from './Player';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import ColorPicker from '../ColorPicker/ColorPicker';

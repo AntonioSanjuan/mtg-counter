@@ -3,14 +3,14 @@ import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useAppDispatch } from '../state/appStateHook';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';
-import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
+import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
 import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
 import * as gameService from '../../services/firebaseStore/gameSettings/gameSettings.service';
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Lifes } from '../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
-import { getNewGame } from '../../utils/gameFactory/gameFactory';
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 
 export function useGameSettings() {
   const dispatch = useAppDispatch();

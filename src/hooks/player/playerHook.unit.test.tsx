@@ -8,7 +8,7 @@ import * as gameSettingsHooks from '../../hooks/gameSettings/gameSettingsHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { FirebaseCounterDto, FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { usePlayer } from './playerHook';
-import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
+import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';

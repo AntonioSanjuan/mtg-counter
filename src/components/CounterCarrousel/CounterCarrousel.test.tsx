@@ -10,7 +10,7 @@ import * as useCounterHooks from './../../hooks/counter/counterHook'
 import CounterCarrousel from './CounterCarrousel';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { useCounterMock } from '../../hooks/counter/counterHook.mock';
-import { getDefaultPlayers } from '../../utils/playerFactory/playerFactory';
+import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 
 describe('CounterCarrousel', () => {
   let counterCarrouselStore: any;

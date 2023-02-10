@@ -11,7 +11,7 @@ import { useGameSettingsMock } from '../../../hooks/gameSettings/gameSettingsHoo
 import * as useGameSettings from './../../../hooks/gameSettings/gameSettingsHook';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
-import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
+import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/factories/playerFactory/playerFactory';
 import { FirebaseGameDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../../state/game/game.actions';
