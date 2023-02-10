@@ -10,6 +10,7 @@ import * as gameService from '../../services/firebaseStore/gameSettings/gameSett
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { Lifes } from '../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
+import { getNewGame } from '../../utils/gameFactory/gameFactory';
 
 export function useGameSettings() {
   const dispatch = useAppDispatch();
@@ -69,14 +70,7 @@ export function useGameSettings() {
   };
 
   const setAnonymousGameSettings = () => {
-    dispatch(setGameSettingsAction({
-      finished: false,
-      board: {
-        initialLifes: Lifes.Fourty,
-        numberOfPlayers: NumberOfPlayers.Two,
-        players: getDefaultPlayers(Lifes.Fourty, NumberOfPlayers.Two),
-      },
-    }));
+    dispatch(setGameSettingsAction(getNewGame()));
   };
 
   return {

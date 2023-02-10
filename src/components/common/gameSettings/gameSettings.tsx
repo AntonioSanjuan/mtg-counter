@@ -5,6 +5,7 @@ import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebase
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { selectGameBoard } from '../../../state/game/game.selectors';
+import { getNewGame } from '../../../utils/gameFactory/gameFactory';
 import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
@@ -22,18 +23,11 @@ function GameSettings() {
 
   const updateBoard = async () => {
     if (boardSettings) {
-      const newGameSettings: FirebaseGameDto = {
-        finished: false,
-        board: {
-          ...boardSettings,
-          initialLifes: Number(formik.values.initialLifes),
-          numberOfPlayers: Number(formik.values.numberOfPlayers),
-          players: getDefaultPlayers(
-            Number(formik.values.initialLifes),
-            Number(formik.values.numberOfPlayers),
-          ),
-        },
-      };
+      const newGameSettings: FirebaseGameDto = getNewGame(
+        Number(formik.values.initialLifes),
+        Number(formik.values.numberOfPlayers),
+      );
+
       await updateGameSettings(newGameSettings);
     }
   };
