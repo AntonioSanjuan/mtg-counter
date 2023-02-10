@@ -2,17 +2,20 @@
   display: flex;
   flex-direction: column;
   border-radius: 50vh;
-  border: 2px solid var(--app-low-contrast);
+  border: 2px solid var(--app-hight-contrast);
   width: fit-content;
-  background: var(--app-card-background-color);
+  background: var(--app-main-color);
   position: absolute;
   top: calc(50% - 23px);
   left: calc(50% - 25px);
   z-index: 3;
+  box-shadow: inset 0 0 5px var(--app-topnav-mobile-background);
+
 }
 
 .GameButton_Button {
     i {
+      color: var(--app-hight-contrast);
       font-size: 20px;
     }
 }

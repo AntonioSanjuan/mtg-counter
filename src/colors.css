@@ -1,5 +1,40 @@
 :root {
---font-color: #ffff;
+
+  --font-color: #0000;
+
+  --app-main-color: #cbcb0f;
+
+  --app-hight-contrast: #1e1e1e;
+  --app-low-contrast: #d8d8d8;
+
+  --app-content-background-color: #2e2e2e;
+  --app-card-background-color: #9fc2df;
+  --app-card-background-hover-color: #242424;
+  
+  --app-sidenav-background-color: #274141;
+  --app-sidenav-section-hover-color: #242424;
+  
+  --app-error-color: #dd1f1f;
+  --app-topnav-mobile-background: #0b0b0c;
+  
+  
+  /*fonts*/
+  --big-fontColor: #D4D4D4;
+  --small-fontColor: #777777;
+  --normal-fontColor: #ABABAB;
+  --error-fontColor: var(--app-error-color);
+
+  /* PlayerBackgroundColor */
+  --PlayerBackgroundColorRed: #b10505fa;
+  --PlayerBackgroundColorBlue:#3068e5;
+  --PlayerBackgroundColorWhite: #dfcc86;
+  --PlayerBackgroundColorBlack: #370360;
+  --PlayerBackgroundColorGreen: #14a502;
+  --PlayerBackgroundColorDefault: var(--app-card-background-color);
+}
+
+[data-theme='dark'] {
+  --font-color: #ffff;
 
 --app-main-color: #0d6efd;
 
@@ -7,7 +42,7 @@
 --app-low-contrast: #1e1e1e;
 
 --app-content-background-color: #cbcbcb;
---app-card-background-color: #b2b3b4;
+--app-card-background-color: #274141;
 --app-card-background-hover-color: #606168;
 
 --app-sidenav-background-color: #ffff;
@@ -27,41 +62,7 @@
   --PlayerBackgroundColorRed: #b10505fa;
   --PlayerBackgroundColorBlue:#3068e5;
   --PlayerBackgroundColorWhite: #dfcc86;
-  --PlayerBackgroundColorBlack: black;
+  --PlayerBackgroundColorBlack: #370360;
   --PlayerBackgroundColorGreen: #14a502;
   --PlayerBackgroundColorDefault: var(--app-card-background-color);
-}
-
-[data-theme='dark'] {
-    --font-color: #0000;
-
-    --app-main-color: #f29102;
-
-    --app-hight-contrast: #1e1e1e;
-    --app-low-contrast: #d8d8d8;
-
-    --app-content-background-color: #2e2e2e;
-    --app-card-background-color: #274141;
-    --app-card-background-hover-color: #242424;
-    
-    --app-sidenav-background-color: #274141;
-    --app-sidenav-section-hover-color: #242424;
-    
-    --app-error-color: #dd1f1f;
-    --app-topnav-mobile-background: #0b0b0c;
-    
-    
-    /*fonts*/
-    --big-fontColor: #D4D4D4;
-    --small-fontColor: #777777;
-    --normal-fontColor: #ABABAB;
-    --error-fontColor: var(--app-error-color);
-
-    /* PlayerBackgroundColor */
-    --PlayerBackgroundColorRed: #b10505fa;
-    --PlayerBackgroundColorBlue:#3068e5;
-    --PlayerBackgroundColorWhite: #dfcc86;
-    --PlayerBackgroundColorBlack: #161616;
-    --PlayerBackgroundColorGreen: #14a502;
-    --PlayerBackgroundColorDefault: var(--app-card-background-color);
   }

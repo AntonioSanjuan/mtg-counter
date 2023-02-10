@@ -33,7 +33,7 @@ transform-origin: center;
 height: ${(props) => (props.playerHeight)}px;
 min-width: ${(props) => (props.playerWidth)}px;
 width: ${(props) => (props.playerWidth)}px;
-
+box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
 .Player_ConfigButton {
   position: absolute;
   bottom: 5px;

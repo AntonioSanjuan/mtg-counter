@@ -19,8 +19,8 @@ background: ${(props) => (backgroundColors[props.color])};
 width: 30px;
 height: 30px;
 border-radius: 50vh;
-border: 1.5px solid var(--app-low-contrast);
-box-shadow: var(--app-low-contrast) 0px 0px 10px;
+border: 1.5px solid var(--app-hight-contrast);
+box-shadow: var(--app-hight-contrast) 0px 0px 4px;
 
 `;
 

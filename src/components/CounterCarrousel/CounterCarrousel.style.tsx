@@ -62,6 +62,8 @@ padding:  0px 20px;
 
     p {
         color:  ${(props) => (textColors[props.playerColor])};
+        text-shadow: 2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, -2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, 0 2px ${(props) => (textShadowBoxColors[props.playerColor])}, 0 -2px ${(props) => (textShadowBoxColors[props.playerColor])},
+             1px 1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, 1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px 1px ${(props) => (textShadowBoxColors[props.playerColor])};
     }
 }
 
@@ -73,6 +75,13 @@ padding:  0px 20px;
 
         text-shadow: 2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, -2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, 0 2px ${(props) => (textShadowBoxColors[props.playerColor])}, 0 -2px ${(props) => (textShadowBoxColors[props.playerColor])},
              1px 1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, 1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px 1px ${(props) => (textShadowBoxColors[props.playerColor])};
+    }
+
+    i {
+        color:  ${(props) => (textShadowBoxColors[props.playerColor])};
+
+        text-shadow: 2px 0 ${(props) => (textColors[props.playerColor])}, -2px 0 ${(props) => (textColors[props.playerColor])}, 0 2px ${(props) => (textColors[props.playerColor])}, 0 -2px ${(props) => (textColors[props.playerColor])},
+             1px 1px ${(props) => (textColors[props.playerColor])}, -1px -1px ${(props) => (textColors[props.playerColor])}, 1px -1px ${(props) => (textColors[props.playerColor])}, -1px 1px ${(props) => (textColors[props.playerColor])};
     }
 }
 `;
