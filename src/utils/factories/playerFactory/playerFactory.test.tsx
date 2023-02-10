@@ -1,6 +1,3 @@
-import { act, renderHook } from '@testing-library/react-hooks';
-import { Dispatch } from '@reduxjs/toolkit';
-import { getNewGame } from './gameFactory';
 import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { getDefaultPlayerCounters, getDefaultPlayers } from './playerFactory';

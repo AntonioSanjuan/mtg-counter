@@ -92,7 +92,7 @@ describe('<usePlayer />', () => {
       ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
-        players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, targetCounterType, 25)
+        players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, playerCounter, 25)
       }
     }
 
