@@ -12,6 +12,7 @@ import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/fire
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 
 describe('<useUserSettings />', () => {
   let useUserSettingsStore: any;
@@ -47,11 +48,7 @@ describe('<useUserSettings />', () => {
     const getUserSettingsOutput: FirebaseUserDto = 
     { 
       userSettings:  { darkMode: true, lang: Language.French }, 
-      game: { finished: false, board: {
-        initialLifes: 0,
-        numberOfPlayers: 2,
-        players: []
-      }}
+      game: getNewGame()
     }
     userSettingsServiceMock.getUserSettingSpy.mockResolvedValue(
       {

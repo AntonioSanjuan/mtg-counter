@@ -12,6 +12,7 @@ import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFac
 import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';
+import { mapPlayerColor, mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;
@@ -91,17 +92,7 @@ describe('<usePlayer />', () => {
       ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
-        players: usePlayerplayers.map((player) => {
-          if (player.id === usePlayerInputplayer.id) {
-            player.counters = player.counters.map((counter) => {
-                if( counter.type === targetCounterType) {
-                  counter.value = 25
-                }
-                return counter;
-              })
-            }
-          return player    
-        })
+        players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, targetCounterType, 25)
       }
     }
 
@@ -134,12 +125,7 @@ describe('<usePlayer />', () => {
       ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
-        players: usePlayerplayers.map((player) => {
-          if (player.id === usePlayerInputplayer.id) {
-            player.color = targetColor
-          }
-          return player    
-        })
+        players: mapPlayerColor(usePlayerplayers, usePlayerInputplayer.id, targetColor)
       }
     }
 

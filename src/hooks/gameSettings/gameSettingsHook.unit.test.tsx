@@ -13,7 +13,8 @@ import { setGameSettingsAction } from '../../state/game/game.actions';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
-
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
+import { mapGameFinished } from '../../utils/mappers/gameMappers/gameMappers'
 describe('<useGameSettings />', () => {
   let useGameSettingsStore: any;
   let wrapper: any;
@@ -50,17 +51,15 @@ describe('<useGameSettings />', () => {
 
     const getUserSettingsOutput: Partial<FirebaseUserDto> = 
     {
-      game: { finished: false, board: {
-        initialLifes: 0,
-        numberOfPlayers: 2,
-        players: []
-      }}
+      game: mapGameFinished(getNewGame())
     }
+
     userSettingsServiceMock.getUserSettingSpy.mockResolvedValue(
       {
         data: () => getUserSettingsOutput as DocumentData,
       } as DocumentSnapshot,
     );
+
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
@@ -73,45 +72,46 @@ describe('<useGameSettings />', () => {
 
   it('setGameSettings should request setGameSettings', async () => {
     expect(gameServiceSettingsMock.setGameSettingsSpy).not.toHaveBeenCalled();
-    const inputSettings = { finished: true} as FirebaseGameDto;
+    const gameSettings = mapGameFinished(getNewGame());
 
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.setGameSettings(inputSettings);
+      await result.current.setGameSettings(gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(inputSettings));
-    expect(gameServiceSettingsMock.setGameSettingsSpy).toHaveBeenCalledWith(inputSettings);
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
+    expect(gameServiceSettingsMock.setGameSettingsSpy).toHaveBeenCalledWith(gameSettings);
   });
 
   it('updateGameSettings should not request updateUserSettings if user is not logged', async () => {
     expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalled();
-    const inputSettings = { finished: true} as FirebaseGameDto;
+    const gameSettings = mapGameFinished(getNewGame());
     
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.updateGameSettings(inputSettings);
+      await result.current.updateGameSettings(gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(inputSettings));
-    expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalledWith(inputSettings);
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
+    expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalledWith(gameSettings);
   });
+  
   it('updateGameSettings should not request updateUserSettings if user is logged', async () => {
     //auth.currentUser = {}
     mockFirebaseAuthUser({} as User)
 
     expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalled();
-    const inputSettings = { finished: true} as FirebaseGameDto;
+    const gameSettings = mapGameFinished(getNewGame());
     
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.updateGameSettings(inputSettings);
+      await result.current.updateGameSettings(gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(inputSettings));
-    expect(gameServiceSettingsMock.updateGameSettingsSpy).toHaveBeenCalledWith(inputSettings);
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
+    expect(gameServiceSettingsMock.updateGameSettingsSpy).toHaveBeenCalledWith(gameSettings);
   });
 });
