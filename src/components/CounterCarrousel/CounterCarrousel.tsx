@@ -1,9 +1,9 @@
 import { Carousel } from 'react-responsive-carousel';
-import './CounterCarrousel.scss';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // requires a loader
 import { useState } from 'react';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { useCounter } from '../../hooks/counter/counterHook';
+import SCCounterCarrousel from './CounterCarrousel.style';
 
 function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, isRotated: boolean}) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
@@ -14,7 +14,7 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
   };
 
   return (
-    <div className="CounterCarrousel_MainContainer">
+    <SCCounterCarrousel playerColor={player.color}>
       <div className="CounterCarrousel_ActionContainer">
         <button type="button" aria-label="removeCounters" className="btn btn-link" onClick={removeCounters}>
           <i className="bi bi-dash-circle-fill" />
@@ -69,7 +69,7 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
         </button>
       </div>
 
-    </div>
+    </SCCounterCarrousel>
   );
 }
 

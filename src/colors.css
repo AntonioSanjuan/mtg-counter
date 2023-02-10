@@ -24,11 +24,11 @@
 --error-fontColor: var(--app-error-color);
 
 /* PlayerBackgroundColor */
-  --PlayerBackgroundColorRed: red;
-  --PlayerBackgroundColorBlue: blue;
-  --PlayerBackgroundColorWhite: white;
+  --PlayerBackgroundColorRed: #b10505fa;
+  --PlayerBackgroundColorBlue:#3068e5;
+  --PlayerBackgroundColorWhite: #dfcc86;
   --PlayerBackgroundColorBlack: black;
-  --PlayerBackgroundColorGreen: green;
+  --PlayerBackgroundColorGreen: #14a502;
   --PlayerBackgroundColorDefault: var(--app-card-background-color);
 }
 
@@ -41,10 +41,10 @@
     --app-low-contrast: #d8d8d8;
 
     --app-content-background-color: #2e2e2e;
-    --app-card-background-color: #121414;
+    --app-card-background-color: #274141;
     --app-card-background-hover-color: #242424;
     
-    --app-sidenav-background-color: #121414;
+    --app-sidenav-background-color: #274141;
     --app-sidenav-section-hover-color: #242424;
     
     --app-error-color: #dd1f1f;
@@ -58,10 +58,10 @@
     --error-fontColor: var(--app-error-color);
 
     /* PlayerBackgroundColor */
-    --PlayerBackgroundColorRed: red;
-    --PlayerBackgroundColorBlue: blue;
-    --PlayerBackgroundColorWhite: white;
-    --PlayerBackgroundColorBlack: black;
-    --PlayerBackgroundColorGreen: green;
+    --PlayerBackgroundColorRed: #b10505fa;
+    --PlayerBackgroundColorBlue:#3068e5;
+    --PlayerBackgroundColorWhite: #dfcc86;
+    --PlayerBackgroundColorBlack: #161616;
+    --PlayerBackgroundColorGreen: #14a502;
     --PlayerBackgroundColorDefault: var(--app-card-background-color);
   }
