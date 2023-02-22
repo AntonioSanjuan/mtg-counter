@@ -19,13 +19,15 @@ export const mapPlayerCounter = (
   playerIdToUpdate: string,
   counterToUpdate: FirebaseCounterDto,
   counterToUpdateValueModification: number,
-) => players.map((player) => {
+): FirebasePlayerDto[] => players.map((player) => {
   if (player.id === playerIdToUpdate) {
     const targetPlayer = player;
     targetPlayer.counters = targetPlayer.counters.map((counter) => {
       if (counter.type === counterToUpdate.type) {
-        const targetCounter = counter;
-        targetCounter.value = counterToUpdate.value + counterToUpdateValueModification;
+        const targetCounter = {
+          ...counter,
+          value: counter.value + counterToUpdateValueModification,
+        };
         return targetCounter;
       }
       return counter;
