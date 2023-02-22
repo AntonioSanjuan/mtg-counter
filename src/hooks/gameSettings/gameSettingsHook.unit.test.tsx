@@ -47,14 +47,14 @@ describe('<useGameSettings />', () => {
   });
 
   it('getGameSettings should request getUserSettings', async () => {
-    expect(userSettingsServiceMock.getUserSettingSpy).not.toHaveBeenCalled();
+    expect(gameServiceSettingsMock.getGameSettingSpy).not.toHaveBeenCalled();
 
     const getUserSettingsOutput: Partial<FirebaseUserDto> = 
     {
       game: mapGameFinished(getNewGame())
     }
 
-    userSettingsServiceMock.getUserSettingSpy.mockResolvedValue(
+    gameServiceSettingsMock.getGameSettingSpy.mockResolvedValue(
       {
         data: () => getUserSettingsOutput as DocumentData,
       } as DocumentSnapshot,
@@ -67,7 +67,7 @@ describe('<useGameSettings />', () => {
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(getUserSettingsOutput.game as FirebaseGameDto));
-    expect(userSettingsServiceMock.getUserSettingSpy).toHaveBeenCalled();
+    expect(gameServiceSettingsMock.getGameSettingSpy).toHaveBeenCalled();
   });
 
   it('setGameSettings should request setGameSettings', async () => {

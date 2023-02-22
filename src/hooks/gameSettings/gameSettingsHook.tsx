@@ -20,7 +20,7 @@ export function useGameSettings() {
 
   const getGameSettings = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
-    return userSettingsService.getUserSettings()
+    return gameService.getGameSettings()
       .then((userResp) => {
         const user = userResp.data() as FirebaseUserDto;
         dispatch(setGameSettingsAction(user.game));
