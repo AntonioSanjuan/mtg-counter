@@ -17,7 +17,9 @@ export function useUserSettings() {
     setLoading(true);
     return userSettingsService.getUserSettings()
       .then((userResp) => {
+        console.log('🚀 ~ file: userSettingsHook.tsx:20 ~ .then ~ userResp', userResp);
         const user = userResp.data() as FirebaseUserDto;
+        console.log('🚀 ~ file: userSettingsHook.tsx:22 ~ .then ~ user', user);
         dispatch(setUserSettingsAction(user.userSettings));
         setLoading(false);
         setError(false);
@@ -29,9 +31,9 @@ export function useUserSettings() {
       });
   };
 
-  const setUserSettings = async (userSettings: FirebaseUserSettingsDto): Promise<any> => {
+  const setUserSettings = async (userSettings: FirebaseUserSettingsDto, gameId: string): Promise<any> => {
     setLoading(true);
-    return userSettingsService.setUserSettings(userSettings).then(() => {
+    return userSettingsService.setUserSettings(userSettings, gameId).then(() => {
       dispatch(setUserSettingsAction(userSettings));
       setLoading(false);
       setError(false);

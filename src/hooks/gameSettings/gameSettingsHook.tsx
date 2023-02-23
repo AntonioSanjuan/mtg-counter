@@ -3,13 +3,8 @@ import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useAppDispatch } from '../state/appStateHook';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';
-import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
-import * as userSettingsService from '../../services/firebaseStore/userSettings/userSettings.service';
 import * as gameService from '../../services/firebaseStore/gameSettings/gameSettings.service';
-import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
-import { Lifes } from '../../models/internal/types/LifeEnum.model';
-import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 
 export function useGameSettings() {
@@ -18,15 +13,17 @@ export function useGameSettings() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const getGameSettings = async (): Promise<DocumentSnapshot<DocumentData>> => {
+  const getGameSettings = async (gameSettingsId: string): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
-    return gameService.getGameSettings()
-      .then((userResp) => {
-        const user = userResp.data() as FirebaseUserDto;
-        dispatch(setGameSettingsAction(user.game));
+    return gameService.getGameSettings(gameSettingsId)
+      .then((gameResp) => {
+        console.log('🚀 ~ file: gameSettingsHook.tsx:20 ~ .then ~ userResp', gameResp);
+        const game = gameResp.data() as FirebaseGameDto;
+        console.log('🚀 ~ file: gameSettingsHook.tsx:21 ~ .then ~ game', game);
+        dispatch(setGameSettingsAction(game));
         setLoading(false);
         setError(false);
-        return userResp;
+        return gameResp;
       }).catch((e) => {
         setLoading(false);
         setError(true);
@@ -36,11 +33,15 @@ export function useGameSettings() {
 
   const setGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
     setLoading(true);
-    return gameService.setGameSettings(gameSettings).then(() => {
-      dispatch(setGameSettingsAction(gameSettings));
+    return gameService.setGameSettings(gameSettings).then((game) => {
+      const gameSettingsOutput = {
+        id: game.id,
+        ...gameSettings,
+      };
+      dispatch(setGameSettingsAction(gameSettingsOutput));
       setLoading(false);
       setError(false);
-      return gameSettings;
+      return gameSettingsOutput;
     }).catch((e) => {
       setLoading(false);
       setError(true);

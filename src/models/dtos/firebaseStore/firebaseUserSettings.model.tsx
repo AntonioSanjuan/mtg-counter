@@ -1,5 +1,4 @@
 import { Language } from '../../internal/types/LanguageEnum.model';
-import { FirebaseGameDto } from './firebaseGameSettings.model';
 
 export interface FirebaseUserSettingsDto {
     lang: Language;
@@ -8,5 +7,5 @@ export interface FirebaseUserSettingsDto {
 
 export interface FirebaseUserDto {
     userSettings: FirebaseUserSettingsDto
-    game: FirebaseGameDto
+    currentGame: any;
 }

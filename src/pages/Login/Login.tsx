@@ -49,11 +49,13 @@ function LoginPage() {
 
   const handleSignUp = (async () => {
     try {
+      console.log('signUpStarting');
       await formik.validateForm();
       await signUp({
         username: formik.values.username,
         password: formik.values.password,
       });
+      console.log('signUpCompleted');
       navigate('/');
     } catch (error) {
       console.error(error);

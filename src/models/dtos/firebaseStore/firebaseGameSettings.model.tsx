@@ -20,12 +20,10 @@ export interface FirebasePlayerDto {
 export interface FirebaseBoardDto {
   initialLifes: Lifes;
   numberOfPlayers: NumberOfPlayers;
-
   players: FirebasePlayerDto[]
 }
 
 export interface FirebaseGameDto {
     finished: boolean;
-
     board: FirebaseBoardDto;
 }

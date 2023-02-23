@@ -51,7 +51,7 @@ describe('<useGameSettings />', () => {
 
     const getUserSettingsOutput: Partial<FirebaseUserDto> = 
     {
-      game: mapGameFinished(getNewGame())
+      currentGame: mapGameFinished(getNewGame())
     }
 
     gameServiceSettingsMock.getGameSettingSpy.mockResolvedValue(
@@ -66,7 +66,7 @@ describe('<useGameSettings />', () => {
       await result.current.getGameSettings();
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(getUserSettingsOutput.game as FirebaseGameDto));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(getUserSettingsOutput.currentGame as FirebaseGameDto));
     expect(gameServiceSettingsMock.getGameSettingSpy).toHaveBeenCalled();
   });
 

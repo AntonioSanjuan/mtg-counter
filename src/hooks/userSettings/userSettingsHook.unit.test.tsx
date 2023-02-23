@@ -48,7 +48,7 @@ describe('<useUserSettings />', () => {
     const getUserSettingsOutput: FirebaseUserDto = 
     { 
       userSettings:  { darkMode: true, lang: Language.French }, 
-      game: getNewGame()
+      currentGame: getNewGame()
     }
     userSettingsServiceMock.getUserSettingSpy.mockResolvedValue(
       {

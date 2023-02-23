@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { selectUserSettings } from '../../state/user/user.selectors';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { auth } from '../../utils/firebase.util';
 import { setUserAction, unsetUserAction } from '../../state/user/user.actions';
 import { useUserSettings } from '../userSettings/userSettingsHook';
@@ -47,8 +47,9 @@ export function useApp() {
 
   const initializeAthenticatedUser = async () => {
     dispatch(setUserAction(auth.currentUser));
-    await getUserSettings();
-    await getGameSettings();
+    const userSettings = await getUserSettings();
+    const user = userSettings.data() as FirebaseUserDto;
+    await getGameSettings(user.currentGame.id);
   };
 
   const initializeAnonymousUser = () => {

@@ -48,13 +48,15 @@ export function useUser() {
       });
   };
 
-  const signUp = useCallback(async ({ username, password }): Promise<UserCredential> => {
+  const signUp = async ({ username, password }: { username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
     return firebaseSignUp(username, password)
       .then(async (resp) => {
-        await setGameSettings(gameSettings as FirebaseGameDto);
-        await setUserSettings(userSettings as FirebaseUserSettingsDto);
-
+        console.log('starting signUp hook');
+        const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
+        console.log('saved gameSettings');
+        await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
+        console.log('saved userSettings');
         setLoading(false);
         setError(false);
         return resp;
@@ -63,7 +65,7 @@ export function useUser() {
         setError(true);
         throw e;
       });
-  }, [userSettings]);
+  };
 
   const logout = useCallback(async (): Promise<void> => {
     await firebaseLogout();
