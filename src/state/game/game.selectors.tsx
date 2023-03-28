@@ -1,5 +1,7 @@
+import { FirebaseBoardDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { AppRootState } from '../rootState';
+import { GameState } from './models/appGame.state';
 
-export const selectGame = (state: AppRootState) => state.game;
-export const selectGameBoard = (state: AppRootState) => state.game.board;
-export const selectGamePlayers = (state: AppRootState) => state.game.board.players;
+export const selectGame = (state: AppRootState): GameState => state.game;
+export const selectGameBoard = (state: AppRootState): FirebaseBoardDto => state.game.board;
+export const selectGamePlayers = (state: AppRootState): FirebasePlayerDto[] => state.game.board.players;

@@ -12,6 +12,7 @@ import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSet
 import { selectGame } from '../../state/game/game.selectors';
 import { useGameSettings } from '../gameSettings/gameSettingsHook';
 import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
+import { GameState } from '../../state/game/models/appGame.state';
 
 export function useUser() {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ export function useUser() {
   const { setUserSettings } = useUserSettings();
   const { setGameSettings } = useGameSettings();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
-  const gameSettings = useAppSelector<FirebaseGameDto | undefined>(selectGame);
+  const gameSettings = useAppSelector<GameState | undefined>(selectGame);
 
   const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
@@ -59,6 +60,7 @@ export function useUser() {
       .then(async (resp) => {
         console.log('guardando tras el signUp!');
         const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
+        console.log('🚀 ~ file: userHook.tsx:63 ~ .then ~ newGameSettings:', newGameSettings);
         await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
         console.log('guardado completado tras el signUp!');
 

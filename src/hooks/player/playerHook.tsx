@@ -5,13 +5,14 @@ import {
 } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { selectGame } from '../../state/game/game.selectors';
+import { GameState } from '../../state/game/models/appGame.state';
 import { mapPlayerColor, mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
 import { useGameSettings } from '../gameSettings/gameSettingsHook';
 import { useAppSelector } from '../state/appStateHook';
 
 export function usePlayer(player: FirebasePlayerDto) {
   const { updateGameSettings } = useGameSettings();
-  const gameSettings = useAppSelector<FirebaseGameDto>(selectGame);
+  const gameSettings = useAppSelector<GameState>(selectGame);
 
   const updatePlayerColor = async (newPlayerColor: PlayerColors) => {
     const newPlayers = mapPlayerColor(

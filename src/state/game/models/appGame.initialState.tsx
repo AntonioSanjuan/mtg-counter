@@ -3,6 +3,7 @@ import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEn
 import { GameState } from './appGame.state';
 
 export const gameInitialState: GameState = {
+  id: undefined,
   finished: false,
   board: {
     initialLifes: Lifes.Fourty,

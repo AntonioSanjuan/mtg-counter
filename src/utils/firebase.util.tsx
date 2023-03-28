@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import {
   browserLocalPersistence, getAuth, setPersistence,
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
 import { FIREBASE_API_KEY, FIREBASE_AUTH_DOMAIN, FIREBASE_PROJECT_ID } from '../environment/environment';
 
 const firebaseConfig = {
@@ -13,6 +13,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+// export const db = getFirestore(app);
+export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 
 setPersistence(auth, browserLocalPersistence);
