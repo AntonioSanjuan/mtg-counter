@@ -34,9 +34,7 @@ function LoginPage() {
     },
   });
 
-  const handleSubmit = async (form: LoginFormModel) => {
-    await login({ username: form.username, password: form.password });
-  };
+  const handleSubmit = async (form: LoginFormModel) => login({ username: form.username, password: form.password });
 
   const handleLoginWithGoogle = async () => {
     try {
@@ -47,7 +45,7 @@ function LoginPage() {
     }
   };
 
-  const handleSignUp = (async () => {
+  const handleSignUp = async () => {
     try {
       console.log('signUpStarting');
       await formik.validateForm();
@@ -60,7 +58,7 @@ function LoginPage() {
     } catch (error) {
       console.error(error);
     }
-  });
+  };
 
   return (
     <>
@@ -125,7 +123,7 @@ function LoginPage() {
                 disabled={!formik.dirty || !formik.isValid}
                 className="btn btn-secondary w-100"
                 type="button"
-                onClick={handleSignUp}
+                onClick={async () => { await handleSignUp(); }}
               >
                 Sign Up
               </button>

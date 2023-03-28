@@ -7,14 +7,13 @@ import { FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGame
 import { auth, db } from '../../../utils/firebase.util';
 
 export function getGameSettings(gameSettingsId: string): Promise<DocumentSnapshot<DocumentData>> {
-  console.log('🚀 ~ file: gameSettings.service.tsx:10 ~ getGameSettings ~ gameSettingsId', gameSettingsId);
   const userRef = doc(db, 'games', gameSettingsId);
   return getDoc(userRef);
 }
 
 export async function setGameSettings(settings: FirebaseGameDto): Promise<any> {
-  const docRef = doc(db, 'games');
-  return setDoc(docRef, settings);
+  const docRef = collection(db, 'games');
+  return addDoc(docRef, settings);
 }
 
 export function updateGameSettings(settings: FirebaseGameDto): Promise<any> {

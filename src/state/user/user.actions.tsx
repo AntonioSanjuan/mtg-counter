@@ -5,6 +5,8 @@ export enum UserActions {
     setUser = '@action/setUSer',
     setUserSettings = '@action/setUserSettings',
     unsetUser = '@action/unsetUser',
+    setUserIsCreating = '@action/setUserIsCreating',
+    unsetUserIsCreating = '@action/unsetUserIsCreating'
 }
 
 export const setUserSettingsAction = (userSettings: FirebaseUserSettingsDto) => ({
@@ -19,4 +21,12 @@ export const setUserAction = (userData: User|null) => ({
 
 export const unsetUserAction = () => ({
   type: UserActions.unsetUser,
+});
+
+export const setUserIsCreatingAction = () => ({
+  type: UserActions.setUserIsCreating,
+});
+
+export const unsetUserIsCreatingAction = () => ({
+  type: UserActions.unsetUserIsCreating,
 });

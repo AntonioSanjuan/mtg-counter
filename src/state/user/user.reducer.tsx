@@ -9,6 +9,7 @@ const userReducer = (state: UserState = userInitialState, action: any) => {
       return {
         ...state,
         isLogged: true,
+        isCreating: false,
         userData: action.payload,
       };
     case UserActions.setUserSettings:
@@ -23,6 +24,16 @@ const userReducer = (state: UserState = userInitialState, action: any) => {
         userData: undefined,
         userSettings: undefined,
       };
+    case UserActions.setUserIsCreating:
+      return {
+        ...state,
+        isCreating: true,
+      }
+    case UserActions.unsetUserIsCreating:
+      return {
+        ...state,
+        isCreating: false,
+      }
     default:
       return state;
   }

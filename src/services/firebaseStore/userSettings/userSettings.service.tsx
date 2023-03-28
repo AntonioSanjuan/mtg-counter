@@ -6,7 +6,6 @@ import { auth, db } from '../../../utils/firebase.util';
 
 export function getUserSettings(): Promise<DocumentSnapshot<DocumentData>> {
   const userRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
-  console.log('🚀 ~ file: userSettings.service.tsx:9 ~ getUserSettings ~ auth?.currentUser?.uid', auth?.currentUser?.uid);
   return getDoc(userRef);
 }
 

@@ -48,7 +48,6 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
         <ColorPicker
           player={player}
           onPick={() => {
-            console.log('llegamos!');
             setIsPlayerConfigOpened(!isPlayerConfigOpened);
           }}
         />

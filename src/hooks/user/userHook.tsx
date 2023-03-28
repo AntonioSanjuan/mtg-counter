@@ -5,14 +5,17 @@ import {
   firebaseGoogleLogin, firebaseLogin, firebaseLogout, firebaseSignUp,
 } from '../../services/firebaseAuth/firebaseAuth.service';
 import { useUserSettings } from '../userSettings/userSettingsHook';
-import { useAppSelector } from '../state/appStateHook';
+import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { selectUserSettings } from '../../state/user/user.selectors';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { useGameSettings } from '../gameSettings/gameSettingsHook';
+import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
 
 export function useUser() {
+  const dispatch = useAppDispatch();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { setUserSettings } = useUserSettings();
@@ -50,17 +53,23 @@ export function useUser() {
 
   const signUp = async ({ username, password }: { username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
+    dispatch(setUserIsCreatingAction());
+
     return firebaseSignUp(username, password)
       .then(async (resp) => {
-        console.log('starting signUp hook');
+        console.log('guardando tras el signUp!');
         const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-        console.log('saved gameSettings');
         await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
-        console.log('saved userSettings');
+        console.log('guardado completado tras el signUp!');
+
+        dispatch(unsetUserIsCreatingAction());
+
         setLoading(false);
         setError(false);
         return resp;
       }).catch((e) => {
+        dispatch(unsetUserIsCreatingAction());
+
         setLoading(false);
         setError(true);
         throw e;

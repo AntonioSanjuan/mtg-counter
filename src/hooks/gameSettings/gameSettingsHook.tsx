@@ -17,9 +17,7 @@ export function useGameSettings() {
     setLoading(true);
     return gameService.getGameSettings(gameSettingsId)
       .then((gameResp) => {
-        console.log('🚀 ~ file: gameSettingsHook.tsx:20 ~ .then ~ userResp', gameResp);
         const game = gameResp.data() as FirebaseGameDto;
-        console.log('🚀 ~ file: gameSettingsHook.tsx:21 ~ .then ~ game', game);
         dispatch(setGameSettingsAction(game));
         setLoading(false);
         setError(false);

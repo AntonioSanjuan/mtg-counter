@@ -3,6 +3,7 @@ import { UserState } from './appUser.state';
 
 export const userInitialState: UserState = {
   isLogged: false,
+  isCreating: false,
   userSettings: undefined,
   userData: auth.currentUser,
 };
