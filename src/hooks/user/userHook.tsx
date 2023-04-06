@@ -58,12 +58,8 @@ export function useUser() {
 
     return firebaseSignUp(username, password)
       .then(async (resp) => {
-        console.log('guardando tras el signUp!');
         const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-        console.log('🚀 ~ file: userHook.tsx:63 ~ .then ~ newGameSettings:', newGameSettings);
         await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
-        console.log('guardado completado tras el signUp!');
-
         dispatch(unsetUserIsCreatingAction());
 
         setLoading(false);
