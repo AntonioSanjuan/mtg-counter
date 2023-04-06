@@ -39,7 +39,7 @@ export function useGameSettings() {
       });
   };
 
-  const setGameSettings = async (gameSettings: Omit<GameState, 'id'>): Promise<any> => {
+  const setGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
     console.log('setGameSettings', gameSettings);
 
     setLoading(true);

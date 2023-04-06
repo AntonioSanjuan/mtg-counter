@@ -22,7 +22,7 @@ export function useUser() {
   const { setUserSettings } = useUserSettings();
   const { setGameSettings } = useGameSettings();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
-  const gameSettings = useAppSelector<GameState | undefined>(selectGame);
+  const gameSettings = useAppSelector<GameState>(selectGame);
 
   const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
