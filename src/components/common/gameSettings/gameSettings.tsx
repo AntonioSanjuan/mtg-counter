@@ -4,31 +4,32 @@ import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
-import { selectGameBoard } from '../../../state/game/game.selectors';
+import { selectGame } from '../../../state/game/game.selectors';
+import { GameState } from '../../../state/game/models/appGame.state';
 import { getNewGame } from '../../../utils/factories/gameFactory/gameFactory';
-import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/factories/playerFactory/playerFactory';
+import { getDefaultPlayerCounters } from '../../../utils/factories/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
 
 function GameSettings() {
-  const boardSettings = useAppSelector<FirebaseBoardDto>(selectGameBoard);
+  const gameSettings = useAppSelector<GameState>(selectGame);
 
   const { updateGameSettings, loading } = useGameSettings();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
-    initialValues: boardSettings as FirebaseBoardDto,
+    initialValues: gameSettings.board as FirebaseBoardDto,
     onSubmit: async () => {
       await updateBoard();
     },
   });
 
   const updateBoard = async () => {
-    if (boardSettings) {
+    if (gameSettings.board) {
       const newGameSettings: FirebaseGameDto = getNewGame(
         Number(formik.values.initialLifes),
         Number(formik.values.numberOfPlayers),
       );
 
-      await updateGameSettings(newGameSettings);
+      await updateGameSettings(gameSettings.id, newGameSettings);
     }
   };
 
@@ -36,18 +37,18 @@ function GameSettings() {
     // TO-DO
     // save it? using modals
 
-    if (boardSettings) {
+    if (gameSettings.board) {
       const newGameSettings: FirebaseGameDto = {
         finished: false,
         board: {
-          ...boardSettings,
-          players: boardSettings.players.map((player) => ({
+          ...gameSettings.board,
+          players: gameSettings.board.players.map((player) => ({
             ...player,
-            counters: getDefaultPlayerCounters(boardSettings.initialLifes),
+            counters: getDefaultPlayerCounters(gameSettings.board.initialLifes),
           })),
         },
       };
-      await updateGameSettings(newGameSettings);
+      await updateGameSettings(gameSettings.id, newGameSettings);
     }
   };
 

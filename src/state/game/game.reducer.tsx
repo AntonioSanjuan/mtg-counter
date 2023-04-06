@@ -7,8 +7,7 @@ const gameReducer = (state: GameState = gameInitialState, action: any) => {
   switch (action.type) {
     case GameActions.setGameSettings:
       return {
-        ...state,
-        board: action.payload.board
+        ...action.payload
       };
     default:
       return state;

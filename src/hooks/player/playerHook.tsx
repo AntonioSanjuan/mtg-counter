@@ -35,13 +35,13 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayers = async (newPlayers: FirebasePlayerDto[]) => {
     const newGameSettings: FirebaseGameDto = {
-      ...gameSettings,
+      finished: false,
       board: {
         ...gameSettings.board,
         players: newPlayers,
       },
     };
-    await updateGameSettings(newGameSettings);
+    await updateGameSettings(gameSettings.id, newGameSettings);
   };
   return {
     updatePlayerCounter,

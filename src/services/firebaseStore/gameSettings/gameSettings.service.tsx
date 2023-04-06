@@ -16,7 +16,7 @@ export async function setGameSettings(settings: FirebaseGameDto): Promise<any> {
   return addDoc(docRef, settings);
 }
 
-export function updateGameSettings(settings: FirebaseGameDto): Promise<any> {
-  const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
-  return setDoc(docRef, { game: settings }, { merge: true });
+export function updateGameSettings(gameSettingsId: string, settings: FirebaseGameDto): Promise<any> {
+  const docRef = doc(db, 'games', gameSettingsId);
+  return setDoc(docRef, settings, { merge: true });
 }
