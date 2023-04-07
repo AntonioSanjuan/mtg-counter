@@ -19,6 +19,8 @@ describe('<useUser />', () => {
   let wrapper: any;
   const useAppDispatchMockResponse = jest.fn((action) => {}) as Dispatch<any>;
 
+  let testSpy: any
+
   beforeEach(() => {
     useUserStore = createTestStore();
     wrapper = function ({ children }: { children: any }) {
@@ -31,7 +33,7 @@ describe('<useUser />', () => {
     jest.spyOn(useUserSettings, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
 
-    jest.spyOn(useGameSettings, 'useGameSettings')
+    testSpy = jest.spyOn(useGameSettings, 'useGameSettings')
       .mockImplementation(useGameSettingsMock);
 
     firebaseAuthServiceMock.initializeMock();
@@ -126,10 +128,17 @@ describe('<useUser />', () => {
   });
 
   it('signUp should request setUserSettings hook function', async () => {
+    const sutGameSettingsId = 'testGameSettingsId'
     const { result } = renderHook(() => useUser(), { wrapper });
 
     expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
     const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
+
+
+    useGameSettingsMock().setGameSettings.mockResolvedValue({ 
+      id: sutGameSettingsId,
+      data: () => {} 
+    })
 
     await act(async () => {
       await useUserStore.dispatch(setUserSettingsAction(userSettings));
@@ -139,10 +148,10 @@ describe('<useUser />', () => {
       await result.current.signUp({ username: '', password: '' });
     });
 
-    expect(useUserSettingsMock().setUserSettings).toHaveBeenCalledWith(userSettings);
+    expect(useUserSettingsMock().setUserSettings).toHaveBeenCalledWith(userSettings, sutGameSettingsId);
   });
 
-    it('signUp should request setGameSettings hook function with default value', async () => {
+  it('signUp should request setGameSettings hook function with default value', async () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
