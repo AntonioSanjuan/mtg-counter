@@ -5,7 +5,9 @@
 
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
 
-const getGameSettingsResponseObj = { data: () => {} } as DocumentSnapshot<DocumentData>;
+const getGameSettingsResponseObj = { 
+  id: 'gameSettingsId',
+  data: () => {} } as DocumentSnapshot<DocumentData>;
 let loadingResponseMock: boolean;
 let errorResponseMock: boolean;
 

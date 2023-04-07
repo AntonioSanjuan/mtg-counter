@@ -15,6 +15,7 @@ import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/fact
 import { FirebaseGameDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../../state/game/game.actions';
+import { GameState } from '../../../state/game/models/appGame.state';
 
 describe('GameSettings', () => {
   let gameSettingsStore: any;
@@ -83,6 +84,7 @@ describe('GameSettings', () => {
   });
 
   it('Restart should restart only the players counters', async () => {
+    const sut = 'gameSettingsId'
     render(
       <Provider store={gameSettingsStore}>
         <Router location={history.location} navigator={history}>
@@ -110,10 +112,13 @@ describe('GameSettings', () => {
       }
     });
 
-    
+    const gameState = {
+      id: sut,
+      ...gameSettings
+    }
 
     await act(async () => {
-      gameSettingsStore.dispatch(setGameSettingsAction(gameSettings));
+      gameSettingsStore.dispatch(setGameSettingsAction(gameState));
     });
 
     expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled()
@@ -124,7 +129,7 @@ describe('GameSettings', () => {
       fireEvent.click(button);
     });
 
-    const restartedGameSettings = {
+    const restartedGameSettings: FirebaseGameDto = {
       ...gameSettings,
       board: {
         ...gameSettings.board,
@@ -137,6 +142,6 @@ describe('GameSettings', () => {
       }
     }
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(restartedGameSettings)
+    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(sut, restartedGameSettings)
   });
 });

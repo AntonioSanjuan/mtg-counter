@@ -15,6 +15,7 @@ import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { mapGameFinished } from '../../utils/mappers/gameMappers/gameMappers'
+import { GameState } from '../../state/game/models/appGame.state';
 describe('<useGameSettings />', () => {
   let useGameSettingsStore: any;
   let wrapper: any;
@@ -47,6 +48,7 @@ describe('<useGameSettings />', () => {
   });
 
   it('getGameSettings should request getUserSettings', async () => {
+    const sut = 'gameSettingsId'
     expect(gameServiceSettingsMock.getGameSettingSpy).not.toHaveBeenCalled();
 
     const getUserSettingsOutput: Partial<FirebaseUserDto> = 
@@ -57,16 +59,21 @@ describe('<useGameSettings />', () => {
     gameServiceSettingsMock.getGameSettingSpy.mockResolvedValue(
       {
         data: () => getUserSettingsOutput as DocumentData,
+        id: sut
       } as DocumentSnapshot,
     );
+    const gameState: GameState = {
+      id: sut,
+      ...getUserSettingsOutput
 
+    }
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.getGameSettings();
+      await result.current.getGameSettings(sut);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(getUserSettingsOutput.currentGame as FirebaseGameDto));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameState));
     expect(gameServiceSettingsMock.getGameSettingSpy).toHaveBeenCalled();
   });
 
@@ -87,15 +94,19 @@ describe('<useGameSettings />', () => {
   it('updateGameSettings should not request updateUserSettings if user is not logged', async () => {
     expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalled();
     const gameSettings = mapGameFinished(getNewGame());
-    
+    const gameSettingsState: GameState = {
+      id: undefined,
+      ...gameSettings
+    }
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.updateGameSettings(gameSettings);
+      await result.current.updateGameSettings(gameSettingsState.id, gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
-    expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalledWith(gameSettings);
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettingsState));
+    expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalledWith(gameSettingsState.id, gameSettings);
   });
   
   it('updateGameSettings should not request updateUserSettings if user is logged', async () => {
@@ -104,14 +115,17 @@ describe('<useGameSettings />', () => {
 
     expect(gameServiceSettingsMock.updateGameSettingsSpy).not.toHaveBeenCalled();
     const gameSettings = mapGameFinished(getNewGame());
-    
+    const gameSettingsState: GameState = {
+      id: "gameSettingsId",
+      ...gameSettings
+    }
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.updateGameSettings(gameSettings);
+      await result.current.updateGameSettings(gameSettingsState.id, gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
-    expect(gameServiceSettingsMock.updateGameSettingsSpy).toHaveBeenCalledWith(gameSettings);
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettingsState));
+    expect(gameServiceSettingsMock.updateGameSettingsSpy).toHaveBeenCalledWith(gameSettingsState.id, gameSettings);
   });
 });

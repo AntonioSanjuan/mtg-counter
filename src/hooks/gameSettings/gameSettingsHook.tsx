@@ -26,7 +26,6 @@ export function useGameSettings() {
           ...game,
           id: gameResp.id,
         };
-        console.log('🚀 ~ file: gameSettingsHook.tsx:27 ~ .then ~ gameSettingsOutput:', gameSettingsOutput);
 
         dispatch(setGameSettingsAction(gameSettingsOutput));
         setLoading(false);
@@ -40,8 +39,6 @@ export function useGameSettings() {
   };
 
   const setGameSettings = async (gameSettings: FirebaseGameDto): Promise<any> => {
-    console.log('setGameSettings', gameSettings);
-
     setLoading(true);
 
     return gameService.setGameSettings(gameSettings).then((game) => {
@@ -64,14 +61,13 @@ export function useGameSettings() {
     gameSettingsId: string | undefined,
     gameSettings: FirebaseGameDto,
   ): Promise<any> => {
-    console.log('🚀 ~ file: gameSettingsHook.tsx:67 ~ useGameSettings ~ gameSettingsId:', gameSettingsId);
     setLoading(true);
     const gameSettingsOutput: GameState = {
-      id: gameSettingsState.id,
+      id: gameSettingsId,
       ...gameSettings,
     };
-    if (auth.currentUser && gameSettingsId) {
-      return gameService.updateGameSettings(gameSettingsId, gameSettings)
+    if (auth.currentUser) {
+      return gameService.updateGameSettings(gameSettingsId as string, gameSettings)
         .then(() => {
           dispatch(setGameSettingsAction(gameSettingsOutput));
           setLoading(false);
@@ -93,7 +89,6 @@ export function useGameSettings() {
       id: undefined,
       ...getNewGame(),
     };
-    console.log('setGameSettings', gameSettingsOutput);
 
     dispatch(setGameSettingsAction(gameSettingsOutput));
   };

@@ -13,6 +13,7 @@ import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';
 import { mapPlayerColor, mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
+import { GameState } from '../../state/game/models/appGame.state';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;
@@ -79,7 +80,7 @@ describe('<usePlayer />', () => {
 
     const targetCounterType = 'Life'
     const playerCounter: FirebaseCounterDto = usePlayerInputplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === targetCounterType)[0]
-    const inputGameSettings: FirebaseGameDto = { 
+    const inputGameSettings: GameState = { 
       finished: false,
       board: {
         players: usePlayerplayers,
@@ -89,7 +90,7 @@ describe('<usePlayer />', () => {
     };
 
     const outputGameSettings: FirebaseGameDto = {
-      ...inputGameSettings,
+      finished: inputGameSettings.finished,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, playerCounter, 25)
@@ -106,13 +107,14 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(outputGameSettings);
+    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
   });
 
   it('updatePlayerColor should request updateGameSettings with the player color updated', async () => {
 
     const targetColor = PlayerColors.red
-    const inputGameSettings: FirebaseGameDto = { 
+    const inputGameSettings: GameState = { 
+      id: 'testId',
       finished: false,
       board: {
         players: usePlayerplayers,
@@ -122,7 +124,7 @@ describe('<usePlayer />', () => {
     };
 
     const outputGameSettings: FirebaseGameDto = {
-      ...inputGameSettings,
+      finished: inputGameSettings.finished,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerColor(usePlayerplayers, usePlayerInputplayer.id, targetColor)
@@ -139,6 +141,6 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerColor(targetColor);
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(outputGameSettings);
+    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
   });
 });
