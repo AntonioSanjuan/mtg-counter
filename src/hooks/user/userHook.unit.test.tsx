@@ -13,8 +13,6 @@ import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
 import * as useGameSettings from '../gameSettings/gameSettingsHook';
 import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
-import { setGameSettingsAction } from '../../state/game/game.actions';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 
 describe('<useUser />', () => {
   let useUserStore: any;

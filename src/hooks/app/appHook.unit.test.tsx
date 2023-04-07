@@ -9,14 +9,12 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import { setUserAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
-import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { createJsDomUnsupportedMethods } from '../../utils/testsUtils/jsDomUnsupportedMethods.util';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
-import { auth } from '../../utils/firebase.util';
-import { BehaviorSubject, of, Subject } from 'rxjs';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
-import { Unsubscribe, User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 
 describe('<useApp />', () => {
@@ -91,11 +89,6 @@ describe('<useApp />', () => {
     const sut = {emailVerified: true} as User
     mockFirebaseAuthUser(sut as User, true);
 
-    useUserSettingsMock().getUserSettings.mockResolvedValue({
-      data: () => {
-        return {} as FirebaseUserDto
-      }
-    })
     await act(async () => {
       renderHook(() => useApp(), { wrapper });
     });

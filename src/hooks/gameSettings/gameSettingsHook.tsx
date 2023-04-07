@@ -7,12 +7,9 @@ import { auth } from '../../utils/firebase.util';
 import * as gameService from '../../services/firebaseStore/gameSettings/gameSettings.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { GameState } from '../../state/game/models/appGame.state';
-import { selectGame } from '../../state/game/game.selectors';
 
 export function useGameSettings() {
   const dispatch = useAppDispatch();
-
-  const gameSettingsState = useAppSelector<GameState>(selectGame);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);

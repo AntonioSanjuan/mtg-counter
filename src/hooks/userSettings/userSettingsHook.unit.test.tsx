@@ -75,7 +75,7 @@ describe('<useUserSettings />', () => {
     const { result } = renderHook(() => useUserSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.setUserSettings(inputSettings);
+      await result.current.setUserSettings(inputSettings, 'gameId');
     });
 
     expect(userSettingsServiceMock.setUserSettingsSpy).toHaveBeenCalled();

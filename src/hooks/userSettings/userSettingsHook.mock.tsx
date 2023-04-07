@@ -5,18 +5,21 @@
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 
-const getUserSettingsResponseObj = { data: () => {
+const getUserSettingsResponseObj = { 
+  id: 'testUserSettingsId',
+  data: () => {
   return {
     currentGame: {
-      id: ''
+      id: 'testCurrentGameId'
     }
   } as Partial<FirebaseUserDto>
 } } as DocumentSnapshot<DocumentData>;
+
 let loadingResponseMock: boolean;
 let errorResponseMock: boolean;
 
 const useUserSettings_GetUserSettings = jest.fn(() => new Promise<DocumentSnapshot<DocumentData>>(
-  (resolve) => resolve(getUserSettingsResponseObj),
+  (resolve) => resolve({...getUserSettingsResponseObj} as any),
 ));
 const useUserSettings_SetUserSettings = jest.fn(() => new Promise<any>(
   (resolve) => resolve(getUserSettingsResponseObj),
@@ -27,9 +30,7 @@ const useUserSettings_UpdateUserSettings = jest.fn(() => new Promise<any>(
 const useUserSettings_SetAnonymousUserSettings = jest.fn(() => {});
 
 export const useUserSettingsMock = () => ({
-  getUserSettings: jest.fn(() => new Promise<DocumentSnapshot<DocumentData>>(
-    (resolve) => resolve(getUserSettingsResponseObj),
-  )),
+  getUserSettings: useUserSettings_GetUserSettings,
   setUserSettings: useUserSettings_SetUserSettings,
   setAnonymousUserSettings: useUserSettings_SetAnonymousUserSettings,
   updateUserSettings: useUserSettings_UpdateUserSettings,

@@ -48,29 +48,27 @@ describe('<useGameSettings />', () => {
   });
 
   it('getGameSettings should request getUserSettings', async () => {
-    const sut = 'gameSettingsId'
+    const gameSettingsId: string = 'gameSettingsId'
     expect(gameServiceSettingsMock.getGameSettingSpy).not.toHaveBeenCalled();
 
-    const getUserSettingsOutput: Partial<FirebaseUserDto> = 
-    {
-      currentGame: mapGameFinished(getNewGame())
-    }
+    const getUserSettingsOutput: FirebaseGameDto = getNewGame()
 
     gameServiceSettingsMock.getGameSettingSpy.mockResolvedValue(
       {
+        id: gameSettingsId,
         data: () => getUserSettingsOutput as DocumentData,
-        id: sut
       } as DocumentSnapshot,
     );
-    const gameState: GameState = {
-      id: sut,
-      ...getUserSettingsOutput
 
+    const gameState = {
+      id: gameSettingsId,
+      ...getUserSettingsOutput
     }
+
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
     await act(async () => {
-      await result.current.getGameSettings(sut);
+      await result.current.getGameSettings(gameSettingsId);
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameState));
@@ -78,16 +76,30 @@ describe('<useGameSettings />', () => {
   });
 
   it('setGameSettings should request setGameSettings', async () => {
+    const gameSettingsId = 'gameSettingsId'
+
     expect(gameServiceSettingsMock.setGameSettingsSpy).not.toHaveBeenCalled();
     const gameSettings = mapGameFinished(getNewGame());
 
     const { result } = renderHook(() => useGameSettings(), { wrapper });
 
+    const gameState: GameState = {
+      id: gameSettingsId,
+      ...gameSettings
+    }
+
+    gameServiceSettingsMock.setGameSettingsSpy.mockResolvedValue(
+      {
+        data: () => {},
+        id: gameSettingsId
+      } as DocumentSnapshot,
+    );
+
     await act(async () => {
       await result.current.setGameSettings(gameSettings);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameSettings));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameSettingsAction(gameState));
     expect(gameServiceSettingsMock.setGameSettingsSpy).toHaveBeenCalledWith(gameSettings);
   });
 

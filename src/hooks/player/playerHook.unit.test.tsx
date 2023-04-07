@@ -81,6 +81,7 @@ describe('<usePlayer />', () => {
     const targetCounterType = 'Life'
     const playerCounter: FirebaseCounterDto = usePlayerInputplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === targetCounterType)[0]
     const inputGameSettings: GameState = { 
+      id: 'testGameSettingsId',
       finished: false,
       board: {
         players: usePlayerplayers,
