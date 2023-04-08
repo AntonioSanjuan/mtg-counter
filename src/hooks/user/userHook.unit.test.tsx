@@ -6,12 +6,8 @@ import { useUser } from './userHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as firebaseAuthServiceMock from '../../services/firebaseAuth/firebaseAuth.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
-import { Language } from '../../models/internal/types/LanguageEnum.model';
-import { setUserSettingsAction } from '../../state/user/user.actions';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
-import { useGameSettings } from '../gameSettings/gameSettingsHook';
 // import * as useGameSettings from '../gameSettings/gameSettingsHook';
 // import { useGameSettingsMock as mock } from '../gameSettings/gameSettingsHook.mock';
 
