@@ -4,7 +4,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { DocumentData, DocumentSnapshot } from "firebase/firestore";
-// import * as gameSettingsHook from './gameSettingsHook';
 
 const getGameSettingsResponseObj = { 
   id: 'testGameSettingsId',
@@ -15,7 +14,7 @@ let loadingResponseMock: boolean;
 let errorResponseMock: boolean;
 
 
-export const useGameSettingsMock = () => {
+export const useGameSettingsMock = jest.fn(() => {
   const useGameSettings_GetGameSettings = jest.fn(() => new Promise<any>(
     (resolve) => resolve({...getGameSettingsResponseObj}),
   ));
@@ -35,6 +34,5 @@ export const useGameSettingsMock = () => {
     loading: loadingResponseMock,
     error: errorResponseMock,
   }
-};
-
+});
 
