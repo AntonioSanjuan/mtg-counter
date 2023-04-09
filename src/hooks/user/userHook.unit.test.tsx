@@ -9,19 +9,15 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
 import * as mock_gameSettingsHook from '../gameSettings/gameSettingsHook.mock';
-
-jest.mock('./../gameSettings/gameSettingsHook', () => ({
-  useGameSettings: () => {
-    return mock_gameSettingsHook.mockGameSettingsResponse
-  }
-}));
+import * as useGameSettings from '../gameSettings/gameSettingsHook';
+import { setUserSettingsAction } from '../../state/user/user.actions';
+import { Language } from '../../models/internal/types/LanguageEnum.model';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 
 describe('<useUser />', () => {
   let useUserStore: any;
   let wrapper: any;
   const useAppDispatchMockResponse = jest.fn((action) => {}) as Dispatch<any>;
-
- 
 
   beforeEach(() => {
     useUserStore = createTestStore();
@@ -35,6 +31,9 @@ describe('<useUser />', () => {
     jest.spyOn(useUserSettings, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
 
+    jest.spyOn(useGameSettings, 'useGameSettings')
+      .mockImplementation(mock_gameSettingsHook.useGameSettingsMock)
+
     mock_firebaseAuthService.initializeMock();
     mock_gameSettingsHook.initializeMock();
   });
@@ -43,113 +42,113 @@ describe('<useUser />', () => {
     mock_firebaseAuthService.reset();
   });
 
-  // it('should create', () => {
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+  it('should create', () => {
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   expect(result.current).toBeDefined();
-  // });
+    expect(result.current).toBeDefined();
+  });
 
-  // it('login should request firebaseLogin', async () => {
-  //   expect(firebaseAuthServiceMock.firebaseLoginSpy).not.toHaveBeenCalled();
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+  it('login should request firebaseLogin', async () => {
+    expect(mock_firebaseAuthService.firebaseLoginSpy).not.toHaveBeenCalled();
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   await act(async () => {
-  //     await result.current.login({ username: 'a@b.com', password: '' });
-  //   });
+    await act(async () => {
+      await result.current.login({ username: 'a@b.com', password: '' });
+    });
 
-  //   expect(firebaseAuthServiceMock.firebaseLoginSpy).toHaveBeenCalled();
-  // });
+    expect(mock_firebaseAuthService.firebaseLoginSpy).toHaveBeenCalled();
+  });
 
-  // it('login failure should set error flag true value', async () => {
-  //   const error = { errorDesc: 'test_errorDEsc' };
-  //   firebaseAuthServiceMock.firebaseLoginSpy.mockRejectedValue(error);
+  it('login failure should set error flag true value', async () => {
+    const error = { errorDesc: 'test_errorDEsc' };
+    mock_firebaseAuthService.firebaseLoginSpy.mockRejectedValue(error);
 
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   await act(async () => {
-  //     await result.current.login({ username: 'a@b.com', password: '' }).catch((e) => {
-  //       // eslint-disable-next-line jest/no-conditional-expect
-  //       expect(e).toEqual(error);
-  //     });
-  //   });
-  //   expect(result.current.error).toBeTruthy();
-  //   expect(result.current.loading).toBeFalsy();
-  // });
+    await act(async () => {
+      await result.current.login({ username: 'a@b.com', password: '' }).catch((e) => {
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(e).toEqual(error);
+      });
+    });
+    expect(result.current.error).toBeTruthy();
+    expect(result.current.loading).toBeFalsy();
+  });
 
-  // it('loginWithGoogle should request firebaseGoogleLogin', async () => {
-  //   expect(firebaseAuthServiceMock.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+  it('loginWithGoogle should request firebaseGoogleLogin', async () => {
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   await act(async () => {
-  //     await result.current.loginWithGoogle();
-  //   });
+    await act(async () => {
+      await result.current.loginWithGoogle();
+    });
 
-  //   expect(firebaseAuthServiceMock.firebaseGoogleLoginSpy).toHaveBeenCalled();
-  // });
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
+  });
 
-  // it('loginWithGoogle failure should set error flag true value', async () => {
-  //   const error = { errorDesc: 'test_errorDEsc' };
-  //   firebaseAuthServiceMock.firebaseGoogleLoginSpy.mockRejectedValue(error);
+  it('loginWithGoogle failure should set error flag true value', async () => {
+    const error = { errorDesc: 'test_errorDEsc' };
+    mock_firebaseAuthService.firebaseGoogleLoginSpy.mockRejectedValue(error);
 
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   await act(async () => {
-  //     await result.current.loginWithGoogle().catch((e) => {
-  //       // eslint-disable-next-line jest/no-conditional-expect
-  //       expect(e).toEqual(error);
-  //     });
-  //   });
-  //   expect(result.current.error).toBeTruthy();
-  //   expect(result.current.loading).toBeFalsy();
-  // });
+    await act(async () => {
+      await result.current.loginWithGoogle().catch((e) => {
+        // eslint-disable-next-line jest/no-conditional-expect
+        expect(e).toEqual(error);
+      });
+    });
+    expect(result.current.error).toBeTruthy();
+    expect(result.current.loading).toBeFalsy();
+  });
 
-  // it('logout should request firebaseLogout setvice function', async () => {
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+  it('logout should request firebaseLogout setvice function', async () => {
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   expect(firebaseAuthServiceMock.firebaseLogoutSpy).not.toHaveBeenCalled();
-  //   await act(async () => {
-  //     await result.current.logout();
-  //   });
-  //   expect(firebaseAuthServiceMock.firebaseLogoutSpy).toHaveBeenCalled();
-  // });
+    expect(mock_firebaseAuthService.firebaseLogoutSpy).not.toHaveBeenCalled();
+    await act(async () => {
+      await result.current.logout();
+    });
+    expect(mock_firebaseAuthService.firebaseLogoutSpy).toHaveBeenCalled();
+  });
 
-  // it('signUp should request firebaseSignUp service function', async () => {
-  //   const { result } = renderHook(() => useUser(), { wrapper });
-  //   const userName = 'test_username';
-  //   const userPass = 'test_userpass';
+  it('signUp should request firebaseSignUp service function', async () => {
+    const { result } = renderHook(() => useUser(), { wrapper });
+    const userName = 'test_username';
+    const userPass = 'test_userpass';
 
-  //   expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
+    expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
 
-  //   await act(async () => {
-  //     await result.current.signUp({ username: userName, password: userPass });
-  //   });
+    await act(async () => {
+      await result.current.signUp({ username: userName, password: userPass });
+    });
 
-  //   expect(firebaseAuthServiceMock.firebaseSignUpSpy).toHaveBeenCalledWith(userName, userPass);
-  // });
+    expect(mock_firebaseAuthService.firebaseSignUpSpy).toHaveBeenCalledWith(userName, userPass);
+  });
 
-  // it('signUp should request setUserSettings hook function', async () => {
-  //   const sutGameSettingsId = 'testGameSettingsId'
-  //   const { result } = renderHook(() => useUser(), { wrapper });
+  it('signUp should request setUserSettings hook function', async () => {
+    const sutGameSettingsId = 'testGameSettingsId'
+    const { result } = renderHook(() => useUser(), { wrapper });
 
-  //   expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
-  //   const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
+    expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
+    const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
 
 
-  //   mock().setGameSettings.mockResolvedValue({ 
-  //     id: sutGameSettingsId,
-  //     data: () => {} 
-  //   })
+    mock_gameSettingsHook.setGameSettingsSpy.mockResolvedValue({ 
+      id: sutGameSettingsId,
+      data: () => {} 
+    })
 
-  //   await act(async () => {
-  //     await useUserStore.dispatch(setUserSettingsAction(userSettings));
-  //   });
+    await act(async () => {
+      await useUserStore.dispatch(setUserSettingsAction(userSettings));
+    });
 
-  //   await act(async () => {
-  //     await result.current.signUp({ username: '', password: '' });
-  //   });
+    await act(async () => {
+      await result.current.signUp({ username: '', password: '' });
+    });
 
-  //   expect(useUserSettingsMock().setUserSettings).toHaveBeenCalledWith(userSettings, sutGameSettingsId);
-  // });
+    expect(useUserSettingsMock().setUserSettings).toHaveBeenCalledWith(userSettings, sutGameSettingsId);
+  });
 
   it('signUp should request setGameSettings hook function with default value', async () => {
     const { result } = renderHook(() => useUser(), { wrapper });

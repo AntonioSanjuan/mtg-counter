@@ -19,17 +19,17 @@ export const updateGameSettingsSpy = jest.fn();
 export const setAnonymousGameSettingsSpy = jest.fn();
 
 export const mockGameSettingsResponse = {
-  getGameSettings: getGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
-  setGameSettings: setGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
-  setAnonymousGameSettings: setAnonymousGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
-  updateGameSettings: updateGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
+  getGameSettings: getGameSettingsSpy,
+  setGameSettings: setGameSettingsSpy,
+  setAnonymousGameSettings: setAnonymousGameSettingsSpy,
+  updateGameSettings: updateGameSettingsSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }
 
-export const useGameSettingsMock = jest.fn(() => {
+export const useGameSettingsMock = () => {
   return mockGameSettingsResponse
-});
+};
 
 export const initializeMock = () => {
   getGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
