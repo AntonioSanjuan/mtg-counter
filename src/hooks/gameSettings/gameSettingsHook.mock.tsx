@@ -10,29 +10,30 @@ const getGameSettingsResponseObj = {
   data: () => {} 
 } as DocumentSnapshot<DocumentData>;
 
-let loadingResponseMock: boolean;
-let errorResponseMock: boolean;
+let loadingResponseMock: boolean = false;
+let errorResponseMock: boolean = false;
 
+export const getGameSettingsSpy = jest.fn();
+export const setGameSettingsSpy = jest.fn();
+export const updateGameSettingsSpy = jest.fn();
+export const setAnonymousGameSettingsSpy = jest.fn();
+
+export const mockGameSettingsResponse = {
+  getGameSettings: getGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
+  setGameSettings: setGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
+  setAnonymousGameSettings: setAnonymousGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
+  updateGameSettings: updateGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj),
+  loading: loadingResponseMock,
+  error: errorResponseMock,
+}
 
 export const useGameSettingsMock = jest.fn(() => {
-  const useGameSettings_GetGameSettings = jest.fn(() => new Promise<any>(
-    (resolve) => resolve({...getGameSettingsResponseObj}),
-  ));
-  const useGameSettings_SetGameSettings = jest.fn(() => new Promise<any>(
-    (resolve) => resolve({...getGameSettingsResponseObj}),
-  ));
-  const useGameSettings_UpdateGameSettings = jest.fn(() => new Promise<any>(
-    (resolve) => resolve({}),
-  ));
-  const useGameSettings_SetAnonymousGameSettings = jest.fn(() => {});
-
-  return {
-    getGameSettings: useGameSettings_GetGameSettings,
-    setGameSettings: useGameSettings_SetGameSettings,
-    setAnonymousGameSettings: useGameSettings_SetAnonymousGameSettings,
-    updateGameSettings: useGameSettings_UpdateGameSettings,
-    loading: loadingResponseMock,
-    error: errorResponseMock,
-  }
+  return mockGameSettingsResponse
 });
 
+export const initializeMock = () => {
+  getGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
+  setGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
+  setAnonymousGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
+  updateGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
+}

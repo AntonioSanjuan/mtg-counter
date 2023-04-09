@@ -4,28 +4,17 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { useUser } from './userHook';
 import * as appStatehooks from '../state/appStateHook';
-import * as firebaseAuthServiceMock from '../../services/firebaseAuth/firebaseAuth.service.mock';
+import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
-// import * as useGameSettings from '../gameSettings/gameSettingsHook';
-// import { useGameSettingsMock as mock } from '../gameSettings/gameSettingsHook.mock';
-
-const mockSetGameSettings = jest.fn()
+import * as mock_gameSettingsHook from '../gameSettings/gameSettingsHook.mock';
 
 jest.mock('./../gameSettings/gameSettingsHook', () => ({
   useGameSettings: () => {
-    return {
-      setGameSettings: mockSetGameSettings.mockResolvedValue({ 
-        id: 'testGameSettingsId',
-        data: () => {} 
-      }),
-      loading: false,
-      error: false,
-    }
+    return mock_gameSettingsHook.mockGameSettingsResponse
   }
 }));
-
 
 describe('<useUser />', () => {
   let useUserStore: any;
@@ -46,11 +35,12 @@ describe('<useUser />', () => {
     jest.spyOn(useUserSettings, 'useUserSettings')
       .mockImplementation(useUserSettingsMock);
 
-    firebaseAuthServiceMock.initializeMock();
+    mock_firebaseAuthService.initializeMock();
+    mock_gameSettingsHook.initializeMock();
   });
 
   afterAll(() => {
-    firebaseAuthServiceMock.reset();
+    mock_firebaseAuthService.reset();
   });
 
   // it('should create', () => {
@@ -164,14 +154,14 @@ describe('<useUser />', () => {
   it('signUp should request setGameSettings hook function with default value', async () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
-    expect(firebaseAuthServiceMock.firebaseSignUpSpy).not.toHaveBeenCalled();
+    expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
 
-    expect(mockSetGameSettings).not.toHaveBeenCalled();
+    expect(mock_gameSettingsHook.setGameSettingsSpy).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.signUp({ username: '', password: '' });
     });
 
-    expect(mockSetGameSettings).toHaveBeenCalled();
+    expect(mock_gameSettingsHook.setGameSettingsSpy).toHaveBeenCalled();
   });
 });
