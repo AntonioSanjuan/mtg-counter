@@ -5,10 +5,10 @@ import { Provider } from 'react-redux';
 import { useUser } from './userHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
+import * as mock_useGameSettingsMock from '../gameSettings/gameSettingsHook.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useUserSettingsMock } from '../userSettings/userSettingsHook.mock';
 import * as useUserSettings from '../userSettings/userSettingsHook';
-import * as mock_gameSettingsHook from '../gameSettings/gameSettingsHook.mock';
 import * as useGameSettings from '../gameSettings/gameSettingsHook';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
@@ -32,10 +32,10 @@ describe('<useUser />', () => {
       .mockImplementation(useUserSettingsMock);
 
     jest.spyOn(useGameSettings, 'useGameSettings')
-      .mockImplementation(mock_gameSettingsHook.useGameSettingsMock)
+      .mockImplementation(mock_useGameSettingsMock.useGameSettingsMock)
 
     mock_firebaseAuthService.initializeMock();
-    mock_gameSettingsHook.initializeMock();
+    mock_useGameSettingsMock.initializeMock();
   });
 
   afterAll(() => {
@@ -133,12 +133,6 @@ describe('<useUser />', () => {
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
     const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
 
-
-    mock_gameSettingsHook.setGameSettingsSpy.mockResolvedValue({ 
-      id: sutGameSettingsId,
-      data: () => {} 
-    })
-
     await act(async () => {
       await useUserStore.dispatch(setUserSettingsAction(userSettings));
     });
@@ -155,12 +149,12 @@ describe('<useUser />', () => {
 
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
 
-    expect(mock_gameSettingsHook.setGameSettingsSpy).not.toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.setGameSettingsSpy).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.signUp({ username: '', password: '' });
     });
 
-    expect(mock_gameSettingsHook.setGameSettingsSpy).toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.setGameSettingsSpy).toHaveBeenCalled();
   });
 });

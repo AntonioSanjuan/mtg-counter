@@ -7,7 +7,7 @@ import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import { act } from '@testing-library/react-hooks';
 import GameSettings from './gameSettings';
-import { useGameSettingsMock } from '../../../hooks/gameSettings/gameSettingsHook.mock';
+import {useGameSettingsMock} from '../../../hooks/gameSettings/gameSettingsHook.mock';
 import * as useGameSettings from './../../../hooks/gameSettings/gameSettingsHook';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';

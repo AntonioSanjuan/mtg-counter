@@ -59,7 +59,7 @@ export function useUser() {
     return firebaseSignUp(username, password)
       .then(async (resp) => {
         const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-        console.log('newGameSettings', newGameSettings);
+        console.log("newGameSettings", newGameSettings)
         await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
         dispatch(unsetUserIsCreatingAction());
 

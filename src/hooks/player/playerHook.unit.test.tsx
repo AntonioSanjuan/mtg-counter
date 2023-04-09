@@ -9,11 +9,11 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { FirebaseCounterDto, FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { usePlayer } from './playerHook';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
-import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameSettingsAction } from '../../state/game/game.actions';
 import { mapPlayerColor, mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
 import { GameState } from '../../state/game/models/appGame.state';
+import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;

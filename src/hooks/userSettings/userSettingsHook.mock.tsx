@@ -8,32 +8,37 @@ import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUserSet
 const getUserSettingsResponseObj = { 
   id: 'testUserSettingsId',
   data: () => {
-  return {
-    currentGame: {
-      id: 'testCurrentGameId'
-    }
-  } as Partial<FirebaseUserDto>
+    return {
+      currentGame: {
+        id: 'testCurrentGameId'
+      }
+    } as Partial<FirebaseUserDto>
 } } as DocumentSnapshot<DocumentData>;
 
-let loadingResponseMock: boolean;
-let errorResponseMock: boolean;
+let loadingResponseMock: boolean = false;
+let errorResponseMock: boolean = false;
 
-const useUserSettings_GetUserSettings = jest.fn(() => new Promise<DocumentSnapshot<DocumentData>>(
-  (resolve) => resolve({...getUserSettingsResponseObj} as any),
-));
-const useUserSettings_SetUserSettings = jest.fn(() => new Promise<any>(
-  (resolve) => resolve(getUserSettingsResponseObj),
-));
-const useUserSettings_UpdateUserSettings = jest.fn(() => new Promise<any>(
-  (resolve) => resolve({}),
-));
-const useUserSettings_SetAnonymousUserSettings = jest.fn(() => {});
+export const getUserSettingsSpy = jest.fn();
+export const setUserSettingsSpy = jest.fn();
+export const updateUserSettingsSpy = jest.fn();
+export const setAnonymousUserSettingsSpy = jest.fn();
 
-export const useUserSettingsMock = () => ({
-  getUserSettings: useUserSettings_GetUserSettings,
-  setUserSettings: useUserSettings_SetUserSettings,
-  setAnonymousUserSettings: useUserSettings_SetAnonymousUserSettings,
-  updateUserSettings: useUserSettings_UpdateUserSettings,
+export const mockUserSettingsMockResponse = {
+  getUserSettings: getUserSettingsSpy,
+  setUserSettings: setUserSettingsSpy,
+  setAnonymousUserSettings: setAnonymousUserSettingsSpy,
+  updateUserSettings: updateUserSettingsSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
-});
+}
+
+export const useUserSettingsMock = () => {
+  return mockUserSettingsMockResponse;
+}
+
+export const initializeMock = () => {
+  getUserSettingsSpy.mockResolvedValue(getUserSettingsResponseObj)
+  setUserSettingsSpy.mockResolvedValue(getUserSettingsResponseObj)
+  setAnonymousUserSettingsSpy.mockResolvedValue(undefined)
+  updateUserSettingsSpy.mockResolvedValue(getUserSettingsResponseObj)
+}

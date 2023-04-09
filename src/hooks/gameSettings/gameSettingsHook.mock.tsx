@@ -34,6 +34,6 @@ export const useGameSettingsMock = () => {
 export const initializeMock = () => {
   getGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
   setGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
-  setAnonymousGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
+  setAnonymousGameSettingsSpy.mockResolvedValue(undefined)
   updateGameSettingsSpy.mockResolvedValue(getGameSettingsResponseObj)
 }
