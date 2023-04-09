@@ -27,7 +27,7 @@ export const mockGameSettingsResponse = {
   error: errorResponseMock,
 }
 
-export const useGameSettingsMock = () => {
+export const mock = () => {
   return mockGameSettingsResponse
 };
 

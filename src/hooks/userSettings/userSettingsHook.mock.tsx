@@ -32,7 +32,7 @@ export const mockUserSettingsMockResponse = {
   error: errorResponseMock,
 }
 
-export const useUserSettingsMock = () => {
+export const mock = () => {
   return mockUserSettingsMockResponse;
 }
 

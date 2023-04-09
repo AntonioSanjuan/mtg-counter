@@ -39,10 +39,10 @@ describe('<useApp />', () => {
       .mockReturnValue(useAppDispatchMockResponse);
 
     jest.spyOn(gameSettingshooks, 'useGameSettings')
-      .mockImplementation(mock_useGameSettingsMock.useGameSettingsMock);
+      .mockImplementation(mock_useGameSettingsMock.mock);
 
     jest.spyOn(userSettingshooks, 'useUserSettings')
-      .mockImplementation(mock_useUserSettingsMock.useUserSettingsMock);
+      .mockImplementation(mock_useUserSettingsMock.mock);
 
     mock_useGameSettingsMock.initializeMock()
     mock_useUserSettingsMock.initializeMock()
@@ -97,8 +97,8 @@ describe('<useApp />', () => {
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAction(sut));
-    expect(mock_useUserSettingsMock.getUserSettingsSpy).toHaveBeenCalled()
-    expect(mock_useGameSettingsMock.getGameSettingsSpy).toHaveBeenCalled()
+    expect(mock_useUserSettingsMock.mock().getUserSettings).toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().getGameSettings).toHaveBeenCalled()
   });
 
 
@@ -113,7 +113,7 @@ describe('<useApp />', () => {
      });
  
      expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
-     expect(mock_useUserSettingsMock.setAnonymousUserSettingsSpy).toHaveBeenCalled()
-     expect(mock_useGameSettingsMock.setAnonymousGameSettingsSpy).toHaveBeenCalled()
+     expect(mock_useUserSettingsMock.mock().setAnonymousUserSettings).toHaveBeenCalled()
+     expect(mock_useGameSettingsMock.mock().setAnonymousGameSettings).toHaveBeenCalled()
   });
 });

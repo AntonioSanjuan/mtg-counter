@@ -7,7 +7,7 @@ import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import { act } from '@testing-library/react-hooks';
 import GameSettings from './gameSettings';
-import {useGameSettingsMock} from '../../../hooks/gameSettings/gameSettingsHook.mock';
+import * as mock_useGameSettingsMock from '../../../hooks/gameSettings/gameSettingsHook.mock';
 import * as useGameSettings from './../../../hooks/gameSettings/gameSettingsHook';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
@@ -26,7 +26,9 @@ describe('GameSettings', () => {
     history = createMemoryHistory();
 
     jest.spyOn(useGameSettings, 'useGameSettings')
-        .mockImplementation(useGameSettingsMock);
+        .mockImplementation(mock_useGameSettingsMock.mock);
+
+    mock_useGameSettingsMock.initializeMock()
   });
 
   it('should create', () => {
@@ -50,7 +52,7 @@ describe('GameSettings', () => {
       </Provider>,
     );
 
-    expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).not.toHaveBeenCalled()
 
     const languageSelect = screen.getByLabelText('InitialLifes');
    
@@ -59,7 +61,7 @@ describe('GameSettings', () => {
         fireEvent.change(languageSelect, { target: { value: Lifes.Twenty } })
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalled()
   });
 
   it('change NumberOfPlayers should request to updateGameSettings', async () => {
@@ -71,7 +73,7 @@ describe('GameSettings', () => {
       </Provider>,
     );
 
-    expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).not.toHaveBeenCalled()
 
     const numberOFPlayersSelect = screen.getByLabelText('NumberOfPlayers');
    
@@ -80,7 +82,7 @@ describe('GameSettings', () => {
         fireEvent.change(numberOFPlayersSelect, { target: { value: NumberOfPlayers.Six } })
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalled()
   });
 
   it('Restart should restart only the players counters', async () => {
@@ -121,7 +123,7 @@ describe('GameSettings', () => {
       gameSettingsStore.dispatch(setGameSettingsAction(gameState));
     });
 
-    expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled()
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).not.toHaveBeenCalled()
 
     const button = screen.getByRole('button', { name: 'restartGameSettings' });
     
@@ -142,6 +144,6 @@ describe('GameSettings', () => {
       }
     }
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(sut, restartedGameSettings)
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalledWith(sut, restartedGameSettings)
   });
 });

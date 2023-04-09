@@ -13,7 +13,7 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { setGameSettingsAction } from '../../state/game/game.actions';
 import { mapPlayerColor, mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
 import { GameState } from '../../state/game/models/appGame.state';
-import { useGameSettingsMock } from '../gameSettings/gameSettingsHook.mock';
+import * as mock_useGameSettingsMock from '../gameSettings/gameSettingsHook.mock';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;
@@ -38,8 +38,9 @@ describe('<usePlayer />', () => {
       .mockReturnValue(useAppDispatchMockResponse);
 
     jest.spyOn(gameSettingsHooks, 'useGameSettings')
-      .mockImplementation(useGameSettingsMock);
+      .mockImplementation(mock_useGameSettingsMock.mock);
 
+    mock_useGameSettingsMock.initializeMock();
   });
 
   it('should create', () => {
@@ -49,7 +50,7 @@ describe('<usePlayer />', () => {
   });
 
   it('updatePlayerCounter should request updateGameSettings', async () => {
-    expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -59,11 +60,11 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
     
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalled();
   });
 
   it('updatePlayerColor should request updateGameSettings', async () => {
-    expect(useGameSettingsMock().updateGameSettings).not.toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -73,7 +74,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerColor(playerColor);
     });
     
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalled();
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalled();
   });
 
   it('updatePlayerCounter should request updateGameSettings with the player counter updated', async () => {
@@ -108,7 +109,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
   });
 
   it('updatePlayerColor should request updateGameSettings with the player color updated', async () => {
@@ -142,6 +143,6 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerColor(targetColor);
     });
 
-    expect(useGameSettingsMock().updateGameSettings).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
+    expect(mock_useGameSettingsMock.mock().updateGameSettings).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
   });
 });
