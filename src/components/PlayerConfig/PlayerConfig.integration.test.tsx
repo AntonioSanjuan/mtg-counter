@@ -5,21 +5,21 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import * as usePlayerHooks from '../../hooks/player/playerHook'
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import ColorPicker from './ColorPicker';
+import PlayerConfig from './PlayerConfig';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import * as mock_usePlayer from '../../hooks/player/playerHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { act } from 'react-dom/test-utils';
 
-describe('ColorPicker', () => {
-  let colorPickerStore: any;
+describe('PlayerConfig', () => {
+  let playerConfigStore: any;
   let history: any;
 
   let inputPlayer: FirebasePlayerDto;
 
   beforeEach(() => {
-    colorPickerStore = createTestStore();
+    playerConfigStore = createTestStore();
     history = createMemoryHistory();
 
     inputPlayer = getDefaultPlayers(40, 1)[0];
@@ -33,9 +33,9 @@ describe('ColorPicker', () => {
 
   it('should create', () => {
     const { container } = render(
-      <Provider store={colorPickerStore}>
+      <Provider store={playerConfigStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer}  onPick={() => {}}/>
+          <PlayerConfig player={inputPlayer}  onPick={() => {}}/>
         </Router>
       </Provider>,
     );
@@ -46,9 +46,9 @@ describe('ColorPicker', () => {
   it('ColorSelector select should request to updatePlayerColor', async () => {
     const onPickFn = jest.fn()
     const { container } = render(
-      <Provider store={colorPickerStore}>
+      <Provider store={playerConfigStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} onPick={onPickFn} />
+          <PlayerConfig player={inputPlayer} onPick={onPickFn} />
         </Router>
       </Provider>,
     );
@@ -69,9 +69,9 @@ describe('ColorPicker', () => {
     expect(mock_usePlayer.mock().updatePlayerColor).not.toHaveBeenCalled()
 
     const { container } = render(
-      <Provider store={colorPickerStore}>
+      <Provider store={playerConfigStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} onPick={() => {}}/>
+          <PlayerConfig player={inputPlayer} onPick={() => {}}/>
         </Router>
       </Provider>,
     );

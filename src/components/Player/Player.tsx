@@ -4,7 +4,7 @@ import {
 import { usePlayer } from '../../hooks/player/playerHook';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import ColorPicker from '../ColorPicker/ColorPicker';
+import PlayerConfig from '../PlayerConfig/PlayerConfig';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import SCPlayer from './Player.style';
 
@@ -45,7 +45,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
         <i className="bi bi-gear-fill" />
       </button>
       {isPlayerConfigOpened && (
-        <ColorPicker
+        <PlayerConfig
           player={player}
           onPick={() => {
             setIsPlayerConfigOpened(!isPlayerConfigOpened);

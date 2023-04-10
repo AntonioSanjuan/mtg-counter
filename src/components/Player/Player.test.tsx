@@ -12,7 +12,7 @@ import { mock } from '../../hooks/counter/counterHook.mock';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import Player from './Player';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
-import ColorPicker from '../ColorPicker/ColorPicker';
+import PlayerConfig from '../PlayerConfig/PlayerConfig';
 import React from 'react';
 describe('Player', () => {
   let playerStore: any;
@@ -78,7 +78,7 @@ describe('Player', () => {
     expect(container).toContainHTML(render(
       <Provider store={playerStore}>
         <Router location={history.location} navigator={history}>
-          <ColorPicker player={inputPlayer} onPick={onPickFn}/>
+          <PlayerConfig player={inputPlayer} onPick={onPickFn}/>
         </Router>
       </Provider>,
     ).container.innerHTML)
