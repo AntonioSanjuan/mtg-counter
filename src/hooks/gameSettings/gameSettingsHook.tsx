@@ -14,15 +14,24 @@ export function useGameSettings() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
+  const createGameState = (game: FirebaseGameDto, gameId: string|undefined): GameState => {
+    const output: GameState = {
+      ...game,
+      id: gameId,
+    };
+    return output;
+  };
+
   const getGameSettings = async (gameSettingsId: string): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
     return gameService.getGameSettings(gameSettingsId)
       .then((gameResp) => {
         const game = gameResp.data() as FirebaseGameDto;
-        const gameSettingsOutput: GameState = {
-          ...game,
-          id: gameResp.id,
-        };
+
+        const gameSettingsOutput = createGameState(
+          game,
+          gameResp.id,
+        );
 
         dispatch(setGameSettingsAction(gameSettingsOutput));
         setLoading(false);
@@ -39,10 +48,10 @@ export function useGameSettings() {
     setLoading(true);
 
     return gameService.setGameSettings(gameSettings).then((game) => {
-      const gameSettingsOutput: GameState = {
-        ...gameSettings,
-        id: game.id,
-      };
+      const gameSettingsOutput = createGameState(
+        gameSettings,
+        game.id,
+      );
       dispatch(setGameSettingsAction(gameSettingsOutput));
       setLoading(false);
       setError(false);
@@ -59,10 +68,10 @@ export function useGameSettings() {
     gameSettings: FirebaseGameDto,
   ): Promise<any> => {
     setLoading(true);
-    const gameSettingsOutput: GameState = {
-      id: gameSettingsId,
-      ...gameSettings,
-    };
+    const gameSettingsOutput = createGameState(
+      gameSettings,
+      gameSettingsId,
+    );
     if (auth.currentUser) {
       return gameService.updateGameSettings(gameSettingsId as string, gameSettings)
         .then(() => {
