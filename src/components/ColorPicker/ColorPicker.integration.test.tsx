@@ -8,7 +8,7 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import ColorPicker from './ColorPicker';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
-import { usePlayerMock } from '../../hooks/player/playerHook.mock';
+import * as mock_usePlayer from '../../hooks/player/playerHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { act } from 'react-dom/test-utils';
 
@@ -26,7 +26,9 @@ describe('ColorPicker', () => {
 
 
     jest.spyOn(usePlayerHooks, 'usePlayer')
-      .mockImplementation(usePlayerMock);
+      .mockImplementation(mock_usePlayer.mock);
+
+      mock_usePlayer.initializeMock()
   });
 
   it('should create', () => {
@@ -50,7 +52,7 @@ describe('ColorPicker', () => {
         </Router>
       </Provider>,
     );
-    expect(usePlayerMock().updatePlayerColor).not.toHaveBeenCalled()
+    expect(mock_usePlayer.mock().updatePlayerColor).not.toHaveBeenCalled()
     expect(onPickFn).not.toHaveBeenCalled()
     
     const colorButton = screen.getByRole('button', { name: PlayerColors.green });
@@ -59,12 +61,12 @@ describe('ColorPicker', () => {
       fireEvent.click(colorButton);
     });
 
-    expect(usePlayerMock().updatePlayerColor).toHaveBeenCalled()
+    expect(mock_usePlayer.mock().updatePlayerColor).toHaveBeenCalled()
     expect(onPickFn).toHaveBeenCalled()
   });
 
   it('ColorSelector select should not show player color', async () => {
-    expect(usePlayerMock().updatePlayerColor).not.toHaveBeenCalled()
+    expect(mock_usePlayer.mock().updatePlayerColor).not.toHaveBeenCalled()
 
     const { container } = render(
       <Provider store={colorPickerStore}>
@@ -76,6 +78,6 @@ describe('ColorPicker', () => {
     const colorButton = screen.queryByRole('button', { name: inputPlayer.color });
 
     expect(colorButton).not.toBeInTheDocument()
-    expect(usePlayerMock().updatePlayerColor).not.toHaveBeenCalled()
+    expect(mock_usePlayer.mock().updatePlayerColor).not.toHaveBeenCalled()
   });
 });

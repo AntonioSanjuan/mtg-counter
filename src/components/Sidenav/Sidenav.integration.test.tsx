@@ -9,9 +9,9 @@ import * as sidenavHooks from '../../hooks/sidenav/sidenavHook';
 import * as userHooks from '../../hooks/user/userHook';
 import * as alertHooks from '../../hooks/alert/alertHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useUserMock } from '../../hooks/user/userHook.mock';
-import { useSidenavMock } from '../../hooks/sidenav/sidenavHook.mock';
-import { useAlertMock } from '../../hooks/alert/alertHook.mock';
+import * as mock_useUser from '../../hooks/user/userHook.mock';
+import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
+import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 import { setUserAction } from '../../state/user/user.actions';
 import { User } from 'firebase/auth';
@@ -26,13 +26,17 @@ describe('Sidenav', () => {
     history = createMemoryHistory();
 
     jest.spyOn(sidenavHooks, 'useSidenavLayer')
-      .mockImplementation(useSidenavMock);
+      .mockImplementation(mock_useSidenavLayer.mock);
 
     jest.spyOn(userHooks, 'useUser')
-      .mockImplementation(useUserMock);
+      .mockImplementation(mock_useUser.mock);
 
     jest.spyOn(alertHooks, 'useAlert')
-      .mockImplementation(useAlertMock);
+      .mockImplementation(mock_useAlert.mock);
+
+      mock_useAlert.initializeMock()
+      mock_useUser.initializeMock()
+      mock_useSidenavLayer.initializeMock()
   });
 
   it('should create', () => {
@@ -56,14 +60,14 @@ describe('Sidenav', () => {
       </Provider>,
     );
 
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
+    expect(mock_useSidenavLayer.mock().switchSidenavStatus).not.toHaveBeenCalled();
 
     fireEvent.click(
       screen.getByText('New Game'),
     );
 
     expect(history.location.pathname).toEqual('/');
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
+    expect(mock_useSidenavLayer.mock().switchSidenavStatus).toHaveBeenCalled();
   });
 
   it('Sidenav History should not appear if user is not logged', () => {

@@ -9,7 +9,7 @@ import { Router } from 'react-router-dom';
 import { User } from 'firebase/auth';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import * as sidenavHooks from '../../../hooks/sidenav/sidenavHook';
-import { useSidenavMock } from '../../../hooks/sidenav/sidenavHook.mock';
+import * as mock_useSidenavLayer from '../../../hooks/sidenav/sidenavHook.mock';
 import { ProfileSection } from './profileSection';
 import { setUserAction } from '../../../state/user/user.actions';
 
@@ -22,7 +22,9 @@ describe('ProfileSection', () => {
     history = createMemoryHistory();
 
     jest.spyOn(sidenavHooks, 'useSidenavLayer')
-      .mockImplementation(useSidenavMock);
+      .mockImplementation(mock_useSidenavLayer.mock);
+    
+    mock_useSidenavLayer.initializeMock();
   });
 
   it('should create', () => {

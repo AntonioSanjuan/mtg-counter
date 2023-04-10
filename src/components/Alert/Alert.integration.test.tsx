@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import * as alertHooks from '../../hooks/alert/alertHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useAlertMock } from '../../hooks/alert/alertHook.mock';
+import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 import Alert from './Alert';
 import { openAlertAction } from '../../state/layout/layout.actions';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
@@ -20,7 +20,9 @@ describe('Alert', () => {
     history = createMemoryHistory();
 
     jest.spyOn(alertHooks, 'useAlert')
-      .mockImplementation(useAlertMock);
+      .mockImplementation(mock_useAlert.mock);
+
+      mock_useAlert.initializeMock()
   });
 
   it('should create', () => {
@@ -49,7 +51,7 @@ describe('Alert', () => {
     });
 
     
-    expect(useAlertMock().getAlertContent).toHaveBeenCalled();
+    expect(mock_useAlert.mock().getAlertContent).toHaveBeenCalled();
   });
 
   it('Alert should not request getAlertContent if !isModalOpened', () => {
@@ -61,6 +63,6 @@ describe('Alert', () => {
       </Provider>,
     );
 
-    expect(useAlertMock().getAlertContent).not.toHaveBeenCalled();
+    expect(mock_useAlert.mock().getAlertContent).not.toHaveBeenCalled();
   });
 });

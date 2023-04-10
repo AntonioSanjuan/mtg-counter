@@ -9,7 +9,7 @@ import { act } from 'react-dom/test-utils';
 import * as useCounterHooks from './../../hooks/counter/counterHook'
 import CounterCarrousel from './CounterCarrousel';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { useCounterMock } from '../../hooks/counter/counterHook.mock';
+import * as mock_useCounter from '../../hooks/counter/counterHook.mock';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 
 describe('CounterCarrousel', () => {
@@ -25,7 +25,9 @@ describe('CounterCarrousel', () => {
 
     inputPlayer = getDefaultPlayers(40, 1)[0];
     jest.spyOn(useCounterHooks, 'useCounter')
-    .mockImplementation(useCounterMock);
+      .mockImplementation(mock_useCounter.mock);
+
+    mock_useCounter.initializeMock()
   });
 
   it('should create', () => {
@@ -57,7 +59,7 @@ describe('CounterCarrousel', () => {
       fireEvent.click(button);
     });
 
-    expect(useCounterMock().removeCounters).toHaveBeenCalled()
+    expect(mock_useCounter.mock().removeCounters).toHaveBeenCalled()
   });
 
   it('button addCounters onClick should request useCounter addCounters function', async () => {
@@ -77,7 +79,7 @@ describe('CounterCarrousel', () => {
       fireEvent.click(button);
     });
 
-    expect(useCounterMock().addCounters).toHaveBeenCalled()
+    expect(mock_useCounter.mock().addCounters).toHaveBeenCalled()
   });
 
 });

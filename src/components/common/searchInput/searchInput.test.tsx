@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import * as alertHooks from '../../../hooks/alert/alertHook';
-import { useAlertMock } from '../../../hooks/alert/alertHook.mock';
+import { mock } from '../../../hooks/alert/alertHook.mock';
 import { act } from '@testing-library/react-hooks';
 import { SearchInput } from './searchInput';
 

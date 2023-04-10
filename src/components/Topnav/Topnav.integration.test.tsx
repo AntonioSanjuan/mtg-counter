@@ -12,8 +12,8 @@ import * as userHook from '../../hooks/user/userHook';
 import { Topnav } from './Topnav';
 import { setUserAction } from '../../state/user/user.actions';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useSidenavMock } from '../../hooks/sidenav/sidenavHook.mock';
-import { useUserMock } from '../../hooks/user/userHook.mock';
+import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
+import * as mock_useUser from '../../hooks/user/userHook.mock';
 
 describe('Topnav', () => {
   let topnavStore: any;
@@ -26,14 +26,16 @@ describe('Topnav', () => {
     history = createMemoryHistory();
 
     jest.spyOn(userHook, 'useUser')
-      .mockImplementation(useUserMock);
+      .mockImplementation(mock_useUser.mock);
 
     jest.spyOn(React, 'useState')
       .mockImplementation(() => [undefined, setLoginButtonHiddenMock]);
 
     jest.spyOn(sidenavhooks, 'useSidenavLayer')
-      .mockImplementation(useSidenavMock);
+      .mockImplementation(mock_useSidenavLayer.mock);
 
+    mock_useSidenavLayer.initializeMock();
+    mock_useUser.initializeMock()
     expect(setLoginButtonHiddenMock).toHaveBeenCalledTimes(0);
   });
 
@@ -62,7 +64,7 @@ describe('Topnav', () => {
       </Provider>,
     );
 
-    expect(useSidenavMock().switchSidenavStatus).not.toHaveBeenCalled();
+    expect(mock_useSidenavLayer.mock().switchSidenavStatus).not.toHaveBeenCalled();
 
     fireEvent.click(
       screen.getAllByRole('button', {
@@ -70,7 +72,7 @@ describe('Topnav', () => {
       })[0],
     );
 
-    expect(useSidenavMock().switchSidenavStatus).toHaveBeenCalled();
+    expect(mock_useSidenavLayer.mock().switchSidenavStatus).toHaveBeenCalled();
   });
 
   it('Topnav `Login` button should appear if !hideLoginButton and user isn`t logged', () => {
@@ -140,7 +142,7 @@ describe('Topnav', () => {
       })[0]
     )
       
-    expect(useUserMock().logout).toHaveBeenCalled();
+    expect(mock_useUser.mock().logout).toHaveBeenCalled();
   });
 
 });

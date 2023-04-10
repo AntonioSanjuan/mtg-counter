@@ -7,7 +7,7 @@ import { act } from 'react-dom/test-utils';
 import * as alertHooks from '../../hooks/alert/alertHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import GameButton from './GameButton';
-import { useAlertMock } from '../../hooks/alert/alertHook.mock';
+import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 
 describe('GameButton', () => {
@@ -19,7 +19,9 @@ describe('GameButton', () => {
     history = createMemoryHistory();
 
     jest.spyOn(alertHooks, 'useAlert')
-    .mockImplementation(useAlertMock);
+      .mockImplementation(mock_useAlert.mock);
+
+    mock_useAlert.initializeMock();
   });
 
   it('should create', () => {
@@ -49,6 +51,6 @@ describe('GameButton', () => {
       fireEvent.click(button);
     });
 
-    expect(useAlertMock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.GameSettings)
+    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.GameSettings)
   });
 });

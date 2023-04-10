@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import * as alertHooks from '../../../hooks/alert/alertHook';
-import { useAlertMock } from '../../../hooks/alert/alertHook.mock';
+import * as mock_useAlert from '../../../hooks/alert/alertHook.mock';
 import Modal from './modal';
 import { act } from '@testing-library/react-hooks';
 
@@ -19,7 +19,9 @@ describe('Modal', () => {
     history = createMemoryHistory();
 
     jest.spyOn(alertHooks, 'useAlert')
-      .mockImplementation(useAlertMock);
+      .mockImplementation(mock_useAlert.mock);
+
+      mock_useAlert.initializeMock()
   });
 
   it('should create', () => {
@@ -49,7 +51,7 @@ describe('Modal', () => {
       </Provider>,
     );
 
-    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+    expect(mock_useAlert.mock().closeAlert).not.toHaveBeenCalled();
 
 
     const button = screen.getByRole('button', { name: 'outsideModal' });
@@ -57,7 +59,7 @@ describe('Modal', () => {
     await act(async () => {
       fireEvent.click(button);
     });
-    expect(useAlertMock().closeAlert).toHaveBeenCalled();
+    expect(mock_useAlert.mock().closeAlert).toHaveBeenCalled();
   });
 
   it('Modal `closeButton` should not trigger useAlert() closeAlert functionality if can not be closed', async () => {
@@ -71,7 +73,7 @@ describe('Modal', () => {
       </Provider>,
     );
 
-    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+    expect(mock_useAlert.mock().closeAlert).not.toHaveBeenCalled();
 
 
     const button = screen.getByRole('button', { name: 'outsideModal' });
@@ -79,6 +81,6 @@ describe('Modal', () => {
     await act(async () => {
       fireEvent.click(button);
     });
-    expect(useAlertMock().closeAlert).not.toHaveBeenCalled();
+    expect(mock_useAlert.mock().closeAlert).not.toHaveBeenCalled();
   });
 });

@@ -13,10 +13,10 @@ const getGameSettingsResponseObj = {
 let loadingResponseMock: boolean = false;
 let errorResponseMock: boolean = false;
 
-export const getGameSettingsSpy = jest.fn();
-export const setGameSettingsSpy = jest.fn();
-export const updateGameSettingsSpy = jest.fn();
-export const setAnonymousGameSettingsSpy = jest.fn();
+const getGameSettingsSpy = jest.fn();
+const setGameSettingsSpy = jest.fn();
+const updateGameSettingsSpy = jest.fn();
+const setAnonymousGameSettingsSpy = jest.fn();
 
 export const mockGameSettingsResponse = {
   getGameSettings: getGameSettingsSpy,

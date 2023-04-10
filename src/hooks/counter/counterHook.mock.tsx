@@ -3,13 +3,22 @@ import React from 'react';
 /* eslint-disable camelcase */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const temporaryCountResponseObj: number = 0
+const temporaryCountMock: number = 0
 
-const useCounter_AddCounters = jest.fn(() => {});
-const useCounter_RemoveCounters = jest.fn(() => {});
+const addCountersSpy = jest.fn(() => {});
+const removeCountersSpy = jest.fn(() => {});
 
-export const useCounterMock = () => ({
-  temporaryCount: temporaryCountResponseObj,
-  addCounters: useCounter_AddCounters,
-  removeCounters: useCounter_RemoveCounters,
-});
+const mockCounterMockResponse = {
+  temporaryCount: temporaryCountMock,
+  addCounters: addCountersSpy,
+  removeCounters: removeCountersSpy,
+}
+
+export const mock = () => {
+  return mockCounterMockResponse;
+}
+
+export const initializeMock = () => {
+  addCountersSpy.mockReturnValue()
+  removeCountersSpy.mockReturnValue()
+}

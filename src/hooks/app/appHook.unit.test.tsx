@@ -7,7 +7,7 @@ import * as userSettingshooks from '../userSettings/userSettingsHook';
 import * as gameSettingshooks from '../gameSettings/gameSettingsHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
-import * as mock_useUserSettingsMock from '../userSettings/userSettingsHook.mock';
+import * as mock_useUserSettings from '../userSettings/userSettingsHook.mock';
 import { setUserAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import { createJsDomUnsupportedMethods } from '../../utils/testsUtils/jsDomUnsupportedMethods.util';
@@ -15,7 +15,7 @@ import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
-import * as mock_useGameSettingsMock from '../gameSettings/gameSettingsHook.mock';
+import * as mock_useGameSettings from '../gameSettings/gameSettingsHook.mock';
 
 describe('<useApp />', () => {
   let useAppStore: any;
@@ -39,13 +39,13 @@ describe('<useApp />', () => {
       .mockReturnValue(useAppDispatchMockResponse);
 
     jest.spyOn(gameSettingshooks, 'useGameSettings')
-      .mockImplementation(mock_useGameSettingsMock.mock);
+      .mockImplementation(mock_useGameSettings.mock);
 
     jest.spyOn(userSettingshooks, 'useUserSettings')
-      .mockImplementation(mock_useUserSettingsMock.mock);
+      .mockImplementation(mock_useUserSettings.mock);
 
-    mock_useGameSettingsMock.initializeMock()
-    mock_useUserSettingsMock.initializeMock()
+    mock_useGameSettings.initializeMock()
+    mock_useUserSettings.initializeMock()
   });
 
   it('should create', async () => {
@@ -97,8 +97,8 @@ describe('<useApp />', () => {
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAction(sut));
-    expect(mock_useUserSettingsMock.mock().getUserSettings).toHaveBeenCalled()
-    expect(mock_useGameSettingsMock.mock().getGameSettings).toHaveBeenCalled()
+    expect(mock_useUserSettings.mock().getUserSettings).toHaveBeenCalled()
+    expect(mock_useGameSettings.mock().getGameSettings).toHaveBeenCalled()
   });
 
 
@@ -113,7 +113,7 @@ describe('<useApp />', () => {
      });
  
      expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
-     expect(mock_useUserSettingsMock.mock().setAnonymousUserSettings).toHaveBeenCalled()
-     expect(mock_useGameSettingsMock.mock().setAnonymousGameSettings).toHaveBeenCalled()
+     expect(mock_useUserSettings.mock().setAnonymousUserSettings).toHaveBeenCalled()
+     expect(mock_useGameSettings.mock().setAnonymousGameSettings).toHaveBeenCalled()
   });
 });

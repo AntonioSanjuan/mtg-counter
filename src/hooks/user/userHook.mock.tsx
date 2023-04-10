@@ -5,25 +5,30 @@
 import { UserCredential } from 'firebase/auth';
 
 const loginResponseMock = {} as UserCredential;
-let loadingResponseMock: boolean;
-let errorResponseMock: boolean;
+let loadingResponseMock: boolean = false;
+let errorResponseMock: boolean = false;
 
-const useUser_LoginMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
-  loginResponseMock as UserCredential,
-)));
-const useUser_LoginWithGoogleMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
-  loginResponseMock as UserCredential,
-)));
-const useUser_SignUpMock = jest.fn(() => new Promise<UserCredential>((resolve) => resolve(
-  loginResponseMock as UserCredential,
-)));
-const useUser_LogoutMock = jest.fn(() => new Promise<void>((resolve) => resolve()));
+const loginSpy = jest.fn()
+const loginWithGoogleSpy = jest.fn()
+const signUpSpy = jest.fn()
+const logoutSpy = jest.fn();
 
-export const useUserMock = () => ({
-  login: useUser_LoginMock,
-  loginWithGoogle: useUser_LoginWithGoogleMock,
-  logout: useUser_LogoutMock,
-  signUp: useUser_SignUpMock,
+const mockUserMockResponse = {
+  login: loginSpy,
+  loginWithGoogle: loginWithGoogleSpy,
+  logout: logoutSpy,
+  signUp: signUpSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
-});
+}
+
+export const mock = () => {
+  return mockUserMockResponse;
+}
+
+export const initializeMock = () => {
+  loginSpy.mockResolvedValue(loginResponseMock),
+  loginWithGoogleSpy.mockResolvedValue(loginResponseMock),
+  logoutSpy.mockResolvedValue(undefined),
+  signUpSpy.mockResolvedValue(loginResponseMock)
+}

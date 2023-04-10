@@ -18,12 +18,12 @@ const getUserSettingsResponseObj = {
 let loadingResponseMock: boolean = false;
 let errorResponseMock: boolean = false;
 
-export const getUserSettingsSpy = jest.fn();
-export const setUserSettingsSpy = jest.fn();
-export const updateUserSettingsSpy = jest.fn();
-export const setAnonymousUserSettingsSpy = jest.fn();
+const getUserSettingsSpy = jest.fn();
+const setUserSettingsSpy = jest.fn();
+const updateUserSettingsSpy = jest.fn();
+const setAnonymousUserSettingsSpy = jest.fn();
 
-export const mockUserSettingsMockResponse = {
+const mockUserSettingsMockResponse = {
   getUserSettings: getUserSettingsSpy,
   setUserSettings: setUserSettingsSpy,
   setAnonymousUserSettings: setAnonymousUserSettingsSpy,

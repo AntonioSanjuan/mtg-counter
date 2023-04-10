@@ -5,12 +5,21 @@ import React from 'react';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const getAlertContentResponseObj = React.createElement('h1') as any;
 
-const useAlert_GetAlertContent = jest.fn(() => getAlertContentResponseObj);
-const useAlert_OpenAlert = jest.fn(() => {});
-const useAlert_CloseAlert = jest.fn(() => {});
+const getAlertContentSpy = jest.fn();
+const openAlertSpy = jest.fn(() => {});
+const closeAlertSpy = jest.fn(() => {});
 
-export const useAlertMock = () => ({
-  getAlertContent: useAlert_GetAlertContent,
-  openAlert: useAlert_OpenAlert,
-  closeAlert: useAlert_CloseAlert,
-});
+export const mockAlertResponse = {
+  getAlertContent: getAlertContentSpy,
+  openAlert: openAlertSpy,
+  closeAlert: closeAlertSpy,
+}
+export const mock = () => {
+  return mockAlertResponse;
+};
+
+export const initializeMock = () => {
+  getAlertContentSpy.mockReturnValue(getAlertContentResponseObj)
+  openAlertSpy.mockReturnValue()
+  closeAlertSpy.mockReturnValue()
+}

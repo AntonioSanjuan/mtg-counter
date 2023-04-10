@@ -9,7 +9,7 @@ import { useCounter } from './counterHook';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { CounterTypes } from '../../models/internal/types/CounterTypes.model';
-import { usePlayerMock } from '../player/playerHook.mock';
+import * as mock_usePlayer from '../player/playerHook.mock';
 
 describe('<useCounter />', () => {
   let useCounterStore: any;
@@ -35,8 +35,9 @@ describe('<useCounter />', () => {
 
     
     jest.spyOn(playerHooks, 'usePlayer')
-      .mockImplementation(usePlayerMock);
+      .mockImplementation(mock_usePlayer.mock);
 
+    mock_usePlayer.initializeMock()
   });
 
   it('should create', async () => {
@@ -74,7 +75,7 @@ describe('<useCounter />', () => {
     expect(result.current.temporaryCount).toEqual(5);
 
     setTimeout(() => {
-      expect(usePlayerMock().updatePlayerCounter).toHaveBeenCalled()
+      expect(mock_usePlayer.mock().updatePlayerCounter).toHaveBeenCalled()
       expect(result.current.temporaryCount).toEqual(0);
     }, 25000)
   });
@@ -109,7 +110,7 @@ describe('<useCounter />', () => {
     expect(result.current.temporaryCount).toEqual(-5);
 
     setTimeout(() => {
-      expect(usePlayerMock().updatePlayerCounter).toHaveBeenCalled()
+      expect(mock_usePlayer.mock().updatePlayerCounter).toHaveBeenCalled()
       expect(result.current.temporaryCount).toEqual(0);
     }, 25000)
   });

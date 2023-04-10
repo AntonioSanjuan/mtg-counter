@@ -7,7 +7,7 @@ import { act } from 'react-dom/test-utils';
 import * as userHooks from '../../hooks/user/userHook';
 import Login from './Login';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useUserMock } from '../../hooks/user/userHook.mock';
+import * as mock_useUser from '../../hooks/user/userHook.mock';
 
 describe('Login', () => {
   let loginStore: any;
@@ -18,7 +18,9 @@ describe('Login', () => {
     history = createMemoryHistory();
 
     jest.spyOn(userHooks, 'useUser')
-      .mockImplementation(useUserMock);
+      .mockImplementation(mock_useUser.mock);
+
+    mock_useUser.initializeMock()
   });
 
   it('should create', () => {
@@ -44,7 +46,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(useUserMock().login).not.toHaveBeenCalled();
+    expect(mock_useUser.mock().login).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     fireEvent.change(usernameInput, { target: { value: username } });
     const passwordInput = screen.getByPlaceholderText('****');
@@ -56,7 +58,7 @@ describe('Login', () => {
       fireEvent.click(loginButton);
     });
 
-    expect(useUserMock().login).toHaveBeenCalledWith({ username, password });
+    expect(mock_useUser.mock().login).toHaveBeenCalledWith({ username, password });
     expect(history.location.pathname).toEqual('/');
   });
 
@@ -92,7 +94,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(useUserMock().signUp).not.toHaveBeenCalled();
+    expect(mock_useUser.mock().signUp).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     const passwordInput = screen.getByPlaceholderText('****');
 
@@ -117,7 +119,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(useUserMock().signUp).not.toHaveBeenCalled();
+    expect(mock_useUser.mock().signUp).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     const passwordInput = screen.getByPlaceholderText('****');
     fireEvent.change(usernameInput, { target: { value: username } });
@@ -131,6 +133,6 @@ describe('Login', () => {
       fireEvent.click(registerButton);
     });
 
-    expect(useUserMock().signUp).toHaveBeenCalledWith({ username, password });
+    expect(mock_useUser.mock().signUp).toHaveBeenCalledWith({ username, password });
   });
 });

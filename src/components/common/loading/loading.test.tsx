@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
-import { useAlertMock } from '../../../hooks/alert/alertHook.mock';
+import { mock } from '../../../hooks/alert/alertHook.mock';
 import { act } from '@testing-library/react-hooks';
 import { Loading } from './loading';
 

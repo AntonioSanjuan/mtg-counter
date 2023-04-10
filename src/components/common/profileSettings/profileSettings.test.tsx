@@ -10,7 +10,7 @@ import { createTestStore } from '../../../utils/testsUtils/createTestStore.util'
 import { setUserSettingsAction } from '../../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
 import * as useUserSettings from '../../../hooks/userSettings/userSettingsHook';
-import * as mock_useUserSettingsMock from '../../../hooks/userSettings/userSettingsHook.mock';
+import * as mock_useUserSettings from '../../../hooks/userSettings/userSettingsHook.mock';
 
 describe('ProfileSettings', () => {
   let profileSettingsStore: any;
@@ -24,9 +24,9 @@ describe('ProfileSettings', () => {
     );
 
     jest.spyOn(useUserSettings, 'useUserSettings')
-      .mockImplementation(mock_useUserSettingsMock.mock);
+      .mockImplementation(mock_useUserSettings.mock);
   
-    mock_useUserSettingsMock.initializeMock();
+    mock_useUserSettings.initializeMock();
   });
 
   it('should create', () => {
@@ -49,7 +49,7 @@ describe('ProfileSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useUserSettingsMock.mock().updateUserSettings).not.toHaveBeenCalled();
+    expect(mock_useUserSettings.mock().updateUserSettings).not.toHaveBeenCalled();
 
     const radioButton = screen.getByLabelText('Dark Mode');
     expect(radioButton).toBeChecked();
@@ -58,7 +58,7 @@ describe('ProfileSettings', () => {
       fireEvent.click(radioButton);
     });
 
-    expect(mock_useUserSettingsMock.mock().updateUserSettings).toHaveBeenCalled();
+    expect(mock_useUserSettings.mock().updateUserSettings).toHaveBeenCalled();
     expect(radioButton).not.toBeChecked();
 
   });
@@ -72,13 +72,13 @@ describe('ProfileSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useUserSettingsMock.mock().updateUserSettings).not.toHaveBeenCalled();
+    expect(mock_useUserSettings.mock().updateUserSettings).not.toHaveBeenCalled();
     const select = screen.getByLabelText('Language');
 
     await act(async () => {
       fireEvent.change(select, { target: { value: 'es' } });
     });
 
-    expect(mock_useUserSettingsMock.mock().updateUserSettings).toHaveBeenCalled();
+    expect(mock_useUserSettings.mock().updateUserSettings).toHaveBeenCalled();
   });
 });
