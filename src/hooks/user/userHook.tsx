@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { UserCredential } from '@firebase/auth';
+import { getAdditionalUserInfo, UserCredential } from '@firebase/auth';
 import {
   firebaseGoogleLogin, firebaseLogin, firebaseLogout, firebaseSignUp,
 } from '../../services/firebaseAuth/firebaseAuth.service';
@@ -42,6 +42,7 @@ export function useUser() {
     setLoading(true);
     return firebaseGoogleLogin()
       .then((resp) => {
+        const { isNewUser } = getAdditionalUserInfo(resp);
         setLoading(false);
         setError(false);
         return resp;

@@ -100,7 +100,7 @@ describe('Modal', () => {
   it('submit should request updatePlayerDetails', async () => {
     const playerSut: FirebasePlayerDto = {
         ...inputPlayer,
-        name: string;
+        name: 
         userId: null;
         deckName: string;
     }
