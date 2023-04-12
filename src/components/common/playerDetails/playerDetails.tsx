@@ -15,7 +15,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
     initialValues: {
       userId: player.userId ?? '',
       name: player.name ?? '',
-      deckName: player.color ?? '',
+      deckName: player.deckName ?? '',
     },
     validationSchema: Yup.object({
       userId: Yup.string(),

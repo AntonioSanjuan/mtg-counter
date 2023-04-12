@@ -59,7 +59,6 @@ export function useApp() {
   const initializeAthenticatedUser = async () => {
     dispatch(setUserAction(auth.currentUser));
     const settings = await getUserSettings();
-    console.log('🚀 ~ file: appHook.tsx:62 ~ initializeAthenticatedUser ~ settings:', settings);
     const user = settings.data() as FirebaseUserDto;
     await getGameSettings(user.currentGame.id);
   };

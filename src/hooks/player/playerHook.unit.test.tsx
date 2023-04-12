@@ -167,7 +167,6 @@ describe('<usePlayer />', () => {
 
   
   it('updatePlayerColor should request updateGameSettings with the player details updated', async () => {
-
     const targetPlayerDetails: PlayerDetailsModel = {
       userId: 'testUserId',
       name: 'testName',

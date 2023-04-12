@@ -42,7 +42,7 @@ export function useUser() {
     setLoading(true);
     return firebaseGoogleLogin()
       .then((resp) => {
-        const { isNewUser } = getAdditionalUserInfo(resp);
+        // const { isNewUser } = getAdditionalUserInfo(resp);
         setLoading(false);
         setError(false);
         return resp;
@@ -60,7 +60,6 @@ export function useUser() {
     return firebaseSignUp(username, password)
       .then(async (resp) => {
         const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-        console.log('newGameSettings', newGameSettings);
         await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
         dispatch(unsetUserIsCreatingAction());
 
