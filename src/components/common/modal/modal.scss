@@ -29,7 +29,8 @@
     align-items: center;
 
     width: var(--app-modal-width);
-    height: var(--app-modal-height);
+    // height: var(--app-modal-height);
+    min-height: var(--app-modal-height);
     background-color: var(--app-hight-contrast);
     border-radius: 10px;
     border: 1px solid var(--app-low-contrast);

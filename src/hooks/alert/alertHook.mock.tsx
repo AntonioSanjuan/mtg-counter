@@ -6,8 +6,8 @@ import React from 'react';
 const getAlertContentResponseObj = React.createElement('h1') as any;
 
 const getAlertContentSpy = jest.fn();
-const openAlertSpy = jest.fn(() => {});
-const closeAlertSpy = jest.fn(() => {});
+const openAlertSpy = jest.fn();
+const closeAlertSpy = jest.fn();
 
 export const mockAlertResponse = {
   getAlertContent: getAlertContentSpy,
@@ -20,6 +20,6 @@ export const mock = () => {
 
 export const initializeMock = () => {
   getAlertContentSpy.mockReturnValue(getAlertContentResponseObj)
-  openAlertSpy.mockReturnValue()
-  closeAlertSpy.mockReturnValue()
+  openAlertSpy.mockReturnValue(undefined)
+  closeAlertSpy.mockReturnValue(undefined)
 }

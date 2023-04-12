@@ -4,6 +4,9 @@ export const layoutInitialState: LayoutState = {
   isSidenavOpened: false,
   alert: {
     isAlertOpened: false,
-    alertContent: undefined,
+    alertContent: {
+      type: undefined,
+      props: {},
+    },
   },
 };

@@ -1,11 +1,16 @@
+import { useAlert } from '../../hooks/alert/alertHook';
 import { usePlayer } from '../../hooks/player/playerHook';
+import { useAppDispatch } from '../../hooks/state/appStateHook';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
+import { openAlertAction } from '../../state/layout/layout.actions';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import SCPlayerConfig from './PlayerConfig.style';
 
 function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: any}) {
   const { updatePlayerColor } = usePlayer(player);
+  const { openAlert } = useAlert();
   const playerColors = Object.keys(PlayerColors).filter((color) => color !== player.color);
 
   const handleColorChange = async (selectedColor: PlayerColors) => {
@@ -17,10 +22,10 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
     <SCPlayerConfig>
       <button
         type="button"
-        aria-label="infoButton"
-        className="btn btn-link PlayerConfig_InfoButton"
+        aria-label="detailsButton"
+        className="btn btn-link PlayerConfig_DetailsButton"
         onClick={() => {
-          console.log('ey');
+          openAlert(DynamicModalTypes.PlayerDetails, { player });
         }}
       >
         <i className="bi bi-pencil-fill" />

@@ -11,6 +11,11 @@ import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFac
 import * as mock_usePlayer from '../../hooks/player/playerHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { act } from 'react-dom/test-utils';
+import * as useAlertHooks from '../../hooks/alert/alertHook'
+import * as mock_useAlert from '../../hooks/alert/alertHook.mock'
+import { Dispatch } from '@reduxjs/toolkit';
+import { openAlertAction } from '../../state/layout/layout.actions';
+import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
 
 describe('PlayerConfig', () => {
   let playerConfigStore: any;
@@ -28,7 +33,11 @@ describe('PlayerConfig', () => {
     jest.spyOn(usePlayerHooks, 'usePlayer')
       .mockImplementation(mock_usePlayer.mock);
 
+    jest.spyOn(useAlertHooks, 'useAlert')
+      .mockImplementation(mock_useAlert.mock);
+
       mock_usePlayer.initializeMock()
+      mock_useAlert.initializeMock()
   });
 
   it('should create', () => {
@@ -79,5 +88,28 @@ describe('PlayerConfig', () => {
 
     expect(colorButton).not.toBeInTheDocument()
     expect(mock_usePlayer.mock().updatePlayerColor).not.toHaveBeenCalled()
+  });
+
+  
+  it('PlayerDetails button select should request PlayerDetails alert with props', async () => {
+    const onPickFn = jest.fn()
+    const { container } = render(
+      <Provider store={playerConfigStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerConfig player={inputPlayer} onPick={onPickFn} />
+        </Router>
+      </Provider>,
+    );
+    
+    expect(mock_useAlert.mock().openAlert).not.toHaveBeenCalled();
+    
+    const detailsButton = screen.getByRole('button', { name: 'detailsButton' });
+
+    await act(async () => {
+      fireEvent.click(detailsButton);
+    });
+
+    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.PlayerDetails, { player: inputPlayer });
+
   });
 });

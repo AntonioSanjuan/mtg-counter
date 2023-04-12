@@ -32,7 +32,7 @@ padding-bottom: 5%;
 
 gap: 10px;
 
-.PlayerConfig_InfoButton {
+.PlayerConfig_DetailsButton {
   position: absolute;
   top: 5px;
   right: 5px;

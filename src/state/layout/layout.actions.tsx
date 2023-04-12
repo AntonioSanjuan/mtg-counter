@@ -10,9 +10,12 @@ export const switchSidenavStatusAction = () => ({
   type: LayoutActions.switchSidenavStatus,
 });
 
-export const openAlertAction = (alert: DynamicModalTypes) => ({
+export const openAlertAction = (alertType: DynamicModalTypes, props: object = {}) => ({
   type: LayoutActions.openAlert,
-  payload: alert,
+  payload: {
+    type: alertType,
+    props,
+  },
 });
 
 export const closeAlertAction = () => ({

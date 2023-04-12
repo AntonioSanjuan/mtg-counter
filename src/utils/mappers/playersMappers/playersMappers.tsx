@@ -1,4 +1,5 @@
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 
 export const mapPlayerColor = (
@@ -14,6 +15,20 @@ export const mapPlayerColor = (
   return player;
 });
 
+export const mapPlayerDetails = (
+  players: FirebasePlayerDto[],
+  playerIdToUpdate: string,
+  newPlayerDetails: PlayerDetailsModel,
+): FirebasePlayerDto[] => players.map((player) => {
+  if (player.id === playerIdToUpdate) {
+    const targetPlayer = {
+      ...player,
+      ...newPlayerDetails,
+    };
+    return targetPlayer;
+  }
+  return player;
+});
 export const mapPlayerCounter = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,

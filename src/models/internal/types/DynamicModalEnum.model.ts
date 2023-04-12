@@ -1,4 +1,5 @@
 export enum DynamicModalTypes {
     ProfileSettings = 'ProfileSettings',
-    GameSettings = 'GameSettings'
+    GameSettings = 'GameSettings',
+    PlayerDetails = 'PlayerDetails'
 }
