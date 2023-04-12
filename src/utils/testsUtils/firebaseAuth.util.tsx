@@ -1,4 +1,4 @@
-import { NextOrObserver, User } from 'firebase/auth';
+import { User } from 'firebase/auth';
 import { auth } from '../firebase.util';
 
 export async function mockFirebaseAuthUser(user: User | undefined, triggerOnAuthStateChanged = false) {

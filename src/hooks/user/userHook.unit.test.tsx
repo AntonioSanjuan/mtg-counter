@@ -13,6 +13,8 @@ import * as useGameSettings from '../gameSettings/gameSettingsHook';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { getAdditionalUserInfo } from 'firebase/auth';
+import * as authFirebase from 'firebase/auth';
 
 describe('<useUser />', () => {
   let useUserStore: any;
@@ -24,6 +26,9 @@ describe('<useUser />', () => {
     wrapper = function ({ children }: { children: any }) {
       return <Provider store={useUserStore}>{children}</Provider>;
     };
+
+    jest.spyOn(authFirebase, 'getAdditionalUserInfo')
+      .mockReturnValue({} as authFirebase.AdditionalUserInfo);
 
     jest.spyOn(appStatehooks, 'useAppDispatch')
       .mockReturnValue(useAppDispatchMockResponse);
@@ -74,6 +79,47 @@ describe('<useUser />', () => {
     });
     expect(result.current.error).toBeTruthy();
     expect(result.current.loading).toBeFalsy();
+  });
+
+  it('loginWithGoogle with !isNewUser should request setGameSettings', async () => {
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    expect(mock_useGameSettings.mock().setGameSettings).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await result.current.loginWithGoogle();
+    });
+    expect(mock_useGameSettings.mock().setGameSettings).not.toHaveBeenCalled();
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
+  });
+
+  it('loginWithGoogle with isNewUser should request setGameSettings', async () => {
+    (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
+      isNewUser: true
+    })
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
+    
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    expect(mock_useGameSettings.mock().setGameSettings).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await result.current.loginWithGoogle();
+    });
+    expect(mock_useGameSettings.mock().setGameSettings).toHaveBeenCalled();
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
+  });
+
+  it('loginWithGoogle should request firebaseGoogleLogin', async () => {
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    await act(async () => {
+      await result.current.loginWithGoogle();
+    });
+
+    expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
   });
 
   it('loginWithGoogle should request firebaseGoogleLogin', async () => {
@@ -128,14 +174,19 @@ describe('<useUser />', () => {
   });
 
   it('signUp should request setUserSettings hook function', async () => {
-    const sutGameSettingsId = 'testGameSettingsId'
+    const sutGameSettingsId = 'testGameSettingsId';
+
+    (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
+      isNewUser: true
+    })
+
     const { result } = renderHook(() => useUser(), { wrapper });
 
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
     const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
 
     await act(async () => {
-      await useUserStore.dispatch(setUserSettingsAction(userSettings));
+      await useUserStore.dispatch(setUserSettingsAction(userSettings ));
     });
 
     await act(async () => {
@@ -145,7 +196,12 @@ describe('<useUser />', () => {
     expect(mock_useUserSettings.mock().setUserSettings).toHaveBeenCalledWith(userSettings, sutGameSettingsId);
   });
 
-  it('signUp should request setGameSettings hook function with default value', async () => {
+  it('signUp should request setGameSettings hook function', async () => {
+    
+    (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
+      isNewUser: true
+    })
+
     const { result } = renderHook(() => useUser(), { wrapper });
 
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();

@@ -10,10 +10,10 @@ const firebaseConfig = {
   authDomain: FIREBASE_AUTH_DOMAIN,
   projectId: FIREBASE_PROJECT_ID,
 };
+
 const app = initializeApp(firebaseConfig);
 
 export const auth = getAuth(app);
-// export const db = getFirestore(app);
 export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 
 setPersistence(auth, browserLocalPersistence);

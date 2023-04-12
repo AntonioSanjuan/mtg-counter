@@ -1,7 +1,6 @@
 import {
-  useRef, useEffect, useLayoutEffect, useState,
+  useRef, useLayoutEffect, useState,
 } from 'react';
-import { usePlayer } from '../../hooks/player/playerHook';
 
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import PlayerConfig from '../PlayerConfig/PlayerConfig';

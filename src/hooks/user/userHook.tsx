@@ -1,6 +1,7 @@
+import { AdditionalUserInfo, getAdditionalUserInfo } from 'firebase/auth';
 import { useCallback, useState } from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { getAdditionalUserInfo, UserCredential } from '@firebase/auth';
+import { UserCredential } from '@firebase/auth';
 import {
   firebaseGoogleLogin, firebaseLogin, firebaseLogout, firebaseSignUp,
 } from '../../services/firebaseAuth/firebaseAuth.service';
@@ -24,6 +25,15 @@ export function useUser() {
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<GameState>(selectGame);
 
+  const setupInitialDataIfRequired = async (user: UserCredential) => {
+    const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
+
+    if (isNewUser) {
+      const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
+      await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
+    }
+  };
+
   const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
     setLoading(true);
     return firebaseLogin(username, password)
@@ -40,9 +50,12 @@ export function useUser() {
 
   const loginWithGoogle = async (): Promise<UserCredential> => {
     setLoading(true);
+    dispatch(setUserIsCreatingAction());
+
     return firebaseGoogleLogin()
-      .then((resp) => {
-        // const { isNewUser } = getAdditionalUserInfo(resp);
+      .then(async (resp) => {
+        await setupInitialDataIfRequired(resp);
+
         setLoading(false);
         setError(false);
         return resp;
@@ -50,6 +63,8 @@ export function useUser() {
         setLoading(false);
         setError(true);
         throw e;
+      }).finally(() => {
+        dispatch(unsetUserIsCreatingAction());
       });
   };
 
@@ -59,19 +74,17 @@ export function useUser() {
 
     return firebaseSignUp(username, password)
       .then(async (resp) => {
-        const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-        await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
-        dispatch(unsetUserIsCreatingAction());
+        await setupInitialDataIfRequired(resp);
 
         setLoading(false);
         setError(false);
         return resp;
       }).catch((e) => {
-        dispatch(unsetUserIsCreatingAction());
-
         setLoading(false);
         setError(true);
         throw e;
+      }).finally(() => {
+        dispatch(unsetUserIsCreatingAction());
       });
   };
 

@@ -5,6 +5,7 @@
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable camelcase */
 import '@testing-library/jest-dom';
+import { AdditionalUserInfo } from 'firebase/auth';
 
 jest.mock('react-i18next', () => ({
   ...jest.requireActual('react-i18next'),
@@ -17,12 +18,14 @@ jest.mock('react-i18next', () => ({
 }));
 
 jest.mock('firebase/auth', () => ({
-
   ...jest.requireActual('firebase/auth'),
   getAuth: jest.fn(() => ({
     onAuthStateChanged: jest.fn((cb) => cb(undefined)),
     currentUser: undefined,
   })),
+  getAdditionalUserInfo: jest.fn().mockReturnValue({
+    isNewUser: false
+  }),
   getFirestore: () => ({}),
   setPersistence: () => ({}),
 }));
