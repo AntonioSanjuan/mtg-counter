@@ -5,6 +5,8 @@ import { GameState } from './appGame.state';
 export const gameInitialState: GameState = {
   id: undefined,
   finished: false,
+  createdAt: new Date(),
+  finishAt: undefined,
   board: {
     initialLifes: Lifes.Fourty,
     numberOfPlayers: NumberOfPlayers.Two,

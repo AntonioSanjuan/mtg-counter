@@ -31,6 +31,11 @@ describe('GameSettings', () => {
     mock_useGameSettings.initializeMock()
   });
 
+  afterEach(() => {
+    //restore mocked new Date!!!
+    jest.useRealTimers();
+  })
+
   it('should create', () => {
     const { container } = render(
       <Provider store={gameSettingsStore}>
@@ -87,6 +92,10 @@ describe('GameSettings', () => {
 
   it('Restart should restart only the players counters', async () => {
     const sut = 'gameSettingsId'
+    const createdAtOriginal = new Date();
+    let createdAtRestarted = new Date(createdAtOriginal);
+    createdAtRestarted.setDate(createdAtOriginal.getDate() + 1);
+
     render(
       <Provider store={gameSettingsStore}>
         <Router location={history.location} navigator={history}>
@@ -97,7 +106,10 @@ describe('GameSettings', () => {
 
     const playersLife = Lifes.Thirty
     let players: FirebasePlayerDto[] = getDefaultPlayers(playersLife, 3);
+
     const gameSettings: FirebaseGameDto = { 
+      createdAt: createdAtOriginal,
+      finishAt: undefined,
       finished: false,
       board: {
         players: players,
@@ -127,12 +139,17 @@ describe('GameSettings', () => {
 
     const button = screen.getByRole('button', { name: 'restartGameSettings' });
     
+    //mocked new Date!!!
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(createdAtRestarted)
+    
     await act(async () => {
       fireEvent.click(button);
     });
 
     const restartedGameSettings: FirebaseGameDto = {
       ...gameSettings,
+      createdAt: createdAtRestarted,
       board: {
         ...gameSettings.board,
         players: gameSettings.board.players.map((player) => {

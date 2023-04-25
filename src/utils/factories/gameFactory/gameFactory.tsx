@@ -7,6 +7,8 @@ export const getNewGame = (
   initialLifes = Lifes.Fourty,
   numberOfPlayers = NumberOfPlayers.Two,
 ): FirebaseGameDto => ({
+  createdAt: new Date(),
+  finishAt: undefined,
   finished: false,
   board: {
     initialLifes,

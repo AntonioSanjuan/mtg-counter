@@ -82,9 +82,13 @@ describe('<usePlayer />', () => {
 
     const targetCounterType = 'Life'
     const playerCounter: FirebaseCounterDto = usePlayerInputplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === targetCounterType)[0]
+    const createdAtSut = new Date();
+
     const inputGameSettings: GameState = { 
       id: 'testGameSettingsId',
       finished: false,
+      createdAt: createdAtSut,
+      finishAt: undefined,
       board: {
         players: usePlayerplayers,
         initialLifes: usePlayerPlayersInitialLifes,
@@ -94,6 +98,8 @@ describe('<usePlayer />', () => {
 
     const outputGameSettings: FirebaseGameDto = {
       finished: inputGameSettings.finished,
+      createdAt: createdAtSut,
+      finishAt: undefined,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, playerCounter, 25)
@@ -116,9 +122,13 @@ describe('<usePlayer />', () => {
   it('updatePlayerColor should request updateGameSettings with the player color updated', async () => {
 
     const targetColor = PlayerColors.red
+    const createdAtSut = new Date();
+
     const inputGameSettings: GameState = { 
       id: 'testId',
       finished: false,
+      createdAt: createdAtSut,
+      finishAt: undefined,
       board: {
         players: usePlayerplayers,
         initialLifes: usePlayerPlayersInitialLifes,
@@ -128,6 +138,8 @@ describe('<usePlayer />', () => {
 
     const outputGameSettings: FirebaseGameDto = {
       finished: inputGameSettings.finished,
+      createdAt: createdAtSut,
+      finishAt: undefined,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerColor(usePlayerplayers, usePlayerInputplayer.id, targetColor)
@@ -167,6 +179,8 @@ describe('<usePlayer />', () => {
 
   
   it('updatePlayerColor should request updateGameSettings with the player details updated', async () => {
+    const createdAtSut = new Date()
+    
     const targetPlayerDetails: PlayerDetailsModel = {
       userId: 'testUserId',
       name: 'testName',
@@ -176,6 +190,8 @@ describe('<usePlayer />', () => {
     const inputGameSettings: GameState = { 
       id: 'testId',
       finished: false,
+      createdAt: createdAtSut,
+      finishAt: undefined,
       board: {
         players: usePlayerplayers,
         initialLifes: usePlayerPlayersInitialLifes,
@@ -184,6 +200,8 @@ describe('<usePlayer />', () => {
     };
 
     const outputGameSettings: FirebaseGameDto = {
+      createdAt: createdAtSut,
+      finishAt: undefined,
       finished: inputGameSettings.finished,
       board: {
         ...inputGameSettings.board,

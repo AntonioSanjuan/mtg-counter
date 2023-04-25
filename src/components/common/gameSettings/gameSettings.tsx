@@ -39,6 +39,8 @@ function GameSettings() {
 
     if (gameSettings.board) {
       const newGameSettings: FirebaseGameDto = {
+        createdAt: new Date(),
+        finishAt: undefined,
         finished: false,
         board: {
           ...gameSettings.board,

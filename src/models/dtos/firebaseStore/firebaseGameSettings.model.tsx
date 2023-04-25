@@ -26,4 +26,6 @@ export interface FirebaseBoardDto {
 export interface FirebaseGameDto {
     finished: boolean;
     board: FirebaseBoardDto;
+    createdAt: Date;
+    finishAt: Date|undefined;
 }
