@@ -14,6 +14,7 @@ export function setUserSettings(settings: FirebaseUserSettingsDto, gameId: strin
   return setDoc(docRef, {
     userSettings: settings,
     currentGame: doc(db, 'games', gameId),
+    historicGames: [],
   } as FirebaseUserDto, { merge: true });
 }
 

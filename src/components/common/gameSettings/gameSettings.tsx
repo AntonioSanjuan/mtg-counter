@@ -1,22 +1,20 @@
 import { FormikProps, useFormik } from 'formik';
 import { useAlert } from '../../../hooks/alert/alertHook';
-import { useGameSettings } from '../../../hooks/gameSettings/gameSettingsHook';
+import { useGame } from '../../../hooks/game/gameHook';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
-import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { DynamicAlertTypes } from '../../../models/internal/types/DynamicAlertEnum.model';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { selectGame } from '../../../state/game/game.selectors';
 import { GameState } from '../../../state/game/models/appGame.state';
-import { getNewGame } from '../../../utils/factories/gameFactory/gameFactory';
-import { getDefaultPlayerCounters } from '../../../utils/factories/playerFactory/playerFactory';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
 
 function GameSettings() {
   const gameSettings = useAppSelector<GameState>(selectGame);
 
-  const { updateGameSettings, loading } = useGameSettings();
+  const { restartGame, resizeGame, loading } = useGame();
   const { openAlert, closeAlert } = useAlert();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
     initialValues: gameSettings.board as FirebaseBoardDto,
@@ -26,35 +24,10 @@ function GameSettings() {
   });
 
   const updateBoard = async () => {
-    if (gameSettings.board) {
-      const newGameSettings: FirebaseGameDto = getNewGame(
-        Number(formik.values.initialLifes),
-        Number(formik.values.numberOfPlayers),
-      );
-
-      await updateGameSettings(gameSettings.id, newGameSettings);
-    }
-  };
-
-  const restartBoard = async () => {
-    // TO-DO
-    // save it? using modals
-
-    if (gameSettings.board) {
-      const newGameSettings: FirebaseGameDto = {
-        createdAt: new Date(),
-        finishAt: undefined,
-        finished: false,
-        board: {
-          ...gameSettings.board,
-          players: gameSettings.board.players.map((player) => ({
-            ...player,
-            counters: getDefaultPlayerCounters(gameSettings.board.initialLifes),
-          })),
-        },
-      };
-      await updateGameSettings(gameSettings.id, newGameSettings);
-    }
+    resizeGame(
+      Number(formik.values.initialLifes),
+      Number(formik.values.numberOfPlayers),
+    );
   };
 
   return (
@@ -105,11 +78,13 @@ function GameSettings() {
               type="button"
               className="btn btn-danger"
               aria-label="restartGameSettings"
-              // onClick={restartBoard}
               onClick={() => openAlert(DynamicAlertTypes.Notification, {
                 title: '¿Quieres guardar la partida?',
                 onOkButtonClick: () => console.log('onOK'),
-                onCancelButtonClick: () => closeAlert(),
+                onCancelButtonClick: () => {
+                  restartGame();
+                  closeAlert();
+                },
               })}
             >
               Restart

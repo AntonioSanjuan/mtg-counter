@@ -11,7 +11,8 @@ const getUserSettingsResponseObj = {
     return {
       currentGame: {
         id: 'testCurrentGameId'
-      }
+      },
+      historicGames: []
     } as Partial<FirebaseUserDto>
 } } as DocumentSnapshot<DocumentData>;
 
