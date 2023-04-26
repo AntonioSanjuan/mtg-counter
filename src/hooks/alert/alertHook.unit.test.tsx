@@ -5,7 +5,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as hooks from '../state/appStateHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useAlert } from './alertHook';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { closeAlertAction, openAlertAction } from '../../state/layout/layout.actions';
 import ProfileSettings from '../../components/common/profileSettings/profileSettings';
 
@@ -30,7 +30,7 @@ describe('<useAlert />', () => {
   });
 
   it('openAlert should dispatch openAlertAction', async () => {
-    const alert = DynamicModalTypes.ProfileSettings;
+    const alert = DynamicAlertTypes.ProfileSettings;
     const { result } = renderHook(() => useAlert(), { wrapper });
 
     await act(async () => {
@@ -51,7 +51,7 @@ describe('<useAlert />', () => {
   });
 
   it('getAlertContent should return dynamic component if redux has stored LayoutAlertContent', async () => {
-    const alert = DynamicModalTypes.ProfileSettings;
+    const alert = DynamicAlertTypes.ProfileSettings;
     await act(async () => {
       useAlertStore.dispatch(openAlertAction(alert));
     });

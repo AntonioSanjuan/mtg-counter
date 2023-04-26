@@ -2,7 +2,7 @@ import { useAlert } from '../../hooks/alert/alertHook';
 import { usePlayer } from '../../hooks/player/playerHook';
 import { useAppDispatch } from '../../hooks/state/appStateHook';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { openAlertAction } from '../../state/layout/layout.actions';
 import ColorSelector from '../ColorSelector/ColorSelector';
@@ -25,7 +25,7 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
         aria-label="detailsButton"
         className="btn btn-link PlayerConfig_DetailsButton"
         onClick={() => {
-          openAlert(DynamicModalTypes.PlayerDetails, { player });
+          openAlert(DynamicAlertTypes.PlayerDetails, { player });
         }}
       >
         <i className="bi bi-pencil-fill" />

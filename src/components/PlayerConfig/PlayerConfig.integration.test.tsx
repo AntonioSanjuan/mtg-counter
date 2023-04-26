@@ -15,7 +15,7 @@ import * as useAlertHooks from '../../hooks/alert/alertHook'
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock'
 import { Dispatch } from '@reduxjs/toolkit';
 import { openAlertAction } from '../../state/layout/layout.actions';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 
 describe('PlayerConfig', () => {
   let playerConfigStore: any;
@@ -109,7 +109,7 @@ describe('PlayerConfig', () => {
       fireEvent.click(detailsButton);
     });
 
-    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicModalTypes.PlayerDetails, { player: inputPlayer });
+    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicAlertTypes.PlayerDetails, { player: inputPlayer });
 
   });
 });

@@ -1,9 +1,11 @@
-import { DynamicModalTypes } from '../../../models/internal/types/DynamicModalEnum.model';
+import { NotificationAlertPropsModel } from '../../../models/internal/models/alertProps.model';
+import { DynamicAlertTypes } from '../../../models/internal/types/DynamicAlertEnum.model';
 
 export interface AlertContent {
-  type: DynamicModalTypes|undefined,
-  props: object
+  type: DynamicAlertTypes|undefined,
+  props: NotificationAlertPropsModel | object
 }
+
 export interface LayoutState {
   isSidenavOpened: boolean,
   alert: {

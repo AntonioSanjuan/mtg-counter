@@ -2,11 +2,13 @@ import React from 'react';
 import ProfileSettings from '../../components/common/profileSettings/profileSettings';
 import GameSettings from '../../components/common/gameSettings/gameSettings';
 import PlayerDetails from '../../components/common/playerDetails/playerDetails';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { closeAlertAction, openAlertAction } from '../../state/layout/layout.actions';
 import { selectLayoutAlertContent } from '../../state/layout/layout.selectors';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { AlertContent } from '../../state/layout/models/appLayout.state';
+import Notification from '../../components/common/notification/notification';
+import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
 
 export function useAlert() {
   const dispatch = useAppDispatch();
@@ -16,14 +18,17 @@ export function useAlert() {
     let MyComponent: any;
 
     switch (alertContent.type) {
-      case DynamicModalTypes.ProfileSettings:
+      case DynamicAlertTypes.ProfileSettings:
         MyComponent = ProfileSettings;
         break;
-      case DynamicModalTypes.GameSettings:
+      case DynamicAlertTypes.GameSettings:
         MyComponent = GameSettings;
         break;
-      case DynamicModalTypes.PlayerDetails:
+      case DynamicAlertTypes.PlayerDetails:
         MyComponent = PlayerDetails;
+        break;
+      case DynamicAlertTypes.Notification:
+        MyComponent = Notification;
         break;
       default:
         break;
@@ -34,7 +39,7 @@ export function useAlert() {
       : undefined;
   };
 
-  const openAlert = (alertType: DynamicModalTypes, props: object = {}) => {
+  const openAlert = (alertType: DynamicAlertTypes, props: NotificationAlertPropsModel | object = {}) => {
     dispatch(openAlertAction(alertType, props));
   };
 

@@ -9,7 +9,7 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 import Alert from './Alert';
 import { openAlertAction } from '../../state/layout/layout.actions';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 
 describe('Alert', () => {
   let alertStore: any;
@@ -47,7 +47,7 @@ describe('Alert', () => {
     );
 
     await act(async () => {
-      alertStore.dispatch(openAlertAction(DynamicModalTypes.ProfileSettings));
+      alertStore.dispatch(openAlertAction(DynamicAlertTypes.ProfileSettings));
     });
 
     

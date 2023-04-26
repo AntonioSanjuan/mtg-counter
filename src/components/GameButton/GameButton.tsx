@@ -1,12 +1,12 @@
 import { useAlert } from '../../hooks/alert/alertHook';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import './GameButton.scss';
 
 function GameButton() {
   const { openAlert } = useAlert();
 
   const openGameSettings = () => {
-    openAlert(DynamicModalTypes.GameSettings);
+    openAlert(DynamicAlertTypes.GameSettings);
   };
 
   return (

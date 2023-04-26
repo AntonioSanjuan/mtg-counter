@@ -1,7 +1,9 @@
 import { FormikProps, useFormik } from 'formik';
+import { useAlert } from '../../../hooks/alert/alertHook';
 import { useGameSettings } from '../../../hooks/gameSettings/gameSettingsHook';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { FirebaseBoardDto, FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { DynamicAlertTypes } from '../../../models/internal/types/DynamicAlertEnum.model';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { selectGame } from '../../../state/game/game.selectors';
@@ -15,6 +17,7 @@ function GameSettings() {
   const gameSettings = useAppSelector<GameState>(selectGame);
 
   const { updateGameSettings, loading } = useGameSettings();
+  const { openAlert, closeAlert } = useAlert();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
     initialValues: gameSettings.board as FirebaseBoardDto,
     onSubmit: async () => {
@@ -102,7 +105,12 @@ function GameSettings() {
               type="button"
               className="btn btn-danger"
               aria-label="restartGameSettings"
-              onClick={restartBoard}
+              // onClick={restartBoard}
+              onClick={() => openAlert(DynamicAlertTypes.Notification, {
+                title: '¿Quieres guardar la partida?',
+                onOkButtonClick: () => console.log('onOK'),
+                onCancelButtonClick: () => closeAlert(),
+              })}
             >
               Restart
             </button>

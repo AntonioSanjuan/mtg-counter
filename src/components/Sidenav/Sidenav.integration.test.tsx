@@ -12,7 +12,7 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useUser from '../../hooks/user/userHook.mock';
 import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
-import { DynamicModalTypes } from '../../models/internal/types/DynamicModalEnum.model';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { setUserAction } from '../../state/user/user.actions';
 import { User } from 'firebase/auth';
 import { Section } from '../common/section/section';
