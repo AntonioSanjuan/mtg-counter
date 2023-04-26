@@ -1,102 +1,80 @@
-import { AdditionalUserInfo, getAdditionalUserInfo } from 'firebase/auth';
-import { useCallback, useState } from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { UserCredential } from '@firebase/auth';
-import {
-  firebaseGoogleLogin, firebaseLogin, firebaseLogout, firebaseSignUp,
-} from '../../services/firebaseAuth/firebaseAuth.service';
-import { useUserSettings } from '../userSettings/userSettingsHook';
-import { useAppDispatch, useAppSelector } from '../state/appStateHook';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
-import { selectUserSettings } from '../../state/user/user.selectors';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { selectGame } from '../../state/game/game.selectors';
-import { useGameSettings } from '../gameSettings/gameSettingsHook';
-import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
-import { GameState } from '../../state/game/models/appGame.state';
+import { useState } from 'react';
+import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
+import { useAppDispatch } from '../state/appStateHook';
+import * as userSettingsService from '../../services/firebaseStore/user/user.service';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
+import { setUserSettingsAction } from '../../state/user/user.actions';
+import { Language } from '../../models/internal/types/LanguageEnum.model';
+import { auth } from '../../utils/firebase.util';
 
 export function useUser() {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const { setUserSettings } = useUserSettings();
-  const { setGameSettings } = useGameSettings();
-  const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
-  const gameSettings = useAppSelector<GameState>(selectGame);
 
-  const setupInitialDataIfRequired = async (user: UserCredential) => {
-    const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
+  const getUser = async (): Promise<DocumentSnapshot<DocumentData>> => {
+    setLoading(true);
+    return userSettingsService.getUser()
+      .then((userResp) => {
+        const user = userResp.data() as FirebaseUserDto;
+        dispatch(setUserSettingsAction(user.userSettings));
+        setLoading(false);
+        setError(false);
+        return userResp;
+      }).catch((e) => {
+        setLoading(false);
+        setError(true);
+        throw e;
+      });
+  };
 
-    if (isNewUser) {
-      const newGameSettings = await setGameSettings(gameSettings as FirebaseGameDto);
-      await setUserSettings(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
+  const setUser = async (userSettings: FirebaseUserSettingsDto, gameId: string): Promise<any> => {
+    setLoading(true);
+    return userSettingsService.setUser(userSettings, gameId).then(() => {
+      dispatch(setUserSettingsAction(userSettings));
+      setLoading(false);
+      setError(false);
+      return userSettings;
+    }).catch((e) => {
+      setLoading(false);
+      setError(true);
+      throw e;
+    });
+  };
+
+  const updateUser = async (settings: FirebaseUserSettingsDto): Promise<any> => {
+    setLoading(true);
+    if (auth.currentUser) {
+      return userSettingsService.updateUser(settings)
+        .then(() => {
+          dispatch(setUserSettingsAction(settings));
+          setLoading(false);
+          setError(false);
+        }).catch((e) => {
+          setLoading(false);
+          setError(true);
+          throw e;
+        });
     }
+    setLoading(false);
+    setError(false);
+    dispatch(setUserSettingsAction(settings));
+    return {};
   };
 
-  const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
-    setLoading(true);
-    return firebaseLogin(username, password)
-      .then((resp) => {
-        setLoading(false);
-        setError(false);
-        return resp;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      });
+  const setAnonymousUser = (lang: Language, darkMode: boolean) => {
+    dispatch(setUserSettingsAction({
+      darkMode,
+      lang,
+    } as FirebaseUserSettingsDto));
   };
-
-  const loginWithGoogle = async (): Promise<UserCredential> => {
-    setLoading(true);
-    dispatch(setUserIsCreatingAction());
-
-    return firebaseGoogleLogin()
-      .then(async (resp) => {
-        await setupInitialDataIfRequired(resp);
-
-        setLoading(false);
-        setError(false);
-        return resp;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      }).finally(() => {
-        dispatch(unsetUserIsCreatingAction());
-      });
-  };
-
-  const signUp = async ({ username, password }: { username: string, password: string}): Promise<UserCredential> => {
-    setLoading(true);
-    dispatch(setUserIsCreatingAction());
-
-    return firebaseSignUp(username, password)
-      .then(async (resp) => {
-        await setupInitialDataIfRequired(resp);
-
-        setLoading(false);
-        setError(false);
-        return resp;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      }).finally(() => {
-        dispatch(unsetUserIsCreatingAction());
-      });
-  };
-
-  const logout = useCallback(async (): Promise<void> => {
-    await firebaseLogout();
-  }, []);
 
   return {
-    login,
-    loginWithGoogle,
-    logout,
-    signUp,
+    getUser,
+    setUser,
+    setAnonymousUser,
+    updateUser,
     loading,
     error,
   };

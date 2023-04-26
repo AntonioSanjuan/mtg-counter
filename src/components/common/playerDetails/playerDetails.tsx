@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import './playerDetails.scss';
 
 import { usePlayer } from '../../../hooks/player/playerHook';
-import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { useAlert } from '../../../hooks/alert/alertHook';
 

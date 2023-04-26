@@ -8,9 +8,9 @@ import { Router } from 'react-router-dom';
 import ProfileSettings from './profileSettings';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import { setUserSettingsAction } from '../../../state/user/user.actions';
-import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
-import * as useUserSettings from '../../../hooks/userSettings/userSettingsHook';
-import * as mock_useUserSettings from '../../../hooks/userSettings/userSettingsHook.mock';
+import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
+import * as useUser from '../../../hooks/user/userHook';
+import * as mock_useUser from '../../../hooks/user/userHook.mock';
 
 describe('ProfileSettings', () => {
   let profileSettingsStore: any;
@@ -23,10 +23,10 @@ describe('ProfileSettings', () => {
       setUserSettingsAction({ darkMode: true, lang: 'es' } as FirebaseUserSettingsDto),
     );
 
-    jest.spyOn(useUserSettings, 'useUserSettings')
-      .mockImplementation(mock_useUserSettings.mock);
+    jest.spyOn(useUser, 'useUser')
+      .mockImplementation(mock_useUser.mock);
   
-    mock_useUserSettings.initializeMock();
+    mock_useUser.initializeMock();
   });
 
   it('should create', () => {
@@ -49,7 +49,7 @@ describe('ProfileSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useUserSettings.mock().updateUserSettings).not.toHaveBeenCalled();
+    expect(mock_useUser.mock().updateUser).not.toHaveBeenCalled();
 
     const radioButton = screen.getByLabelText('Dark Mode');
     expect(radioButton).toBeChecked();
@@ -58,7 +58,7 @@ describe('ProfileSettings', () => {
       fireEvent.click(radioButton);
     });
 
-    expect(mock_useUserSettings.mock().updateUserSettings).toHaveBeenCalled();
+    expect(mock_useUser.mock().updateUser).toHaveBeenCalled();
     expect(radioButton).not.toBeChecked();
 
   });
@@ -72,13 +72,13 @@ describe('ProfileSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useUserSettings.mock().updateUserSettings).not.toHaveBeenCalled();
+    expect(mock_useUser.mock().updateUser).not.toHaveBeenCalled();
     const select = screen.getByLabelText('Language');
 
     await act(async () => {
       fireEvent.change(select, { target: { value: 'es' } });
     });
 
-    expect(mock_useUserSettings.mock().updateUserSettings).toHaveBeenCalled();
+    expect(mock_useUser.mock().updateUser).toHaveBeenCalled();
   });
 });

@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth';
-import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
 
 export interface UserState {
   isLogged: boolean;

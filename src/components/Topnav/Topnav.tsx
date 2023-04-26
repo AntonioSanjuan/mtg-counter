@@ -6,14 +6,14 @@ import { useSidenavLayer } from '../../hooks/sidenav/sidenavHook';
 import './Topnav.scss';
 import { SearchInput } from '../common/searchInput/searchInput';
 import { ProfileSection } from '../common/profileSection/profileSection';
-import { useUser } from '../../hooks/user/userHook';
+import { useAuth } from '../../hooks/auth/authHook';
 
 function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
   {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
 
   const { switchSidenavStatus } = useSidenavLayer();
-  const { logout } = useUser();
+  const { logout } = useAuth();
 
   const handleSidenavChange = (e: any) => {
     e.preventDefault();

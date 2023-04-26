@@ -2,22 +2,33 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { UserCredential } from 'firebase/auth';
+import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
+import { FirebaseUserDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 
-const loginResponseMock = {} as UserCredential;
+const getUserResponseObj = { 
+  id: 'testUserSettingsId',
+  data: () => {
+    return {
+      currentGame: {
+        id: 'testCurrentGameId'
+      },
+      historicGames: []
+    } as Partial<FirebaseUserDto>
+} } as DocumentSnapshot<DocumentData>;
+
 let loadingResponseMock: boolean = false;
 let errorResponseMock: boolean = false;
 
-const loginSpy = jest.fn()
-const loginWithGoogleSpy = jest.fn()
-const signUpSpy = jest.fn()
-const logoutSpy = jest.fn();
+const getUserSpy = jest.fn();
+const setUserSpy = jest.fn();
+const updateUserSpy = jest.fn();
+const setAnonymousUserSpy = jest.fn();
 
 const mockUserMockResponse = {
-  login: loginSpy,
-  loginWithGoogle: loginWithGoogleSpy,
-  logout: logoutSpy,
-  signUp: signUpSpy,
+  getUser: getUserSpy,
+  setUser: setUserSpy,
+  setAnonymousUser: setAnonymousUserSpy,
+  updateUser: updateUserSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }
@@ -27,8 +38,8 @@ export const mock = () => {
 }
 
 export const initializeMock = () => {
-  loginSpy.mockResolvedValue(loginResponseMock),
-  loginWithGoogleSpy.mockResolvedValue(loginResponseMock),
-  logoutSpy.mockResolvedValue(undefined),
-  signUpSpy.mockResolvedValue(loginResponseMock)
+  getUserSpy.mockResolvedValue(getUserResponseObj)
+  setUserSpy.mockResolvedValue(getUserResponseObj)
+  setAnonymousUserSpy.mockResolvedValue(undefined)
+  updateUserSpy.mockResolvedValue(getUserResponseObj)
 }

@@ -6,7 +6,7 @@ import * as hooks from '../state/appStateHook';
 import * as playerHooks from '../../hooks/player/playerHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useCounter } from './counterHook';
-import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { CounterTypes } from '../../models/internal/types/CounterTypes.model';
 import * as mock_usePlayer from '../player/playerHook.mock';

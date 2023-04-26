@@ -8,12 +8,12 @@ import { Router } from 'react-router-dom';
 import React from 'react';
 import { User } from 'firebase/auth';
 import * as sidenavhooks from '../../hooks/sidenav/sidenavHook';
-import * as userHook from '../../hooks/user/userHook';
+import * as userHook from '../../hooks/auth/authHook';
 import { Topnav } from './Topnav';
-import { setUserAction } from '../../state/user/user.actions';
+import { setUserAuthAction } from '../../state/user/user.actions';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
-import * as mock_useUser from '../../hooks/user/userHook.mock';
+import * as mock_useAuth from '../../hooks/auth/authHook.mock';
 
 describe('Topnav', () => {
   let topnavStore: any;
@@ -25,8 +25,8 @@ describe('Topnav', () => {
     topnavStore = createTestStore();
     history = createMemoryHistory();
 
-    jest.spyOn(userHook, 'useUser')
-      .mockImplementation(mock_useUser.mock);
+    jest.spyOn(userHook, 'useAuth')
+      .mockImplementation(mock_useAuth.mock);
 
     jest.spyOn(React, 'useState')
       .mockImplementation(() => [undefined, setLoginButtonHiddenMock]);
@@ -35,7 +35,7 @@ describe('Topnav', () => {
       .mockImplementation(mock_useSidenavLayer.mock);
 
     mock_useSidenavLayer.initializeMock();
-    mock_useUser.initializeMock()
+    mock_useAuth.initializeMock()
     expect(setLoginButtonHiddenMock).toHaveBeenCalledTimes(0);
   });
 
@@ -91,7 +91,7 @@ describe('Topnav', () => {
 
   it('Topnav `Logout` button should appear if !hideLoginButton and user is logged', () => {
     topnavStore.dispatch(
-      setUserAction({} as User),
+      setUserAuthAction({} as User),
     );
 
     render(
@@ -126,7 +126,7 @@ describe('Topnav', () => {
   
   it('Topnav `Logout` button click should request useUser logout', () => {
     topnavStore.dispatch(
-      setUserAction({} as User),
+      setUserAuthAction({} as User),
     );
 
     render(
@@ -142,7 +142,7 @@ describe('Topnav', () => {
       })[0]
     )
       
-    expect(mock_useUser.mock().logout).toHaveBeenCalled();
+    expect(mock_useAuth.mock().logout).toHaveBeenCalled();
   });
 
 });

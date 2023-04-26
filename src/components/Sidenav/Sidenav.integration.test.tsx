@@ -6,14 +6,14 @@ import { Router } from 'react-router-dom';
 import { Sidenav } from './Sidenav';
 
 import * as sidenavHooks from '../../hooks/sidenav/sidenavHook';
-import * as userHooks from '../../hooks/user/userHook';
+import * as userHooks from '../../hooks/auth/authHook';
 import * as alertHooks from '../../hooks/alert/alertHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import * as mock_useUser from '../../hooks/user/userHook.mock';
+import * as mock_useAuth from '../../hooks/auth/authHook.mock';
 import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
-import { setUserAction } from '../../state/user/user.actions';
+import { setUserAuthAction } from '../../state/user/user.actions';
 import { User } from 'firebase/auth';
 import { Section } from '../common/section/section';
 
@@ -28,14 +28,14 @@ describe('Sidenav', () => {
     jest.spyOn(sidenavHooks, 'useSidenavLayer')
       .mockImplementation(mock_useSidenavLayer.mock);
 
-    jest.spyOn(userHooks, 'useUser')
-      .mockImplementation(mock_useUser.mock);
+    jest.spyOn(userHooks, 'useAuth')
+      .mockImplementation(mock_useAuth.mock);
 
     jest.spyOn(alertHooks, 'useAlert')
       .mockImplementation(mock_useAlert.mock);
 
       mock_useAlert.initializeMock()
-      mock_useUser.initializeMock()
+      mock_useAuth.initializeMock()
       mock_useSidenavLayer.initializeMock()
   });
 
@@ -106,7 +106,7 @@ describe('Sidenav', () => {
     );
 
     sidenavStore.dispatch(
-      setUserAction({} as User),
+      setUserAuthAction({} as User),
     );
 
     expect(container).toContainHTML(render(

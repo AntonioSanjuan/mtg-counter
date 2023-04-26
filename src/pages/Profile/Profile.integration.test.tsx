@@ -7,7 +7,7 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 
 import Profile from './Profile';
 import { setUserSettingsAction } from '../../state/user/user.actions';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 
 describe('Profile', () => {
   let profileStore: any;

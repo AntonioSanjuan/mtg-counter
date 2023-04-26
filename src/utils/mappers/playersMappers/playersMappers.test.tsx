@@ -1,4 +1,4 @@
-import { FirebaseCounterDto, FirebaseGameDto } from "../../../models/dtos/firebaseStore/firebaseGameSettings.model";
+import { FirebaseCounterDto, FirebaseGameDto } from "../../../models/dtos/firebaseStore/firebaseGame.model";
 import { Lifes } from "../../../models/internal/types/LifeEnum.model";
 import { NumberOfPlayers } from "../../../models/internal/types/NumberOfPlayerEnum.model";
 import { PlayerColors } from "../../../models/internal/types/PlayerColorEnum.model";

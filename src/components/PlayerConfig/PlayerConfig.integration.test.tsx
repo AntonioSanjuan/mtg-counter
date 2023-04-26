@@ -6,15 +6,13 @@ import { createMemoryHistory } from 'history';
 import * as usePlayerHooks from '../../hooks/player/playerHook'
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import PlayerConfig from './PlayerConfig';
-import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import * as mock_usePlayer from '../../hooks/player/playerHook.mock';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { act } from 'react-dom/test-utils';
 import * as useAlertHooks from '../../hooks/alert/alertHook'
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock'
-import { Dispatch } from '@reduxjs/toolkit';
-import { openAlertAction } from '../../state/layout/layout.actions';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 
 describe('PlayerConfig', () => {

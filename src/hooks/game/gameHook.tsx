@@ -1,54 +1,110 @@
-import React, { useState } from 'react';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
-import { selectGame } from '../../state/game/game.selectors';
-import { GameState } from '../../state/game/models/appGame.state';
+import { useState } from 'react';
+import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
+import { useAppDispatch, useAppSelector } from '../state/appStateHook';
+import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
+import { setGameAction } from '../../state/game/game.actions';
+import { auth } from '../../utils/firebase.util';
+import * as gameService from '../../services/firebaseStore/game/game.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
-import { getDefaultPlayerCounters } from '../../utils/factories/playerFactory/playerFactory';
-import { useGameSettings } from '../gameSettings/gameSettingsHook';
-import { useAppSelector } from '../state/appStateHook';
+import { GameState } from '../../state/game/models/appGame.state';
 
 export function useGame() {
-  const gameSettings = useAppSelector<GameState>(selectGame);
-  const { updateGameSettings, loading: gameSettingsLoading, error: gameSettingsError } = useGameSettings();
+  const dispatch = useAppDispatch();
 
-  const restartGame = async () => {
-    if (gameSettings.board) {
-      const newGameSettings: FirebaseGameDto = {
-        createdAt: new Date(),
-        finishAt: undefined,
-        finished: false,
-        board: {
-          ...gameSettings.board,
-          players: gameSettings.board.players.map((player) => ({
-            ...player,
-            counters: getDefaultPlayerCounters(gameSettings.board.initialLifes),
-          })),
-        },
-      };
-      await updateGameSettings(gameSettings.id, newGameSettings);
-    }
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
+
+  const createGameState = (game: FirebaseGameDto, gameId: string|undefined): GameState => {
+    const output: GameState = {
+      ...game,
+      id: gameId,
+    };
+    return output;
   };
 
-  const resizeGame = async (initialLifes: number, numberOfPlayers: number) => {
-    if (gameSettings.board) {
-      const newGameSettings: FirebaseGameDto = getNewGame(
-        initialLifes,
-        numberOfPlayers,
+  const getGame = async (gameSettingsId: string): Promise<DocumentSnapshot<DocumentData>> => {
+    setLoading(true);
+    return gameService.getGame(gameSettingsId)
+      .then((gameResp) => {
+        const game = gameResp.data() as FirebaseGameDto;
+
+        const gameSettingsOutput = createGameState(
+          game,
+          gameResp.id,
+        );
+
+        dispatch(setGameAction(gameSettingsOutput));
+        setLoading(false);
+        setError(false);
+        return gameResp;
+      }).catch((e) => {
+        setLoading(false);
+        setError(true);
+        throw e;
+      });
+  };
+
+  const setGame = async (gameSettings: FirebaseGameDto): Promise<any> => {
+    setLoading(true);
+
+    return gameService.setGame(gameSettings).then((game) => {
+      const gameSettingsOutput = createGameState(
+        gameSettings,
+        game.id,
       );
-
-      await updateGameSettings(gameSettings.id, newGameSettings);
-    }
+      dispatch(setGameAction(gameSettingsOutput));
+      setLoading(false);
+      setError(false);
+      return gameSettingsOutput;
+    }).catch((e) => {
+      setLoading(false);
+      setError(true);
+      throw e;
+    });
   };
 
-  const saveGameIntoHistoric = async () => {
-    // to-do
+  const updateGame = async (
+    gameSettingsId: string | undefined,
+    gameSettings: FirebaseGameDto,
+  ): Promise<any> => {
+    setLoading(true);
+    const gameSettingsOutput = createGameState(
+      gameSettings,
+      gameSettingsId,
+    );
+    if (auth.currentUser) {
+      return gameService.updateGame(gameSettingsId as string, gameSettings)
+        .then(() => {
+          dispatch(setGameAction(gameSettingsOutput));
+          setLoading(false);
+          setError(false);
+        }).catch((e) => {
+          setLoading(false);
+          setError(true);
+          throw e;
+        });
+    }
+    setLoading(false);
+    setError(false);
+    dispatch(setGameAction(gameSettingsOutput));
+    return {};
+  };
+
+  const setAnonymousGame = () => {
+    const gameSettingsOutput: GameState = {
+      id: undefined,
+      ...getNewGame(),
+    };
+
+    dispatch(setGameAction(gameSettingsOutput));
   };
 
   return {
-    restartGame,
-    resizeGame,
-    saveGameIntoHistoric,
-    loading: gameSettingsLoading,
-    error: gameSettingsError,
+    getGame,
+    setGame,
+    setAnonymousGame,
+    updateGame,
+    loading,
+    error,
   };
 }

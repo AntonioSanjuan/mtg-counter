@@ -1,15 +1,15 @@
 import {
   doc, DocumentData, DocumentSnapshot, getDoc, setDoc,
 } from 'firebase/firestore';
-import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
 import { auth, db } from '../../../utils/firebase.util';
 
-export function getUserSettings(): Promise<DocumentSnapshot<DocumentData>> {
+export function getUser(): Promise<DocumentSnapshot<DocumentData>> {
   const userRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return getDoc(userRef);
 }
 
-export function setUserSettings(settings: FirebaseUserSettingsDto, gameId: string): Promise<any> {
+export function setUser(settings: FirebaseUserSettingsDto, gameId: string): Promise<any> {
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, {
     userSettings: settings,
@@ -18,7 +18,7 @@ export function setUserSettings(settings: FirebaseUserSettingsDto, gameId: strin
   } as FirebaseUserDto, { merge: true });
 }
 
-export function updateUserSettings(settings: FirebaseUserSettingsDto): Promise<any> {
+export function updateUser(settings: FirebaseUserSettingsDto): Promise<any> {
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, { userSettings: settings }, { merge: true });
 }

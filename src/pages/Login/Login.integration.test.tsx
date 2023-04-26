@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { act } from 'react-dom/test-utils';
-import * as userHooks from '../../hooks/user/userHook';
+import * as authHooks from '../../hooks/auth/authHook';
 import Login from './Login';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import * as mock_useUser from '../../hooks/user/userHook.mock';
+import * as mock_useAuth from '../../hooks/auth/authHook.mock';
 
 describe('Login', () => {
   let loginStore: any;
@@ -17,10 +17,10 @@ describe('Login', () => {
     loginStore = createTestStore();
     history = createMemoryHistory();
 
-    jest.spyOn(userHooks, 'useUser')
-      .mockImplementation(mock_useUser.mock);
+    jest.spyOn(authHooks, 'useAuth')
+      .mockImplementation(mock_useAuth.mock);
 
-    mock_useUser.initializeMock()
+    mock_useAuth.initializeMock()
   });
 
   it('should create', () => {
@@ -46,7 +46,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(mock_useUser.mock().login).not.toHaveBeenCalled();
+    expect(mock_useAuth.mock().login).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     fireEvent.change(usernameInput, { target: { value: username } });
     const passwordInput = screen.getByPlaceholderText('****');
@@ -58,7 +58,7 @@ describe('Login', () => {
       fireEvent.click(loginButton);
     });
 
-    expect(mock_useUser.mock().login).toHaveBeenCalledWith({ username, password });
+    expect(mock_useAuth.mock().login).toHaveBeenCalledWith({ username, password });
     expect(history.location.pathname).toEqual('/');
   });
 
@@ -94,7 +94,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(mock_useUser.mock().signUp).not.toHaveBeenCalled();
+    expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     const passwordInput = screen.getByPlaceholderText('****');
 
@@ -119,7 +119,7 @@ describe('Login', () => {
       </Provider>,
     );
 
-    expect(mock_useUser.mock().signUp).not.toHaveBeenCalled();
+    expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
     const usernameInput = screen.getByPlaceholderText(/name@example.com/i);
     const passwordInput = screen.getByPlaceholderText('****');
     fireEvent.change(usernameInput, { target: { value: username } });
@@ -133,6 +133,6 @@ describe('Login', () => {
       fireEvent.click(registerButton);
     });
 
-    expect(mock_useUser.mock().signUp).toHaveBeenCalledWith({ username, password });
+    expect(mock_useAuth.mock().signUp).toHaveBeenCalledWith({ username, password });
   });
 });

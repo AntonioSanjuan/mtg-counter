@@ -1,8 +1,8 @@
 import { FormikProps, useFormik } from 'formik';
 import { useAlert } from '../../../hooks/alert/alertHook';
-import { useGame } from '../../../hooks/game/gameHook';
+import { useGameManagement } from '../../../hooks/gameManagement/gameManagementHook';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
-import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { DynamicAlertTypes } from '../../../models/internal/types/DynamicAlertEnum.model';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
@@ -14,7 +14,7 @@ import './gameSettings.scss';
 function GameSettings() {
   const gameSettings = useAppSelector<GameState>(selectGame);
 
-  const { restartGame, resizeGame, loading } = useGame();
+  const { restartGame, resizeGame, loading } = useGameManagement();
   const { openAlert, closeAlert } = useAlert();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
     initialValues: gameSettings.board as FirebaseBoardDto,

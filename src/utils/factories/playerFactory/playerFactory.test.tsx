@@ -1,7 +1,7 @@
 import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { getDefaultPlayerCounters, getDefaultPlayers } from './playerFactory';
-import { FirebaseCounterDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseCounterDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 
 describe('PlayerFactory', () => {
     let sutCounters: FirebaseCounterDto[] = [];

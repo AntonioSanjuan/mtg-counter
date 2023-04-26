@@ -1,11 +1,10 @@
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
 import { GameState } from './models/appGame.state';
 
 export enum GameActions {
-  setGameSettings = '@action/setGameSettings',
+  setGame = '@action/setGame',
 }
 
-export const setGameSettingsAction = (gameSettings: GameState) => ({
-  type: GameActions.setGameSettings,
+export const setGameAction = (gameSettings: GameState) => ({
+  type: GameActions.setGame,
   payload: gameSettings,
 });

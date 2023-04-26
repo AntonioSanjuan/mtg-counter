@@ -2,17 +2,17 @@ import {
   FirebaseCounterDto,
   FirebaseGameDto,
   FirebasePlayerDto,
-} from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+} from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails } from '../../utils/mappers/playersMappers/playersMappers';
-import { useGameSettings } from '../gameSettings/gameSettingsHook';
+import { useGame } from '../game/gameHook';
 import { useAppSelector } from '../state/appStateHook';
 
 export function usePlayer(player: FirebasePlayerDto) {
-  const { updateGameSettings } = useGameSettings();
+  const { updateGame } = useGame();
   const gameSettings = useAppSelector<GameState>(selectGame);
 
   const updatePlayerColor = async (newPlayerColor: PlayerColors) => {
@@ -53,7 +53,7 @@ export function usePlayer(player: FirebasePlayerDto) {
         players: newPlayers,
       },
     };
-    await updateGameSettings(gameSettings.id, newGameSettings);
+    await updateGame(gameSettings.id, newGameSettings);
   };
   return {
     updatePlayerCounter,

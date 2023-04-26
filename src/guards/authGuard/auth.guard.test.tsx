@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 
 import { User } from 'firebase/auth';
 import { AuthRouteGuard } from './auth.guard';
-import { setUserAction } from '../../state/user/user.actions';
+import { setUserAuthAction } from '../../state/user/user.actions';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 
 describe('AuthRouteGuard', () => {
@@ -75,7 +75,7 @@ describe('AuthRouteGuard', () => {
 
   it('if userIsLogged, guard should allow children view', async () => {
     await act(async () => {
-      authGuardStore.dispatch(setUserAction({} as User));
+      authGuardStore.dispatch(setUserAuthAction({} as User));
     });
 
     history.push('/testUri');

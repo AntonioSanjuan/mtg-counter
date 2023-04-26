@@ -3,19 +3,19 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as appStatehooks from '../state/appStateHook';
-import * as userSettingshooks from '../userSettings/userSettingsHook';
-import * as gameSettingshooks from '../gameSettings/gameSettingsHook';
+import * as userhooks from '../user/userHook';
+import * as gamehooks from '../game/gameHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
-import * as mock_useUserSettings from '../userSettings/userSettingsHook.mock';
-import { setUserAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import * as mock_useUser from '../user/userHook.mock';
+import { setUserAuthAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 import { createJsDomUnsupportedMethods } from '../../utils/testsUtils/jsDomUnsupportedMethods.util';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
-import * as mock_useGameSettings from '../gameSettings/gameSettingsHook.mock';
+import * as mock_useGame from '../game/gameHook.mock';
 
 describe('<useApp />', () => {
   let useAppStore: any;
@@ -38,14 +38,14 @@ describe('<useApp />', () => {
     jest.spyOn(appStatehooks, 'useAppDispatch')
       .mockReturnValue(useAppDispatchMockResponse);
 
-    jest.spyOn(gameSettingshooks, 'useGameSettings')
-      .mockImplementation(mock_useGameSettings.mock);
+    jest.spyOn(gamehooks, 'useGame')
+      .mockImplementation(mock_useGame.mock);
 
-    jest.spyOn(userSettingshooks, 'useUserSettings')
-      .mockImplementation(mock_useUserSettings.mock);
+    jest.spyOn(userhooks, 'useUser')
+      .mockImplementation(mock_useUser.mock);
 
-    mock_useGameSettings.initializeMock()
-    mock_useUserSettings.initializeMock()
+    mock_useGame.initializeMock()
+    mock_useUser.initializeMock()
   });
 
   it('should create', async () => {
@@ -96,9 +96,9 @@ describe('<useApp />', () => {
       renderHook(() => useApp(), { wrapper });
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAction(sut));
-    expect(mock_useUserSettings.mock().getUserSettings).toHaveBeenCalled()
-    expect(mock_useGameSettings.mock().getGameSettings).toHaveBeenCalled()
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAuthAction(sut));
+    expect(mock_useUser.mock().getUser).toHaveBeenCalled()
+    expect(mock_useGame.mock().getGame).toHaveBeenCalled()
   });
 
 
@@ -113,7 +113,7 @@ describe('<useApp />', () => {
      });
  
      expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
-     expect(mock_useUserSettings.mock().setAnonymousUserSettings).toHaveBeenCalled()
-     expect(mock_useGameSettings.mock().setAnonymousGameSettings).toHaveBeenCalled()
+     expect(mock_useUser.mock().setAnonymousUser).toHaveBeenCalled()
+     expect(mock_useGame.mock().setAnonymousGame).toHaveBeenCalled()
   });
 });

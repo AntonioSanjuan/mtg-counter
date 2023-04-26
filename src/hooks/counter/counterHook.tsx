@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   FirebaseCounterDto,
   FirebasePlayerDto,
-} from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+} from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { usePlayer } from '../player/playerHook';
 
 export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCounterDto) {

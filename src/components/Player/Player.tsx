@@ -2,7 +2,7 @@ import {
   useRef, useLayoutEffect, useState,
 } from 'react';
 
-import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import PlayerConfig from '../PlayerConfig/PlayerConfig';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import SCPlayer from './Player.style';

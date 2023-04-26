@@ -1,14 +1,14 @@
 import './profileSettings.scss';
 import { FormikProps, useFormik } from 'formik';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
-import { useUserSettings } from '../../../hooks/userSettings/userSettingsHook';
-import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { useUser } from '../../../hooks/user/userHook';
+import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
 import { selectUserSettings } from '../../../state/user/user.selectors';
 import { Loading } from '../loading/loading';
 
 function ProfileSettings() {
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
-  const { updateUserSettings, loading } = useUserSettings();
+  const { updateUser, loading } = useUser();
   const formik: FormikProps<FirebaseUserSettingsDto> = useFormik<FirebaseUserSettingsDto>({
     initialValues: userSettings as FirebaseUserSettingsDto,
     onSubmit: async () => {
@@ -23,7 +23,7 @@ function ProfileSettings() {
         lang: formik.values.lang,
         darkMode: formik.values.darkMode,
       };
-      await updateUserSettings(newSettings);
+      await updateUser(newSettings);
     }
   };
 

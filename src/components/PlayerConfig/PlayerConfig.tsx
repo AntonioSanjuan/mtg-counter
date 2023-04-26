@@ -1,7 +1,7 @@
 import { useAlert } from '../../hooks/alert/alertHook';
 import { usePlayer } from '../../hooks/player/playerHook';
 import { useAppDispatch } from '../../hooks/state/appStateHook';
-import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { openAlertAction } from '../../state/layout/layout.actions';

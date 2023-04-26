@@ -5,16 +5,16 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { selectUserIsCreating, selectUserSettings } from '../../state/user/user.selectors';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
-import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 import { auth } from '../../utils/firebase.util';
-import { setUserAction, unsetUserAction } from '../../state/user/user.actions';
-import { useUserSettings } from '../userSettings/userSettingsHook';
+import { setUserAuthAction, unsetUserAction } from '../../state/user/user.actions';
+import { useUser } from '../user/userHook';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { TRANSLATIONS_EN } from '../../locales/en';
 import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
-import { useGameSettings } from '../gameSettings/gameSettingsHook';
-import { useUser } from '../user/userHook';
+import { useGame } from '../game/gameHook';
+import { useAuth } from '../auth/authHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
@@ -37,8 +37,8 @@ const changeLanguage = (lang: Language) => {
 
 export function useApp() {
   const dispatch = useAppDispatch();
-  const { getUserSettings, setAnonymousUserSettings } = useUserSettings();
-  const { getGameSettings, setAnonymousGameSettings } = useGameSettings();
+  const { getUser, setAnonymousUser } = useUser();
+  const { getGame, setAnonymousGame } = useGame();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
@@ -57,16 +57,16 @@ export function useApp() {
   };
 
   const initializeAthenticatedUser = async () => {
-    dispatch(setUserAction(auth.currentUser));
-    const settings = await getUserSettings();
+    dispatch(setUserAuthAction(auth.currentUser));
+    const settings = await getUser();
     const user = settings.data() as FirebaseUserDto;
-    await getGameSettings(user.currentGame.id);
+    await getGame(user.currentGame.id);
   };
 
   const initializeAnonymousUser = () => {
     dispatch(unsetUserAction());
-    setAnonymousUserSettings(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
-    setAnonymousGameSettings();
+    setAnonymousUser(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
+    setAnonymousGame();
   };
 
   const initializeLanguage = () => {

@@ -11,7 +11,7 @@ import { createTestStore } from '../../../utils/testsUtils/createTestStore.util'
 import * as sidenavHooks from '../../../hooks/sidenav/sidenavHook';
 import * as mock_useSidenavLayer from '../../../hooks/sidenav/sidenavHook.mock';
 import { ProfileSection } from './profileSection';
-import { setUserAction } from '../../../state/user/user.actions';
+import { setUserAuthAction } from '../../../state/user/user.actions';
 
 describe('ProfileSection', () => {
   let profileSectionStore: any;
@@ -49,7 +49,7 @@ describe('ProfileSection', () => {
     );
 
     await act(async () => {
-      profileSectionStore.dispatch(setUserAction({} as User));
+      profileSectionStore.dispatch(setUserAuthAction({} as User));
     });
 
     fireEvent.click(

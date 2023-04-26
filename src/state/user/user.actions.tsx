@@ -1,5 +1,5 @@
 import { User } from 'firebase/auth';
-import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUserSettings.model';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 
 export enum UserActions {
     setUser = '@action/setUSer',
@@ -14,7 +14,7 @@ export const setUserSettingsAction = (userSettings: FirebaseUserSettingsDto) => 
   payload: userSettings,
 });
 
-export const setUserAction = (userData: User|null) => ({
+export const setUserAuthAction = (userData: User|null) => ({
   type: UserActions.setUser,
   payload: userData,
 });

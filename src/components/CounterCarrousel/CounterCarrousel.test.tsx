@@ -8,7 +8,7 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { act } from 'react-dom/test-utils';
 import * as useCounterHooks from './../../hooks/counter/counterHook'
 import CounterCarrousel from './CounterCarrousel';
-import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import * as mock_useCounter from '../../hooks/counter/counterHook.mock';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 

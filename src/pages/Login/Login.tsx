@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
 import logo from '../../assets/images/Logo.png';
-import { useUser } from '../../hooks/user/userHook';
+import { useAuth } from '../../hooks/auth/authHook';
 import { Loading } from '../../components/common/loading/loading';
 
 interface LoginFormModel {
@@ -14,7 +14,7 @@ interface LoginFormModel {
 function LoginPage() {
   const {
     login, loginWithGoogle, signUp, loading, error,
-  } = useUser();
+  } = useAuth();
   const navigate = useNavigate();
 
   const formik: FormikProps<LoginFormModel> = useFormik<LoginFormModel>({

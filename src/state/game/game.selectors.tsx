@@ -1,4 +1,4 @@
-import { FirebaseBoardDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGameSettings.model';
+import { FirebaseBoardDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { AppRootState } from '../rootState';
 import { GameState } from './models/appGame.state';
 
