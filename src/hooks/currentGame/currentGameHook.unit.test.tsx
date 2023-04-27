@@ -4,7 +4,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 import * as hooks from '../state/appStateHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { useGame } from './gameHook';
+import { useCurrentGame } from './currentGameHook';
 import * as userServiceMock from '../../services/firebaseStore/user/user.service.mock';
 import * as gameServiceMock from '../../services/firebaseStore/game/game.service.mock';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
@@ -15,16 +15,16 @@ import { User } from 'firebase/auth';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { mapGameFinished } from '../../utils/mappers/gameMappers/gameMappers'
 import { GameState } from '../../state/game/models/appGame.state';
-describe('<useGame />', () => {
-  let useGameStore: any;
+describe('<useCurrentGame />', () => {
+  let useCurrentGameStore: any;
   let wrapper: any;
 
   const useAppDispatchMockResponse = jest.fn((action) => {}) as Dispatch<any>;
 
   beforeEach(() => {
-    useGameStore = createTestStore();
+    useCurrentGameStore = createTestStore();
     wrapper = function ({ children }: { children: any }) {
-      return <Provider store={useGameStore}>{children}</Provider>;
+      return <Provider store={useCurrentGameStore}>{children}</Provider>;
     };
 
     jest.spyOn(hooks, 'useAppDispatch')
@@ -41,7 +41,7 @@ describe('<useGame />', () => {
   });
 
   it('should create', () => {
-    const { result } = renderHook(() => useGame(), { wrapper });
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     expect(result.current).toBeDefined();
   });
@@ -64,7 +64,7 @@ describe('<useGame />', () => {
       ...getUserSettingsOutput
     }
 
-    const { result } = renderHook(() => useGame(), { wrapper });
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     await act(async () => {
       await result.current.getGame(gameSettingsId);
@@ -80,7 +80,7 @@ describe('<useGame />', () => {
     expect(gameServiceMock.setGameSettingsSpy).not.toHaveBeenCalled();
     const gameSettings = mapGameFinished(getNewGame());
 
-    const { result } = renderHook(() => useGame(), { wrapper });
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     const gameState: GameState = {
       id: gameSettingsId,
@@ -109,7 +109,7 @@ describe('<useGame />', () => {
       id: undefined,
       ...gameSettings
     }
-    const { result } = renderHook(() => useGame(), { wrapper });
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     await act(async () => {
       await result.current.updateGame(gameSettingsState.id, gameSettings);
@@ -130,7 +130,7 @@ describe('<useGame />', () => {
       id: "gameSettingsId",
       ...gameSettings
     }
-    const { result } = renderHook(() => useGame(), { wrapper });
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     await act(async () => {
       await result.current.updateGame(gameSettingsState.id, gameSettings);

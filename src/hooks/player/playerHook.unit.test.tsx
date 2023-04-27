@@ -3,7 +3,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 
 import { Provider } from 'react-redux';
 import * as hooks from '../state/appStateHook';
-import * as gameHooks from '../game/gameHook';
+import * as currentGamehooks from '../currentGame/currentGameHook';
 
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { FirebaseCounterDto, FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
@@ -13,7 +13,7 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { setGameAction } from '../../state/game/game.actions';
 import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails } from '../../utils/mappers/playersMappers/playersMappers';
 import { GameState } from '../../state/game/models/appGame.state';
-import * as mock_useGame from '../game/gameHook.mock';
+import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.model';
 
 describe('<usePlayer />', () => {
@@ -38,10 +38,10 @@ describe('<usePlayer />', () => {
     jest.spyOn(hooks, 'useAppDispatch')
       .mockReturnValue(useAppDispatchMockResponse);
 
-    jest.spyOn(gameHooks, 'useGame')
-      .mockImplementation(mock_useGame.mock);
+    jest.spyOn(currentGamehooks, 'useCurrentGame')
+      .mockImplementation(mock_useCurrentGame.mock);
 
-    mock_useGame.initializeMock();
+    mock_useCurrentGame.initializeMock();
   });
 
   it('should create', () => {
@@ -51,7 +51,7 @@ describe('<usePlayer />', () => {
   });
 
   it('updatePlayerCounter should request updateGameSettings', async () => {
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -61,11 +61,11 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
     
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
   });
 
   it('updatePlayerColor should request updateGameSettings', async () => {
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -75,7 +75,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerColor(playerColor);
     });
     
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
   });
 
   it('updatePlayerCounter should request updateGameSettings with the player counter updated', async () => {
@@ -116,7 +116,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
   });
 
   it('updatePlayerColor should request updateGameSettings with the player color updated', async () => {
@@ -156,11 +156,11 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerColor(targetColor);
     });
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
   });
 
   it('updatePlayerDetails should request updateGameSettings', async () => {
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -174,7 +174,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerDetails(playerDetails);
     });
     
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
   });
 
   
@@ -219,6 +219,6 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerDetails(targetPlayerDetails);
     });
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
   });
 });

@@ -8,7 +8,7 @@ import * as gameService from '../../services/firebaseStore/game/game.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { GameState } from '../../state/game/models/appGame.state';
 
-export function useGame() {
+export function useCurrentGame() {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);

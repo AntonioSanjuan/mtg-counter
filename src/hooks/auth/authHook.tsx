@@ -11,7 +11,7 @@ import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebas
 import { selectUserSettings } from '../../state/user/user.selectors';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { selectGame } from '../../state/game/game.selectors';
-import { useGame } from '../game/gameHook';
+import { useCurrentGame } from '../currentGame/currentGameHook';
 import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
 import { GameState } from '../../state/game/models/appGame.state';
 
@@ -21,7 +21,7 @@ export function useAuth() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const { setUser } = useUser();
-  const { setGame } = useGame();
+  const { setGame } = useCurrentGame();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<GameState>(selectGame);
 

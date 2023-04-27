@@ -8,11 +8,11 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails } from '../../utils/mappers/playersMappers/playersMappers';
-import { useGame } from '../game/gameHook';
+import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAppSelector } from '../state/appStateHook';
 
 export function usePlayer(player: FirebasePlayerDto) {
-  const { updateGame } = useGame();
+  const { updateGame } = useCurrentGame();
   const gameSettings = useAppSelector<GameState>(selectGame);
 
   const updatePlayerColor = async (newPlayerColor: PlayerColors) => {

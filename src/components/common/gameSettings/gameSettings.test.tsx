@@ -7,8 +7,8 @@ import { Router } from 'react-router-dom';
 import { createTestStore } from '../../../utils/testsUtils/createTestStore.util';
 import { act } from '@testing-library/react-hooks';
 import GameSettings from './gameSettings';
-import * as mock_useGame from '../../../hooks/game/gameHook.mock';
-import * as useGame from '../../../hooks/game/gameHook';
+import * as mock_useCurrentGame from '../../../hooks/currentGame/currentGameHook.mock';
+import * as useCurrentGame from '../../../hooks/currentGame/currentGameHook';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { getDefaultPlayerCounters, getDefaultPlayers } from '../../../utils/factories/playerFactory/playerFactory';
@@ -24,10 +24,10 @@ describe('GameSettings', () => {
     gameSettingsStore = createTestStore();
     history = createMemoryHistory();
 
-    jest.spyOn(useGame, 'useGame')
-        .mockImplementation(mock_useGame.mock);
+    jest.spyOn(useCurrentGame, 'useCurrentGame')
+        .mockImplementation(mock_useCurrentGame.mock);
 
-    mock_useGame.initializeMock()
+    mock_useCurrentGame.initializeMock()
   });
 
   afterEach(() => {
@@ -56,7 +56,7 @@ describe('GameSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled()
 
     const languageSelect = screen.getByLabelText('InitialLifes');
    
@@ -65,7 +65,7 @@ describe('GameSettings', () => {
         fireEvent.change(languageSelect, { target: { value: Lifes.Twenty } })
     });
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled()
   });
 
   it('change NumberOfPlayers should request to updateGameSettings', async () => {
@@ -77,7 +77,7 @@ describe('GameSettings', () => {
       </Provider>,
     );
 
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled()
 
     const numberOFPlayersSelect = screen.getByLabelText('NumberOfPlayers');
    
@@ -86,7 +86,7 @@ describe('GameSettings', () => {
         fireEvent.change(numberOFPlayersSelect, { target: { value: NumberOfPlayers.Six } })
     });
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled()
   });
 
   it('Restart should restart only the players counters', async () => {
@@ -134,7 +134,7 @@ describe('GameSettings', () => {
       gameSettingsStore.dispatch(setGameAction(gameState));
     });
 
-    expect(mock_useGame.mock().updateGame).not.toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled()
 
     const button = screen.getByRole('button', { name: 'restartGameSettings' });
     
@@ -160,6 +160,6 @@ describe('GameSettings', () => {
       }
     }
 
-    expect(mock_useGame.mock().updateGame).toHaveBeenCalledWith(sut, restartedGameSettings)
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith(sut, restartedGameSettings)
   });
 });

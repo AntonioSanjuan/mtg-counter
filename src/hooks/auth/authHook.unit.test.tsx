@@ -5,11 +5,11 @@ import { Provider } from 'react-redux';
 import { useAuth } from './authHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
-import * as mock_useGame from '../game/gameHook.mock';
+import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useUser from '../user/userHook.mock';
 import * as useUser from '../user/userHook';
-import * as useGame from '../game/gameHook';
+import * as useCurrentGame from '../currentGame/currentGameHook';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -36,11 +36,11 @@ describe('<useUser />', () => {
     jest.spyOn(useUser, 'useUser')
       .mockImplementation(mock_useUser.mock);
 
-    jest.spyOn(useGame, 'useGame')
-      .mockImplementation(mock_useGame.mock)
+    jest.spyOn(useCurrentGame, 'useCurrentGame')
+      .mockImplementation(mock_useCurrentGame.mock)
 
     mock_firebaseAuthService.initializeMock();
-    mock_useGame.initializeMock();
+    mock_useCurrentGame.initializeMock();
     mock_useUser.initializeMock();
   });
 
@@ -85,12 +85,12 @@ describe('<useUser />', () => {
     expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).not.toHaveBeenCalled();
     const { result } = renderHook(() => useAuth(), { wrapper });
 
-    expect(mock_useGame.mock().setGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.loginWithGoogle();
     });
-    expect(mock_useGame.mock().setGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
     expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
   });
 
@@ -102,12 +102,12 @@ describe('<useUser />', () => {
     
     const { result } = renderHook(() => useAuth(), { wrapper });
 
-    expect(mock_useGame.mock().setGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.loginWithGoogle();
     });
-    expect(mock_useGame.mock().setGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
     expect(mock_firebaseAuthService.firebaseGoogleLoginSpy).toHaveBeenCalled();
   });
 
@@ -206,12 +206,12 @@ describe('<useUser />', () => {
 
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
 
-    expect(mock_useGame.mock().setGame).not.toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
     await act(async () => {
       await result.current.signUp({ username: '', password: '' });
     });
 
-    expect(mock_useGame.mock().setGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
   });
 });

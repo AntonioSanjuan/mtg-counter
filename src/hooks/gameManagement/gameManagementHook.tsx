@@ -3,12 +3,12 @@ import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { getDefaultPlayerCounters } from '../../utils/factories/playerFactory/playerFactory';
-import { useGame } from '../game/gameHook';
+import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAppSelector } from '../state/appStateHook';
 
 export function useGameManagement() {
   const gameSettings = useAppSelector<GameState>(selectGame);
-  const { updateGame, loading: gameLoading, error: gameError } = useGame();
+  const { updateGame, loading: gameLoading, error: gameError } = useCurrentGame();
 
   const restartGame = async () => {
     if (gameSettings.board) {

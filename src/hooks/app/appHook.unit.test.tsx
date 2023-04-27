@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as appStatehooks from '../state/appStateHook';
 import * as userhooks from '../user/userHook';
-import * as gamehooks from '../game/gameHook';
+import * as currentGamehooks from '../currentGame/currentGameHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
 import * as mock_useUser from '../user/userHook.mock';
@@ -15,7 +15,7 @@ import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
-import * as mock_useGame from '../game/gameHook.mock';
+import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 
 describe('<useApp />', () => {
   let useAppStore: any;
@@ -38,13 +38,13 @@ describe('<useApp />', () => {
     jest.spyOn(appStatehooks, 'useAppDispatch')
       .mockReturnValue(useAppDispatchMockResponse);
 
-    jest.spyOn(gamehooks, 'useGame')
-      .mockImplementation(mock_useGame.mock);
+    jest.spyOn(currentGamehooks, 'useCurrentGame')
+      .mockImplementation(mock_useCurrentGame.mock);
 
     jest.spyOn(userhooks, 'useUser')
       .mockImplementation(mock_useUser.mock);
 
-    mock_useGame.initializeMock()
+    mock_useCurrentGame.initializeMock()
     mock_useUser.initializeMock()
   });
 
@@ -98,7 +98,7 @@ describe('<useApp />', () => {
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAuthAction(sut));
     expect(mock_useUser.mock().getUser).toHaveBeenCalled()
-    expect(mock_useGame.mock().getGame).toHaveBeenCalled()
+    expect(mock_useCurrentGame.mock().getGame).toHaveBeenCalled()
   });
 
 
@@ -114,6 +114,6 @@ describe('<useApp />', () => {
  
      expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
      expect(mock_useUser.mock().setAnonymousUser).toHaveBeenCalled()
-     expect(mock_useGame.mock().setAnonymousGame).toHaveBeenCalled()
+     expect(mock_useCurrentGame.mock().setAnonymousGame).toHaveBeenCalled()
   });
 });

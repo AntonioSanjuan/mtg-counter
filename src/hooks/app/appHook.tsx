@@ -13,7 +13,7 @@ import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { TRANSLATIONS_EN } from '../../locales/en';
 import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
-import { useGame } from '../game/gameHook';
+import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAuth } from '../auth/authHook';
 
 const getBrowserTheme = (): Theme => (window
@@ -38,7 +38,7 @@ const changeLanguage = (lang: Language) => {
 export function useApp() {
   const dispatch = useAppDispatch();
   const { getUser, setAnonymousUser } = useUser();
-  const { getGame, setAnonymousGame } = useGame();
+  const { getGame, setAnonymousGame } = useCurrentGame();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
