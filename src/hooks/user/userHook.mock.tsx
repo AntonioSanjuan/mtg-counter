@@ -12,7 +12,9 @@ const getUserResponseObj = {
       currentGame: {
         id: 'testCurrentGameId'
       },
-      historicGames: []
+      historicGames: {
+        id: 'testHistoricGamesId'
+      }
     } as Partial<FirebaseUserDto>
 } } as DocumentSnapshot<DocumentData>;
 
@@ -22,6 +24,7 @@ let errorResponseMock: boolean = false;
 const getUserSpy = jest.fn();
 const setUserSpy = jest.fn();
 const updateUserSpy = jest.fn();
+const updateUserCurrentGameSpy = jest.fn();
 const setAnonymousUserSpy = jest.fn();
 
 const mockUserMockResponse = {
@@ -29,6 +32,7 @@ const mockUserMockResponse = {
   setUser: setUserSpy,
   setAnonymousUser: setAnonymousUserSpy,
   updateUser: updateUserSpy,
+  updateUserCurrentGame: updateUserCurrentGameSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }

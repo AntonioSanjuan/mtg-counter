@@ -10,11 +10,14 @@ import { selectGame } from '../../../state/game/game.selectors';
 import { GameState } from '../../../state/game/models/appGame.state';
 import { Loading } from '../loading/loading';
 import './gameSettings.scss';
+import { auth } from '../../../utils/firebase.util';
 
 function GameSettings() {
   const gameSettings = useAppSelector<GameState>(selectGame);
+  const {
+    restartGame, resizeGame, saveAndRestartGame, loading,
+  } = useGameManagement();
 
-  const { restartGame, resizeGame, loading } = useGameManagement();
   const { openAlert, closeAlert } = useAlert();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
     initialValues: gameSettings.board as FirebaseBoardDto,
@@ -28,6 +31,24 @@ function GameSettings() {
       Number(formik.values.initialLifes),
       Number(formik.values.numberOfPlayers),
     );
+  };
+
+  const restartGameClb = async () => {
+    if (auth.currentUser) {
+      openAlert(DynamicAlertTypes.Notification, {
+        title: '¿Quieres guardar la partida?',
+        onOkButtonClick: () => {
+          saveAndRestartGame();
+          closeAlert();
+        },
+        onCancelButtonClick: () => {
+          restartGame();
+          closeAlert();
+        },
+      });
+    } else {
+      restartGame();
+    }
   };
 
   return (
@@ -76,16 +97,10 @@ function GameSettings() {
             </div>
             <button
               type="button"
-              className="btn btn-danger"
+              name="restartGameSettings"
               aria-label="restartGameSettings"
-              onClick={() => openAlert(DynamicAlertTypes.Notification, {
-                title: '¿Quieres guardar la partida?',
-                onOkButtonClick: () => console.log('onOK'),
-                onCancelButtonClick: () => {
-                  restartGame();
-                  closeAlert();
-                },
-              })}
+              className="btn btn-danger"
+              onClick={restartGameClb}
             >
               Restart
             </button>

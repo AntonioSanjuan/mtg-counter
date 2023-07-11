@@ -29,9 +29,9 @@ export function useUser() {
       });
   };
 
-  const setUser = async (userSettings: FirebaseUserSettingsDto, gameId: string): Promise<any> => {
+  const setUser = async (userSettings: FirebaseUserSettingsDto, gameId: string, historicId: string): Promise<any> => {
     setLoading(true);
-    return userSettingsService.setUser(userSettings, gameId).then(() => {
+    return userSettingsService.setUser(userSettings, gameId, historicId).then(() => {
       dispatch(setUserSettingsAction(userSettings));
       setLoading(false);
       setError(false);
@@ -63,6 +63,27 @@ export function useUser() {
     return {};
   };
 
+  const updateUserCurrentGame = async (gameId: string): Promise<any> => {
+    setLoading(true);
+    if (auth.currentUser) {
+      return userSettingsService.updateUserCurrentGame(gameId)
+        .then((userResp) => {
+          const user = userResp.data() as FirebaseUserDto;
+
+          dispatch(setUserSettingsAction(user.userSettings));
+          setLoading(false);
+          setError(false);
+        }).catch((e) => {
+          setLoading(false);
+          setError(true);
+          throw e;
+        });
+    }
+    setLoading(false);
+    setError(false);
+    return {};
+  };
+
   const setAnonymousUser = (lang: Language, darkMode: boolean) => {
     dispatch(setUserSettingsAction({
       darkMode,
@@ -75,6 +96,7 @@ export function useUser() {
     setUser,
     setAnonymousUser,
     updateUser,
+    updateUserCurrentGame,
     loading,
     error,
   };

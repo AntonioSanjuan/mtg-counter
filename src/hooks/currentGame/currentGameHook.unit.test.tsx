@@ -37,7 +37,9 @@ describe('<useCurrentGame />', () => {
   afterEach(() => {
     userServiceMock.reset();
     gameServiceMock.reset();
-
+    
+    mockFirebaseAuthUser(undefined)
+  
   });
 
   it('should create', () => {

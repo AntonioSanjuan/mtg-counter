@@ -6,10 +6,12 @@ import { useAuth } from './authHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
 import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
+import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useUser from '../user/userHook.mock';
 import * as useUser from '../user/userHook';
 import * as useCurrentGame from '../currentGame/currentGameHook';
+import * as useHistoricGames from '../historicGames/historicGamesHook';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -39,8 +41,12 @@ describe('<useUser />', () => {
     jest.spyOn(useCurrentGame, 'useCurrentGame')
       .mockImplementation(mock_useCurrentGame.mock)
 
+    jest.spyOn(useHistoricGames, 'useHistoricGames')
+      .mockImplementation(mock_useHistoricGames.mock)
+
     mock_firebaseAuthService.initializeMock();
     mock_useCurrentGame.initializeMock();
+    mock_useHistoricGames.initializeMock();
     mock_useUser.initializeMock();
   });
 
@@ -175,6 +181,7 @@ describe('<useUser />', () => {
 
   it('signUp should request setUserSettings hook function', async () => {
     const sutGameSettingsId = 'testGameSettingsId';
+    const sutHistoricId = 'testHistoricGamesId';
 
     (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
       isNewUser: true
@@ -193,7 +200,7 @@ describe('<useUser />', () => {
       await result.current.signUp({ username: '', password: '' });
     });
 
-    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId);
+    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId );
   });
 
   it('signUp should request setGameSettings hook function', async () => {

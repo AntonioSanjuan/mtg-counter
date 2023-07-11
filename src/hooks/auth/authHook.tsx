@@ -14,6 +14,10 @@ import { selectGame } from '../../state/game/game.selectors';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
 import { GameState } from '../../state/game/models/appGame.state';
+import { useHistoricGames } from '../historicGames/historicGamesHook';
+import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
+import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
+import { FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -22,15 +26,18 @@ export function useAuth() {
   const [error, setError] = useState<boolean>(false);
   const { setUser } = useUser();
   const { setGame } = useCurrentGame();
+  const { setHistoric } = useHistoricGames();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<GameState>(selectGame);
+  const historicGames = useAppSelector<HistoricGamesState>(selectHistoricGames);
 
   const setupInitialDataIfRequired = async (user: UserCredential) => {
     const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
 
     if (isNewUser) {
-      const newGameSettings = await setGame(gameSettings as FirebaseGameDto);
-      await setUser(userSettings as FirebaseUserSettingsDto, newGameSettings.id);
+      const newGame = await setGame(gameSettings as FirebaseGameDto);
+      const newHistoricGames = await setHistoric(historicGames as FirebaseHistoricGamesDto);
+      await setUser(userSettings as FirebaseUserSettingsDto, newGame.id, newHistoricGames.id);
     }
   };
 

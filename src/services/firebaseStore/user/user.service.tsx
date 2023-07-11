@@ -9,16 +9,23 @@ export function getUser(): Promise<DocumentSnapshot<DocumentData>> {
   return getDoc(userRef);
 }
 
-export function setUser(settings: FirebaseUserSettingsDto, gameId: string): Promise<any> {
+export function setUser(settings: FirebaseUserSettingsDto, gameId: string, historicId: string): Promise<any> {
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, {
     userSettings: settings,
     currentGame: doc(db, 'games', gameId),
-    historicGames: [],
+    historicGames: doc(db, 'historicGames', historicId),
   } as FirebaseUserDto, { merge: true });
 }
 
 export function updateUser(settings: FirebaseUserSettingsDto): Promise<any> {
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, { userSettings: settings }, { merge: true });
+}
+
+export function updateUserCurrentGame(gameId: string): Promise<any> {
+  const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
+  return setDoc(docRef, {
+    currentGame: doc(db, 'games', gameId),
+  } as FirebaseUserDto, { merge: true });
 }

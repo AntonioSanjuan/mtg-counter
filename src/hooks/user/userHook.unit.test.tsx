@@ -34,6 +34,7 @@ describe('<useUser />', () => {
 
   afterEach(() => {
     userServiceMock.reset();
+    mockFirebaseAuthUser(undefined)
   });
 
   it('should create', () => {
@@ -76,7 +77,7 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     await act(async () => {
-      await result.current.setUser(inputSettings, 'gameId');
+      await result.current.setUser(inputSettings, 'gameId', 'historicId');
     });
 
     expect(userServiceMock.setUserSpy).toHaveBeenCalled();

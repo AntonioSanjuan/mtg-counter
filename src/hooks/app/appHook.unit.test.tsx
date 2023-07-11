@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import { act, renderHook } from '@testing-library/react-hooks';
 import * as appStatehooks from '../state/appStateHook';
 import * as userhooks from '../user/userHook';
+import * as useHistoricGames from '../historicGames/historicGamesHook';
 import * as currentGamehooks from '../currentGame/currentGameHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
+import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
 import * as mock_useUser from '../user/userHook.mock';
 import { setUserAuthAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -44,9 +46,17 @@ describe('<useApp />', () => {
     jest.spyOn(userhooks, 'useUser')
       .mockImplementation(mock_useUser.mock);
 
+    jest.spyOn(useHistoricGames, 'useHistoricGames')
+      .mockImplementation(mock_useHistoricGames.mock)
+
     mock_useCurrentGame.initializeMock()
     mock_useUser.initializeMock()
+    mock_useHistoricGames.initializeMock()
   });
+
+  afterEach(() => {
+    mockFirebaseAuthUser(undefined)
+  })
 
   it('should create', async () => {
     const { result } = renderHook(() => useApp(), { wrapper });
@@ -99,6 +109,7 @@ describe('<useApp />', () => {
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserAuthAction(sut));
     expect(mock_useUser.mock().getUser).toHaveBeenCalled()
     expect(mock_useCurrentGame.mock().getGame).toHaveBeenCalled()
+    expect(mock_useHistoricGames.mock().getHistoric).toHaveBeenCalled()
   });
 
 

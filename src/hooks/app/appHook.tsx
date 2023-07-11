@@ -14,7 +14,7 @@ import { TRANSLATIONS_EN } from '../../locales/en';
 import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
 import { useCurrentGame } from '../currentGame/currentGameHook';
-import { useAuth } from '../auth/authHook';
+import { useHistoricGames } from '../historicGames/historicGamesHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
@@ -39,6 +39,7 @@ export function useApp() {
   const dispatch = useAppDispatch();
   const { getUser, setAnonymousUser } = useUser();
   const { getGame, setAnonymousGame } = useCurrentGame();
+  const { getHistoric, setHistoric } = useHistoricGames();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
@@ -61,12 +62,16 @@ export function useApp() {
     const settings = await getUser();
     const user = settings.data() as FirebaseUserDto;
     await getGame(user.currentGame.id);
+
+    // only for authenticated users
+    await getHistoric(user.historicGames.id);
   };
 
   const initializeAnonymousUser = () => {
     dispatch(unsetUserAction());
     setAnonymousUser(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
     setAnonymousGame();
+    setHistoric({ games: [] });
   };
 
   const initializeLanguage = () => {
