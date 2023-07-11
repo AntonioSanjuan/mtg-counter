@@ -5,7 +5,6 @@ import { GameState } from '../../state/game/models/appGame.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { getNewGame, getRestartedGame } from '../../utils/factories/gameFactory/gameFactory';
-import { getDefaultPlayerCounters } from '../../utils/factories/playerFactory/playerFactory';
 import { auth } from '../../utils/firebase.util';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
@@ -23,22 +22,10 @@ export function useGameManagement() {
 
   const startNewGame = async () => {
     if (gameSettings.board) {
-      const game: FirebaseGameDto = {
-        createdAt: new Date(),
-        finishAt: undefined,
-        finished: false,
-        board: {
-          ...gameSettings.board,
-          players: gameSettings.board.players.map((player) => ({
-            ...player,
-            counters: getDefaultPlayerCounters(gameSettings.board.initialLifes),
-          })),
-        },
-      };
+      const game: FirebaseGameDto = getRestartedGame(gameSettings);
 
       if (auth.currentUser) {
         const newGame = await setGame(game);
-
         await updateUserCurrentGame(newGame.id);
       } else {
         await updateGame(gameSettings.id, game);
