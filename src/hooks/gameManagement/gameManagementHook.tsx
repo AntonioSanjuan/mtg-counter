@@ -21,23 +21,19 @@ export function useGameManagement() {
   const { updateHistoric } = useHistoricGames();
 
   const startNewGame = async () => {
-    if (gameSettings.board) {
-      const game: FirebaseGameDto = getRestartedGame(gameSettings);
+    const game: FirebaseGameDto = getRestartedGame(gameSettings);
 
-      if (auth.currentUser) {
-        const newGame = await setGame(game);
-        await updateUserCurrentGame(newGame.id);
-      } else {
-        await updateGame(gameSettings.id, game);
-      }
+    if (auth.currentUser) {
+      const newGame = await setGame(game);
+      await updateUserCurrentGame(newGame.id);
+    } else {
+      await updateGame(gameSettings.id, game);
     }
   };
 
   const restartGame = async () => {
-    if (gameSettings.board) {
-      const newGame: FirebaseGameDto = getRestartedGame(gameSettings);
-      await updateGame(gameSettings.id, newGame);
-    }
+    const newGame: FirebaseGameDto = getRestartedGame(gameSettings);
+    await updateGame(gameSettings.id, newGame);
   };
 
   const saveAndRestartGame = () => {
@@ -46,22 +42,18 @@ export function useGameManagement() {
   };
 
   const resizeGame = async (initialLifes: number, numberOfPlayers: number) => {
-    if (gameSettings.board) {
-      const newGame: FirebaseGameDto = getNewGame(
-        initialLifes,
-        numberOfPlayers,
-      );
+    const newGame: FirebaseGameDto = getNewGame(
+      initialLifes,
+      numberOfPlayers,
+    );
 
-      await updateGame(gameSettings.id, newGame);
-    }
+    await updateGame(gameSettings.id, newGame);
   };
 
   const saveGameIntoHistoric = async () => {
-    if (historicGames.id) {
-      updateHistoric(historicGames.id, {
-        games: historicGames.games ? [...historicGames.games, gameSettings.id] : [gameSettings.id],
-      } as FirebaseHistoricGamesDto);
-    }
+    updateHistoric(historicGames.id, {
+      games: historicGames.games ? [...historicGames.games, gameSettings.id] : [gameSettings.id],
+    } as FirebaseHistoricGamesDto);
   };
 
   return {
