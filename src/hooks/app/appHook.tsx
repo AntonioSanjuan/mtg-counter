@@ -39,7 +39,7 @@ export function useApp() {
   const dispatch = useAppDispatch();
   const { getUser, setAnonymousUser } = useUser();
   const { getGame, setAnonymousGame } = useCurrentGame();
-  const { getHistoric, setHistoric } = useHistoricGames();
+  const { getHistoric, setAnonymousHistoric } = useHistoricGames();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
@@ -62,8 +62,6 @@ export function useApp() {
     const settings = await getUser();
     const user = settings.data() as FirebaseUserDto;
     await getGame(user.currentGame.id);
-
-    // only for authenticated users
     await getHistoric(user.historicGames.id);
   };
 
@@ -71,7 +69,7 @@ export function useApp() {
     dispatch(unsetUserAction());
     setAnonymousUser(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
     setAnonymousGame();
-    setHistoric({ games: [] });
+    setAnonymousHistoric();
   };
 
   const initializeLanguage = () => {

@@ -44,27 +44,9 @@ export function useHistoricGames() {
       });
   };
 
-  const setHistoric = async (historicGames: FirebaseHistoricGamesDto) : Promise<any> => {
-    setLoading(true);
-
-    if (auth.currentUser) {
-      return historicGamesService.setHistoricGames(historicGames).then((historic) => {
-        const historicGamesOutput = createHistoricGamesState(
-          historicGames,
-          historic.id,
-        );
-        dispatch(setHistoricGamesAction(historicGamesOutput));
-        setLoading(false);
-        setError(false);
-        return historicGamesOutput;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      });
-    }
+  const setAnonymousHistoric = () => {
     const historicGamesOutput = createHistoricGamesState(
-      historicGames,
+      { games: [] },
       undefined,
     );
 
@@ -72,6 +54,25 @@ export function useHistoricGames() {
     setLoading(false);
     setError(false);
     return {};
+  };
+
+  const setHistoric = async (historicGames: FirebaseHistoricGamesDto) : Promise<any> => {
+    setLoading(true);
+
+    return historicGamesService.setHistoricGames(historicGames).then((historic) => {
+      const historicGamesOutput = createHistoricGamesState(
+        historicGames,
+        historic.id,
+      );
+      dispatch(setHistoricGamesAction(historicGamesOutput));
+      setLoading(false);
+      setError(false);
+      return historicGamesOutput;
+    }).catch((e) => {
+      setLoading(false);
+      setError(true);
+      throw e;
+    });
   };
 
   const updateHistoric = async (
@@ -104,6 +105,7 @@ export function useHistoricGames() {
   return {
     getHistoric,
     setHistoric,
+    setAnonymousHistoric,
     updateHistoric,
     loading,
     error,
