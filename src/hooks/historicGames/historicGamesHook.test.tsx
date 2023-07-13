@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import * as hooks from '../state/appStateHook';
 import * as HistoricGamesServiceMock from '../../services/firebaseStore/historicGames/historicGames.service.mock';
+import * as GameServiceMock from '../../services/firebaseStore/game/game.service.mock'
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { useHistoricGames } from './historicGamesHook';
@@ -29,10 +30,12 @@ describe('<useHistoricGames />', () => {
       .mockReturnValue(useAppDispatchMockResponse);
 
     HistoricGamesServiceMock.initializeMock();
+    GameServiceMock.initializeMock();
   });
 
   afterEach(() => {
     HistoricGamesServiceMock.reset();
+    GameServiceMock.reset();
     mockFirebaseAuthUser(undefined)
   });
 
@@ -55,6 +58,7 @@ describe('<useHistoricGames />', () => {
         data: () => getHistoricGamesOutput as DocumentData,
       } as DocumentSnapshot,
     );
+    
     const { result } = renderHook(() => useHistoricGames(), { wrapper });
 
     await act(async () => {
@@ -70,13 +74,45 @@ describe('<useHistoricGames />', () => {
     expect(HistoricGamesServiceMock.getHistoricGamesSpy).toHaveBeenCalled();
   });
 
+  it('getHistoricGames should request getGame for each returned historicGames ', async () => {
+    expect(HistoricGamesServiceMock.getHistoricGamesSpy).not.toHaveBeenCalled();
+    const returnedHistoricGames = [{
+      id:'historicGame0'
+    }, {
+      id: 'historicGame1'
+    }]
+
+    const getHistoricGamesOutput: FirebaseHistoricGamesDto = 
+    { 
+      games: returnedHistoricGames
+    }
+
+    HistoricGamesServiceMock.getHistoricGamesSpy.mockResolvedValue(
+      {
+        id: historicId,
+        data: () => getHistoricGamesOutput as DocumentData,
+      } as DocumentSnapshot,
+    );
+    const { result } = renderHook(() => useHistoricGames(), { wrapper });
+
+    await act(async () => {
+      await result.current.getHistoric('');
+    });
+    expect(HistoricGamesServiceMock.getHistoricGamesSpy).toHaveBeenCalled();
+    expect(GameServiceMock.getGameSpy).toHaveBeenCalledTimes(returnedHistoricGames.length);
+  });
+
   it('setHistoric should request setHistoric if user is logged', async () => {
     mockFirebaseAuthUser({} as User)
     
     expect(HistoricGamesServiceMock.setHistoricGamesSpy).not.toHaveBeenCalled();
     const inputHistoricGames = {
-      games: ['historicGame0', 'historicGame1']
-    } as FirebaseHistoricGamesDto;
+      games: [{
+        id:'historicGame0'
+      }, {
+        id: 'historicGame1'
+      }]
+    } as HistoricGamesState;
 
     const { result } = renderHook(() => useHistoricGames(), { wrapper });
 
@@ -87,22 +123,44 @@ describe('<useHistoricGames />', () => {
     expect(HistoricGamesServiceMock.setHistoricGamesSpy).toHaveBeenCalled();
   });
 
-  it('updateHistoric should not request updateHistoricGames if user is not logged', async () => {
-    expect(HistoricGamesServiceMock.updateHistoricGamesSpy).not.toHaveBeenCalled();
+  it('setHistoric should not request getGame', async () => {
+    mockFirebaseAuthUser({} as User)
+    
+    expect(HistoricGamesServiceMock.setHistoricGamesSpy).not.toHaveBeenCalled();
     const inputHistoricGames = {
-      games: ['historicGame0', 'historicGame1']
-    } as FirebaseHistoricGamesDto;
+      games: [{
+        id:'historicGame0'
+      }, {
+        id: 'historicGame1'
+      }]
+    } as HistoricGamesState;
 
     const { result } = renderHook(() => useHistoricGames(), { wrapper });
 
     await act(async () => {
-      await result.current.updateHistoric(historicId, inputHistoricGames);
+      await result.current.setHistoric(inputHistoricGames);
     });
 
-    const historicState: HistoricGamesState = {
-      id: historicId,
-      ...inputHistoricGames
-    }
+    expect(HistoricGamesServiceMock.setHistoricGamesSpy).toHaveBeenCalled();
+    expect(GameServiceMock.getGameSpy).not.toBeCalled()
+  });
+
+  it('updateHistoric should not request updateHistoricGames if user is not logged', async () => {
+    expect(HistoricGamesServiceMock.updateHistoricGamesSpy).not.toHaveBeenCalled();
+    const historicState = {
+      games: [{
+        id:'historicGame0'
+      }, {
+        id: 'historicGame1'
+      }]
+    } as HistoricGamesState;
+
+    const { result } = renderHook(() => useHistoricGames(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateHistoric(historicId, historicState);
+    });
+
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setHistoricGamesAction(historicState));
     expect(HistoricGamesServiceMock.updateHistoricGamesSpy).not.toHaveBeenCalled();
   });
@@ -111,20 +169,21 @@ describe('<useHistoricGames />', () => {
     mockFirebaseAuthUser({} as User)
 
     expect(HistoricGamesServiceMock.updateHistoricGamesSpy).not.toHaveBeenCalled();
-    const inputHistoricGames = {
-      games: ['historicGame0', 'historicGame1']
-    } as FirebaseHistoricGamesDto;
+    const historicState = {
+      games: [{
+        id:'historicGame0'
+      }, {
+        id: 'historicGame1'
+      }]
+    } as HistoricGamesState;
 
     const { result } = renderHook(() => useHistoricGames(), { wrapper });
 
     await act(async () => {
-      await result.current.updateHistoric(historicId, inputHistoricGames);
+      await result.current.updateHistoric(historicId, historicState);
     });
 
-    const historicState: HistoricGamesState = {
-      id: historicId,
-      ...inputHistoricGames
-    }
+
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setHistoricGamesAction(historicState));
     expect(HistoricGamesServiceMock.updateHistoricGamesSpy).toHaveBeenCalled();
   });

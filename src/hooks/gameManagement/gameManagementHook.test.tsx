@@ -16,17 +16,36 @@ import { useGameManagement } from './gameManagementHook';
 import { act } from 'react-dom/test-utils';
 import { setGameAction } from '../../state/game/game.actions';
 import { GameState } from '../../state/game/models/appGame.state';
-import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { User } from 'firebase/auth';
 import { mapPlayerCounter } from '../../utils/mappers/playersMappers/playersMappers';
 import { setHistoricGamesAction } from '../../state/historicGames/historicGames.actions';
+import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
+import { getFinishedGame } from '../../utils/factories/gameFactory/gameFactory';
 describe('<useGameManagement />', () => {
   const usePlayerPlayersInitialLifes = 40
 
   let useGameManagementStore: any;
   let wrapper: any;
+
+  const createdAtSut = new Date();
+  let useGameManagementplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, 2);
+  const playerCounter: FirebaseCounterDto = useGameManagementplayers[0].counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
+  useGameManagementplayers = mapPlayerCounter(useGameManagementplayers, useGameManagementplayers[0].id,
+    playerCounter, 5)
+    
+  const inputGameSettings: GameState = { 
+    id: 'testId',
+    finished: false,
+    createdAt: createdAtSut,
+    finishAt: undefined,
+    board: {
+      players: useGameManagementplayers,
+      initialLifes: usePlayerPlayersInitialLifes,
+      numberOfPlayers: useGameManagementplayers.length
+    }
+  };
 
   beforeEach(async () => {
     useGameManagementStore = createTestStore();
@@ -43,23 +62,7 @@ describe('<useGameManagement />', () => {
       .mockImplementation(mock_useHistoricGames.mock);
 
 
-    const createdAtSut = new Date();
-    let useGameManagementplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, 2);
-    const playerCounter: FirebaseCounterDto = useGameManagementplayers[0].counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
-    useGameManagementplayers = mapPlayerCounter(useGameManagementplayers, useGameManagementplayers[0].id,
-      playerCounter, 5)
-      
-    const inputGameSettings: GameState = { 
-      id: 'testId',
-      finished: false,
-      createdAt: createdAtSut,
-      finishAt: undefined,
-      board: {
-        players: useGameManagementplayers,
-        initialLifes: usePlayerPlayersInitialLifes,
-        numberOfPlayers: useGameManagementplayers.length
-      }
-    };
+
 
     await act(async () => {
       useGameManagementStore.dispatch(setGameAction(inputGameSettings));
@@ -116,32 +119,69 @@ describe('<useGameManagement />', () => {
   });
 
   it('saveAndRestartGame without previous historicGames should set currentGame as historic games', async () => {
+    const historicGamesState = {
+      id: 'historicGamesId',
+      games: []
+    }
     await act(async () => {
-      useGameManagementStore.dispatch(setHistoricGamesAction({
-        id: 'historicGamesId',
-        games: []
-      }));
+      useGameManagementStore.dispatch(setHistoricGamesAction(historicGamesState));
     });
 
     const { result } = renderHook(() => useGameManagement(), { wrapper });
     
+    const newGamesSut = [ getFinishedGame(inputGameSettings)]
     await result.current.saveAndRestartGame()
   
-    expect(mock_useHistoricGames.mock().updateHistoric).toHaveBeenCalledWith('historicGamesId', {games: ['testId']})
+    expect(mock_useHistoricGames.mock().updateHistoric).toHaveBeenCalledWith('historicGamesId', {...historicGamesState, 
+      games: newGamesSut
+    })
   });
+  
 
   it('saveAndRestartGame with previous historicGames should set currentGame as historic games', async () => {
+    const historicGamesState: HistoricGamesState = {
+      id: 'historicGamesId',
+      games: [
+        {
+          id: 'HGameId'
+        } as  GameState
+      ]
+  }
+
     await act(async () => {
-      useGameManagementStore.dispatch(setHistoricGamesAction({
-        id: 'historicGamesId',
-        games: ['HGameId']
-      }));
+      useGameManagementStore.dispatch(setHistoricGamesAction(historicGamesState));
+    });
+
+    const { result } = renderHook(() => useGameManagement(), { wrapper });
+    
+    const newGamesSut = [...historicGamesState.games,  getFinishedGame(inputGameSettings)]
+    await result.current.saveAndRestartGame()
+   
+    expect(mock_useHistoricGames.mock().updateHistoric).toHaveBeenCalledWith('historicGamesId', {...historicGamesState, 
+      games: newGamesSut
+    })
+  });
+
+  it('saveAndRestartGame should request updateGame first of all, with finished currenGame', async () => {
+    mockFirebaseAuthUser({} as User)
+
+    const historicGamesState: HistoricGamesState = {
+      id: 'historicGamesId',
+      games: [
+        {
+          id: 'HGameId'
+        } as  GameState
+      ]
+  }
+
+    await act(async () => {
+      useGameManagementStore.dispatch(setHistoricGamesAction(historicGamesState));
     });
 
     const { result } = renderHook(() => useGameManagement(), { wrapper });
     
     await result.current.saveAndRestartGame()
-  
-    expect(mock_useHistoricGames.mock().updateHistoric).toHaveBeenCalledWith('historicGamesId', {games: ['HGameId', 'testId']})
+   
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith(inputGameSettings.id, getFinishedGame(inputGameSettings))
   });
 });

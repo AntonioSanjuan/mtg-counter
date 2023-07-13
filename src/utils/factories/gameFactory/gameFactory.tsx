@@ -32,3 +32,8 @@ export const getRestartedGame = (
     })),
   },
 });
+
+export const getFinishedGame = (game: GameState): GameState => ({
+  ...game,
+  finished: true,
+});

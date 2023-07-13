@@ -1,14 +1,13 @@
 import { useState } from 'react';
 import { FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
-import { useAppDispatch, useAppSelector } from '../state/appStateHook';
+import { useAppDispatch } from '../state/appStateHook';
 import * as historicGamesService from '../../services/firebaseStore/historicGames/historicGames.service';
 import * as gameService from '../../services/firebaseStore/game/game.service';
 import { setHistoricGamesAction } from '../../state/historicGames/historicGames.actions';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { auth } from '../../utils/firebase.util';
-import { useCurrentGame } from '../currentGame/currentGameHook';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
-import { createHistoricGamesState } from '../../adapters/historic/historic.adapter';
+import { HistoricAdapter } from '../../adapters/historic/historic.adapter';
 import { createGameState } from '../../adapters/games/game.adapter';
 import { GameState } from '../../state/game/models/appGame.state';
 
@@ -34,11 +33,11 @@ export function useHistoricGames() {
         const historicGames = historicResp.data() as FirebaseHistoricGamesDto;
 
         // to-do
-        const historicGamesData: GameState[] = await Promise.all(historicGames.games.map(async (gameId) => {
-          const data = createGameState(await getHistoricGame(gameId), gameId);
+        const historicGamesData: GameState[] = await Promise.all(historicGames.games.map(async (historicGame) => {
+          const data = createGameState(await getHistoricGame(historicGame.id), historicGame.id);
           return data;
         }));
-        const historicGamesOutput = createHistoricGamesState(
+        const historicGamesOutput = HistoricAdapter.toState(
           historicGamesData,
           historicResp.id,
         );
@@ -55,8 +54,8 @@ export function useHistoricGames() {
   };
 
   const setAnonymousHistoric = () => {
-    const historicGamesOutput = createHistoricGamesState(
-      { games: [] },
+    const historicGamesOutput = HistoricAdapter.toState(
+      [],
       undefined,
     );
 
@@ -66,14 +65,17 @@ export function useHistoricGames() {
     return {};
   };
 
-  const setHistoric = async (historicGames: FirebaseHistoricGamesDto) : Promise<any> => {
+  const setHistoric = async (historicGames: HistoricGamesState) : Promise<any> => {
     setLoading(true);
 
-    return historicGamesService.setHistoricGames(historicGames).then((historic) => {
-      const historicGamesOutput = createHistoricGamesState(
-        historicGames,
+    const historicGamesInput = HistoricAdapter.toDto(historicGames);
+
+    return historicGamesService.setHistoricGames(historicGamesInput).then(async (historic) => {
+      const historicGamesOutput = HistoricAdapter.toState(
+        historicGames.games,
         historic.id,
       );
+
       dispatch(setHistoricGamesAction(historicGamesOutput));
       setLoading(false);
       setError(false);
@@ -87,17 +89,16 @@ export function useHistoricGames() {
 
   const updateHistoric = async (
     historicId: string | undefined,
-    historicGames: FirebaseHistoricGamesDto,
+    historicGames: HistoricGamesState,
   ): Promise<any> => {
     setLoading(true);
-    const historicGamesOutput = createHistoricGamesState(
-      historicGames,
-      historicId,
-    );
     if (auth.currentUser) {
-      return historicGamesService.updateHistoricGames(historicId as string, historicGames)
+      const inputData = HistoricAdapter.toDto(
+        historicGames,
+      );
+      return historicGamesService.updateHistoricGames(historicId as string, inputData)
         .then(() => {
-          dispatch(setHistoricGamesAction(historicGamesOutput));
+          dispatch(setHistoricGamesAction(historicGames));
           setLoading(false);
           setError(false);
         }).catch((e) => {
@@ -108,7 +109,7 @@ export function useHistoricGames() {
     }
     setLoading(false);
     setError(false);
-    dispatch(setHistoricGamesAction(historicGamesOutput));
+    dispatch(setHistoricGamesAction(historicGames));
     return {};
   };
 

@@ -17,7 +17,6 @@ import { GameState } from '../../state/game/models/appGame.state';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
-import { FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -36,7 +35,7 @@ export function useAuth() {
 
     if (isNewUser) {
       const newGame = await setGame(gameSettings as FirebaseGameDto);
-      const newHistoricGames = await setHistoric(historicGames as FirebaseHistoricGamesDto);
+      const newHistoricGames = await setHistoric(historicGames);
       await setUser(userSettings as FirebaseUserSettingsDto, newGame.id, newHistoricGames.id);
     }
   };

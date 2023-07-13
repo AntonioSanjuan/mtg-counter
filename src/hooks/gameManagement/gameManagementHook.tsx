@@ -1,10 +1,9 @@
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
-import { FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
-import { getNewGame, getRestartedGame } from '../../utils/factories/gameFactory/gameFactory';
+import { getFinishedGame, getNewGame, getRestartedGame } from '../../utils/factories/gameFactory/gameFactory';
 import { auth } from '../../utils/firebase.util';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
@@ -36,9 +35,12 @@ export function useGameManagement() {
     await updateGame(gameSettings.id, newGame);
   };
 
-  const saveAndRestartGame = () => {
-    saveGameIntoHistoric();
-    startNewGame();
+  const saveAndRestartGame = async () => {
+    const newGame: GameState = getFinishedGame(gameSettings);
+
+    await updateGame(gameSettings.id, newGame);
+    await saveGameIntoHistoric(newGame);
+    await startNewGame();
   };
 
   const resizeGame = async (initialLifes: number, numberOfPlayers: number) => {
@@ -50,10 +52,11 @@ export function useGameManagement() {
     await updateGame(gameSettings.id, newGame);
   };
 
-  const saveGameIntoHistoric = async () => {
-    updateHistoric(historicGames.id, {
-      games: historicGames.games ? [...historicGames.games, gameSettings.id] : [gameSettings.id],
-    } as FirebaseHistoricGamesDto);
+  const saveGameIntoHistoric = async (game: GameState) => {
+    const newHistoric: HistoricGamesState = { ...historicGames };
+    newHistoric.games.push(getFinishedGame(game));
+
+    updateHistoric(historicGames.id, newHistoric);
   };
 
   return {

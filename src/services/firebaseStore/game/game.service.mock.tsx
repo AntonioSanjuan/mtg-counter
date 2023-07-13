@@ -5,33 +5,33 @@
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import * as gameSettingsService from './game.service';
 
-export const getUserResponseObjMock = {
+export const getGameResponseObjMock = {
   data: () => {},
 } as DocumentSnapshot<DocumentData>;
 export const setGameResponseObjMock = {} as any;
 export const updateGameResponseMock = {} as any;
 
 const getGameMock = () => new Promise<DocumentSnapshot<DocumentData>>((resolve) => resolve(
-  getUserResponseObjMock,
+  getGameResponseObjMock,
 ));
 const setGameMock = () => new Promise<any>((resolve) => resolve(setGameResponseObjMock));
 const updateGameMock = () => new Promise<any>((resolve) => resolve(updateGameResponseMock));
 
-export const getGameSettingSpy = jest.spyOn(gameSettingsService, 'getGame');
-export const setGameSettingsSpy = jest.spyOn(gameSettingsService, 'setGame');
-export const updateGameSettingsSpy = jest.spyOn(gameSettingsService, 'updateGame');
+export const getGameSpy = jest.spyOn(gameSettingsService, 'getGame');
+export const setGameSpy = jest.spyOn(gameSettingsService, 'setGame');
+export const updateGameSpy = jest.spyOn(gameSettingsService, 'updateGame');
 
 export const initializeMock = () => {
-  getGameSettingSpy
+  getGameSpy
     .mockImplementation(getGameMock);
-  setGameSettingsSpy
+  setGameSpy
     .mockImplementation(setGameMock);
-  updateGameSettingsSpy
+  updateGameSpy
     .mockImplementation(updateGameMock);
 };
 
 export const reset = () => {
-  getGameSettingSpy.mockClear();
-  setGameSettingsSpy.mockClear();
-  updateGameSettingsSpy.mockClear();
+  getGameSpy.mockClear();
+  setGameSpy.mockClear();
+  updateGameSpy.mockClear();
 };

@@ -1,3 +1,7 @@
 export interface FirebaseHistoricGamesDto {
-    games: string[]
+    games: FirebaseHistoricGameDto[]
+}
+
+export interface FirebaseHistoricGameDto {
+    id: string
 }
