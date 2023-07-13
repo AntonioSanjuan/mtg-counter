@@ -28,7 +28,7 @@ function Sidenav() {
         {isLoggedIn && (
           <Section
             sectionName="History"
-            onClickCallback={() => { handleNavigation('/'); }}
+            onClickCallback={() => { handleNavigation('/history'); }}
           >
             <i className="bi bi-bookmark-star-fill" />
           </Section>

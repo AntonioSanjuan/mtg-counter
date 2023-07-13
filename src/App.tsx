@@ -6,6 +6,8 @@ import Alert from './components/Alert/Alert';
 import HomePage from './pages/Home/Home';
 import LoginPage from './pages/Login/Login';
 import ProfilePage from './pages/Profile/Profile';
+import HistoricPage from './pages/Historic/Historic';
+import { AuthRouteGuard } from './guards/authGuard/auth.guard';
 
 function App() {
   return (
@@ -30,7 +32,19 @@ function App() {
             path="profile"
             element={(
               <React.Suspense fallback={<>...</>}>
-                <ProfilePage />
+                <AuthRouteGuard>
+                  <ProfilePage />
+                </AuthRouteGuard>
+              </React.Suspense>
+                  )}
+          />
+          <Route
+            path="history"
+            element={(
+              <React.Suspense fallback={<>...</>}>
+                <AuthRouteGuard>
+                  <HistoricPage />
+                </AuthRouteGuard>
               </React.Suspense>
                   )}
           />

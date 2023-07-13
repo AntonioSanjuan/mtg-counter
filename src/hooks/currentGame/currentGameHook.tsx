@@ -7,20 +7,13 @@ import { auth } from '../../utils/firebase.util';
 import * as gameService from '../../services/firebaseStore/game/game.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { GameState } from '../../state/game/models/appGame.state';
+import { createGameState } from '../../adapters/games/game.adapter';
 
 export function useCurrentGame() {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-
-  const createGameState = (game: FirebaseGameDto, gameId: string|undefined): GameState => {
-    const output: GameState = {
-      ...game,
-      id: gameId,
-    };
-    return output;
-  };
 
   const getGame = async (gameSettingsId: string): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);

@@ -2,9 +2,15 @@ import { useState } from 'react';
 import { FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import * as historicGamesService from '../../services/firebaseStore/historicGames/historicGames.service';
+import * as gameService from '../../services/firebaseStore/game/game.service';
 import { setHistoricGamesAction } from '../../state/historicGames/historicGames.actions';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { auth } from '../../utils/firebase.util';
+import { useCurrentGame } from '../currentGame/currentGameHook';
+import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
+import { createHistoricGamesState } from '../../adapters/historic/historic.adapter';
+import { createGameState } from '../../adapters/games/game.adapter';
+import { GameState } from '../../state/game/models/appGame.state';
 
 export function useHistoricGames() {
   const dispatch = useAppDispatch();
@@ -12,24 +18,28 @@ export function useHistoricGames() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const createHistoricGamesState = (historic: FirebaseHistoricGamesDto, historicId: string|undefined):
-  HistoricGamesState => {
-    const output: HistoricGamesState = {
-      ...historic,
-      id: historicId,
-    };
-    return output;
-  };
+  const getHistoricGame = async (historicGameId: string) => gameService.getGame(historicGameId)
+    .then((gameResp) => {
+      const game = gameResp.data() as FirebaseGameDto;
+      return game;
+    }).catch((e) => {
+      throw e;
+    });
 
   const getHistoric = async (historicId: string) => {
     setLoading(true);
 
     return historicGamesService.getHistoricGames(historicId)
-      .then((historicResp) => {
+      .then(async (historicResp) => {
         const historicGames = historicResp.data() as FirebaseHistoricGamesDto;
 
+        // to-do
+        const historicGamesData: GameState[] = await Promise.all(historicGames.games.map(async (gameId) => {
+          const data = createGameState(await getHistoricGame(gameId), gameId);
+          return data;
+        }));
         const historicGamesOutput = createHistoricGamesState(
-          historicGames,
+          historicGamesData,
           historicResp.id,
         );
 
