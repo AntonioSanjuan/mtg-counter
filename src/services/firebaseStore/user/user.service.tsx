@@ -24,6 +24,7 @@ export function updateUser(settings: FirebaseUserSettingsDto): Promise<any> {
 }
 
 export function updateUserCurrentGame(gameId: string): Promise<any> {
+  console.log('auth?.currentUser', auth?.currentUser);
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
   return setDoc(docRef, {
     currentGame: doc(db, 'games', gameId),

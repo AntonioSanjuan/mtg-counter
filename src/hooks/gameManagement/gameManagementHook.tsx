@@ -36,7 +36,6 @@ export function useGameManagement() {
 
   const saveAndRestartGame = async () => {
     const newGame: GameState = getFinishedGame(gameSettings);
-
     await updateGame(gameSettings.id, newGame);
     await saveGameIntoHistoric(newGame);
     await startNewGame();

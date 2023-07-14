@@ -15,7 +15,7 @@ import { auth } from '../../../utils/firebase.util';
 function GameSettings() {
   const gameSettings = useAppSelector<GameState>(selectGame);
   const {
-    restartGame, resizeGame, saveAndRestartGame, loading,
+    restartGame, resizeGame, loading,
   } = useGameManagement();
 
   const { openAlert, closeAlert } = useAlert();
@@ -35,19 +35,10 @@ function GameSettings() {
 
   const restartGameClb = async () => {
     if (auth.currentUser) {
-      openAlert(DynamicAlertTypes.Notification, {
-        title: '¿Quieres guardar la partida?',
-        onOkButtonClick: () => {
-          saveAndRestartGame();
-          closeAlert();
-        },
-        onCancelButtonClick: () => {
-          restartGame();
-          closeAlert();
-        },
-      });
+      openAlert(DynamicAlertTypes.GameRestart);
     } else {
-      restartGame();
+      await restartGame();
+      closeAlert();
     }
   };
 

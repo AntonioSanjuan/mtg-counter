@@ -67,10 +67,7 @@ export function useUser() {
     setLoading(true);
     if (auth.currentUser) {
       return userSettingsService.updateUserCurrentGame(gameId)
-        .then((userResp) => {
-          const user = userResp.data() as FirebaseUserDto;
-
-          dispatch(setUserSettingsAction(user.userSettings));
+        .then(() => {
           setLoading(false);
           setError(false);
         }).catch((e) => {

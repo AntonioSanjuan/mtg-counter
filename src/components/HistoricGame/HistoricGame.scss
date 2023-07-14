@@ -1,0 +1,57 @@
+.HistoricGame_MainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 350px;
+    gap: 30px;
+
+    .HistoricGame_BoardContainer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        position: relative;
+        width: 50%;
+        height: 100%;
+
+        .HistoricGame_PlayerContainer {
+            height: 100%;
+            width: 50%;
+        }
+    }
+    .HistoricGame_InfoContainer {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+
+    }
+}
+
+.Board_PlayerContainer {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: center;
+
+    width: 50%;
+
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--app-hight-contrast)
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .HistoricGame_MainContainer {
+        flex-direction: column;
+        gap: 50px;
+        height: 500px;
+
+        .HistoricGame_BoardContainer {
+            width: 100%;
+            min-height: 50%;
+        }
+        .HistoricGame_InfoContainer {
+            width: 100%;
+            min-height: 50%;
+        }
+    }
+}

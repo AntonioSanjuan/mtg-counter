@@ -2,16 +2,16 @@ import './Historic.scss';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
-import Board from '../../components/Board/Board';
+import { GameState } from '../../state/game/models/appGame.state';
+import HistoricGame from '../../components/HistoricGame/HistoricGame';
 
 function HistoricPage() {
   const historicGames = useAppSelector<HistoricGamesState>(selectHistoricGames);
-  console.log('🚀 ~ file: Historic.tsx:8 ~ HistoricPage ~ historicGames:', historicGames);
 
   return (
     <div className="HistoricPage_MainContainer">
-      {historicGames.games.map((historicGame) => (
-        <Board />
+      {historicGames.games.map((historicGame: GameState) => (
+        <HistoricGame game={historicGame} key={historicGame.id} />
       ))}
     </div>
   );

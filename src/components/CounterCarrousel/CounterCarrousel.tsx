@@ -5,7 +5,10 @@ import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebas
 import { useCounter } from '../../hooks/counter/counterHook';
 import SCCounterCarrousel from './CounterCarrousel.style';
 
-function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, isRotated: boolean}) {
+function CounterCarrousel(
+  { player, isRotated, minified } :
+  { player: FirebasePlayerDto, isRotated: boolean, minified?: boolean},
+) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
   const { temporaryCount, addCounters, removeCounters } = useCounter(player, currentCounter);
 
@@ -15,11 +18,18 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
 
   return (
     <SCCounterCarrousel playerColor={player.color}>
+      {!minified && (
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" aria-label="removeCounters" className="btn btn-link" onClick={removeCounters}>
+        <button
+          type="button"
+          aria-label="removeCounters"
+          className="btn btn-link"
+          onClick={removeCounters}
+        >
           <i className="bi bi-dash-circle-fill" />
         </button>
       </div>
+      )}
 
       <div className="CounterCarrousel_Carrousel">
         <div className="CounterCarrousel_TemporaryCount">
@@ -63,11 +73,19 @@ function CounterCarrousel({ player, isRotated } : { player: FirebasePlayerDto, i
           ))}
         </Carousel>
       </div>
+      {!minified && (
       <div className="CounterCarrousel_ActionContainer">
-        <button type="button" aria-label="addCounters" className="btn btn-link" onClick={addCounters}>
+        <button
+          disabled={minified}
+          type="button"
+          aria-label="addCounters"
+          className="btn btn-link"
+          onClick={addCounters}
+        >
           <i className="bi bi-plus-circle-fill" />
         </button>
       </div>
+      )}
 
     </SCCounterCarrousel>
   );

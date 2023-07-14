@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { AlertContent } from '../../state/layout/models/appLayout.state';
 import Notification from '../../components/common/notification/notification';
 import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
+import GameRestart from '../../components/common/gameRestart/gameRestart';
 
 export function useAlert() {
   const dispatch = useAppDispatch();
@@ -30,6 +31,9 @@ export function useAlert() {
       case DynamicAlertTypes.Notification:
         MyComponent = Notification;
         break;
+      case DynamicAlertTypes.GameRestart:
+        MyComponent = GameRestart;
+        break;
       default:
         break;
     }
@@ -44,6 +48,7 @@ export function useAlert() {
   };
 
   const closeAlert = () => {
+    console.log('closeAlert');
     dispatch(closeAlertAction());
   };
 

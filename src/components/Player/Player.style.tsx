@@ -30,9 +30,9 @@ position: relative;
 background: ${(props) => (backgroundColors[props.backgroundColor])};
 transform: ${(props) => (`rotate(${props.rotation}deg)`)};
 transform-origin: center;
-height: ${(props) => (props.playerHeight)}px;
-min-width: ${(props) => (props.playerWidth)}px;
-width: ${(props) => (props.playerWidth)}px;
+height: ${(props) => (props.playerHeight ? `${props.playerHeight}px` : '100%')};
+min-width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
+width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
 box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
 .Player_ConfigButton {
   position: absolute;

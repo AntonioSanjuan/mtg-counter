@@ -101,6 +101,7 @@ export function useHistoricGames() {
           dispatch(setHistoricGamesAction(historicGames));
           setLoading(false);
           setError(false);
+          return historicGames;
         }).catch((e) => {
           setLoading(false);
           setError(true);

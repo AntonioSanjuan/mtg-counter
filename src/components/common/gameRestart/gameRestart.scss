@@ -1,0 +1,15 @@
+.Notification_MainContainer {
+  display: flex;
+  flex-direction: column;
+  .Notification_HeaderContainer {
+    text-align: center;
+  }
+  .Notification_ContentContainer {
+    text-align: center;
+  }
+  .Notification_ActionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

@@ -53,6 +53,9 @@ padding:  0px 20px;
     height: 70%;
     width: 40%;
     user-select: none; /* Standard syntax */
+
+    .CounterCarrousel_CarrouselItemContainer {
+    }
 }
 
 .CounterCarrousel_TemporaryCount {
