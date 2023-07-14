@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import i18n from 'i18next';
+import i18n, { FormatFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
@@ -72,6 +72,14 @@ export function useApp() {
     setAnonymousHistoric();
   };
 
+  const formatterClb: FormatFunction | undefined = (value, format, lng): string => {
+    if (format === 'date') {
+      console.log('new Intl.DateTimeFormat(lng).format(value)', new Intl.DateTimeFormat(lng).format(value));
+      return new Intl.DateTimeFormat(lng).format(value);
+    }
+    return '';
+  };
+
   const initializeLanguage = () => {
     i18n
       .use(LanguageDetector)
@@ -87,6 +95,10 @@ export function useApp() {
           fr: {
             translation: TRANSLATIONS_FR,
           },
+        },
+        interpolation: {
+          format: formatterClb,
+          escapeValue: false,
         },
         supportedLngs: Object.values(Language),
       });

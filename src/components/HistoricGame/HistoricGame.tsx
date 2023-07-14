@@ -1,13 +1,15 @@
+import { useTranslation } from 'react-i18next';
 import { GameState } from '../../state/game/models/appGame.state';
 import { getPlayerWidthPercentage } from '../../utils/boardPlayerRotation/boardPlayerRotation';
 import HistoricPlayer from '../HistoricPlayer/HistoricPlayer';
 import './HistoricGame.scss';
 
 function HistoricGame({ game } : {game: GameState}) {
+  const { t } = useTranslation();
+
   const { board } = game;
   return (
     <div className="HistoricGame_MainContainer">
-
       <div className="HistoricGame_BoardContainer">
         {
           board.players.map((player) => (
@@ -26,9 +28,27 @@ function HistoricGame({ game } : {game: GameState}) {
       }
       </div>
       <div className="HistoricGame_InfoContainer">
+        <p className="app_font_l">Creada</p>
         <p className="app_font_m">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          {t(
+            'common.date',
+            {
+              val: new Date(),
+            },
+          ) }
+
         </p>
+        <p className="app_font_l">Finalizada</p>
+        <p className="app_font_m">
+          {t(
+            'common.date',
+            {
+              val: game.finishAt,
+            },
+          ) }
+
+        </p>
+        <p className="app_font_l">Players</p>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import { CounterTypes } from '../../internal/types/CounterTypes.model';
 import { Lifes } from '../../internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../internal/types/NumberOfPlayerEnum.model';
@@ -26,6 +27,6 @@ export interface FirebaseBoardDto {
 export interface FirebaseGameDto {
     finished: boolean;
     board: FirebaseBoardDto;
-    createdAt: Date;
-    finishAt: Date|undefined;
+    createdAt: Timestamp;
+    finishAt?: Timestamp;
 }

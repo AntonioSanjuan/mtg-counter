@@ -5,8 +5,9 @@
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import * as gameSettingsService from './game.service';
 
+
 export const getGameResponseObjMock = {
-  data: () => {},
+  data: () => { } ,
 } as DocumentSnapshot<DocumentData>;
 export const setGameResponseObjMock = {} as any;
 export const updateGameResponseMock = {} as any;

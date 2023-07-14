@@ -43,7 +43,8 @@
     .HistoricGame_MainContainer {
         flex-direction: column;
         gap: 50px;
-        height: 500px;
+        min-height: 500px;
+
 
         .HistoricGame_BoardContainer {
             width: 100%;
@@ -52,6 +53,8 @@
         .HistoricGame_InfoContainer {
             width: 100%;
             min-height: 50%;
+            
+            min-height: inherit;
         }
     }
 }

@@ -44,10 +44,10 @@ export function useCurrentGame() {
       gameSettings,
     );
     return gameService.setGame(gameSettingsInput).then((game) => {
-      const gameSettingsOutput = GameAdapter.toState(
-        gameSettings,
-        game.id,
-      );
+      const gameSettingsOutput: GameState = {
+        ...gameSettings,
+        id: game.id,
+      };
       dispatch(setGameAction(gameSettingsOutput));
       setLoading(false);
       setError(false);

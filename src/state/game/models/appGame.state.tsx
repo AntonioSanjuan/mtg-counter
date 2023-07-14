@@ -1,5 +1,9 @@
-import { FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
+import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 
-export interface GameState extends FirebaseGameDto {
+export interface GameState {
     id: string | undefined;
+    finished: boolean;
+    board: FirebaseBoardDto;
+    createdAt: Date;
+    finishAt?: Date;
 }

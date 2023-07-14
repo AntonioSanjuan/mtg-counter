@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase/firestore';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { GameState } from '../../state/game/models/appGame.state';
 
@@ -6,6 +7,10 @@ export class GameAdapter {
     const output: GameState = {
       ...game,
       id: gameId,
+      finished: game?.finished,
+      board: game?.board,
+      createdAt: game?.createdAt.toDate(),
+      finishAt: game?.finishAt?.toDate(),
     };
     return output;
   }
@@ -13,8 +18,8 @@ export class GameAdapter {
   static toDto(game: GameState): FirebaseGameDto {
     const output: FirebaseGameDto = {
       finished: game.finished,
-      createdAt: game.createdAt,
-      finishAt: game.finishAt,
+      createdAt: Timestamp.fromDate(game.createdAt),
+      finishAt: game.finishAt ? Timestamp.fromDate(game.finishAt) : undefined,
       board: { ...game.board },
     };
     return output;

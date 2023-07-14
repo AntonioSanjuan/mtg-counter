@@ -4,6 +4,7 @@ import { textColors, textShadowBoxColors } from '../../utils/playerTextColors/pl
 
 export interface CounterCarrouselStyleProps {
     playerColor?: PlayerColors
+    minified?: boolean
 }
 
 const SCCounterCarrousel = styled.div.attrs<
@@ -51,7 +52,7 @@ padding:  0px 20px;
     align-items: center;
     justify-content: center;
     height: 70%;
-    width: 40%;
+    width: ${(props) => (props.minified ? '100%' : '40%')};
     user-select: none; /* Standard syntax */
 
     .CounterCarrousel_CarrouselItemContainer {
@@ -71,7 +72,11 @@ padding:  0px 20px;
 }
 
 .CounterCarrousel_CarrouselItem {
-    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 3px 10px;
     p {
         margin: 0;
         color:  ${(props) => (textColors[props.playerColor])};

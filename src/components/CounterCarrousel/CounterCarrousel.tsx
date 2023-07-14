@@ -17,7 +17,7 @@ function CounterCarrousel(
   };
 
   return (
-    <SCCounterCarrousel playerColor={player.color}>
+    <SCCounterCarrousel playerColor={player.color} minified={minified}>
       {!minified && (
       <div className="CounterCarrousel_ActionContainer">
         <button
