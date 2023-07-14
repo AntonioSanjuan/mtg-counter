@@ -8,8 +8,8 @@ import { HistoricGamesState } from '../../state/historicGames/models/appHistoric
 import { auth } from '../../utils/firebase.util';
 import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { HistoricAdapter } from '../../adapters/historic/historic.adapter';
-import { createGameState } from '../../adapters/games/game.adapter';
 import { GameState } from '../../state/game/models/appGame.state';
+import { GameAdapter } from '../../adapters/games/game.adapter';
 
 export function useHistoricGames() {
   const dispatch = useAppDispatch();
@@ -34,7 +34,7 @@ export function useHistoricGames() {
 
         // to-do
         const historicGamesData: GameState[] = await Promise.all(historicGames.games.map(async (historicGame) => {
-          const data = createGameState(await getHistoricGame(historicGame.id), historicGame.id);
+          const data = GameAdapter.toState(await getHistoricGame(historicGame.id), historicGame.id);
           return data;
         }));
         const historicGamesOutput = HistoricAdapter.toState(

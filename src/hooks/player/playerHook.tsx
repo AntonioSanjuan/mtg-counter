@@ -1,6 +1,5 @@
 import {
   FirebaseCounterDto,
-  FirebaseGameDto,
   FirebasePlayerDto,
 } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.model';
@@ -44,10 +43,8 @@ export function usePlayer(player: FirebasePlayerDto) {
   };
 
   const updatePlayers = async (newPlayers: FirebasePlayerDto[]) => {
-    const newGame: FirebaseGameDto = {
-      finished: false,
-      createdAt: gameSettings.createdAt,
-      finishAt: gameSettings.finishAt,
+    const newGame: GameState = {
+      ...gameSettings,
       board: {
         ...gameSettings.board,
         players: newPlayers,

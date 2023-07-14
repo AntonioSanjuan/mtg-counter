@@ -9,11 +9,9 @@ import * as userServiceMock from '../../services/firebaseStore/user/user.service
 import * as gameServiceMock from '../../services/firebaseStore/game/game.service.mock';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { setGameAction } from '../../state/game/game.actions';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
-import { mapGameFinished } from '../../utils/mappers/gameMappers/gameMappers'
 import { GameState } from '../../state/game/models/appGame.state';
 describe('<useCurrentGame />', () => {
   let useCurrentGameStore: any;
@@ -52,7 +50,7 @@ describe('<useCurrentGame />', () => {
     const gameSettingsId: string = 'gameSettingsId'
     expect(gameServiceMock.getGameSpy).not.toHaveBeenCalled();
 
-    const getUserSettingsOutput: FirebaseGameDto = getNewGame()
+    const getUserSettingsOutput: GameState = getNewGame()
 
     gameServiceMock.getGameSpy.mockResolvedValue(
       {
@@ -62,8 +60,8 @@ describe('<useCurrentGame />', () => {
     );
 
     const gameState = {
+      ...getUserSettingsOutput,
       id: gameSettingsId,
-      ...getUserSettingsOutput
     }
 
     const { result } = renderHook(() => useCurrentGame(), { wrapper });
@@ -80,13 +78,13 @@ describe('<useCurrentGame />', () => {
     const gameSettingsId = 'gameSettingsId'
 
     expect(gameServiceMock.setGameSpy).not.toHaveBeenCalled();
-    const gameSettings = mapGameFinished(getNewGame());
+    const gameSettings = getNewGame();
 
     const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     const gameState: GameState = {
-      id: gameSettingsId,
-      ...gameSettings
+      ...gameSettings,
+      id: gameSettingsId
     }
 
     gameServiceMock.setGameSpy.mockResolvedValue(
@@ -106,10 +104,10 @@ describe('<useCurrentGame />', () => {
 
   it('updateGameSettings should not request updateUserSettings if user is not logged', async () => {
     expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalled();
-    const gameSettings = mapGameFinished(getNewGame());
+    const gameSettings = getNewGame();
     const gameSettingsState: GameState = {
+      ...gameSettings,
       id: undefined,
-      ...gameSettings
     }
     const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
@@ -123,19 +121,19 @@ describe('<useCurrentGame />', () => {
   });
   
   it('updateGameSettings should not request updateUserSettings if user is logged', async () => {
-    //auth.currentUser = {}
     mockFirebaseAuthUser({} as User)
 
     expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalled();
-    const gameSettings = mapGameFinished(getNewGame());
+    const gameSettings = getNewGame();
     const gameSettingsState: GameState = {
+      ...gameSettings,
       id: "gameSettingsId",
-      ...gameSettings
     }
+
     const { result } = renderHook(() => useCurrentGame(), { wrapper });
 
     await act(async () => {
-      await result.current.updateGame(gameSettingsState.id, gameSettings);
+      await result.current.updateGame(gameSettingsState.id, gameSettingsState);
     });
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameAction(gameSettingsState));

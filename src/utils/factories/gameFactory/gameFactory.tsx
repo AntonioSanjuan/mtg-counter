@@ -1,4 +1,3 @@
-import { FirebaseGameDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { GameState } from '../../../state/game/models/appGame.state';
@@ -7,7 +6,8 @@ import { getDefaultPlayerCounters, getDefaultPlayers } from '../playerFactory/pl
 export const getNewGame = (
   initialLifes = Lifes.Fourty,
   numberOfPlayers = NumberOfPlayers.Two,
-): FirebaseGameDto => ({
+): GameState => ({
+  id: undefined,
   createdAt: new Date(),
   finishAt: undefined,
   finished: false,
@@ -20,7 +20,8 @@ export const getNewGame = (
 
 export const getRestartedGame = (
   gameSettings: GameState,
-): FirebaseGameDto => ({
+): GameState => ({
+  id: gameSettings.id,
   createdAt: new Date(),
   finishAt: undefined,
   finished: false,

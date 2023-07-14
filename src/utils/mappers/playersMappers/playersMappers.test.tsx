@@ -1,12 +1,13 @@
-import { FirebaseCounterDto, FirebaseGameDto } from "../../../models/dtos/firebaseStore/firebaseGame.model";
+import { FirebaseCounterDto } from "../../../models/dtos/firebaseStore/firebaseGame.model";
 import { Lifes } from "../../../models/internal/types/LifeEnum.model";
 import { NumberOfPlayers } from "../../../models/internal/types/NumberOfPlayerEnum.model";
 import { PlayerColors } from "../../../models/internal/types/PlayerColorEnum.model";
+import { GameState } from "../../../state/game/models/appGame.state";
 import { getNewGame } from "../../factories/gameFactory/gameFactory";
 import { mapPlayerColor, mapPlayerCounter } from "./playersMappers";
 
 describe('PlayerMappers', () => {  
-    let sutGame: FirebaseGameDto
+    let sutGame: GameState
     beforeEach(() => {
         sutGame = getNewGame(Lifes.Twenty, NumberOfPlayers.Five);
     });

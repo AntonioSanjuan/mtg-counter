@@ -9,7 +9,6 @@ import { useUser } from '../user/userHook';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 import { selectUserSettings } from '../../state/user/user.selectors';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { setUserIsCreatingAction, unsetUserIsCreatingAction } from '../../state/user/user.actions';
@@ -34,9 +33,9 @@ export function useAuth() {
     const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
 
     if (isNewUser) {
-      const newGame = await setGame(gameSettings as FirebaseGameDto);
+      const newGame = await setGame(gameSettings);
       const newHistoricGames = await setHistoric(historicGames);
-      await setUser(userSettings as FirebaseUserSettingsDto, newGame.id, newHistoricGames.id);
+      await setUser(userSettings as FirebaseUserSettingsDto, newGame.id as string, newHistoricGames.id);
     }
   };
 

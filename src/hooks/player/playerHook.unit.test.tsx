@@ -6,7 +6,7 @@ import * as hooks from '../state/appStateHook';
 import * as currentGamehooks from '../currentGame/currentGameHook';
 
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
-import { FirebaseCounterDto, FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
+import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { usePlayer } from './playerHook';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
@@ -96,10 +96,8 @@ describe('<usePlayer />', () => {
       }
     };
 
-    const outputGameSettings: FirebaseGameDto = {
-      finished: inputGameSettings.finished,
-      createdAt: createdAtSut,
-      finishAt: undefined,
+    const outputGameSettings: GameState = {
+      ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerCounter(usePlayerplayers, usePlayerInputplayer.id, playerCounter, 25)
@@ -136,10 +134,8 @@ describe('<usePlayer />', () => {
       }
     };
 
-    const outputGameSettings: FirebaseGameDto = {
-      finished: inputGameSettings.finished,
-      createdAt: createdAtSut,
-      finishAt: undefined,
+    const outputGameSettings: GameState = {
+      ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerColor(usePlayerplayers, usePlayerInputplayer.id, targetColor)
@@ -199,10 +195,8 @@ describe('<usePlayer />', () => {
       }
     };
 
-    const outputGameSettings: FirebaseGameDto = {
-      createdAt: createdAtSut,
-      finishAt: undefined,
-      finished: inputGameSettings.finished,
+    const outputGameSettings: GameState = {
+      ...inputGameSettings,
       board: {
         ...inputGameSettings.board,
         players: mapPlayerDetails(usePlayerplayers, usePlayerInputplayer.id, targetPlayerDetails)

@@ -7,7 +7,7 @@ import { auth } from '../../utils/firebase.util';
 import * as gameService from '../../services/firebaseStore/game/game.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 import { GameState } from '../../state/game/models/appGame.state';
-import { createGameState } from '../../adapters/games/game.adapter';
+import { GameAdapter } from '../../adapters/games/game.adapter';
 
 export function useCurrentGame() {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export function useCurrentGame() {
       .then((gameResp) => {
         const game = gameResp.data() as FirebaseGameDto;
 
-        const gameSettingsOutput = createGameState(
+        const gameSettingsOutput = GameAdapter.toState(
           game,
           gameResp.id,
         );
@@ -37,11 +37,14 @@ export function useCurrentGame() {
       });
   };
 
-  const setGame = async (gameSettings: FirebaseGameDto): Promise<any> => {
+  const setGame = async (gameSettings: GameState): Promise<GameState> => {
     setLoading(true);
 
-    return gameService.setGame(gameSettings).then((game) => {
-      const gameSettingsOutput = createGameState(
+    const gameSettingsInput = GameAdapter.toDto(
+      gameSettings,
+    );
+    return gameService.setGame(gameSettingsInput).then((game) => {
+      const gameSettingsOutput = GameAdapter.toState(
         gameSettings,
         game.id,
       );
@@ -58,19 +61,19 @@ export function useCurrentGame() {
 
   const updateGame = async (
     gameSettingsId: string | undefined,
-    gameSettings: FirebaseGameDto,
-  ): Promise<any> => {
+    gameSettings: GameState,
+  ): Promise<GameState> => {
     setLoading(true);
-    const gameSettingsOutput = createGameState(
+    const gameSettingsInput = GameAdapter.toDto(
       gameSettings,
-      gameSettingsId,
     );
     if (auth.currentUser) {
-      return gameService.updateGame(gameSettingsId as string, gameSettings)
+      return gameService.updateGame(gameSettingsId as string, gameSettingsInput)
         .then(() => {
-          dispatch(setGameAction(gameSettingsOutput));
+          dispatch(setGameAction(gameSettings));
           setLoading(false);
           setError(false);
+          return gameSettings;
         }).catch((e) => {
           setLoading(false);
           setError(true);
@@ -79,13 +82,12 @@ export function useCurrentGame() {
     }
     setLoading(false);
     setError(false);
-    dispatch(setGameAction(gameSettingsOutput));
-    return {};
+    dispatch(setGameAction(gameSettings));
+    return gameSettings;
   };
 
   const setAnonymousGame = () => {
     const gameSettingsOutput: GameState = {
-      id: undefined,
       ...getNewGame(),
     };
 
