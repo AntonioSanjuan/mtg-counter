@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/microFrontCounter/static/css/main.1a69c326.css",
-    "main.js": "/microFrontCounter/static/js/main.bedaaefe.js",
+    "main.css": "/microFrontCounter/static/css/main.c092aa3e.css",
+    "main.js": "/microFrontCounter/static/js/main.074fceed.js",
     "static/js/787.8eeb87bb.chunk.js": "/microFrontCounter/static/js/787.8eeb87bb.chunk.js",
     "static/media/bootstrap-icons.woff?": "/microFrontCounter/static/media/bootstrap-icons.38c4d2499557ae0379fd.woff",
     "static/media/bootstrap-icons.woff2?": "/microFrontCounter/static/media/bootstrap-icons.2b56e79ae5013246de29.woff2",
     "index.html": "/microFrontCounter/index.html",
-    "main.1a69c326.css.map": "/microFrontCounter/static/css/main.1a69c326.css.map",
-    "main.bedaaefe.js.map": "/microFrontCounter/static/js/main.bedaaefe.js.map",
+    "main.c092aa3e.css.map": "/microFrontCounter/static/css/main.c092aa3e.css.map",
+    "main.074fceed.js.map": "/microFrontCounter/static/js/main.074fceed.js.map",
     "787.8eeb87bb.chunk.js.map": "/microFrontCounter/static/js/787.8eeb87bb.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.1a69c326.css",
-    "static/js/main.bedaaefe.js"
+    "static/css/main.c092aa3e.css",
+    "static/js/main.074fceed.js"
   ]
 }
