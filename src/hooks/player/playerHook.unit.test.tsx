@@ -11,7 +11,7 @@ import { usePlayer } from './playerHook';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameAction } from '../../state/game/game.actions';
-import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails } from '../../utils/mappers/playersMappers/playersMappers';
+import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner } from '../../utils/mappers/playersMappers/playersMappers';
 import { GameState } from '../../state/game/models/appGame.state';
 import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.model';
@@ -59,6 +59,18 @@ describe('<usePlayer />', () => {
     
     await act(async () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
+    });
+    
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+  });
+
+  it('updatePlayerOwner should request updateGameSettings', async () => {
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
+
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+    
+    await act(async () => {
+      await result.current.updatePlayerOwner();
     });
     
     expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
@@ -150,6 +162,42 @@ describe('<usePlayer />', () => {
 
     await act(async () => {
       await result.current.updatePlayerColor(targetColor);
+    });
+
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
+  });
+
+  it('updatePlayerOwner should request updateGameSettings with the players ownser updated', async () => {
+    const createdAtSut = new Date();
+
+    const inputGameSettings: GameState = { 
+      id: 'testId',
+      finished: false,
+      createdAt: createdAtSut,
+      finishAt: undefined,
+      board: {
+        players: usePlayerplayers,
+        initialLifes: usePlayerPlayersInitialLifes,
+        numberOfPlayers: usePlayerplayers.length
+      }
+    };
+
+    const outputGameSettings: GameState = {
+      ...inputGameSettings,
+      board: {
+        ...inputGameSettings.board,
+        players: mapPlayerOwner(usePlayerplayers, usePlayerInputplayer.id)
+      }
+    }
+
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+
+    await act(async () => {
+      usePlayerStore.dispatch(setGameAction(inputGameSettings));
+    });
+
+    await act(async () => {
+      await result.current.updatePlayerOwner();
     });
 
     expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);

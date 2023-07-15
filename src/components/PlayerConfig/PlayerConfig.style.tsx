@@ -43,6 +43,18 @@ gap: 10px;
     font-size: 20px;
     color: var(--app-low-contrast)
   }}
+
+.PlayerConfig_OwnerButton {
+  position: absolute;
+  top: calc(50% - 20px);
+  right: 5px;
+  z-index: 3;
+  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
+  1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
+  i {
+    font-size: 20px;
+    color: var(--app-low-contrast)
+  }}
 `;
 
 export default SCPlayerConfig;

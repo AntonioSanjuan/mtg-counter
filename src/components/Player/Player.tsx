@@ -31,6 +31,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       playerHeight={sizes.width}
       playerWidth={sizes.height}
       backgroundColor={player.color}
+      isOwner={player.owner}
       ref={playerRef}
     >
       <button

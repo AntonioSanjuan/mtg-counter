@@ -6,6 +6,7 @@ export interface PlayerStyleProps {
     rotation: number,
     playerHeight: number,
     playerWidth: number,
+    isOwner: boolean,
     backgroundColor?: PlayerColors
 }
 
@@ -33,13 +34,13 @@ transform-origin: center;
 height: ${(props) => (props.playerHeight ? `${props.playerHeight}px` : '100%')};
 min-width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
 width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
-box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
+box-shadow: inset 0 0 75px var(${(props) => (props.isOwner ? '--OwnerPlayerBackground' : '--app-topnav-mobile-background')});
 .Player_ConfigButton {
   position: absolute;
   bottom: 5px;
   right: calc(50% - 22px);
   z-index: 3;
-  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
+  text-shadow: 2px 0 var(${(props) => (props.isOwner ? '--OwnerPlayerBackground' : '--app-hight-contrast')}), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
   1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
   i {
     font-size: 20px;

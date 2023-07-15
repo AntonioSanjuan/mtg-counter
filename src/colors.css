@@ -31,6 +31,7 @@
   --PlayerBackgroundColorBlack: #370360;
   --PlayerBackgroundColorGreen: #14a502;
   --PlayerBackgroundColorDefault: var(--app-card-background-color);
+  --OwnerPlayerBackground: #cbcb0f;
 }
 
 [data-theme='dark'] {
@@ -65,4 +66,5 @@
   --PlayerBackgroundColorBlack: #370360;
   --PlayerBackgroundColorGreen: #14a502;
   --PlayerBackgroundColorDefault: var(--app-card-background-color);
+  --OwnerPlayerBackground: #cbcb0f;
   }

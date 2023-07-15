@@ -12,10 +12,12 @@ export const getDefaultPlayerCounters = (initialLifes: Lifes): FirebaseCounterDt
 
 const getDefaultPlayer = (
   initialLifes: Lifes,
+  firstPlayer: boolean,
 ): FirebasePlayerDto => ({
   id: uuidv4(),
   name: '',
   userId: null,
+  owner: firstPlayer,
   deckName: '',
   counters: getDefaultPlayerCounters(initialLifes),
   color: PlayerColors.default,
@@ -25,7 +27,7 @@ export const getDefaultPlayers = (
   initialLifes: Lifes,
   numberOfPlayers: NumberOfPlayers,
 ): FirebasePlayerDto[] => {
-  const players = new Array(numberOfPlayers).fill({}).map((player) => getDefaultPlayer(initialLifes));
+  const players = new Array(numberOfPlayers).fill({}).map((player, index) => getDefaultPlayer(initialLifes, index === 0));
   // players.fill(getDefaultPlayer(
   //   initialLifes,
   // ));

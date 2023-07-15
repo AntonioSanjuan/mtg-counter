@@ -15,6 +15,15 @@ export const mapPlayerColor = (
   return player;
 });
 
+export const mapPlayerOwner = (
+  players: FirebasePlayerDto[],
+  playerIdToUpdate: string,
+): FirebasePlayerDto[] => players.map((player) => {
+  const targetPlayer = { ...player };
+  targetPlayer.owner = player.id === playerIdToUpdate;
+  return targetPlayer;
+});
+
 export const mapPlayerDetails = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,
@@ -29,6 +38,7 @@ export const mapPlayerDetails = (
   }
   return player;
 });
+
 export const mapPlayerCounter = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,

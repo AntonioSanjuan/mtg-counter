@@ -13,6 +13,7 @@ export interface FirebasePlayerDto {
   id: string;
   name: string;
   userId: string|null;
+  owner: boolean;
   deckName: string;
   counters: FirebaseCounterDto[];
   color: PlayerColors;

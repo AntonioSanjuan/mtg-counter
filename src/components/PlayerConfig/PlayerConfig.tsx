@@ -1,15 +1,13 @@
 import { useAlert } from '../../hooks/alert/alertHook';
 import { usePlayer } from '../../hooks/player/playerHook';
-import { useAppDispatch } from '../../hooks/state/appStateHook';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
-import { openAlertAction } from '../../state/layout/layout.actions';
 import ColorSelector from '../ColorSelector/ColorSelector';
 import SCPlayerConfig from './PlayerConfig.style';
 
 function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: any}) {
-  const { updatePlayerColor } = usePlayer(player);
+  const { updatePlayerColor, updatePlayerOwner } = usePlayer(player);
   const { openAlert } = useAlert();
   const playerColors = Object.keys(PlayerColors).filter((color) => color !== player.color);
 
@@ -30,6 +28,19 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
       >
         <i className="bi bi-pencil-fill" />
       </button>
+      {!player.owner && (
+        <button
+          type="button"
+          aria-label="ownerButton"
+          className="btn btn-link PlayerConfig_OwnerButton"
+          onClick={() => {
+            updatePlayerOwner();
+          }}
+        >
+          <i className="bi bi-trophy-fill" />
+        </button>
+      )}
+
       {playerColors.map((color) => (
         <ColorSelector
           key={color}
