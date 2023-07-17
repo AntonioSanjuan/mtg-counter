@@ -2,7 +2,9 @@ import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
-import { getFinishedGame, getNewGame, getRestartedGame } from '../../utils/factories/gameFactory/gameFactory';
+import {
+  getFinishedGame, getNamedGame, getNewGame, getResizedGame, getRestartedGame,
+} from '../../utils/factories/gameFactory/gameFactory';
 import { auth } from '../../utils/firebase.util';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
@@ -34,15 +36,18 @@ export function useGameManagement() {
     await updateGame(gameSettings.id, newGame);
   };
 
-  const saveAndRestartGame = async () => {
-    const newGame: GameState = getFinishedGame(gameSettings);
+  const saveAndRestartGame = async (gameName?: string) => {
+    let newGame: GameState = getFinishedGame(gameSettings);
+    newGame = getNamedGame(newGame, gameName);
+
     await updateGame(gameSettings.id, newGame);
     await saveGameIntoHistoric(newGame);
     await startNewGame();
   };
 
   const resizeGame = async (initialLifes: number, numberOfPlayers: number) => {
-    const newGame: GameState = getNewGame(
+    const newGame: GameState = getResizedGame(
+      gameSettings,
       initialLifes,
       numberOfPlayers,
     );

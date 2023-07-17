@@ -52,6 +52,8 @@ describe('<useGameManagement />', () => {
     wrapper = function ({ children }: { children: any }) {
       return <Provider store={useGameManagementStore}>{children}</Provider>;
     };
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(createdAtSut);
 
 
     jest.spyOn(useCurrentGame, 'useCurrentGame')
@@ -74,6 +76,7 @@ describe('<useGameManagement />', () => {
   });
 
   afterEach(() => {
+    jest.useRealTimers();
     mockFirebaseAuthUser(undefined)
   })
 

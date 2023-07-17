@@ -3,6 +3,7 @@ import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGam
 export interface GameState {
     id: string | undefined;
     finished: boolean;
+    name?: string;
     board: FirebaseBoardDto;
     createdAt: Date;
     finishAt?: Date;

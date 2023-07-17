@@ -1,0 +1,25 @@
+.MinifiedBoard_MainContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .MinifiedBoard_PlayersContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    // position: relative;
+    height: 100%;
+
+    .MinifiedBoard_PlayerContainer {
+      display: flex;
+      flex: 1 0 auto;
+      justify-content: center;
+      width: 50%;
+      align-items: center;
+      overflow: hidden;
+      border: 1px solid var(--app-hight-contrast);
+    }
+  }
+
+}

@@ -12,7 +12,7 @@ const getPlayerRotation = (playerIndex: number, numberOfPlayers: number): number
   return 90;
 };
 
-export const getPlayerWidthPercentage = (numberOfPlayers: number): number => {
+export const getPlayerHeightPercentage = (numberOfPlayers: number): number => {
   switch (numberOfPlayers) {
     case NumberOfPlayers.Two:
       return 100;

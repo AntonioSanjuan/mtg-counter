@@ -1,13 +1,18 @@
-.Notification_MainContainer {
+.GameRestart_MainContainer {
   display: flex;
   flex-direction: column;
-  .Notification_HeaderContainer {
+  gap: 20px;
+  .GameRestart_Board {
+    display: flex;
+    flex-direction: column;
+  }
+  .GameRestart_HeaderContainer {
     text-align: center;
   }
-  .Notification_ContentContainer {
+  .GameRestart_ContentContainer {
     text-align: center;
   }
-  .Notification_ActionsContainer {
+  .GameRestart_ActionsContainer {
     display: flex;
     flex-direction: column;
     gap: 10px;

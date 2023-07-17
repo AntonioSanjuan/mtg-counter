@@ -4,7 +4,7 @@ import { NumberOfPlayers } from "../../../models/internal/types/NumberOfPlayerEn
 import { PlayerColors } from "../../../models/internal/types/PlayerColorEnum.model";
 import { GameState } from "../../../state/game/models/appGame.state";
 import { getNewGame } from "../../factories/gameFactory/gameFactory";
-import { mapPlayerColor, mapPlayerCounter, mapPlayerOwner } from "./playersMappers";
+import { mapPlayerColor, mapPlayerCounter, mapPlayerOwner, mapPlayerWinner } from "./playersMappers";
 
 describe('PlayerMappers', () => {  
     let sutGame: GameState
@@ -63,6 +63,27 @@ describe('PlayerMappers', () => {
         expect(sut[0].owner).toEqual(false)
     });
 
+    it('mapPlayerWinner should keep players', () => {
+        const sut = mapPlayerWinner(
+            sutGame.board.players, 
+            sutGame.board.players[1].id);
+
+        expect(sut[1].id).toEqual(sutGame.board.players[1].id)
+        expect(sut[0].id).toEqual(sutGame.board.players[0].id)
+    });
+
+    it('mapPlayerWinner should change color of target player', () => {
+
+        expect(sutGame.board.players[1].winner).toEqual(false)
+        expect(sutGame.board.players[0].winner).toEqual(false)
+
+        const sut = mapPlayerWinner(
+            sutGame.board.players, 
+            sutGame.board.players[1].id);
+
+        expect(sut[1].winner).toEqual(true)
+        expect(sut[0].winner).toEqual(false)
+    });
 
     it('mapPlayerCounter should return same length of counters', () => {
         const sutPlayers = mapPlayerCounter(

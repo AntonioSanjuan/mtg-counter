@@ -48,8 +48,8 @@
   flex-direction: column;
   box-sizing: border-box;
   display: flex;
-  place-content: center;
   align-items: center;
+  overflow: auto;
 
   min-width: 100%;
   width: 100%;
@@ -71,7 +71,6 @@
   }
 
   .Layout_Content {
-    place-content: center;
     padding: 0px;
     margin-bottom: var(--app-topnav-height);
   }

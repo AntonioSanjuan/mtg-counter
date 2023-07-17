@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { FirebaseBoardDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { selectGameBoard } from '../../state/game/game.selectors';
-import getPlayerRotation, { getPlayerWidthPercentage } from '../../utils/boardPlayerRotation/boardPlayerRotation';
+import getPlayerRotation, { getPlayerHeightPercentage } from '../../utils/boardPlayerRotation/boardPlayerRotation';
 import GameButton from '../GameButton/GameButton';
 import Player from '../Player/Player';
 import './Board.scss';
@@ -17,7 +17,7 @@ function Board() {
           <div
             key={player.id}
             className="Board_PlayerContainer"
-            style={{ height: `calc(${getPlayerWidthPercentage(boardSettings.numberOfPlayers)}%)` }}
+            style={{ height: `calc(${getPlayerHeightPercentage(boardSettings.numberOfPlayers)}%)` }}
           >
             <Player player={player} rotation={getPlayerRotation(index, boardSettings.numberOfPlayers)} />
           </div>

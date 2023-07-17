@@ -12,7 +12,6 @@ import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useAuth from '../../hooks/auth/authHook.mock';
 import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
-import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { setUserAuthAction } from '../../state/user/user.actions';
 import { User } from 'firebase/auth';
 import { Section } from '../common/section/section';

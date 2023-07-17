@@ -4,7 +4,7 @@ import { textColors, textShadowBoxColors } from '../../utils/playerTextColors/pl
 
 export interface CounterCarrouselStyleProps {
     playerColor?: PlayerColors
-    minified?: boolean
+    isResume?: boolean
 }
 
 const SCCounterCarrousel = styled.div.attrs<
@@ -36,11 +36,10 @@ padding:  0px 20px;
         height: 70%;
         padding: 0;
         width: 100%;
-        text-shadow: 2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, -2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, 0 2px ${(props) => (textShadowBoxColors[props.playerColor])}, 0 -2px ${(props) => (textShadowBoxColors[props.playerColor])},
-             1px 1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, 1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px 1px ${(props) => (textShadowBoxColors[props.playerColor])};
+        
         i{
             font-size: 25px;
-            color: var(--app-hight-contrast);
+            color: ${(props) => (textColors[props.playerColor])};
         }
     }
 }
@@ -52,10 +51,14 @@ padding:  0px 20px;
     align-items: center;
     justify-content: center;
     height: 70%;
-    width: ${(props) => (props.minified ? '100%' : '40%')};
+    width: ${(props) => (props.isResume ? '100%' : '40%')};
     user-select: none; /* Standard syntax */
 
     .CounterCarrousel_CarrouselItemContainer {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        justify-content: center;
     }
 }
 
@@ -75,21 +78,16 @@ padding:  0px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    height: 100%;
+    
     padding: 3px 10px;
     p {
         margin: 0;
         color:  ${(props) => (textColors[props.playerColor])};
-
-        text-shadow: 2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, -2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, 0 2px ${(props) => (textShadowBoxColors[props.playerColor])}, 0 -2px ${(props) => (textShadowBoxColors[props.playerColor])},
-             1px 1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, 1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px 1px ${(props) => (textShadowBoxColors[props.playerColor])};
     }
 
     i {
-        color:  ${(props) => (textShadowBoxColors[props.playerColor])};
-
-        text-shadow: 2px 0 ${(props) => (textColors[props.playerColor])}, -2px 0 ${(props) => (textColors[props.playerColor])}, 0 2px ${(props) => (textColors[props.playerColor])}, 0 -2px ${(props) => (textColors[props.playerColor])},
-             1px 1px ${(props) => (textColors[props.playerColor])}, -1px -1px ${(props) => (textColors[props.playerColor])}, 1px -1px ${(props) => (textColors[props.playerColor])}, -1px 1px ${(props) => (textColors[props.playerColor])};
+        color:  ${(props) => (textColors[props.playerColor])};
     }
 }
 `;

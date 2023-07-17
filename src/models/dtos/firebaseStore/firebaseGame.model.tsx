@@ -14,6 +14,7 @@ export interface FirebasePlayerDto {
   name: string;
   userId: string|null;
   owner: boolean;
+  winner: boolean;
   deckName: string;
   counters: FirebaseCounterDto[];
   color: PlayerColors;
@@ -26,6 +27,7 @@ export interface FirebaseBoardDto {
 }
 
 export interface FirebaseGameDto {
+    name?: string;
     finished: boolean;
     board: FirebaseBoardDto;
     createdAt: Timestamp;

@@ -7,12 +7,14 @@ const updatePlayerCounterSpy = jest.fn()
 const updatePlayerColorSpy = jest.fn()
 const updatePlayerDetailsSpy = jest.fn()
 const updatePlayerOwnerSpy = jest.fn()
+const updatePlayerWinnerSpy = jest.fn()
 
 const mockPlayerMockResponse= {
   updatePlayerCounter: updatePlayerCounterSpy,
   updatePlayerColor: updatePlayerColorSpy,
   updatePlayerDetails: updatePlayerDetailsSpy,
-  updatePlayerOwner: updatePlayerOwnerSpy
+  updatePlayerOwner: updatePlayerOwnerSpy,
+  updatePlayerWinner: updatePlayerWinnerSpy
 }
 export const mock = () => {
   return mockPlayerMockResponse;
@@ -23,4 +25,5 @@ export const initializeMock = () => {
   updatePlayerColorSpy.mockResolvedValue(undefined)
   updatePlayerDetailsSpy.mockResolvedValue(undefined)
   updatePlayerOwnerSpy.mockResolvedValue(undefined)
+  updatePlayerWinnerSpy.mockResolvedValue(undefined)
 }

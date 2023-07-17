@@ -46,7 +46,7 @@ gap: 10px;
 
 .PlayerConfig_OwnerButton {
   position: absolute;
-  top: calc(50% - 20px);
+  bottom: 5px;
   right: 5px;
   z-index: 3;
   text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),

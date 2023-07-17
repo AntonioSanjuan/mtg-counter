@@ -1,7 +1,8 @@
 export const TRANSLATIONS_ES = {
   welcome: 'spanish',
   common: {
-    date: '{{val, date}}',
+    date: '{{val, datetime}}',
+    dateTime: '{{val, datetime}}',
   },
   views: {
     historic: {

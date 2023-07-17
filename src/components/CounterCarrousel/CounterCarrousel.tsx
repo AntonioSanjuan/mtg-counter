@@ -6,8 +6,8 @@ import { useCounter } from '../../hooks/counter/counterHook';
 import SCCounterCarrousel from './CounterCarrousel.style';
 
 function CounterCarrousel(
-  { player, isRotated, minified } :
-  { player: FirebasePlayerDto, isRotated: boolean, minified?: boolean},
+  { player, isRotated, isResume } :
+  { player: FirebasePlayerDto, isRotated: boolean, isResume?: boolean},
 ) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
   const { temporaryCount, addCounters, removeCounters } = useCounter(player, currentCounter);
@@ -17,8 +17,8 @@ function CounterCarrousel(
   };
 
   return (
-    <SCCounterCarrousel playerColor={player.color} minified={minified}>
-      {!minified && (
+    <SCCounterCarrousel playerColor={player.color} isResume={isResume || currentCounter.type === 'CommanderDamage'}>
+      {(!isResume && currentCounter.type !== 'CommanderDamage') && (
       <div className="CounterCarrousel_ActionContainer">
         <button
           type="button"
@@ -37,46 +37,51 @@ function CounterCarrousel(
             <p className="app_font_m app_font_noMargin">{temporaryCount}</p>
           )}
         </div>
-        <Carousel
-          axis={isRotated ? 'horizontal' : 'vertical'}
-          onChange={handleCarrouselChange}
-          infiniteLoop
-          showStatus={false}
-          showThumbs={false}
-          swipeable={temporaryCount === 0}
-          verticalSwipe={isRotated ? 'natural' : 'standard'}
-          emulateTouch
-          showIndicators={false}
-          showArrows={false}
-          preventMovementUntilSwipeScrollTolerance
-        >
-          { player.counters.map((counter: FirebaseCounterDto) => (
-            <div
-              className="CounterCarrousel_CarrouselItemContainer"
-              key={counter.type}
-            >
-              <div className="CounterCarrousel_CarrouselItem">
-                <p className="app_font_m">
-                  {counter.type === 'Poison'
+        <div className="CounterCarrousel_CarrouselContainer">
+          <Carousel
+            axis={isRotated ? 'horizontal' : 'vertical'}
+            onChange={handleCarrouselChange}
+            infiniteLoop
+            showStatus={false}
+            dynamicHeight
+            showThumbs={false}
+            swipeable={temporaryCount === 0}
+            verticalSwipe={isRotated ? 'natural' : 'standard'}
+            emulateTouch
+            showIndicators={false}
+            showArrows={false}
+            preventMovementUntilSwipeScrollTolerance
+          >
+            { player.counters.map((counter: FirebaseCounterDto) => (
+              <div
+                className="CounterCarrousel_CarrouselItemContainer"
+                key={counter.type}
+              >
+                <div className="CounterCarrousel_CarrouselItem">
+
+                  <p className="app_font_m">
+                    {counter.type === 'Poison'
                     && (<i className="bi bi-radioactive" />)}
-                  {counter.type === 'Life'
+                    {counter.type === 'Life'
                     && (<i className="bi bi-heart-fill" />)}
-                  {counter.type === 'CommanderDamage'
-                    && (<i className="bi bi-lightning-charge-fill" />
-                    ) }
-                </p>
-                <p className="app_font_xl">
-                  {counter.value}
-                </p>
+                    {counter.type === 'CommanderDamage'
+                    && (<i className="bi bi-heart-fill" />)}
+                  </p>
+
+                  <p className="app_font_xl">
+                    {counter.value}
+                  </p>
+
+                </div>
               </div>
-            </div>
-          ))}
-        </Carousel>
+            ))}
+          </Carousel>
+        </div>
       </div>
-      {!minified && (
+      {(!isResume && currentCounter.type !== 'CommanderDamage') && (
       <div className="CounterCarrousel_ActionContainer">
         <button
-          disabled={minified}
+          disabled={isResume}
           type="button"
           aria-label="addCounters"
           className="btn btn-link"

@@ -14,6 +14,7 @@ import GameRestart from '../../components/common/gameRestart/gameRestart';
 export function useAlert() {
   const dispatch = useAppDispatch();
   const alertContent = useAppSelector<AlertContent>(selectLayoutAlertContent);
+  const canBeClosed = alertContent?.type !== DynamicAlertTypes.GameRestart;
 
   const getAlertContent = () => {
     let MyComponent: any;
@@ -48,7 +49,6 @@ export function useAlert() {
   };
 
   const closeAlert = () => {
-    console.log('closeAlert');
     dispatch(closeAlertAction());
   };
 
@@ -56,5 +56,6 @@ export function useAlert() {
     getAlertContent,
     openAlert,
     closeAlert,
+    canBeClosed,
   };
 }

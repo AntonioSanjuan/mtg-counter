@@ -74,10 +74,19 @@ export function useApp() {
 
   const formatterClb: FormatFunction | undefined = (value, format, lng): string => {
     if (format === 'date') {
-      console.log('new Intl.DateTimeFormat(lng).format(value)', new Intl.DateTimeFormat(lng).format(value));
       return new Intl.DateTimeFormat(lng).format(value);
     }
-    return '';
+    if (format === 'datetime') {
+      return new Intl.DateTimeFormat(lng, {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      }).format(value);
+    }
+    return value;
   };
 
   const initializeLanguage = () => {

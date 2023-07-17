@@ -7,7 +7,7 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import {
-  mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner,
+  mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner, mapPlayerWinner,
 } from '../../utils/mappers/playersMappers/playersMappers';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAppSelector } from '../state/appStateHook';
@@ -21,6 +21,14 @@ export function usePlayer(player: FirebasePlayerDto) {
       gameSettings.board.players,
       player.id,
       newPlayerColor,
+    );
+    await updatePlayers(newPlayers);
+  };
+
+  const updatePlayerWinner = async () => {
+    const newPlayers = mapPlayerWinner(
+      gameSettings.board.players,
+      player.id,
     );
     await updatePlayers(newPlayers);
   };
@@ -65,6 +73,7 @@ export function usePlayer(player: FirebasePlayerDto) {
   return {
     updatePlayerCounter,
     updatePlayerOwner,
+    updatePlayerWinner,
     updatePlayerColor,
     updatePlayerDetails,
   };

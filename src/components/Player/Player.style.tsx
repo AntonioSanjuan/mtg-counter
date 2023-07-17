@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { backgroundColors } from '../../utils/playerBackgroundColors/playerBackgroundColors';
+import { textColors } from '../../utils/playerTextColors/playerTextColors';
 
 export interface PlayerStyleProps {
     rotation: number,
@@ -34,13 +35,14 @@ transform-origin: center;
 height: ${(props) => (props.playerHeight ? `${props.playerHeight}px` : '100%')};
 min-width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
 width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
-box-shadow: inset 0 0 75px var(${(props) => (props.isOwner ? '--OwnerPlayerBackground' : '--app-topnav-mobile-background')});
+box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
+border: ${(props) => (props.isOwner ? '5px outset var(--OwnerPlayerBackground)' : 'none')};
 .Player_ConfigButton {
   position: absolute;
   bottom: 5px;
   right: calc(50% - 22px);
   z-index: 3;
-  text-shadow: 2px 0 var(${(props) => (props.isOwner ? '--OwnerPlayerBackground' : '--app-hight-contrast')}), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
+  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
   1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
   i {
     font-size: 20px;
@@ -48,6 +50,17 @@ box-shadow: inset 0 0 75px var(${(props) => (props.isOwner ? '--OwnerPlayerBackg
   }
 }
 
+.Player_NameContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0px;
+
+  p, i {
+    color: ${(props) => textColors[props.backgroundColor]}
+  }
+}
 `;
 
 export default SCPlayer;

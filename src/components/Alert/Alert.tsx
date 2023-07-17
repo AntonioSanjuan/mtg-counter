@@ -4,7 +4,7 @@ import { selectLayoutIsAlertOpened } from '../../state/layout/layout.selectors';
 import Modal from '../common/modal/modal';
 
 function Alert() {
-  const { getAlertContent } = useAlert();
+  const { getAlertContent, canBeClosed } = useAlert();
   const isModalOpened = useAppSelector<boolean>(selectLayoutIsAlertOpened);
   return (
     // eslint-disable-next-line react/jsx-no-useless-fragment
@@ -12,7 +12,7 @@ function Alert() {
       { isModalOpened
         && (
         <Modal
-          canBeClosed
+          canBeClosed={canBeClosed}
         >
           {getAlertContent()}
         </Modal>
