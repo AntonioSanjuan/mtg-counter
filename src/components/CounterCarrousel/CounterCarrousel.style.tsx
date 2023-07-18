@@ -13,6 +13,7 @@ Required<CounterCarrouselStyleProps> // What comes out of .attrs()
 >((props: CounterCarrouselStyleProps) => (
   {
     playerColor: props.playerColor ?? PlayerColors.default,
+    isResume: props.isResume ?? false,
   } as Required<CounterCarrouselStyleProps>
 ))`
 display: flex;
@@ -21,7 +22,7 @@ justify-content: center;
 
 height: 100%;
 padding:  0px 20px;
-
+overflow: hidden;
 
 .CounterCarrousel_ActionContainer {
     display: flex;
@@ -59,6 +60,7 @@ padding:  0px 20px;
         height: 100%;
         flex-direction: column;
         justify-content: center;
+        height: 135px;
     }
 }
 
@@ -75,21 +77,7 @@ padding:  0px 20px;
 }
 
 .CounterCarrousel_CarrouselItem {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
     
-    padding: 3px 10px;
-    p {
-        margin: 0;
-        color:  ${(props) => (textColors[props.playerColor])};
-    }
-
-    i {
-        color:  ${(props) => (textColors[props.playerColor])};
-    }
-}
 `;
 
 export default SCCounterCarrousel;

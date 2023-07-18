@@ -6,6 +6,7 @@ import { PlayerColors } from '../../internal/types/PlayerColorEnum.model';
 
 export interface FirebaseCounterDto {
   type: CounterTypes
+  targetPlayerId?: string
   value: number
 }
 

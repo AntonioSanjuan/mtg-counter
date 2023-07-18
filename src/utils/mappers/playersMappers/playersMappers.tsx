@@ -57,13 +57,37 @@ export const mapPlayerCounter = (
   if (player.id === playerIdToUpdate) {
     const targetPlayer = player;
     targetPlayer.counters = targetPlayer.counters.map((counter) => {
-      if (counter.type === counterToUpdate.type) {
-        const targetCounter = {
-          ...counter,
-          value: counter.value + counterToUpdateValueModification,
-        };
-        return targetCounter;
+      switch (counterToUpdate.type) {
+        case 'Life':
+        case 'Poison':
+          if (counter.type === counterToUpdate.type) {
+            const targetCounter = {
+              ...counter,
+              value: counter.value + counterToUpdateValueModification,
+            };
+            return targetCounter;
+          }
+          break;
+        case 'CommanderDamage':
+          if (counter.type === 'Life') {
+            const targetCounter = {
+              ...counter,
+              value: counter.value + counterToUpdateValueModification,
+            };
+            return targetCounter;
+          }
+          if (counter.type === 'CommanderDamage' && counter.targetPlayerId === counterToUpdate.targetPlayerId) {
+            const targetCounter = {
+              ...counter,
+              value: counter.value + counterToUpdateValueModification,
+            };
+            return targetCounter;
+          }
+          break;
+        default:
+          return counter;
       }
+
       return counter;
     });
     return targetPlayer;

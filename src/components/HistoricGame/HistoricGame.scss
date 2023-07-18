@@ -3,6 +3,7 @@
     flex-direction: row;
     align-items: center;
     min-height: 350px;
+    height: 350px;
     gap: 30px;
 
     .HistoricGame_BoardContainer {
@@ -51,10 +52,10 @@
         .HistoricGame_BoardContainer {
             width: 100%;
             min-height: 350px;
+            height: 350px;
         }
         .HistoricGame_InfoContainer {
             width: 100%;
-            min-height: 50%;
             
             min-height: auto;
         }

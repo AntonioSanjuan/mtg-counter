@@ -11,6 +11,7 @@ import CounterCarrousel from './CounterCarrousel';
 import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import * as mock_useCounter from '../../hooks/counter/counterHook.mock';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
+import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 
 describe('CounterCarrousel', () => {
   let counterCarrouselStore: any;
@@ -23,7 +24,7 @@ describe('CounterCarrousel', () => {
     counterCarrouselStore = createTestStore();
     history = createMemoryHistory();
 
-    inputPlayer = getDefaultPlayers(40, 1)[0];
+    inputPlayer = getDefaultPlayers(40, NumberOfPlayers.Two)[0];
     jest.spyOn(useCounterHooks, 'useCounter')
       .mockImplementation(mock_useCounter.mock);
 

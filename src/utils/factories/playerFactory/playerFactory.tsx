@@ -4,23 +4,56 @@ import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../../models/in
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 
-export const getDefaultPlayerCounters = (initialLifes: Lifes): FirebaseCounterDto[] => [
+const getDefaultPlayerCounters = (initialLifes: Lifes, opponentsId: string[]): FirebaseCounterDto[] => [
   { type: 'Life', value: initialLifes },
   { type: 'Poison', value: MaxPoisonCounters },
-  { type: 'CommanderDamage', value: MaxCommanderDamage },
+  ...opponentsId.map((opponentId) => getOpponentCommanderCounter(opponentId)),
 ];
 
-const getDefaultPlayer = (
+export const getRestartedPlayerCounters = (
+  currentPlayerCounters:FirebaseCounterDto[],
   initialLifes: Lifes,
+): FirebaseCounterDto[] => currentPlayerCounters.map((currentPlayerCounter) => {
+  switch (currentPlayerCounter.type) {
+    case 'Life':
+      return {
+        ...currentPlayerCounter,
+        value: initialLifes,
+      };
+    case 'Poison':
+      return {
+        ...currentPlayerCounter,
+        value: MaxPoisonCounters,
+      };
+    case 'CommanderDamage':
+      return {
+        ...currentPlayerCounter,
+        value: MaxCommanderDamage,
+      };
+    default:
+      return currentPlayerCounter;
+  }
+});
+
+const getOpponentCommanderCounter = (opponentId: string): FirebaseCounterDto => ({
+  targetPlayerId: opponentId,
+  type: 'CommanderDamage',
+  value: MaxCommanderDamage,
+} as FirebaseCounterDto);
+
+const getDefaultPlayer = (
+  playerId: string,
+  initialLifes: Lifes,
+  opponentsId: string[],
   firstPlayer: boolean,
 ): FirebasePlayerDto => ({
-  id: uuidv4(),
+  id: playerId,
   name: '',
   userId: null,
   owner: firstPlayer,
   winner: false,
   deckName: '',
-  counters: getDefaultPlayerCounters(initialLifes),
+  counters: getDefaultPlayerCounters(initialLifes, opponentsId),
   color: PlayerColors.default,
 });
 
@@ -28,9 +61,12 @@ export const getDefaultPlayers = (
   initialLifes: Lifes,
   numberOfPlayers: NumberOfPlayers,
 ): FirebasePlayerDto[] => {
-  const players = new Array(numberOfPlayers).fill({}).map((player, index) => getDefaultPlayer(initialLifes, index === 0));
-  // players.fill(getDefaultPlayer(
-  //   initialLifes,
-  // ));
-  return players;
+  const defaultPlayersId = new Array(numberOfPlayers).fill({}).map(() => uuidv4());
+  const defaultPlayers = defaultPlayersId
+    .map((targetPlayerId: string, index: number) => {
+      const opponentsId = defaultPlayersId.filter((defaultPlayer) => targetPlayerId !== defaultPlayer);
+      return getDefaultPlayer(targetPlayerId, initialLifes, opponentsId, index === 0);
+    });
+
+  return defaultPlayers;
 };

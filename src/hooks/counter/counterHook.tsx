@@ -6,7 +6,7 @@ import {
 import { usePlayer } from '../player/playerHook';
 
 export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCounterDto) {
-  const { updatePlayerCounter } = usePlayer(player);
+  const { updatePlayerCounter, playerOpponents } = usePlayer(player);
 
   const [temporaryCount, setTemporaryCount] = useState<number>(0);
   const temporaryCountTimeout = useRef<NodeJS.Timeout>();
@@ -25,6 +25,12 @@ export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCo
     }
   }, [temporaryCount]);
 
+  const getCounterOpponent = (counterOpponentId?: string) => {
+    const counterOpponent: FirebasePlayerDto | undefined = counterOpponentId
+      ? playerOpponents.find((playerOpponents) => playerOpponents.id === counterOpponentId)
+      : undefined;
+    return counterOpponent;
+  };
   const addCounters = () => {
     setTemporaryCount(temporaryCount + 1);
   };
@@ -37,5 +43,6 @@ export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCo
     temporaryCount,
     addCounters,
     removeCounters,
+    getCounterOpponent,
   };
 }

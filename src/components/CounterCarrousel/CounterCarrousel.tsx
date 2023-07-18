@@ -4,21 +4,24 @@ import { useState } from 'react';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { useCounter } from '../../hooks/counter/counterHook';
 import SCCounterCarrousel from './CounterCarrousel.style';
+import CounterCarrouselItem from '../CounterCarrouselItem/CounterCarrouselItem';
 
 function CounterCarrousel(
   { player, isRotated, isResume } :
   { player: FirebasePlayerDto, isRotated: boolean, isResume?: boolean},
 ) {
   const [currentCounter, setCurrentCounter] = useState<FirebaseCounterDto>(player.counters[0]);
-  const { temporaryCount, addCounters, removeCounters } = useCounter(player, currentCounter);
+  const {
+    temporaryCount, addCounters, removeCounters, getCounterOpponent,
+  } = useCounter(player, currentCounter);
 
   const handleCarrouselChange = (index: any, element: any) => {
     setCurrentCounter(player.counters[index]);
   };
 
   return (
-    <SCCounterCarrousel playerColor={player.color} isResume={isResume || currentCounter.type === 'CommanderDamage'}>
-      {(!isResume && currentCounter.type !== 'CommanderDamage') && (
+    <SCCounterCarrousel playerColor={player.color} isResume={isResume}>
+      {!isResume && (
       <div className="CounterCarrousel_ActionContainer">
         <button
           type="button"
@@ -55,30 +58,19 @@ function CounterCarrousel(
             { player.counters.map((counter: FirebaseCounterDto) => (
               <div
                 className="CounterCarrousel_CarrouselItemContainer"
-                key={counter.type}
+                key={counter.type + counter.targetPlayerId}
               >
-                <div className="CounterCarrousel_CarrouselItem">
-
-                  <p className="app_font_m">
-                    {counter.type === 'Poison'
-                    && (<i className="bi bi-radioactive" />)}
-                    {counter.type === 'Life'
-                    && (<i className="bi bi-heart-fill" />)}
-                    {counter.type === 'CommanderDamage'
-                    && (<i className="bi bi-heart-fill" />)}
-                  </p>
-
-                  <p className="app_font_xl">
-                    {counter.value}
-                  </p>
-
-                </div>
+                <CounterCarrouselItem
+                  counter={counter}
+                  counterOpponent={getCounterOpponent(counter.targetPlayerId)}
+                  playerColor={player.color}
+                />
               </div>
             ))}
           </Carousel>
         </div>
       </div>
-      {(!isResume && currentCounter.type !== 'CommanderDamage') && (
+      {!isResume && (
       <div className="CounterCarrousel_ActionContainer">
         <button
           disabled={isResume}

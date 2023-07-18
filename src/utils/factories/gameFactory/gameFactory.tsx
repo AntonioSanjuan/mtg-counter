@@ -1,7 +1,7 @@
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { GameState } from '../../../state/game/models/appGame.state';
-import { getDefaultPlayerCounters, getDefaultPlayers } from '../playerFactory/playerFactory';
+import { getRestartedPlayerCounters, getDefaultPlayers } from '../playerFactory/playerFactory';
 
 export const getNewGame = (
   initialLifes: Lifes = Lifes.Fourty,
@@ -32,7 +32,7 @@ export const getRestartedGame = (
     players: gameSettings.board.players.map((player) => ({
       ...player,
       winner: false,
-      counters: getDefaultPlayerCounters(gameSettings.board.initialLifes),
+      counters: getRestartedPlayerCounters(player.counters, gameSettings.board.initialLifes),
     })),
   },
 });

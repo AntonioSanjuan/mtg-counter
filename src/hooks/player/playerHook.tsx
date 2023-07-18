@@ -14,11 +14,13 @@ import { useAppSelector } from '../state/appStateHook';
 
 export function usePlayer(player: FirebasePlayerDto) {
   const { updateGame } = useCurrentGame();
-  const gameSettings = useAppSelector<GameState>(selectGame);
+  const game = useAppSelector<GameState>(selectGame);
+
+  const opponents = game.board.players.filter((boardPlayers) => boardPlayers.id !== player.id);
 
   const updatePlayerColor = async (newPlayerColor: PlayerColors) => {
     const newPlayers = mapPlayerColor(
-      gameSettings.board.players,
+      game.board.players,
       player.id,
       newPlayerColor,
     );
@@ -27,7 +29,7 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayerWinner = async () => {
     const newPlayers = mapPlayerWinner(
-      gameSettings.board.players,
+      game.board.players,
       player.id,
     );
     await updatePlayers(newPlayers);
@@ -35,7 +37,7 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayerOwner = async () => {
     const newPlayers = mapPlayerOwner(
-      gameSettings.board.players,
+      game.board.players,
       player.id,
     );
     await updatePlayers(newPlayers);
@@ -43,7 +45,7 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayerDetails = async (newPlayerDetails: PlayerDetailsModel) => {
     const newPlayers = mapPlayerDetails(
-      gameSettings.board.players,
+      game.board.players,
       player.id,
       newPlayerDetails,
     );
@@ -52,7 +54,7 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayerCounter = async (currentCounter: FirebaseCounterDto, counterValueModification: number) => {
     const newPlayers = mapPlayerCounter(
-      gameSettings.board.players,
+      game.board.players,
       player.id,
       currentCounter,
       counterValueModification,
@@ -62,13 +64,13 @@ export function usePlayer(player: FirebasePlayerDto) {
 
   const updatePlayers = async (newPlayers: FirebasePlayerDto[]) => {
     const newGame: GameState = {
-      ...gameSettings,
+      ...game,
       board: {
-        ...gameSettings.board,
+        ...game.board,
         players: newPlayers,
       },
     };
-    await updateGame(gameSettings.id, newGame);
+    await updateGame(game.id, newGame);
   };
   return {
     updatePlayerCounter,
@@ -76,5 +78,6 @@ export function usePlayer(player: FirebasePlayerDto) {
     updatePlayerWinner,
     updatePlayerColor,
     updatePlayerDetails,
+    playerOpponents: opponents,
   };
 }

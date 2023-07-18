@@ -3,6 +3,10 @@
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { FirebasePlayerDto } from "../../models/dtos/firebaseStore/firebaseGame.model"
+
+const playerOpponentsResponseObject: FirebasePlayerDto[] = []
+
 const updatePlayerCounterSpy = jest.fn()
 const updatePlayerColorSpy = jest.fn()
 const updatePlayerDetailsSpy = jest.fn()
@@ -14,7 +18,8 @@ const mockPlayerMockResponse= {
   updatePlayerColor: updatePlayerColorSpy,
   updatePlayerDetails: updatePlayerDetailsSpy,
   updatePlayerOwner: updatePlayerOwnerSpy,
-  updatePlayerWinner: updatePlayerWinnerSpy
+  updatePlayerWinner: updatePlayerWinnerSpy,
+  playerOpponents: playerOpponentsResponseObject
 }
 export const mock = () => {
   return mockPlayerMockResponse;
