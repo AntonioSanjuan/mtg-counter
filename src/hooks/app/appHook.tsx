@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import i18n, { FormatFunction } from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -15,6 +15,7 @@ import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
+import { useWakeLock } from '../useWakeLock/wakeLockHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
@@ -40,6 +41,7 @@ export function useApp() {
   const { getUser, setAnonymousUser } = useUser();
   const { getGame, setAnonymousGame } = useCurrentGame();
   const { getHistoric, setAnonymousHistoric } = useHistoricGames();
+  const { isAvailable: isWakeLockAvailable, lockScreen } = useWakeLock();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
@@ -49,6 +51,11 @@ export function useApp() {
   const [theme, setTheme] = useState<Theme>(getBrowserTheme());
   const [language, setLanguage] = useState<Language>(getBrowserLanguage());
 
+  const initializeLockScreen = async () => {
+    if (isWakeLockAvailable) {
+      await lockScreen();
+    }
+  };
   const initializeUser = async () => {
     setLoading(true);
     (auth.currentUser)
@@ -120,6 +127,8 @@ export function useApp() {
   useEffect(() => {
     initializeLanguage();
     initializeTheme();
+
+    initializeLockScreen();
 
     auth.onAuthStateChanged(async () => {
       setAuthStateChanged(true);
