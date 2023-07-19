@@ -38,7 +38,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
         type="button"
         aria-label="configButton"
         className="btn btn-link Player_ConfigButton"
-        onClick={() => {
+        onTouchStart={() => {
           setIsPlayerConfigOpened(!isPlayerConfigOpened);
         }}
       >

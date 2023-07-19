@@ -57,7 +57,7 @@ describe('CounterCarrousel', () => {
     const button = screen.getByRole('button', { name: 'removeCounters' });
 
     await act(async () => {
-      fireEvent.click(button);
+      fireEvent.touchStart(button);
     });
 
     expect(mock_useCounter.mock().removeCounters).toHaveBeenCalled()
@@ -77,7 +77,7 @@ describe('CounterCarrousel', () => {
     const button = screen.getByRole('button', { name: 'addCounters' });
 
     await act(async () => {
-      fireEvent.click(button);
+      fireEvent.touchStart(button);
     });
 
     expect(mock_useCounter.mock().addCounters).toHaveBeenCalled()

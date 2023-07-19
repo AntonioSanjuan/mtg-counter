@@ -33,9 +33,7 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
           type="button"
           aria-label="ownerButton"
           className="btn btn-link PlayerConfig_OwnerButton"
-          onClick={() => {
-            updatePlayerOwner();
-          }}
+          onTouchStart={updatePlayerOwner}
         >
           <i className="bi bi-trophy-fill" />
         </button>

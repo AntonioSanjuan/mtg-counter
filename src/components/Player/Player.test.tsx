@@ -14,6 +14,7 @@ import Player from './Player';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import PlayerConfig from '../PlayerConfig/PlayerConfig';
 import React from 'react';
+import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 describe('Player', () => {
   let playerStore: any;
   let history: any;
@@ -25,7 +26,7 @@ describe('Player', () => {
     playerStore = createTestStore();
     history = createMemoryHistory();
 
-    inputPlayer = getDefaultPlayers(40, 1)[0];
+    inputPlayer = getDefaultPlayers(40, NumberOfPlayers.Two)[0];
   });
 
   it('should create', () => {
@@ -70,7 +71,7 @@ describe('Player', () => {
     const button = screen.getByRole('button', { name: 'configButton' });
 
     await act(async () => {
-      fireEvent.click(button);
+      fireEvent.touchStart(button);
     });
 
     const onPickFn = jest.fn();

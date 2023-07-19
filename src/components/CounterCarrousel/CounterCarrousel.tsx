@@ -27,7 +27,7 @@ function CounterCarrousel(
           type="button"
           aria-label="removeCounters"
           className="btn btn-link"
-          onClick={removeCounters}
+          onTouchStart={removeCounters}
         >
           <i className="bi bi-dash-circle-fill" />
         </button>
@@ -77,7 +77,7 @@ function CounterCarrousel(
           type="button"
           aria-label="addCounters"
           className="btn btn-link"
-          onClick={addCounters}
+          onTouchStart={addCounters}
         >
           <i className="bi bi-plus-circle-fill" />
         </button>
