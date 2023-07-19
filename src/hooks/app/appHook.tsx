@@ -41,7 +41,7 @@ export function useApp() {
   const { getUser, setAnonymousUser } = useUser();
   const { getGame, setAnonymousGame } = useCurrentGame();
   const { getHistoric, setAnonymousHistoric } = useHistoricGames();
-  const { isAvailable: isWakeLockAvailable, lockScreen } = useWakeLock();
+  const { lockScreen } = useWakeLock();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userIsCreating = useAppSelector<boolean>(selectUserIsCreating);
@@ -51,11 +51,6 @@ export function useApp() {
   const [theme, setTheme] = useState<Theme>(getBrowserTheme());
   const [language, setLanguage] = useState<Language>(getBrowserLanguage());
 
-  const initializeLockScreen = async () => {
-    if (isWakeLockAvailable) {
-      await lockScreen();
-    }
-  };
   const initializeUser = async () => {
     setLoading(true);
     (auth.currentUser)
@@ -128,7 +123,7 @@ export function useApp() {
     initializeLanguage();
     initializeTheme();
 
-    initializeLockScreen();
+    lockScreen();
 
     auth.onAuthStateChanged(async () => {
       setAuthStateChanged(true);
@@ -163,7 +158,6 @@ export function useApp() {
 
   return {
     theme,
-    isWakeLockAvailable,
     language,
     loading,
   };

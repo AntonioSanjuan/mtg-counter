@@ -1,34 +1,54 @@
 import { useState } from 'react';
+import { useAlert } from '../alert/alertHook';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
+import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
 
 export function useWakeLock() {
+  const { openAlert } = useAlert();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [wakeLock, setWakelock] = useState<WakeLockSentinel|null>(null);
 
   const isAvailable: boolean = 'wakeLock' in navigator;
 
-  const lockScreen = async () => {
+  const relockScreen = () => {
+    openAlert(DynamicAlertTypes.Notification, {
+      title: 'relock',
+      description: `${wakeLock?.released} - ${wakeLock?.type}`,
+    } as NotificationAlertPropsModel);
+    if (wakeLock && document.visibilityState === 'visible') {
+      lockScreen();
+    }
+  };
+
+  const lockScreen = () => {
     setError(false);
 
     if (isAvailable) {
       setLoading(true);
-
-      try {
-        const wakeLockAux: WakeLockSentinel = await navigator.wakeLock.request('screen');
-
-        wakeLockAux.addEventListener('release', () => {
-          // the wake lock has been released
-          console.log('mierda, mierda, mierda');
-          lockScreen();
-        });
-
+      navigator.wakeLock.request('screen').then((wakeLockAux: WakeLockSentinel) => {
         setWakelock(wakeLockAux);
-        setLoading(false);
-      } catch (err) {
-        console.log('error', err);
+
+        document.addEventListener('visibilitychange', async () => {
+          await relockScreen();
+        });
+      }).catch(() => {
         // The wake lock request fails - usually system-related, such as low battery.
         setError(true);
-      }
+
+        // reset
+        setWakelock(null);
+        document.removeEventListener('visibilitychange', async () => {
+          await relockScreen();
+        });
+
+        // to-remove
+        openAlert(DynamicAlertTypes.Notification, {
+          title: 'error',
+        } as NotificationAlertPropsModel);
+      }).finally(() => {
+        setLoading(false);
+      });
     }
   };
 
@@ -38,13 +58,13 @@ export function useWakeLock() {
     if (isAvailable && wakeLock) {
       setLoading(true);
 
-      try {
-        await wakeLock?.release();
+      wakeLock?.release().then(() => {
         setWakelock(null);
-        setLoading(false);
-      } catch (err) {
+      }).catch((error) => {
         setError(true);
-      }
+      }).finally(() => {
+        setLoading(false);
+      });
     }
   };
 
