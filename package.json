@@ -1,7 +1,7 @@
 {
   "name": "mtg-counter",
   "homepage": "https://antoniosanjuan.github.io/microFrontCounter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
     "@testing-library/jest-dom": "^5.16.1",

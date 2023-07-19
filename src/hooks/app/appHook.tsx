@@ -163,6 +163,7 @@ export function useApp() {
 
   return {
     theme,
+    isWakeLockAvailable,
     language,
     loading,
   };
