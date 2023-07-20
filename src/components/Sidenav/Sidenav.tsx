@@ -4,6 +4,7 @@ import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
 import { Section } from '../common/section/section';
 import SCSidenav from './Sidenav.style';
+import logo from '../../assets/images/Logo.png';
 
 function Sidenav() {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
@@ -19,20 +20,36 @@ function Sidenav() {
   return (
     <SCSidenav>
       <div className="Sidenav_NavContainer">
-        <Section
-          sectionName="New Game"
-          onClickCallback={() => { handleNavigation('/'); }}
-        >
-          <i className="bi bi-plus" />
-        </Section>
-        {isLoggedIn && (
-          <Section
-            sectionName="History"
-            onClickCallback={() => { handleNavigation('/history'); }}
-          >
-            <i className="bi bi-bookmark-star-fill" />
-          </Section>
-        )}
+        <div className="Sidenav_BodyContainer">
+          <div className="Sidenav_HeaderContainer">
+            <img src={logo} alt="logo" />
+          </div>
+          <hr />
+          <div className="Sidenav_SectionContainer">
+            <Section
+              sectionName="New Game"
+              onClickCallback={() => { handleNavigation('/'); }}
+            >
+              <i className="bi bi-plus" />
+            </Section>
+            {isLoggedIn && (
+            <Section
+              sectionName="History"
+              onClickCallback={() => { handleNavigation('/history'); }}
+            >
+              <i className="bi bi-bookmark-star-fill" />
+            </Section>
+            )}
+          </div>
+
+        </div>
+        <div className="Sidenav_FooterContainer">
+          <hr />
+          <p className="app_font_m app_font_noMargin">
+            Version:
+            {}
+          </p>
+        </div>
       </div>
     </SCSidenav>
   );

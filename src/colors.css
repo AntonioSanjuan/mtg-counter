@@ -7,7 +7,6 @@
   --app-content-background-color: #cbcbcb;
 
   --app-card-background-color: #3d5e79;
-  --app-card-background-hover-color: #242424;
   
   --app-sidenav-background-color: #0b0b0c;
   --app-sidenav-section-hover-color: #242424;
@@ -15,10 +14,10 @@
   
   --app-error-color: #dd1f1f;
   --app-topnav-mobile-background: #0b0b0c;
-  
+
   
   /*fonts*/
-  --big-fontColor: #D4D4D4;
+  --big-fontColor: #4b4a4a;
   --small-fontColor: #777777;
   --normal-fontColor: #ABABAB;
   --error-fontColor: var(--app-error-color);
@@ -48,13 +47,12 @@
 
 --app-content-background-color: #2e2e2e;
 
---app-card-background-color: #659999;
---app-card-background-hover-color: #606168;
-
+--app-card-background-color: #435353;
 
 --app-sidenav-background-color: #000000;
 --app-sidenav-section-hover-color: #d0d3e4;
 --app-sidenav-section-font-color: #d8d8d8;
+--app-sidenav-section-hover-font-color: #1e1e1e;
 
 --app-error-color: #dd1f1f;
 --app-topnav-mobile-background: #000000;
@@ -62,9 +60,9 @@
 
 
 /*fonts*/
---big-fontColor: #2b2b2b;
---small-fontColor: #888888;
---normal-fontColor: #545454;
+--big-fontColor: #d8d8d8;
+--small-fontColor: #bdbdbd;
+--normal-fontColor: #aaa9a9;
 --error-fontColor: var(--app-error-color);
 
 /* PlayerBackgroundColor */

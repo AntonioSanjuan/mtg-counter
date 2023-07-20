@@ -11,7 +11,7 @@
 .app_font_m {
     color: var(--normal-fontColor);
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .app_font_error {
@@ -29,7 +29,7 @@
 
 .app_font_xl {
     color: var(--big-fontColor);
-    font-weight: 700;
+    font-weight: 800;
     font-size: 20px;
     line-height: 1.2em;
 }

@@ -27,7 +27,7 @@ height: 100%;
     box-sizing: border-box;
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: space-between;
 
     position: sticky;
 
@@ -39,7 +39,34 @@ height: 100%;
 
     background-color: var(--app-sidenav-background-color);
     box-shadow: var(--app-hight-contrast) 0px 0px 20px;
-}
+
+    hr {
+      height: 2px;
+      color: var(--app-sidenav-section-font-color)
+    }
+
+    .Sidenav_BodyContainer {
+      display: flex;
+      flex-direction: column;
+
+      .Sidenav_HeaderContainer {
+        display: flex;
+        flex-direction: column;
+
+        img {
+          filter: invert(1);
+        }
+      }
+      .Sidenav_SectionContainer {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .Sidenav_FooterContainer {
+      display: flex;
+      flex-direction: column;
+    }
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {

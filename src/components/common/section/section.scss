@@ -29,6 +29,10 @@
 
     &:hover {
         background-color: var(--app-sidenav-section-hover-color);
+
+        p, i {
+            color: var(--app-sidenav-section-hover-font-color)
+        }
     }
     
     i{
@@ -47,11 +51,6 @@
 
     i {
         color: var(--app-sidenav-section-font-color);
-    }
-
-    svg {
-        height: 100%;
-        width: 50px;
     }
 }
 
