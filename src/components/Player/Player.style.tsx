@@ -42,11 +42,9 @@ border: ${(props) => (props.isOwner ? '5px outset var(--OwnerPlayerBackground)' 
   bottom: 5px;
   right: calc(50% - 22px);
   z-index: 3;
-  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
-  1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
   i {
     font-size: 20px;
-    color: var(--app-low-contrast)
+    color: ${(props) => textColors[props.backgroundColor]}
   }
 }
 

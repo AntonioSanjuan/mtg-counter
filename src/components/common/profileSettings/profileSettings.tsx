@@ -35,8 +35,9 @@ function ProfileSettings() {
         <form onChange={formik.handleSubmit}>
           <div className="ProfileSettings_Settings">
             <div className="ProfileSettings_Setting">
+              <p className="app_font_l">Dark Mode</p>
               <div className="form-check form-switch">
-                <p className="app_font_m">Dark Mode</p>
+
                 <input
                   className="form-check-input"
                   type="checkbox"
@@ -50,7 +51,7 @@ function ProfileSettings() {
               </div>
             </div>
             <div className="ProfileSettings_Setting">
-              <p className="app_font_m">Language</p>
+              <p className="app_font_l">Language</p>
               <select
                 className="form-select"
                 id="lang"

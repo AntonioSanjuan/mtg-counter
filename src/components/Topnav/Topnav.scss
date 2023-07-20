@@ -16,7 +16,7 @@
     place-content: space-between;
     align-items: center;
     height: inherit;
-    width: var(--app-width);
+    width: var(--app-topnav-width);
     border-color: var(--app-low-contrast);
     border-bottom-width: 2px;
     border-bottom-style: ridge;
@@ -45,7 +45,7 @@
     }
     
     a {
-      color: var(--);
+      color: var(--app-main-color);
     }
 }
 

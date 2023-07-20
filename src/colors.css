@@ -1,18 +1,17 @@
 :root {
+  --app-main-color: #c7b31b;
 
-  --font-color: #0000;
-
-  --app-main-color: #cbcb0f;
-
-  --app-hight-contrast: #1e1e1e;
+  --app-hight-contrast: #1f1f1f;
   --app-low-contrast: #d8d8d8;
 
-  --app-content-background-color: #2e2e2e;
-  --app-card-background-color: #9fc2df;
+  --app-content-background-color: #cbcbcb;
+
+  --app-card-background-color: #3d5e79;
   --app-card-background-hover-color: #242424;
   
-  --app-sidenav-background-color: #274141;
+  --app-sidenav-background-color: #0b0b0c;
   --app-sidenav-section-hover-color: #242424;
+  --app-sidenav-section-font-color: #d8d8d8;
   
   --app-error-color: #dd1f1f;
   --app-topnav-mobile-background: #0b0b0c;
@@ -30,27 +29,36 @@
   --PlayerBackgroundColorWhite: #dfcc86;
   --PlayerBackgroundColorBlack: #370360;
   --PlayerBackgroundColorGreen: #14a502;
-  --PlayerBackgroundColorDefault: var(--app-card-background-color);
+  --PlayerBackgroundColorDefault: #8da6bb;
+
+  /*PlayerBackgroundFontColor*/
+  --PlayerBackgroundFontLight: #d8d8d8;
+  --PlayerBackgroundFontDark:#1f1f1f;
+  --PlayerBackgroundFontDefault:#1f1f1f;
+
+  /*OwnerBorderColor*/
   --OwnerPlayerBackground: yellow;
 }
 
 [data-theme='dark'] {
-  --font-color: #ffff;
-
---app-main-color: #0d6efd;
+--app-main-color: #c7b31b;
 
 --app-hight-contrast: #d8d8d8;
 --app-low-contrast: #1e1e1e;
 
---app-content-background-color: #cbcbcb;
---app-card-background-color: #274141;
+--app-content-background-color: #2e2e2e;
+
+--app-card-background-color: #659999;
 --app-card-background-hover-color: #606168;
 
---app-sidenav-background-color: #ffff;
+
+--app-sidenav-background-color: #000000;
 --app-sidenav-section-hover-color: #d0d3e4;
+--app-sidenav-section-font-color: #d8d8d8;
 
 --app-error-color: #dd1f1f;
 --app-topnav-mobile-background: #000000;
+
 
 
 /*fonts*/
@@ -65,6 +73,13 @@
   --PlayerBackgroundColorWhite: #dfcc86;
   --PlayerBackgroundColorBlack: #370360;
   --PlayerBackgroundColorGreen: #14a502;
-  --PlayerBackgroundColorDefault: var(--app-card-background-color);
+  --PlayerBackgroundColorDefault: #314343;
+
+  /*PlayerBackgroundFontColor*/
+  --PlayerBackgroundFontLight: #d8d8d8;
+  --PlayerBackgroundFontDark:#1f1f1f;
+  --PlayerBackgroundFontDefault:#d8d8d8;
+
+  /*OwnerBorderColor*/
   --OwnerPlayerBackground: yellow;
   }

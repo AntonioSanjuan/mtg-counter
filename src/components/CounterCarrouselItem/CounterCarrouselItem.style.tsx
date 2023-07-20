@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { textColors, textShadowBoxColors } from '../../utils/playerTextColors/playerTextColors';
+import { textColors } from '../../utils/playerTextColors/playerTextColors';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { backgroundColors } from '../../utils/playerBackgroundColors/playerBackgroundColors';
 

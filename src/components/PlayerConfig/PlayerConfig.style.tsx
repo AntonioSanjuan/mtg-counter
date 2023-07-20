@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
+import { textColors } from '../../utils/playerTextColors/playerTextColors';
 
 export interface PlayerConfigStyleProps {
     rotation: number,
@@ -37,24 +38,20 @@ gap: 10px;
   top: 5px;
   right: 5px;
   z-index: 3;
-  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
-  1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
   i {
     font-size: 20px;
-    color: var(--app-low-contrast)
-  }}
+    color: ${(props) => (textColors[props.backgroundColor])};
+  }
+}
 
 .PlayerConfig_OwnerButton {
   position: absolute;
   bottom: 5px;
   right: 5px;
   z-index: 3;
-  text-shadow: 2px 0 var(--app-hight-contrast), -2px 0 var(--app-hight-contrast), 0 2px var(--app-hight-contrast), 0 -2px var(--app-hight-contrast),
-  1px 1px var(--app-hight-contrast), -1px -1px var(--app-hight-contrast), 1px -1px var(--app-hight-contrast), -1px 1px var(--app-hight-contrast);
   i {
     font-size: 20px;
-    color: var(--app-low-contrast)
-  }}
+    color: ${(props) => (textColors[props.backgroundColor])};  }}
 `;
 
 export default SCPlayerConfig;

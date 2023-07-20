@@ -8,7 +8,7 @@ function ProfilePage() {
   return (
     <div className="Profile_MainContainer">
       <div className="Profile_SettingsContainer">
-        <p className="app_font_l">User Settings</p>
+        <p className="app_font_xl">User Settings</p>
         <ProfileSettings />
         <p className="app_font_m" />
       </div>

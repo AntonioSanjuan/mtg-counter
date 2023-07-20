@@ -4,7 +4,8 @@
     display: flex;
     place-content: flex-start;
     align-items: flex-start;
-    
+    gap: 10px;
+
     height: 100%;
     padding: 1%;
 }
@@ -12,16 +13,21 @@
 .Section_ImageContainer, 
 .Section_DataContainer {
     height: 100%;
+
+    p {
+        color: var(--app-sidenav-section-font-color)
+    }
 }
 
 .Section_Button {
     display: flex;
     height: 50px;
     cursor: pointer;
-    width: fit-content;
+    width: 100%;
     align-items: center;
+    border-radius: 50vh;
 
-    :hover {
+    &:hover {
         background-color: var(--app-sidenav-section-hover-color);
     }
     
@@ -38,6 +44,10 @@
     align-items: center;
     
     width: 35%;
+
+    i {
+        color: var(--app-sidenav-section-font-color);
+    }
 
     svg {
         height: 100%;

@@ -1,17 +1,17 @@
 @keyframes inSlideAnimationKeyframe {
     0% {
-        transform: translateY(var(--app-sidenav-closed-position));
+        left: -100%;
     }
     100% {
-        transform: translateY(var(--app-sidenav-opened-position));
+        left: 0;
     }
   }
   
   @keyframes outSlideAnimationKeyframe {
     0% {
-        transform: translateY(var(--app-sidenav-opened-position));
+        left: 0;
     }
     100% {
-        transform: translateY(var(--app-sidenav-closed-position));
+        left: -100%;
     }
   }

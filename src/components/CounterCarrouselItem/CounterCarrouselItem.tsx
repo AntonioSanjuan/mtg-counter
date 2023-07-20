@@ -19,7 +19,7 @@ function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
         </div>
         )}
 
-      <p className="app_font_xl">
+      <p className="app_font_xxl">
         {counter.value}
       </p>
     </SCCounterCarrouselItem>

@@ -1,9 +1,9 @@
-import './Sidenav.scss';
 import { useNavigate } from 'react-router-dom';
 import { useSidenavLayer } from '../../hooks/sidenav/sidenavHook';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
 import { Section } from '../common/section/section';
+import SCSidenav from './Sidenav.style';
 
 function Sidenav() {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
@@ -17,8 +17,8 @@ function Sidenav() {
   };
 
   return (
-    <div className="sidenav_MainContainer">
-      <div className="sidenav_NavContainer">
+    <SCSidenav>
+      <div className="Sidenav_NavContainer">
         <Section
           sectionName="New Game"
           onClickCallback={() => { handleNavigation('/'); }}
@@ -34,7 +34,7 @@ function Sidenav() {
           </Section>
         )}
       </div>
-    </div>
+    </SCSidenav>
   );
 }
 

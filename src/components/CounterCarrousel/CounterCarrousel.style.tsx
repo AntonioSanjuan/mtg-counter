@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
-import { textColors, textShadowBoxColors } from '../../utils/playerTextColors/playerTextColors';
+import { textColors } from '../../utils/playerTextColors/playerTextColors';
 
 export interface CounterCarrouselStyleProps {
     playerColor?: PlayerColors
@@ -71,13 +71,8 @@ overflow: hidden;
 
     p {
         color:  ${(props) => (textColors[props.playerColor])};
-        text-shadow: 2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, -2px 0 ${(props) => (textShadowBoxColors[props.playerColor])}, 0 2px ${(props) => (textShadowBoxColors[props.playerColor])}, 0 -2px ${(props) => (textShadowBoxColors[props.playerColor])},
-             1px 1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, 1px -1px ${(props) => (textShadowBoxColors[props.playerColor])}, -1px 1px ${(props) => (textShadowBoxColors[props.playerColor])};
     }
-}
-
-.CounterCarrousel_CarrouselItem {
-    
+}    
 `;
 
 export default SCCounterCarrousel;

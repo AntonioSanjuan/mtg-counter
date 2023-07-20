@@ -37,7 +37,7 @@ function CounterCarrousel(
       <div className="CounterCarrousel_Carrousel">
         <div className="CounterCarrousel_TemporaryCount">
           { temporaryCount !== 0 && (
-            <p className="app_font_m app_font_noMargin">{temporaryCount}</p>
+            <p className="app_font_xl app_font_noMargin">{temporaryCount}</p>
           )}
         </div>
         <div className="CounterCarrousel_CarrouselContainer">

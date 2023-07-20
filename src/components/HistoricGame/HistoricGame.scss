@@ -48,7 +48,8 @@
     .HistoricGame_MainContainer {
         flex-direction: column;
         min-height: auto;
-
+        height: auto;
+        
         .HistoricGame_BoardContainer {
             width: 100%;
             min-height: 350px;

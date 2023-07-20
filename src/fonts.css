@@ -30,6 +30,13 @@
 .app_font_xl {
     color: var(--big-fontColor);
     font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2em;
+}
+
+.app_font_xxl {
+    color: var(--big-fontColor);
+    font-weight: 700;
     font-size: 48px;
     line-height: 1.2em;
 }
