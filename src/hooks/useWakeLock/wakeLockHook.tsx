@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAlert } from '../alert/alertHook';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
@@ -11,12 +11,16 @@ export function useWakeLock() {
 
   const isAvailable: boolean = 'wakeLock' in navigator;
 
+  useEffect(() => {
+    if (wakeLock) {
+      document.addEventListener('visibilitychange', () => {
+        relockScreen();
+      });
+    }
+  }, [wakeLock]);
+
   const relockScreen = () => {
-    openAlert(DynamicAlertTypes.Notification, {
-      title: 'relock',
-      description: `${wakeLock?.released} - ${wakeLock?.type}`,
-    } as NotificationAlertPropsModel);
-    if (wakeLock && document.visibilityState === 'visible') {
+    if (document.visibilityState === 'visible') {
       lockScreen();
     }
   };
@@ -28,31 +32,22 @@ export function useWakeLock() {
       setLoading(true);
       navigator.wakeLock.request('screen').then((wakeLockAux: WakeLockSentinel) => {
         setWakelock(wakeLockAux);
-
-        document.addEventListener('visibilitychange', async () => {
-          await relockScreen();
-        });
       }).catch(() => {
         // The wake lock request fails - usually system-related, such as low battery.
         setError(true);
 
         // reset
         setWakelock(null);
-        document.removeEventListener('visibilitychange', async () => {
-          await relockScreen();
+        document.removeEventListener('visibilitychange', () => {
+          relockScreen();
         });
-
-        // to-remove
-        openAlert(DynamicAlertTypes.Notification, {
-          title: 'error',
-        } as NotificationAlertPropsModel);
       }).finally(() => {
         setLoading(false);
       });
     }
   };
 
-  const releaseLockScreen = async () => {
+  const releaseLockScreen = () => {
     setError(false);
 
     if (isAvailable && wakeLock) {
