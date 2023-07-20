@@ -1,4 +1,7 @@
-import { FirebaseHistoricGameDto, FirebaseHistoricGamesDto } from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
+import {
+  FirebaseHistoricGameDto,
+  FirebaseHistoricGamesDto,
+} from '../../models/dtos/firebaseStore/firebaseHistoricGames.model';
 import { GameState } from '../../state/game/models/appGame.state';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 

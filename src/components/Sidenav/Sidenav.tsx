@@ -5,6 +5,7 @@ import { selectUserIsLogged } from '../../state/user/user.selectors';
 import { Section } from '../common/section/section';
 import SCSidenav from './Sidenav.style';
 import logo from '../../assets/images/Logo.png';
+import { SearchInput } from '../common/searchInput/searchInput';
 
 function Sidenav() {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
@@ -26,6 +27,7 @@ function Sidenav() {
           </div>
           <hr />
           <div className="Sidenav_SectionContainer">
+
             <Section
               sectionName="New Game"
               onClickCallback={() => { handleNavigation('/'); }}
@@ -45,6 +47,9 @@ function Sidenav() {
         </div>
         <div className="Sidenav_FooterContainer">
           <hr />
+          <div>
+            <SearchInput onSearch={undefined} />
+          </div>
           <p className="app_font_m app_font_noMargin">
             Version:
             {}

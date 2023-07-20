@@ -10,6 +10,7 @@ import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebas
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { CounterTypes } from '../../models/internal/types/CounterTypes.model';
 import * as mock_usePlayer from '../player/playerHook.mock';
+import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 
 describe('<useCounter />', () => {
   let useCounterStore: any;
@@ -27,12 +28,11 @@ describe('<useCounter />', () => {
     wrapper = function ({ children }: { children: any }) {
       return <Provider store={useCounterStore}>{children}</Provider>;
     };
-    useCounterplayer = getDefaultPlayers(initialLife, 1)[0];
+    useCounterplayer = getDefaultPlayers(initialLife, NumberOfPlayers.Three)[0];
     useCounterCounters = useCounterplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === targetCounterType)[0]
     
     jest.spyOn(hooks, 'useAppDispatch')
       .mockReturnValue(useAppDispatchMockResponse);
-
     
     jest.spyOn(playerHooks, 'usePlayer')
       .mockImplementation(mock_usePlayer.mock);
@@ -96,6 +96,26 @@ describe('<useCounter />', () => {
   });
 
   it('removeCounters should request updateCounter and reset temporaryCount after 2 seconds', async () => {
+    const { result } = renderHook(() => useCounter(useCounterplayer, useCounterCounters), { wrapper });
+    expect(result.current.temporaryCount).toEqual(0);
+
+    await act(async () => {
+      await result.current.removeCounters();
+      await result.current.removeCounters();
+      await result.current.removeCounters();
+      await result.current.removeCounters();
+      await result.current.removeCounters();
+    });
+
+    expect(result.current.temporaryCount).toEqual(-5);
+
+    setTimeout(() => {
+      expect(mock_usePlayer.mock().updatePlayerCounter).toHaveBeenCalled()
+      expect(result.current.temporaryCount).toEqual(0);
+    }, 25000)
+  });
+
+  it('getCounterOpponent should request updateCounter and reset temporaryCount after 2 seconds', async () => {
     const { result } = renderHook(() => useCounter(useCounterplayer, useCounterCounters), { wrapper });
     expect(result.current.temporaryCount).toEqual(0);
 

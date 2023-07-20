@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { closeSearchAnimation, openSearchAnimation } from '../../../animations/search/searchAnimation';
 import { useAnimationByStateTransition } from '../../../hooks/animation/animationHook';
 import './searchInput.scss';

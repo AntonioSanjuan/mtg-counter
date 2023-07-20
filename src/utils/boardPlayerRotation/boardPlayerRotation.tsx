@@ -2,7 +2,7 @@ import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.
 
 const isOdd = (data: number): boolean => !!(data % 2);
 
-const getPlayerRotation = (playerIndex: number, numberOfPlayers: number): number => {
+export const getPlayerRotation = (playerIndex: number, numberOfPlayers: NumberOfPlayers): number => {
   if (!isOdd(playerIndex) && playerIndex + 1 === numberOfPlayers) {
     return 0;
   }
@@ -12,7 +12,7 @@ const getPlayerRotation = (playerIndex: number, numberOfPlayers: number): number
   return 90;
 };
 
-export const getPlayerHeightPercentage = (numberOfPlayers: number): number => {
+export const getPlayerHeightPercentage = (numberOfPlayers: NumberOfPlayers): number => {
   switch (numberOfPlayers) {
     case NumberOfPlayers.Two:
       return 100;
@@ -26,4 +26,3 @@ export const getPlayerHeightPercentage = (numberOfPlayers: number): number => {
       return 0;
   }
 };
-export default getPlayerRotation;

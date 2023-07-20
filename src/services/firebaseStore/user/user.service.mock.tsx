@@ -17,10 +17,12 @@ const getUserMock = () => new Promise<DocumentSnapshot<DocumentData>>((resolve) 
 ));
 const setUserMock = () => new Promise<any>((resolve) => resolve(setUserDataResponseObjMock));
 const updateUserMock = () => new Promise<any>((resolve) => resolve(updateUserDataResponseMock));
+const updateUserCurrentGameSpyMock = () => new Promise<any>((resolve) => resolve(updateUserDataResponseMock));
 
 export const getUserSpy = jest.spyOn(userDataService, 'getUser');
 export const setUserSpy = jest.spyOn(userDataService, 'setUser');
 export const updateUserSpy = jest.spyOn(userDataService, 'updateUser');
+export const updateUserCurrentGameSpy = jest.spyOn(userDataService, 'updateUserCurrentGame')
 
 export const initializeMock = () => {
   getUserSpy
@@ -29,10 +31,13 @@ export const initializeMock = () => {
     .mockImplementation(setUserMock);
   updateUserSpy
     .mockImplementation(updateUserMock);
+  updateUserCurrentGameSpy
+  .mockImplementation(updateUserCurrentGameSpyMock)
 };
 
 export const reset = () => {
   getUserSpy.mockClear();
   setUserSpy.mockClear();
   updateUserSpy.mockClear();
+  updateUserCurrentGameSpy.mockClear();
 };

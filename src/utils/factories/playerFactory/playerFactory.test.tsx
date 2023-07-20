@@ -1,6 +1,6 @@
 import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
-import { getDefaultPlayers } from './playerFactory';
+import { getDefaultPlayers, getRestartedPlayerCounters } from './playerFactory';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 
 describe('PlayerFactory', () => {
@@ -43,11 +43,19 @@ describe('PlayerFactory', () => {
     });
 
     it('getDefaultPlayers call should return 4 players with 30 lifes each', () => {
-    
         expect(sutPlayers.length).toEqual(NumberOfPlayers.Four)
         sutPlayers.forEach((sutPlayer) => {
             expect(sutPlayer.id).toBeDefined()
             expect(sutPlayer.counters.find((counter) => {return counter.type === "Life"})?.value).toEqual(Lifes.Thirty)
         })
+    });
+
+    it('getRestartedPlayerCounters call should return restarted player counters', () => {
+        const sutRestartedLifes = Lifes.Thirty
+        sutCounters.map((counter) => counter.value = 0)
+        const newPlayerCounters = getRestartedPlayerCounters(sutCounters, sutRestartedLifes)
+        expect(newPlayerCounters.find((counter) => counter.type === "Life")?.value).toEqual(sutRestartedLifes)
+        expect(newPlayerCounters.find((counter) => counter.type === "CommanderDamage")?.value).toEqual(MaxCommanderDamage)
+        expect(newPlayerCounters.find((counter) => counter.type === "Poison")?.value).toEqual(MaxPoisonCounters)
     });
 });

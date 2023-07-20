@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { FirebaseBoardDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { selectGameBoard } from '../../state/game/game.selectors';
-import getPlayerRotation, { getPlayerHeightPercentage } from '../../utils/boardPlayerRotation/boardPlayerRotation';
+import { getPlayerHeightPercentage, getPlayerRotation } from '../../utils/boardPlayerRotation/boardPlayerRotation';
 import GameButton from '../GameButton/GameButton';
 import Player from '../Player/Player';
 import './Board.scss';

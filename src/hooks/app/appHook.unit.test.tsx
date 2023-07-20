@@ -5,10 +5,12 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import * as appStatehooks from '../state/appStateHook';
 import * as userhooks from '../user/userHook';
 import * as useHistoricGames from '../historicGames/historicGamesHook';
+import * as useWakeLock from '../wakeLock/wakeLockHook';
 import * as currentGamehooks from '../currentGame/currentGameHook';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
 import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
+import * as mock_useWakeLock from '../wakeLock/wakeLockHook.mock';
 import * as mock_useUser from '../user/userHook.mock';
 import { setUserAuthAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -49,6 +51,9 @@ describe('<useApp />', () => {
     jest.spyOn(useHistoricGames, 'useHistoricGames')
       .mockImplementation(mock_useHistoricGames.mock)
 
+    jest.spyOn(useWakeLock, 'useWakeLock')
+      .mockImplementation(mock_useWakeLock.mock)
+
     mock_useCurrentGame.initializeMock()
     mock_useUser.initializeMock()
     mock_useHistoricGames.initializeMock()
@@ -61,6 +66,12 @@ describe('<useApp />', () => {
   it('should create', async () => {
     const { result } = renderHook(() => useApp(), { wrapper });
     expect(result).toBeDefined();
+  });
+
+  it('initially should request lockScreen', async () => {
+    const { result } = renderHook(() => useApp(), { wrapper });
+    
+    expect(mock_useWakeLock.mock().lockScreen).toHaveBeenCalled()
   });
 
   it('should set userSettings if redux userSettings change to defined value', async () => {

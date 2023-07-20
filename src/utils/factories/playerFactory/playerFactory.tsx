@@ -7,7 +7,7 @@ import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.mod
 const getDefaultPlayerCounters = (initialLifes: Lifes, opponentsId: string[]): FirebaseCounterDto[] => [
   { type: 'Life', value: initialLifes },
   { type: 'Poison', value: MaxPoisonCounters },
-  ...opponentsId.map((opponentId) => getOpponentCommanderCounter(opponentId)),
+  ...opponentsId.map((opponentId) => getDefaultOpponentCommanderCounter(opponentId)),
 ];
 
 export const getRestartedPlayerCounters = (
@@ -35,7 +35,7 @@ export const getRestartedPlayerCounters = (
   }
 });
 
-const getOpponentCommanderCounter = (opponentId: string): FirebaseCounterDto => ({
+const getDefaultOpponentCommanderCounter = (opponentId: string): FirebaseCounterDto => ({
   targetPlayerId: opponentId,
   type: 'CommanderDamage',
   value: MaxCommanderDamage,

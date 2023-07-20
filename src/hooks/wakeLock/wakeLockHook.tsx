@@ -1,10 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useAlert } from '../alert/alertHook';
-import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
-import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
 
 export function useWakeLock() {
-  const { openAlert } = useAlert();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [wakeLock, setWakelock] = useState<WakeLockSentinel|null>(null);

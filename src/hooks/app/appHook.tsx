@@ -15,7 +15,7 @@ import { TRANSLATIONS_ES } from '../../locales/es';
 import { TRANSLATIONS_FR } from '../../locales/fr';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
-import { useWakeLock } from '../useWakeLock/wakeLockHook';
+import { useWakeLock } from '../wakeLock/wakeLockHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
