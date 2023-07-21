@@ -1,4 +1,4 @@
-export function createJsDomUnsupportedMethods() {
+export function createJsDomMatchMedia() {
   Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
@@ -12,4 +12,19 @@ export function createJsDomUnsupportedMethods() {
       dispatchEvent: jest.fn(),
     })),
   });
+}
+
+export function createJsDomWakeLock(exists = false) {
+  Object.defineProperty(
+    navigator,
+    'wakeLock',
+    exists ? {
+      configurable: true,
+      writable: true,
+      value: {
+        request: jest.fn(),
+        release: jest.fn(),
+      },
+    } : {},
+  );
 }

@@ -119,4 +119,52 @@ describe('<useUser />', () => {
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
     expect(userServiceMock.updateUserSpy).toHaveBeenCalled();
   });
+
+  it('updateUserCurrentGame should request updateUserCurrentGame if user is logged', async () => {
+    //auth.currentUser = {}
+    mockFirebaseAuthUser({} as User)
+
+    expect(userServiceMock.updateUserCurrentGameSpy).not.toHaveBeenCalled();
+
+    const inputGameId = 'gameIdTest'
+
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateUserCurrentGame(inputGameId);
+    });
+
+    expect(userServiceMock.updateUserCurrentGameSpy).toHaveBeenCalledWith(inputGameId);
+  });
+
+  it('updateUserCurrentGame should not request updateUserCurrentGame if user is not logged', async () => {
+    expect(userServiceMock.updateUserCurrentGameSpy).not.toHaveBeenCalled();
+
+    const inputGameId = 'gameIdTest'
+
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateUserCurrentGame(inputGameId);
+    });
+
+    expect(userServiceMock.updateUserCurrentGameSpy).not.toHaveBeenCalled();
+  });
+
+  it('setAnonymousUser should dispatch new user settings', async () => {
+    expect(useAppDispatchMockResponse).not.toHaveBeenCalled();
+
+    const inputSettings = {
+      darkMode: true,
+      lang: Language.English,
+    } as FirebaseUserSettingsDto;
+
+    const { result } = renderHook(() => useUser(), { wrapper });
+
+    act(() => {
+      result.current.setAnonymousUser(Language.English, true);
+    });
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
+  });
 });

@@ -102,7 +102,7 @@ describe('<useHistoricGames />', () => {
     expect(GameServiceMock.getGameSpy).toHaveBeenCalledTimes(returnedHistoricGames.length);
   });
 
-  it('setHistoric should request setHistoric if user is logged', async () => {
+  it('setHistoric should request setHistoric', async () => {
     mockFirebaseAuthUser({} as User)
     
     expect(HistoricGamesServiceMock.setHistoricGamesSpy).not.toHaveBeenCalled();
@@ -186,5 +186,24 @@ describe('<useHistoricGames />', () => {
 
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setHistoricGamesAction(historicState));
     expect(HistoricGamesServiceMock.updateHistoricGamesSpy).toHaveBeenCalled();
+  });
+
+  it('setAnonymousHistoric should not request setHistoric', async () => {
+    mockFirebaseAuthUser({} as User)
+    
+    expect(HistoricGamesServiceMock.setHistoricGamesSpy).not.toHaveBeenCalled();
+
+    const { result } = renderHook(() => useHistoricGames(), { wrapper });
+
+    await act(async () => {
+      await result.current.setAnonymousHistoric();
+    });
+
+    const historicState = {
+      id: undefined,
+      games: []
+    } as HistoricGamesState;
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setHistoricGamesAction(historicState));
+    expect(HistoricGamesServiceMock.setHistoricGamesSpy).not.toHaveBeenCalled();
   });
 });

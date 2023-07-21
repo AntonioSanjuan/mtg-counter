@@ -14,7 +14,7 @@ import * as mock_useWakeLock from '../wakeLock/wakeLockHook.mock';
 import * as mock_useUser from '../user/userHook.mock';
 import { setUserAuthAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
-import { createJsDomUnsupportedMethods } from '../../utils/testsUtils/jsDomUnsupportedMethods.util';
+import { createJsDomMatchMedia } from '../../utils/testsUtils/jsDomUnsupportedProps.util';
 import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
@@ -31,7 +31,7 @@ describe('<useApp />', () => {
 
   beforeEach(() => {
     useAppStore = createTestStore();
-    createJsDomUnsupportedMethods();
+    createJsDomMatchMedia();
     wrapper = function ({ children }: { children: any }) {
       return <Provider store={useAppStore}>{children}</Provider>;
     };

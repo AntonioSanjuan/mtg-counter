@@ -62,7 +62,6 @@ export function useHistoricGames() {
     dispatch(setHistoricGamesAction(historicGamesOutput));
     setLoading(false);
     setError(false);
-    return {};
   };
 
   const setHistoric = async (historicGames: HistoricGamesState) : Promise<any> => {

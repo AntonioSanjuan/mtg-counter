@@ -6,6 +6,7 @@ export function useWakeLock() {
   const [wakeLock, setWakelock] = useState<WakeLockSentinel|null>(null);
 
   const isAvailable: boolean = 'wakeLock' in navigator;
+  console.log('🚀 ~ file: wakeLockHook.tsx:9 ~ useWakeLock ~ isAvailable:', navigator.wakeLock);
 
   useEffect(() => {
     if (wakeLock) {
@@ -51,7 +52,7 @@ export function useWakeLock() {
 
       wakeLock?.release().then(() => {
         setWakelock(null);
-      }).catch((error) => {
+      }).catch(() => {
         setError(true);
       }).finally(() => {
         setLoading(false);

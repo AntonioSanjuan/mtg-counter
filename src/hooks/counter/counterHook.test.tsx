@@ -11,11 +11,13 @@ import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFac
 import { CounterTypes } from '../../models/internal/types/CounterTypes.model';
 import * as mock_usePlayer from '../player/playerHook.mock';
 import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 
 describe('<useCounter />', () => {
   let useCounterStore: any;
   let wrapper: any;
 
+  let useCounterplayers: FirebasePlayerDto[];
   let useCounterplayer: FirebasePlayerDto;
   let useCounterCounters: FirebaseCounterDto;
 
@@ -28,7 +30,8 @@ describe('<useCounter />', () => {
     wrapper = function ({ children }: { children: any }) {
       return <Provider store={useCounterStore}>{children}</Provider>;
     };
-    useCounterplayer = getDefaultPlayers(initialLife, NumberOfPlayers.Three)[0];
+    useCounterplayers =  getDefaultPlayers(initialLife, NumberOfPlayers.Three)
+    useCounterplayer = useCounterplayers[0];
     useCounterCounters = useCounterplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === targetCounterType)[0]
     
     jest.spyOn(hooks, 'useAppDispatch')
@@ -115,24 +118,22 @@ describe('<useCounter />', () => {
     }, 25000)
   });
 
-  it('getCounterOpponent should request updateCounter and reset temporaryCount after 2 seconds', async () => {
+  it('getCounterOpponent should return the opponent player by id if exists', async () => {
+    const opponentPlayersSut = useCounterplayers.filter((player) => {return player.id !== useCounterplayer.id})
+    mock_usePlayer.mock().playerOpponents = opponentPlayersSut
+
     const { result } = renderHook(() => useCounter(useCounterplayer, useCounterCounters), { wrapper });
-    expect(result.current.temporaryCount).toEqual(0);
 
-    await act(async () => {
-      await result.current.removeCounters();
-      await result.current.removeCounters();
-      await result.current.removeCounters();
-      await result.current.removeCounters();
-      await result.current.removeCounters();
-    });
+    expect(result.current.getCounterOpponent(opponentPlayersSut[0].id)).toEqual(opponentPlayersSut[0])
+  });
 
-    expect(result.current.temporaryCount).toEqual(-5);
+  it('getCounterOpponent should return undefined if opponent player id doesnt exits', async () => {
+    const opponentPlayersSut = useCounterplayers.filter((player) => {return player.id !== useCounterplayer.id})
+    mock_usePlayer.mock().playerOpponents = opponentPlayersSut
 
-    setTimeout(() => {
-      expect(mock_usePlayer.mock().updatePlayerCounter).toHaveBeenCalled()
-      expect(result.current.temporaryCount).toEqual(0);
-    }, 25000)
+    const { result } = renderHook(() => useCounter(useCounterplayer, useCounterCounters), { wrapper });
+
+    expect(result.current.getCounterOpponent('playerTestId')).toEqual(undefined)
   });
 
 });

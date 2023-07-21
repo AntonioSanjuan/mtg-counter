@@ -141,4 +141,22 @@ describe('<useCurrentGame />', () => {
     expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGameAction(gameSettingsState));
     expect(gameServiceMock.updateGameSpy).toHaveBeenCalledWith(gameSettingsState.id, GameAdapter.toDto(gameSettings));
   });
+
+  it('setAnonymousGame should not request updateUserSettings', async () => {
+    mockFirebaseAuthUser({} as User)
+
+    const createdAtSut = new Date()
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(createdAtSut);
+
+    expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalled();
+
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
+
+    act(() => {
+      result.current.setAnonymousGame();
+    });
+
+    expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalled();
+  });
 });
