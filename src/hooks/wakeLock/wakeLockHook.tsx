@@ -6,7 +6,6 @@ export function useWakeLock() {
   const [wakeLock, setWakelock] = useState<WakeLockSentinel|null>(null);
 
   const isAvailable: boolean = 'wakeLock' in navigator;
-  console.log('🚀 ~ file: wakeLockHook.tsx:9 ~ useWakeLock ~ isAvailable:', navigator.wakeLock);
 
   useEffect(() => {
     if (wakeLock) {
@@ -22,12 +21,12 @@ export function useWakeLock() {
     }
   };
 
-  const lockScreen = () => {
+  const lockScreen = async (): Promise<void> => {
     setError(false);
 
     if (isAvailable) {
       setLoading(true);
-      navigator.wakeLock.request('screen').then((wakeLockAux: WakeLockSentinel) => {
+      return navigator.wakeLock.request('screen').then((wakeLockAux: WakeLockSentinel) => {
         setWakelock(wakeLockAux);
       }).catch(() => {
         // The wake lock request fails - usually system-related, such as low battery.
@@ -42,15 +41,16 @@ export function useWakeLock() {
         setLoading(false);
       });
     }
+    return Promise.resolve();
   };
 
-  const releaseLockScreen = () => {
+  const releaseLockScreen = async (): Promise<void> => {
     setError(false);
 
     if (isAvailable && wakeLock) {
       setLoading(true);
 
-      wakeLock?.release().then(() => {
+      return wakeLock?.release().then(() => {
         setWakelock(null);
       }).catch(() => {
         setError(true);
@@ -58,6 +58,7 @@ export function useWakeLock() {
         setLoading(false);
       });
     }
+    return Promise.resolve();
   };
 
   return {

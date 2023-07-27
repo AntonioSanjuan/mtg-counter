@@ -15,16 +15,10 @@ export function createJsDomMatchMedia() {
 }
 
 export function createJsDomWakeLock(exists = false) {
-  Object.defineProperty(
-    navigator,
-    'wakeLock',
-    exists ? {
-      configurable: true,
-      writable: true,
-      value: {
-        request: jest.fn(),
-        release: jest.fn(),
-      },
-    } : {},
-  );
+  Object.defineProperty(navigator, 'wakeLock', {
+    writable: true,
+    value: {
+      request: jest.fn().mockResolvedValue({}),
+    },
+  });
 }
