@@ -79,7 +79,9 @@
     .Layout_ContentContainer {
       margin-top: 0;
       overflow: hidden;
-
+      min-height: calc(100vh - #{var(--app-topnav-height)} - (100vh - 100%));
+      height: calc(100vh - 100% - #{var(--app-topnav-height)} - 100vh - 100%) ;
+      
       .Layout_Content {
         padding: 0px;
         margin-bottom: var(--app-topnav-height);
