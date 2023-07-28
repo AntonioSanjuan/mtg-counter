@@ -48,7 +48,7 @@ function Sidenav() {
         <div className="Sidenav_FooterContainer">
           <hr />
           <Section
-            sectionName="Settings"
+            sectionName="Profile Settings"
             onClickCallback={() => { handleNavigation('/Profile'); }}
           >
             <i className="bi bi-gear-fill" />
