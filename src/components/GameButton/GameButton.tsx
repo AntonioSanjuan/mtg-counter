@@ -17,7 +17,7 @@ function GameButton() {
         className="btn btn-link GameButton_Button"
         onClick={() => openGameSettings()}
       >
-        <i className="bi bi-box" />
+        <i className="bi bi-rocket-takeoff" />
       </button>
     </div>
   );

@@ -17,7 +17,7 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
   };
 
   return (
-    <SCPlayerConfig>
+    <SCPlayerConfig backgroundColor={player.color}>
       <button
         type="button"
         aria-label="detailsButton"

@@ -3,9 +3,6 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { textColors } from '../../utils/playerTextColors/playerTextColors';
 
 export interface PlayerConfigStyleProps {
-    rotation: number,
-    playerHeight: number,
-    playerWidth: number,
     backgroundColor?: PlayerColors
 }
 
@@ -14,9 +11,6 @@ PlayerConfigStyleProps, // What is consumed by .attrs()
 Required<PlayerConfigStyleProps> // What comes out of .attrs()
 >((props: PlayerConfigStyleProps) => (
   {
-    rotation: props.rotation ?? 0,
-    playerHeight: props.playerHeight ?? 0,
-    playerWidth: props.playerWidth ?? 0,
     backgroundColor: props.backgroundColor ?? PlayerColors.default,
   } as Required<PlayerConfigStyleProps>
 ))`
