@@ -12,8 +12,8 @@ export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCo
   const temporaryCountTimeout = useRef<NodeJS.Timeout>();
 
   const updateCounter = async () => {
-    await updatePlayerCounter(currentCounter, temporaryCount);
     setTemporaryCount(0);
+    await updatePlayerCounter(currentCounter, temporaryCount);
   };
 
   useEffect(() => {
@@ -22,6 +22,8 @@ export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCo
         clearTimeout(temporaryCountTimeout.current);
       }
       temporaryCountTimeout.current = setTimeout(updateCounter, 2000);
+    } else if (temporaryCountTimeout.current) {
+      clearTimeout(temporaryCountTimeout.current);
     }
   }, [temporaryCount]);
 
@@ -31,6 +33,7 @@ export function useCounter(player: FirebasePlayerDto, currentCounter: FirebaseCo
       : undefined;
     return counterOpponent;
   };
+
   const addCounters = () => {
     setTemporaryCount(temporaryCount + 1);
   };
