@@ -72,7 +72,6 @@ describe('HistoricGame', () => {
       createdAt: createddAt,
       finishAt:  finishedAt
     } as GameState;
-    console.log("🚀 ~ file: HistoricGame.test.tsx:69 ~ it ~ gameSut:", gameSut)
 
     const { container } = render(
       <Provider store={HistoricGameStore}>
