@@ -24,6 +24,7 @@ Required<PlayerStyleProps> // What comes out of .attrs()
 ))`
 display: flex;
 height: 100%;
+role: button;
 align-items: center;
 justify-content: center;
 

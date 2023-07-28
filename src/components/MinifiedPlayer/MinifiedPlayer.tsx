@@ -15,6 +15,8 @@ function MinifiedPlayer(
       backgroundColor={player.color}
       isOwner={player.owner}
       onClick={winnerSelection ? updatePlayerWinner : undefined}
+      aria-label="minifiedPlayer"
+      role="button"
     >
       {showWinner ? (
         <div className="Player_NameContainer">

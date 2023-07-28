@@ -54,7 +54,6 @@ height: 100%;
         flex-direction: column;
 
         img {
-          filter: invert(1);
         }
       }
       .Sidenav_SectionContainer {

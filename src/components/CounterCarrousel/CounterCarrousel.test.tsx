@@ -83,4 +83,20 @@ describe('CounterCarrousel', () => {
     expect(mock_useCounter.mock().addCounters).toHaveBeenCalled()
   });
 
+  it('button addCounters && removeCounters should not appear if isResume its true', async () => {
+    render(
+      <Provider store={counterCarrouselStore}>
+        <Router location={history.location} navigator={history}>
+          <CounterCarrousel player={inputPlayer} isRotated={false} isResume={true}/>
+        </Router>
+      </Provider>,
+    );
+
+    const addCounterButton = screen.queryByRole('button', { name: 'addCounters' });
+    const removeCounterButtton = screen.queryByRole('button', { name: 'removeCounters' });
+
+    expect(addCounterButton).not.toBeInTheDocument()
+    expect(removeCounterButtton).not.toBeInTheDocument()
+  });
+
 });

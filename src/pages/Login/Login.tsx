@@ -2,7 +2,7 @@ import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
-import logo from '../../assets/images/Logo.png';
+import ColoredLogo from '../../assets/ColoredLogo.png';
 import { useAuth } from '../../hooks/auth/authHook';
 import { Loading } from '../../components/common/loading/loading';
 
@@ -65,7 +65,7 @@ function LoginPage() {
       <div className="Login_MainContainer">
         <div className="Login_CardContainer">
           <div className="Login_Logo">
-            <img src={logo} alt="logo" />
+            <img src={ColoredLogo} alt="logo" />
           </div>
           <form onSubmit={formik.handleSubmit}>
             <div className="form-floating">

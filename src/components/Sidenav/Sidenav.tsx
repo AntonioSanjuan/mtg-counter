@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
 import { Section } from '../common/section/section';
 import SCSidenav from './Sidenav.style';
-import logo from '../../assets/images/Logo.png';
+import Coloredlogo from '../../assets/ColoredLogo.png';
 import { SearchInput } from '../common/searchInput/searchInput';
 
 function Sidenav() {
@@ -23,7 +23,7 @@ function Sidenav() {
       <div className="Sidenav_NavContainer">
         <div className="Sidenav_BodyContainer">
           <div className="Sidenav_HeaderContainer">
-            <img src={logo} alt="logo" />
+            <img src={Coloredlogo} alt="logo" />
           </div>
           <hr />
           <div className="Sidenav_SectionContainer">

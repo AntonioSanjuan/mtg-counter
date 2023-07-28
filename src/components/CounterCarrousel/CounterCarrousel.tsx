@@ -73,7 +73,6 @@ function CounterCarrousel(
       {!isResume && (
       <div className="CounterCarrousel_ActionContainer">
         <button
-          disabled={isResume}
           type="button"
           aria-label="addCounters"
           className="btn btn-link"

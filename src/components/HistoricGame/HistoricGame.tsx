@@ -16,6 +16,7 @@ function HistoricGame({ game } : {game: GameState}) {
   // eslint-disable-next-line no-unsafe-optional-chaining
   const durationInMin = game.finishAt ? Math.ceil((game.finishAt?.getTime() - game.createdAt.getTime())
   / (60 * 1000)) : '-';
+
   return (
     <div className="HistoricGame_MainContainer">
       <div className="HistoricGame_BoardContainer">
@@ -67,14 +68,11 @@ function HistoricGame({ game } : {game: GameState}) {
 
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Duración</p>
+            <p className="app_font_l">Duración en minutos</p>
           </div>
           <div className="HistoricGame_InfoValue">
             <p className="app_font_m">
               {durationInMin}
-              {' '}
-              Minuto/s
-
             </p>
           </div>
         </div>
