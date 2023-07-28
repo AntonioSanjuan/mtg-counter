@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/microFrontCounter/static/css/main.a7e223f0.css",
-    "main.js": "/microFrontCounter/static/js/main.30793c7a.js",
+    "main.js": "/microFrontCounter/static/js/main.037f0172.js",
     "static/js/787.8eeb87bb.chunk.js": "/microFrontCounter/static/js/787.8eeb87bb.chunk.js",
     "static/media/bootstrap-icons.woff?": "/microFrontCounter/static/media/bootstrap-icons.38c4d2499557ae0379fd.woff",
     "static/media/bootstrap-icons.woff2?": "/microFrontCounter/static/media/bootstrap-icons.2b56e79ae5013246de29.woff2",
@@ -9,11 +9,11 @@
     "static/media/WhiteLogo.png": "/microFrontCounter/static/media/WhiteLogo.2be7bb01ff7e3d53b727.png",
     "index.html": "/microFrontCounter/index.html",
     "main.a7e223f0.css.map": "/microFrontCounter/static/css/main.a7e223f0.css.map",
-    "main.30793c7a.js.map": "/microFrontCounter/static/js/main.30793c7a.js.map",
+    "main.037f0172.js.map": "/microFrontCounter/static/js/main.037f0172.js.map",
     "787.8eeb87bb.chunk.js.map": "/microFrontCounter/static/js/787.8eeb87bb.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a7e223f0.css",
-    "static/js/main.30793c7a.js"
+    "static/js/main.037f0172.js"
   ]
 }
