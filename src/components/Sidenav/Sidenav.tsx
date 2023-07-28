@@ -27,7 +27,7 @@ function Sidenav() {
           </div>
           <hr />
           <div className="Sidenav_SectionContainer">
-
+            {/* <ProfileSection /> */}
             <Section
               sectionName="New Game"
               onClickCallback={() => { handleNavigation('/'); }}
@@ -47,9 +47,16 @@ function Sidenav() {
         </div>
         <div className="Sidenav_FooterContainer">
           <hr />
-          <div>
-            <SearchInput onSearch={undefined} />
-          </div>
+          <Section
+            sectionName="Settings"
+            onClickCallback={() => { handleNavigation('/Profile'); }}
+          >
+            <i className="bi bi-gear-fill" />
+          </Section>
+          <hr />
+
+          <SearchInput onSearch={undefined} />
+
           <p className="app_font_m app_font_noMargin">
             Version:
             {}

@@ -46,7 +46,6 @@ describe('Topnav', () => {
           <Topnav
             hideLoginButton={false}
             hideSidenavButton
-            hideSearchButton
           />
         </Router>
       </Provider>,

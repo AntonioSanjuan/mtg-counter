@@ -24,7 +24,7 @@
     align-items: center;
     gap: 25px;
 
-    background-color: var(--app-hight-contrast);
+    background-color: var(--app-low-contrast);
     
     p {
         margin: 0;
@@ -44,8 +44,8 @@
     height: 64px;
     margin: 8px;
     border-radius: 50%;
-    border: 6px solid var(--app-low-contrast);
-    border-color: var(--app-low-contrast) transparent var(--app-low-contrast);
+    border: 6px solid var(--app-hight-contrast);
+    border-color: var(--app-hight-contrast) transparent var(--app-hight-contrast);
     animation: lds-dual-ring 1.2s linear infinite;
 }
 

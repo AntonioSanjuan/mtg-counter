@@ -8,8 +8,8 @@ import { SearchInput } from '../common/searchInput/searchInput';
 import { ProfileSection } from '../common/profileSection/profileSection';
 import { useAuth } from '../../hooks/auth/authHook';
 
-function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
-  {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean, hideSearchButton?: boolean}) {
+function Topnav({ hideLoginButton, hideSidenavButton } :
+  {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean}) {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
 
   const { switchSidenavStatus } = useSidenavLayer();
@@ -20,30 +20,19 @@ function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
     switchSidenavStatus();
   };
 
-  const handleSearch = (searchValue: string) => {
-    console.log('searching!!!!!...', searchValue);
-  };
-
   return (
     <div className="TopNav_Maincontainer">
       <div className="TopNav_Subcontainer">
         <div className="TopNav_Leftcontainer">
           { !hideSidenavButton && (
-          <>
-            <button
-              type="button"
-              className="btn btn-dark"
-              aria-label="switchSidenavButton"
-              onClick={handleSidenavChange}
-            >
-              <i className="bi bi-list" />
-            </button>
-            { !hideSearchButton && (
-            <div className="TopNav_Search">
-              <SearchInput onSearch={handleSearch} />
-            </div>
-            )}
-          </>
+          <button
+            type="button"
+            className="btn btn-dark"
+            aria-label="switchSidenavButton"
+            onClick={handleSidenavChange}
+          >
+            <i className="bi bi-list" />
+          </button>
           )}
         </div>
 
@@ -53,8 +42,6 @@ function Topnav({ hideLoginButton, hideSidenavButton, hideSearchButton } :
           </Link>
         </div>
         <div className="TopNav_Rightcontainer">
-
-          <ProfileSection />
           {isLoggedIn && !hideLoginButton && (
           <button
             type="button"

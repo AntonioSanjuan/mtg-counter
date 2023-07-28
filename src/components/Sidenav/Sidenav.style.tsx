@@ -65,6 +65,10 @@ height: 100%;
     .Sidenav_FooterContainer {
       display: flex;
       flex-direction: column;
+
+      > p {
+        margin-top: 10px;
+      }
     }
 }
 

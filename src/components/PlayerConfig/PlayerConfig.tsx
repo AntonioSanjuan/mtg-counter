@@ -35,7 +35,7 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
           className="btn btn-link PlayerConfig_OwnerButton"
           onTouchStart={updatePlayerOwner}
         >
-          <i className="bi bi-trophy-fill" />
+          <i className="bi bi-person-gear" />
         </button>
       )}
 

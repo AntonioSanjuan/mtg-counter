@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Loading } from './components/common/loading/loading';
 import { useApp } from './hooks/app/appHook';
+import { AppLoading } from './components/common/appLoading/appLoading';
 
 export function StartUp({ children }: {children: any}) {
   const { loading } = useApp();
@@ -9,5 +9,5 @@ export function StartUp({ children }: {children: any}) {
     console.log('App initialize');
   }, []);
 
-  return loading ? <Loading /> : children;
+  return loading ? <AppLoading /> : children;
 }

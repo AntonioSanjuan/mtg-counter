@@ -32,9 +32,7 @@ function App() {
             path="profile"
             element={(
               <React.Suspense fallback={<>...</>}>
-                <AuthRouteGuard>
-                  <ProfilePage />
-                </AuthRouteGuard>
+                <ProfilePage />
               </React.Suspense>
                   )}
           />

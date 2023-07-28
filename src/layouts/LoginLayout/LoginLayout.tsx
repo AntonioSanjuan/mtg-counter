@@ -10,7 +10,6 @@ function LoginLayout() {
         <Topnav
           hideLoginButton
           hideSidenavButton
-          hideSearchButton
         />
       </div>
       <div className="LoginLayout_ContentContainer">
