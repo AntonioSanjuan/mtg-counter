@@ -1,4 +1,4 @@
-import './Login.scss';
+import './SignUp.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
@@ -6,41 +6,54 @@ import ColoredLogo from '../../assets/ColoredLogo.png';
 import { useAuth } from '../../hooks/auth/authHook';
 import { Loading } from '../../components/common/loading/loading';
 
-interface LoginFormModel {
+interface SignUpPageFormModel {
   userEmail: string,
+  userName: string,
   password: string
 }
 
-function LoginPage() {
+function SignUpPage() {
   const {
-    login, loginWithGoogle, loading, error,
+    loginWithGoogle, signUp, loading, error: authError,
   } = useAuth();
   const navigate = useNavigate();
 
-  const formik: FormikProps<LoginFormModel> = useFormik<LoginFormModel>({
+  const formik: FormikProps<SignUpPageFormModel> = useFormik<SignUpPageFormModel>({
     initialValues: {
       userEmail: '',
+      userName: '',
       password: '',
     },
     validationSchema: Yup.object({
       userEmail: Yup.string().required().email(),
+      userName: Yup.string().required(),
       password: Yup.string().required(),
     }),
     onSubmit: (values, { resetForm }) => {
       resetForm();
-      handleSubmit(values).then(() => {
-        navigate('/');
+      handleSubmit().then(() => {
+        // navigate('/');
       });
     },
   });
 
-  const handleSubmit = async (form: LoginFormModel) => login(
-    { userEmail: form.userEmail, userPassword: form.password },
-  );
-
-  const handleLoginWithGoogle = async () => {
+  const handleSignUpWithGoogle = async () => {
     try {
       await loginWithGoogle();
+      navigate('/');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await formik.validateForm();
+      await signUp({
+        userEmail: formik.values.userEmail,
+        userName: formik.values.userName,
+        userPassword: formik.values.password,
+      });
       navigate('/');
     } catch (error) {
       console.error(error);
@@ -51,9 +64,9 @@ function LoginPage() {
     <>
       { loading
       && <Loading />}
-      <div className="Login_MainContainer">
-        <div className="Login_CardContainer">
-          <div className="Login_Logo">
+      <div className="SignUp_MainContainer">
+        <div className="SignUp_CardContainer">
+          <div className="SignUp_Logo">
             <img src={ColoredLogo} alt="logo" />
           </div>
           <form onSubmit={formik.handleSubmit}>
@@ -77,8 +90,28 @@ function LoginPage() {
                   && <span className="app_font_error">{formik.errors.userEmail}</span>
             }
             </div>
+            <div className="form-floating">
+              <label htmlFor="userName">
+                Username
+                <input
+                  type="text"
+                  id="userName"
+                  name="userName"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.userName}
+                  className="form-control"
+                  placeholder="user name"
+                />
+              </label>
+              {
+              formik.touched.userName && formik.errors.userName
+                  && <span className="app_font_error">{formik.errors.userName}</span>
+              }
+            </div>
 
             <div className="form-floating">
+
               <label htmlFor="password">
                 Password
                 <input
@@ -97,43 +130,42 @@ function LoginPage() {
               && <span className="app_font_error">{formik.errors.password}</span>
             }
             </div>
-            <div className="Login_ActionContainer">
+            <div className="SignUp_ActionContainer">
               <button
                 disabled={!formik.dirty || !formik.isValid}
-                className="btn btn-primary w-100"
+                className="btn btn-secondary w-100"
                 type="submit"
+                name="Sign Up"
               >
-                Login
+                Sign Up
               </button>
 
               <button
                 className="btn btn-dark w-100"
                 type="button"
-                onClick={handleLoginWithGoogle}
+                onClick={handleSignUpWithGoogle}
               >
                 <img
                   width="20px"
                   alt="Google sign-in"
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                 />
-                Login with Google
+                Sign up with Google
               </button>
-
-              <Link to="/signUp">
+              <Link to="/login">
                 <button
                   className="btn btn-link w-100"
                   type="button"
                 >
-                  ¿No tienes cuenta? Regístrate aqui.
+                  ¿Ya tienes cuenta? Inicia sesion aqui.
                 </button>
               </Link>
-
             </div>
           </form>
           {
-          error
+          authError
           && (
-          <div className="Login_ErrorContainer">
+          <div className="SignUp_ErrorContainer">
             <p className="app_font_error">
               Error!, try it again
             </p>
@@ -147,4 +179,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

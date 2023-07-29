@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
+import { DocumentData, DocumentSnapshot, QuerySnapshot } from 'firebase/firestore';
 import { useAppDispatch } from '../state/appStateHook';
 import * as userSettingsService from '../../services/firebaseStore/user/user.service';
 import { FirebaseUserDto, FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -12,6 +12,21 @@ export function useUser() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
+
+  const existsUserWithUserName = async (userName: string): Promise<boolean> => {
+    setLoading(true);
+    return userSettingsService.getUserByUsername(userName)
+      .then((userResp) => {
+        console.log('userResp', userResp.size);
+        setLoading(false);
+        setError(false);
+        return userResp.size > 0;
+      }).catch((e) => {
+        setLoading(false);
+        setError(true);
+        throw e;
+      });
+  };
 
   const getUser = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
@@ -29,9 +44,14 @@ export function useUser() {
       });
   };
 
-  const setUser = async (userSettings: FirebaseUserSettingsDto, gameId: string, historicId: string): Promise<any> => {
+  const setUser = async (
+    userSettings: FirebaseUserSettingsDto,
+    gameId: string,
+    historicId: string,
+    userName: string,
+  ): Promise<any> => {
     setLoading(true);
-    return userSettingsService.setUser(userSettings, gameId, historicId).then(() => {
+    return userSettingsService.setUser(userSettings, gameId, historicId, userName).then(() => {
       dispatch(setUserSettingsAction(userSettings));
       setLoading(false);
       setError(false);
@@ -90,6 +110,7 @@ export function useUser() {
 
   return {
     getUser,
+    existsUserWithUserName,
     setUser,
     setAnonymousUser,
     updateUser,

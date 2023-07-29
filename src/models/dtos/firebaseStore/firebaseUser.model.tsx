@@ -7,6 +7,7 @@ export interface FirebaseUserSettingsDto {
 
 export interface FirebaseUserDto {
     userSettings: FirebaseUserSettingsDto
+    userName: string,
     currentGame: any;
     historicGames: any;
 }

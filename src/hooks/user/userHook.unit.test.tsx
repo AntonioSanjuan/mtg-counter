@@ -48,7 +48,8 @@ describe('<useUser />', () => {
 
     const getUserSettingsOutput: FirebaseUserDto = 
     { 
-      userSettings:  { darkMode: true, lang: Language.French }, 
+      userSettings:  { darkMode: true, lang: Language.French },
+      userName: '',
       currentGame: getNewGame(),
       historicGames: []
     }
@@ -77,7 +78,7 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     await act(async () => {
-      await result.current.setUser(inputSettings, 'gameId', 'historicId');
+      await result.current.setUser(inputSettings, 'gameId', 'historicId', 'username');
     });
 
     expect(userServiceMock.setUserSpy).toHaveBeenCalled();

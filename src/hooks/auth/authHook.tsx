@@ -22,26 +22,34 @@ export function useAuth() {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
-  const { setUser } = useUser();
+  const { existsUserWithUserName, setUser } = useUser();
   const { setGame } = useCurrentGame();
   const { setHistoric } = useHistoricGames();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<GameState>(selectGame);
   const historicGames = useAppSelector<HistoricGamesState>(selectHistoricGames);
 
-  const setupInitialDataIfRequired = async (user: UserCredential) => {
+  const setupInitialDataIfRequired = async (user: UserCredential, userName: string) => {
     const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
 
     if (isNewUser) {
       const newGame = await setGame(gameSettings);
       const newHistoricGames = await setHistoric(historicGames);
-      await setUser(userSettings as FirebaseUserSettingsDto, newGame.id as string, newHistoricGames.id);
+      await setUser(
+        userSettings as FirebaseUserSettingsDto,
+        newGame.id as string,
+        newHistoricGames.id,
+        userName,
+      );
     }
   };
 
-  const login = async ({ username, password }: {username: string, password: string}): Promise<UserCredential> => {
+  const login = async (
+    { userEmail, userPassword }:
+    {userEmail: string, userPassword: string},
+  ): Promise<UserCredential> => {
     setLoading(true);
-    return firebaseLogin(username, password)
+    return firebaseLogin(userEmail, userPassword)
       .then((resp) => {
         setLoading(false);
         setError(false);
@@ -59,7 +67,7 @@ export function useAuth() {
 
     return firebaseGoogleLogin()
       .then(async (resp) => {
-        await setupInitialDataIfRequired(resp);
+        await setupInitialDataIfRequired(resp, resp.user.email as string);
 
         setLoading(false);
         setError(false);
@@ -73,13 +81,17 @@ export function useAuth() {
       });
   };
 
-  const signUp = async ({ username, password }: { username: string, password: string}): Promise<UserCredential> => {
+  const signUp = async (
+    { userEmail, userName, userPassword }:
+    { userEmail: string, userName: string, userPassword: string},
+  ): Promise<UserCredential> => {
     setLoading(true);
     dispatch(setUserIsCreatingAction());
-
-    return firebaseSignUp(username, password)
+    const userNameAlreadyExists = await existsUserWithUserName(userName);
+    return (!(userNameAlreadyExists)
+      ? firebaseSignUp(userEmail, userPassword) : Promise.reject())
       .then(async (resp) => {
-        await setupInitialDataIfRequired(resp);
+        await setupInitialDataIfRequired(resp, userName);
 
         setLoading(false);
         setError(false);

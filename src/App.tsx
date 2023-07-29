@@ -8,6 +8,7 @@ import LoginPage from './pages/Login/Login';
 import ProfilePage from './pages/Profile/Profile';
 import HistoricPage from './pages/Historic/Historic';
 import { AuthRouteGuard } from './guards/authGuard/auth.guard';
+import SignUpPage from './pages/SignUp/SignUp';
 
 function App() {
   return (
@@ -66,6 +67,21 @@ function App() {
             element={(
               <React.Suspense fallback={<>...</>}>
                 <LoginPage />
+              </React.Suspense>
+          )}
+          />
+        </Route>
+        <Route
+          path="signUp"
+          element={
+            <LoginLayout />
+}
+        >
+          <Route
+            index
+            element={(
+              <React.Suspense fallback={<>...</>}>
+                <SignUpPage />
               </React.Suspense>
           )}
           />

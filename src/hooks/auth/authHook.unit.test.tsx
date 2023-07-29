@@ -18,15 +18,15 @@ import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebas
 import { getAdditionalUserInfo } from 'firebase/auth';
 import * as authFirebase from 'firebase/auth';
 
-describe('<useUser />', () => {
-  let useUserStore: any;
+describe('<useAuth />', () => {
+  let useAuthStore: any;
   let wrapper: any;
   const useAppDispatchMockResponse = jest.fn((action) => {}) as Dispatch<any>;
 
   beforeEach(() => {
-    useUserStore = createTestStore();
+    useAuthStore = createTestStore();
     wrapper = function ({ children }: { children: any }) {
-      return <Provider store={useUserStore}>{children}</Provider>;
+      return <Provider store={useAuthStore}>{children}</Provider>;
     };
 
     jest.spyOn(authFirebase, 'getAdditionalUserInfo')
@@ -65,7 +65,7 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     await act(async () => {
-      await result.current.login({ username: 'a@b.com', password: '' });
+      await result.current.login({ userEmail: 'a@b.com', userPassword: '' });
     });
 
     expect(mock_firebaseAuthService.firebaseLoginSpy).toHaveBeenCalled();
@@ -78,7 +78,7 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useAuth(), { wrapper });
 
     await act(async () => {
-      await result.current.login({ username: 'a@b.com', password: '' }).catch((e) => {
+      await result.current.login({ userEmail: 'a@b.com', userPassword: '' }).catch((e) => {
         // eslint-disable-next-line jest/no-conditional-expect
         expect(e).toEqual(error);
       });
@@ -167,21 +167,22 @@ describe('<useUser />', () => {
 
   it('signUp should request firebaseSignUp service function', async () => {
     const { result } = renderHook(() => useAuth(), { wrapper });
-    const userName = 'test_username';
+    const userEmail = 'test_useremail';
     const userPass = 'test_userpass';
-
+    const userName = 'test_username'
     expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
 
     await act(async () => {
-      await result.current.signUp({ username: userName, password: userPass });
+      await result.current.signUp({ userEmail: userEmail, userName: userName, userPassword: userPass });
     });
 
-    expect(mock_firebaseAuthService.firebaseSignUpSpy).toHaveBeenCalledWith(userName, userPass);
+    expect(mock_firebaseAuthService.firebaseSignUpSpy).toHaveBeenCalledWith(userEmail, userPass);
   });
 
   it('signUp should request setUserSettings hook function', async () => {
     const sutGameSettingsId = 'testGameSettingsId';
     const sutHistoricId = 'testHistoricGamesId';
+    const sutUserName = "testUserName";
 
     (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
       isNewUser: true
@@ -193,14 +194,14 @@ describe('<useUser />', () => {
     const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
 
     await act(async () => {
-      await useUserStore.dispatch(setUserSettingsAction(userSettings ));
+      await useAuthStore.dispatch(setUserSettingsAction(userSettings ));
     });
 
     await act(async () => {
-      await result.current.signUp({ username: '', password: '' });
+      await result.current.signUp({ userEmail: '', userName: sutUserName, userPassword: '' });
     });
 
-    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId );
+    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId, sutUserName );
   });
 
   it('signUp should request setGameSettings hook function', async () => {
@@ -211,14 +212,66 @@ describe('<useUser />', () => {
 
     const { result } = renderHook(() => useAuth(), { wrapper });
 
-    expect(mock_firebaseAuthService.firebaseSignUpSpy).not.toHaveBeenCalled();
-
     expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
     await act(async () => {
-      await result.current.signUp({ username: '', password: '' });
+      await result.current.signUp({ userEmail: '', userName: '', userPassword: '' });
     });
 
     expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
+  });
+
+  it('signUp should request existsUserWithUserName hook function', async () => {
+    const userNameSut = 'usernameTest'
+
+    const { result } = renderHook(() => useAuth(), { wrapper });
+
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
+
+
+    await act(async () => {
+      await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
+    });
+
+    expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
+  });
+
+  it('if signUp existsUserWithUserName returns true, should not set user', async () => {
+    const userNameSut = 'usernameTest'
+
+    const { result } = renderHook(() => useAuth(), { wrapper });
+
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
+
+    mock_useUser.mock().existsUserWithUserName.mockResolvedValue(true)
+
+    try {
+      await act(async () => {
+        await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
+      })
+    } catch {
+      expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
+      expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
+    }
+  });
+
+  it('if signUp existsUserWithUserName returns false, should not set user', async () => {
+    const userNameSut = 'usernameTest';
+
+    (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
+      isNewUser: true
+    })
+
+    const { result } = renderHook(() => useAuth(), { wrapper });
+
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
+
+    mock_useUser.mock().existsUserWithUserName.mockResolvedValue(false)
+
+    await act(async () => {
+      await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
+    })
+    expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
+    expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
   });
 });
