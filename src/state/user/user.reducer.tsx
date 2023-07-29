@@ -15,7 +15,8 @@ const userReducer = (state: UserState = userInitialState, action: any) => {
     case UserActions.setUserSettings:
       return {
         ...state,
-        userSettings: action.payload,
+        userSettings: action.payload.userSettings,
+        userName: action.payload.userName
       };
     case UserActions.unsetUser:
       return {

@@ -3,7 +3,7 @@ import { GameState } from '../../state/game/models/appGame.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import {
-  getFinishedGame, getNamedGame, getNewGame, getResizedGame, getRestartedGame,
+  getFinishedGame, getNamedGame, getResizedGame, getRestartedGame,
 } from '../../utils/factories/gameFactory/gameFactory';
 import { auth } from '../../utils/firebase.util';
 import { useCurrentGame } from '../currentGame/currentGameHook';

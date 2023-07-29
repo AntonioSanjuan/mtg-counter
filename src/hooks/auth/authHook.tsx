@@ -16,12 +16,14 @@ import { GameState } from '../../state/game/models/appGame.state';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
+import { IError } from '../../models/internal/commons/error.model';
+import { ErrorAdapter } from '../../adapters/error/error.adapter';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<boolean>(false);
+  const [error, setError] = useState<IError|undefined>(undefined);
   const { existsUserWithUserName, setUser } = useUser();
   const { setGame } = useCurrentGame();
   const { setHistoric } = useHistoricGames();
@@ -52,11 +54,11 @@ export function useAuth() {
     return firebaseLogin(userEmail, userPassword)
       .then((resp) => {
         setLoading(false);
-        setError(false);
+        setError(undefined);
         return resp;
       }).catch((e) => {
         setLoading(false);
-        setError(true);
+        setError(ErrorAdapter.newFirebaseError(e));
         throw e;
       });
   };
@@ -70,11 +72,11 @@ export function useAuth() {
         await setupInitialDataIfRequired(resp, resp.user.email as string);
 
         setLoading(false);
-        setError(false);
+        setError(undefined);
         return resp;
       }).catch((e) => {
         setLoading(false);
-        setError(true);
+        setError(ErrorAdapter.newFirebaseError(e));
         throw e;
       }).finally(() => {
         dispatch(unsetUserIsCreatingAction());
@@ -88,17 +90,24 @@ export function useAuth() {
     setLoading(true);
     dispatch(setUserIsCreatingAction());
     const userNameAlreadyExists = await existsUserWithUserName(userName);
-    return (!(userNameAlreadyExists)
-      ? firebaseSignUp(userEmail, userPassword) : Promise.reject())
-      .then(async (resp) => {
-        await setupInitialDataIfRequired(resp, userName);
+    return !(userNameAlreadyExists)
+      ? firebaseSignUp(userEmail, userPassword)
+        .then(async (resp) => {
+          await setupInitialDataIfRequired(resp, userName);
 
+          setLoading(false);
+          setError(undefined);
+          return resp;
+        }).catch((e) => {
+          setLoading(false);
+          setError(ErrorAdapter.newFirebaseError(e));
+          throw e;
+        }).finally(() => {
+          dispatch(unsetUserIsCreatingAction());
+        })
+      : Promise.reject().catch((e) => {
         setLoading(false);
-        setError(false);
-        return resp;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
+        setError(ErrorAdapter.newGenericError('InternalError: Error (auth/userName_already_in_use)'));
         throw e;
       }).finally(() => {
         dispatch(unsetUserIsCreatingAction());

@@ -167,7 +167,7 @@ function SignUpPage() {
           && (
           <div className="SignUp_ErrorContainer">
             <p className="app_font_error">
-              Error!, try it again
+              {authError.msg}
             </p>
           </div>
           )

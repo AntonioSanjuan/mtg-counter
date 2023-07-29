@@ -6,4 +6,5 @@ export interface UserState {
   isCreating: boolean;
   userData: User | null;
   userSettings: FirebaseUserSettingsDto | undefined;
+  userName: string;
 }

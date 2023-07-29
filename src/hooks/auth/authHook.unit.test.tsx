@@ -194,7 +194,7 @@ describe('<useAuth />', () => {
     const userSettings = { lang: Language.French, darkMode: true } as FirebaseUserSettingsDto;
 
     await act(async () => {
-      await useAuthStore.dispatch(setUserSettingsAction(userSettings ));
+      await useAuthStore.dispatch(setUserSettingsAction(userSettings, "userNameTest"));
     });
 
     await act(async () => {

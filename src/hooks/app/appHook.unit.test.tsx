@@ -79,7 +79,7 @@ describe('<useApp />', () => {
     const { result } = renderHook(() => useApp(), { wrapper });
 
     await act(async () => {
-      useAppStore.dispatch(setUserSettingsAction(inputUserSettings));
+      useAppStore.dispatch(setUserSettingsAction(inputUserSettings, 'userNameTest'));
     });
 
     expect(result.current.language).toEqual(inputUserSettings.lang);

@@ -5,5 +5,6 @@ export const userInitialState: UserState = {
   isLogged: false,
   isCreating: false,
   userSettings: undefined,
+  userName: '',
   userData: auth.currentUser,
 };

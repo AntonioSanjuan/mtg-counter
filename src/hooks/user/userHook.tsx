@@ -17,7 +17,6 @@ export function useUser() {
     setLoading(true);
     return userSettingsService.getUserByUsername(userName)
       .then((userResp) => {
-        console.log('userResp', userResp.size);
         setLoading(false);
         setError(false);
         return userResp.size > 0;
@@ -33,7 +32,7 @@ export function useUser() {
     return userSettingsService.getUser()
       .then((userResp) => {
         const user = userResp.data() as FirebaseUserDto;
-        dispatch(setUserSettingsAction(user.userSettings));
+        dispatch(setUserSettingsAction(user.userSettings, user.userName));
         setLoading(false);
         setError(false);
         return userResp;
@@ -52,7 +51,7 @@ export function useUser() {
   ): Promise<any> => {
     setLoading(true);
     return userSettingsService.setUser(userSettings, gameId, historicId, userName).then(() => {
-      dispatch(setUserSettingsAction(userSettings));
+      dispatch(setUserSettingsAction(userSettings, userName));
       setLoading(false);
       setError(false);
       return userSettings;
@@ -63,12 +62,12 @@ export function useUser() {
     });
   };
 
-  const updateUser = async (settings: FirebaseUserSettingsDto): Promise<any> => {
+  const updateUser = async (settings: FirebaseUserSettingsDto, userName: string): Promise<any> => {
     setLoading(true);
     if (auth.currentUser) {
       return userSettingsService.updateUser(settings)
         .then(() => {
-          dispatch(setUserSettingsAction(settings));
+          dispatch(setUserSettingsAction(settings, userName));
           setLoading(false);
           setError(false);
         }).catch((e) => {
@@ -79,7 +78,7 @@ export function useUser() {
     }
     setLoading(false);
     setError(false);
-    dispatch(setUserSettingsAction(settings));
+    dispatch(setUserSettingsAction(settings, 'Anonymous'));
     return {};
   };
 
@@ -102,10 +101,15 @@ export function useUser() {
   };
 
   const setAnonymousUser = (lang: Language, darkMode: boolean) => {
-    dispatch(setUserSettingsAction({
-      darkMode,
-      lang,
-    } as FirebaseUserSettingsDto));
+    dispatch(
+      setUserSettingsAction(
+        {
+          darkMode,
+          lang,
+        } as FirebaseUserSettingsDto,
+        'Anonymous',
+      ),
+    );
   };
 
   return {

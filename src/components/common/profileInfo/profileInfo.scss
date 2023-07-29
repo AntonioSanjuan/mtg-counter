@@ -1,0 +1,34 @@
+.profileInfo_MainContainer {
+    display: flex;
+    flex-direction: 'row';
+    flex-direction: column;
+    place-content: center;
+    align-items: center; 
+
+    form {
+        width: 100%;
+    }
+}
+
+.profileInfo_Settings {
+    display: flex;
+    flex-direction: column;
+    place-content: space-between;
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.profileInfo_Setting {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: flex-start; 
+
+    width: 100%;
+    padding: 0px 10px;
+
+    .form-switch {
+        padding-left: 0;
+    }
+}

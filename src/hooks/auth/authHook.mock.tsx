@@ -3,10 +3,11 @@
 /* eslint-disable no-promise-executor-return */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { UserCredential } from 'firebase/auth';
+import { IError } from '../../models/internal/commons/error.model';
 
 const loginResponseMock = {} as UserCredential;
 let loadingResponseMock: boolean = false;
-let errorResponseMock: boolean = false;
+let errorResponseMock: IError|undefined = undefined;
 
 const loginSpy = jest.fn()
 const loginWithGoogleSpy = jest.fn()

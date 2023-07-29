@@ -20,7 +20,7 @@ describe('ProfileSettings', () => {
     profileSettingsStore = createTestStore();
     history = createMemoryHistory();
     profileSettingsStore.dispatch(
-      setUserSettingsAction({ darkMode: true, lang: 'es' } as FirebaseUserSettingsDto),
+      setUserSettingsAction({ darkMode: true, lang: 'es' } as FirebaseUserSettingsDto, 'userName'),
     );
 
     jest.spyOn(useUser, 'useUser')

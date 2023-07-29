@@ -44,12 +44,13 @@ describe('<useUser />', () => {
   });
 
   it('getUserSettings should request getUserSettings', async () => {
+    const userNameSut = 'userNameTest'
     expect(userServiceMock.getUserSpy).not.toHaveBeenCalled();
 
     const getUserSettingsOutput: FirebaseUserDto = 
     { 
       userSettings:  { darkMode: true, lang: Language.French },
-      userName: '',
+      userName: userNameSut,
       currentGame: getNewGame(),
       historicGames: []
     }
@@ -64,7 +65,7 @@ describe('<useUser />', () => {
       await result.current.getUser();
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(getUserSettingsOutput.userSettings));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(getUserSettingsOutput.userSettings, userNameSut));
     expect(userServiceMock.getUserSpy).toHaveBeenCalled();
   });
 
@@ -84,7 +85,8 @@ describe('<useUser />', () => {
     expect(userServiceMock.setUserSpy).toHaveBeenCalled();
   });
 
-  it('updateUserSettings should not request updateUserSettings if user is not logged', async () => {
+  it('updateUserSettings should not request updateUserSettings if user is not logged', async () => {    
+
     expect(userServiceMock.setUserSpy).not.toHaveBeenCalled();
     const inputSettings = {
       darkMode: true,
@@ -94,15 +96,17 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     await act(async () => {
-      await result.current.updateUser(inputSettings);
+      await result.current.updateUser(inputSettings, "");
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, "Anonymous"));
     expect(userServiceMock.updateUserSpy).not.toHaveBeenCalled();
   });
 
   it('updateUserSettings should request updateUserSettings if user is logged', async () => {
     //auth.currentUser = {}
+    const userNameSut = 'userNameTest'
+
     mockFirebaseAuthUser({} as User)
 
     expect(userServiceMock.setUserSpy).not.toHaveBeenCalled();
@@ -114,10 +118,10 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     await act(async () => {
-      await result.current.updateUser(inputSettings);
+      await result.current.updateUser(inputSettings, userNameSut);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, userNameSut));
     expect(userServiceMock.updateUserSpy).toHaveBeenCalled();
   });
 
@@ -166,6 +170,6 @@ describe('<useUser />', () => {
       result.current.setAnonymousUser(Language.English, true);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, 'Anonymous'));
   });
 });

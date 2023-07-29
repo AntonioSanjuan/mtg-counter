@@ -9,9 +9,9 @@ export enum UserActions {
     unsetUserIsCreating = '@action/unsetUserIsCreating'
 }
 
-export const setUserSettingsAction = (userSettings: FirebaseUserSettingsDto) => ({
+export const setUserSettingsAction = (userSettings: FirebaseUserSettingsDto, userName: string) => ({
   type: UserActions.setUserSettings,
-  payload: userSettings,
+  payload: { userSettings, userName },
 });
 
 export const setUserAuthAction = (userData: User|null) => ({
