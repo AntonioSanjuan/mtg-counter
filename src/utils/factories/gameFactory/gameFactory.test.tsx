@@ -3,10 +3,8 @@ import { Dispatch } from '@reduxjs/toolkit';
 import { getFinishedGame, getNamedGame, getNewGame, getResizedGame, getRestartedGame } from './gameFactory';
 import { Lifes } from '../../../models/internal/types/LifeEnum.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
-import { GameState } from '../../../state/game/models/appGame.state';
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 import { FirebaseCounterDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
-import { getRestartedPlayerCounters } from '../playerFactory/playerFactory';
 
 describe('GameFactory', () => {  
     beforeEach(() => {
@@ -50,6 +48,7 @@ describe('GameFactory', () => {
         inputGameSut.board.players[0].color = PlayerColors.blue;
         inputGameSut.board.players[0].winner = true,
         inputGameSut.board.players[0].name = 'PlayerName0',
+        inputGameSut.board.players[0].death = true,
         inputGameSut.board.players[0].counters.map((counter: FirebaseCounterDto) => counter.value = 0)
 
         const restartedGame = getRestartedGame(inputGameSut)
@@ -61,6 +60,7 @@ describe('GameFactory', () => {
         expect(restartedGame.finished).toEqual(false)
         expect(restartedGame.board.players[0].color).toEqual(inputGameSut.board.players[0].color)
         expect(restartedGame.board.players[0].winner).toEqual(false)
+        expect(restartedGame.board.players[0].death).toEqual(false)
         expect(restartedGame.board.players[0].name).toEqual(inputGameSut.board.players[0].name)
         expect(restartedGame.board.players[0].counters).not.toEqual(inputGameSut.board.players[0].counters)
         expect(restartedGame.board.players[0].counters.find((counter) => counter.type ==="Life")).not.toEqual(inputGameSut.board.initialLifes)
@@ -76,6 +76,7 @@ describe('GameFactory', () => {
         inputGameSut.finishAt = new Date()
         inputGameSut.board.players[0].color = PlayerColors.blue;
         inputGameSut.board.players[0].winner = true,
+        inputGameSut.board.players[0].death = true,
         inputGameSut.board.players[0].name = 'PlayerName0',
         inputGameSut.board.players[0].counters.map((counter: FirebaseCounterDto) => counter.value = 0)
 
@@ -91,6 +92,7 @@ describe('GameFactory', () => {
 
         expect(resizedGame.board.players[0].color).not.toEqual(inputGameSut.board.players[0].color)
         expect(resizedGame.board.players[0].winner).toEqual(false)
+        expect(resizedGame.board.players[0].death).toEqual(false)
         expect(resizedGame.board.players[0].name).not.toEqual(inputGameSut.board.players[0].name)
         expect(resizedGame.board.players[0].counters).not.toEqual(inputGameSut.board.players[0].counters)
         expect(resizedGame.board.players[0].counters.find((counter) => counter.type ==="Life")).not.toEqual(inputGameSut.board.initialLifes)

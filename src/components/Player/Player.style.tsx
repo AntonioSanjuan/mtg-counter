@@ -3,11 +3,14 @@ import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model'
 import { backgroundColors } from '../../utils/playerBackgroundColors/playerBackgroundColors';
 import { textColors } from '../../utils/playerTextColors/playerTextColors';
 
+import deathImage from '../../assets/images/death.png';
+
 export interface PlayerStyleProps {
     rotation: number,
     playerHeight: number,
     playerWidth: number,
     isOwner: boolean,
+    isDeath: boolean,
     backgroundColor?: PlayerColors
 }
 
@@ -38,6 +41,23 @@ min-width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')}
 width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
 box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
 border: ${(props) => (props.isOwner ? '5px outset var(--OwnerPlayerBackground)' : 'none')};
+
+&::before {
+  content: '';
+  background-image: ${(props) => (props.isDeath ? `url(${deathImage})` : 'none')};
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  aspect-ratio: 1/1;
+  filter: drop-shadow(0px 0px 4px ${(props) => textColors[props.backgroundColor]});
+  opacity: 0.3;
+  margin-left: 10px;
+
+  pointer-events: none;
+}
+
 
 .PlayerName {
   position: absolute;

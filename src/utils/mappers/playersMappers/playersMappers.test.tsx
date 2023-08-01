@@ -1,5 +1,5 @@
 import { FirebaseCounterDto } from "../../../models/dtos/firebaseStore/firebaseGame.model";
-import { Lifes } from "../../../models/internal/types/LifeEnum.model";
+import { Lifes, MaxCommanderDamage, MaxPoisonCounters } from "../../../models/internal/types/LifeEnum.model";
 import { NumberOfPlayers } from "../../../models/internal/types/NumberOfPlayerEnum.model";
 import { PlayerColors } from "../../../models/internal/types/PlayerColorEnum.model";
 import { GameState } from "../../../state/game/models/appGame.state";
@@ -7,9 +7,10 @@ import { getNewGame } from "../../factories/gameFactory/gameFactory";
 import { mapPlayerColor, mapPlayerCounter, mapPlayerOwner, mapPlayerWinner } from "./playersMappers";
 
 describe('PlayerMappers', () => {  
-    let sutGame: GameState
+    let sutGame: GameState;
+    let initialLifes: Lifes = Lifes.Twenty
     beforeEach(() => {
-        sutGame = getNewGame(Lifes.Twenty, NumberOfPlayers.Five);
+        sutGame = getNewGame(initialLifes, NumberOfPlayers.Five);
     });
   
     it('mapPlayerColor should return same length of players', () => {
@@ -104,4 +105,96 @@ describe('PlayerMappers', () => {
 
             expect(sutPlayers[0].counters.find((counter) => { return counter.type === "Life"})?.value).toEqual(10)
         });
+
+    it('mapPlayerCounter should set player death to false if counter life value is more than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
+            - 1);
+
+        expect(sutPlayers[0].death).toBeFalsy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter life value is equal 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
+            initialLifes * - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter life value is less than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
+            (initialLifes * -1) - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+    
+    it('mapPlayerCounter should set player death to false if counter poison value is more than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
+            - 1);
+
+        expect(sutPlayers[0].death).toBeFalsy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter poison value is equal 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
+            MaxPoisonCounters * - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter poison value is less than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
+            (MaxPoisonCounters * -1) - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+
+    it('mapPlayerCounter should set player death to false if counter CommanderDamage value is more than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
+            - 1);
+
+        expect(sutPlayers[0].death).toBeFalsy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter CommanderDamage value is equal 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
+            MaxCommanderDamage * - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+
+    it('mapPlayerCounter should set player death to true if counter CommanderDamage value is less than 0', () => {
+        const sutPlayers = mapPlayerCounter(
+            sutGame.board.players, 
+            sutGame.board.players[0].id, 
+            sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
+            (MaxCommanderDamage * -1) - 1);
+
+        expect(sutPlayers[0].death).toBeTruthy()
+    });
+
+
 });

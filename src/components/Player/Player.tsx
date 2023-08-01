@@ -33,6 +33,7 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       playerWidth={sizes.height}
       backgroundColor={player.color}
       isOwner={player.owner}
+      isDeath={player.death}
       ref={playerRef}
     >
       <div className="PlayerName">

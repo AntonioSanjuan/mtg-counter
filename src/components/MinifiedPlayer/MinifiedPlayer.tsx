@@ -14,6 +14,7 @@ function MinifiedPlayer(
       rotation={0}
       backgroundColor={player.color}
       isOwner={player.owner}
+      isDeath={player.death}
       onClick={winnerSelection ? updatePlayerWinner : undefined}
       aria-label="minifiedPlayer"
       role="button"

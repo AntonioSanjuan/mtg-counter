@@ -55,7 +55,7 @@ export const mapPlayerCounter = (
   counterToUpdateValueModification: number,
 ): FirebasePlayerDto[] => players.map((player) => {
   if (player.id === playerIdToUpdate) {
-    const targetPlayer = player;
+    const targetPlayer = { ...player };
     targetPlayer.counters = targetPlayer.counters.map((counter) => {
       switch (counterToUpdate.type) {
         case 'Life':
@@ -90,7 +90,10 @@ export const mapPlayerCounter = (
 
       return counter;
     });
-    return targetPlayer;
+    return {
+      ...targetPlayer,
+      death: targetPlayer.counters.some((counter) => counter.value <= 0),
+    };
   }
   return player;
 });

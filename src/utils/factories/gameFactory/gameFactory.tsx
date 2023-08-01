@@ -31,6 +31,7 @@ export const getRestartedGame = (
     ...gameSettings.board,
     players: gameSettings.board.players.map((player) => ({
       ...player,
+      death: false,
       winner: false,
       counters: getRestartedPlayerCounters(player.counters, gameSettings.board.initialLifes),
     })),

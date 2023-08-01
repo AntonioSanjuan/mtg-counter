@@ -19,6 +19,7 @@ export interface FirebasePlayerDto {
   deckName: string;
   counters: FirebaseCounterDto[];
   color: PlayerColors;
+  death: boolean;
 }
 
 export interface FirebaseBoardDto {

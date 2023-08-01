@@ -52,6 +52,7 @@ const getDefaultPlayer = (
   userId: null,
   owner: firstPlayer,
   winner: false,
+  death: false,
   deckName: '',
   counters: getDefaultPlayerCounters(initialLifes, opponentsId),
   color: PlayerColors.default,
