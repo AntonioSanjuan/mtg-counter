@@ -32,22 +32,6 @@ Required<CounterCarrouselItemStyleProps> // What comes out of .attrs()
     i {
         color:  ${(props) => (textColors[props.playerColor])};
     }
-
-    .CounterCarrousel_CommanderCounter {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        border: 1px solid ${(props) => (textColors[props.playerColor])};
-        width: fit-content;
-        padding: 0px 10px;
-        background: ${(props) => (backgroundColors[props.counterOpponentColor])};
-
-        p {
-          color:  ${(props) => (textColors[props.counterOpponentColor])};
-        }
-    }
 }
 `;
 

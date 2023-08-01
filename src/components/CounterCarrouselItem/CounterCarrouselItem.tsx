@@ -18,9 +18,6 @@ function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
           <Chip backgroundColor={counterOpponent?.color}>
             <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
           </Chip>
-        // <div className="CounterCarrousel_CommanderCounter">
-        //   <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
-        // </div>
         )}
 
       <p className="app_font_xxl">

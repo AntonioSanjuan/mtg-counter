@@ -18,8 +18,8 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
       deckName: player.deckName ?? '',
     },
     validationSchema: Yup.object({
-      userId: Yup.string(),
-      name: Yup.string(),
+      userId: Yup.string().test('VALID', 'Error!', async () => Promise.resolve(false)),
+      name: Yup.string().required(),
       deckName: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -41,18 +41,31 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
 
           <label htmlFor="userId">
             userId
-            <input
-              type="text"
-              id="userId"
-              name="userId"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.userId as string}
-              disabled
-              className="form-control"
-              placeholder="rubio#1234"
-            />
+            <div className="PlayerDetails_UserIdContainer">
+              <input
+                type="text"
+                id="userId"
+                name="userId"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.userId as string}
+                // disabled
+                className="form-control"
+                placeholder="rubio#1234"
+              />
+              <button
+                type="button"
+                aria-label="configButton"
+                className="btn btn-link Player_ConfigButton"
+                onClick={() => {
+                  // setIsPlayerConfigOpened(!isPlayerConfigOpened);
+                }}
+              >
+                <i className="bi bi-gear-fill" />
+              </button>
+            </div>
           </label>
+
           {
           formik.touched.userId && formik.errors.userId
           && <span className="app_font_error">{formik.errors.userId}</span>

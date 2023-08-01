@@ -60,6 +60,7 @@ overflow: hidden;
         height: 100%;
         flex-direction: column;
         justify-content: center;
+        height: 82px;
     }
 }
 

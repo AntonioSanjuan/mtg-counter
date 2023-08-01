@@ -26,7 +26,7 @@ padding: 0px 10px;
 background: ${(props) => (backgroundColors[props.backgroundColor])};
 
 p {
-  color:  ${(props) => (textColors[props.backgroundColor])};
+  color:  ${(props) => (textColors[props.backgroundColor])} !important;
 }
 `;
 
