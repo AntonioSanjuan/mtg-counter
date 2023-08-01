@@ -38,6 +38,15 @@ min-width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')}
 width: ${(props) => (props.playerWidth ? `${props.playerWidth}px` : '100%')};
 box-shadow: inset 0 0 75px var(--app-topnav-mobile-background);
 border: ${(props) => (props.isOwner ? '5px outset var(--OwnerPlayerBackground)' : 'none')};
+
+.PlayerName {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 3;
+
+  color: ${(props) => textColors[props.backgroundColor]}
+}
 .Player_ConfigButton {
   position: absolute;
   bottom: 5px;

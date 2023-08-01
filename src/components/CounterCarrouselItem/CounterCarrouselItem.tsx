@@ -1,5 +1,6 @@
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
+import Chip from '../common/chip/chip';
 import SCCounterCarrouselItem from './CounterCarrouselItem.style';
 
 function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
@@ -14,9 +15,12 @@ function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
         && (<i className="bi bi-heart-fill app_font_s" />)}
       {counter.type === 'CommanderDamage'
         && (
-        <div className="CounterCarrousel_CommanderCounter">
-          <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
-        </div>
+          <Chip backgroundColor={counterOpponent?.color}>
+            <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
+          </Chip>
+        // <div className="CounterCarrousel_CommanderCounter">
+        //   <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
+        // </div>
         )}
 
       <p className="app_font_xxl">

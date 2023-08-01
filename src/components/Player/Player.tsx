@@ -6,6 +6,7 @@ import { FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.
 import PlayerConfig from '../PlayerConfig/PlayerConfig';
 import CounterCarrousel from '../CounterCarrousel/CounterCarrousel';
 import SCPlayer from './Player.style';
+import Chip from '../common/chip/chip';
 
 function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: number}) {
   const playerRef = useRef<HTMLDivElement | null>(null);
@@ -34,6 +35,11 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       isOwner={player.owner}
       ref={playerRef}
     >
+      <div className="PlayerName">
+        <Chip backgroundColor={player.color}>
+          <p className="app_font_l app_font_noMargin">{player?.name || '-'}</p>
+        </Chip>
+      </div>
       <button
         type="button"
         aria-label="configButton"
