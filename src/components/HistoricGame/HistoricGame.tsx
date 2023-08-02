@@ -31,7 +31,14 @@ function HistoricGame({ game } : {game: GameState}) {
             <p className="app_font_m">{game.name || '-'}</p>
           </div>
         </div>
-
+        <div className="HistoricGame_Info">
+          <div className="HistoricGame_InfoKey">
+            <p className="app_font_l">Estado</p>
+          </div>
+          <div className="HistoricGame_InfoValue">
+            <p className="app_font_m">{game.finished ? 'Finalizada' : 'En curso'}</p>
+          </div>
+        </div>
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
             <p className="app_font_l">Creada</p>
