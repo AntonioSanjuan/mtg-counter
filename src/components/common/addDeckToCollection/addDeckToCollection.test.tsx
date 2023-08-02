@@ -131,7 +131,6 @@ describe('addDeckToCollection', () => {
 
     const newCollectionDecks = {...deckCollectionInput}
 
-    console.log("🚀 ~ test:", newCollectionDecks)
     newCollectionDecks.decks.push(deckCollectionNewDeck)
     expect(mock_useDeckCollection.mock().updateDeckCollection).toHaveBeenCalledWith(deckCollectionInput.id, newCollectionDecks)
   });

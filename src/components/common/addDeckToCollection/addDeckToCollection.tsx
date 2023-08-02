@@ -36,7 +36,6 @@ function AddDeckToCollection() {
   const handleSubmit = async (form: FirebaseDeckDto) => {
     const newDeckCollection = { ...deckCollection };
     newDeckCollection.decks.push(form);
-    console.log('🚀 ~ original:', newDeckCollection);
     await updateDeckCollection(newDeckCollection.id, newDeckCollection);
   };
 
