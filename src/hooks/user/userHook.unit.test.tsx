@@ -52,7 +52,8 @@ describe('<useUser />', () => {
       userSettings:  { darkMode: true, lang: Language.French },
       userName: userNameSut,
       currentGame: getNewGame(),
-      historicGames: []
+      historicGames: {},
+      deckCollection: {}
     }
     userServiceMock.getUserSpy.mockResolvedValue(
       {
