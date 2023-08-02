@@ -9,6 +9,7 @@ import ProfilePage from './pages/Profile/Profile';
 import HistoricPage from './pages/Historic/Historic';
 import { AuthRouteGuard } from './guards/authGuard/auth.guard';
 import SignUpPage from './pages/SignUp/SignUp';
+import DeckCollectionPage from './pages/DeckCollection/DeckCollection';
 
 function App() {
   return (
@@ -43,6 +44,16 @@ function App() {
               <React.Suspense fallback={<>...</>}>
                 <AuthRouteGuard>
                   <HistoricPage />
+                </AuthRouteGuard>
+              </React.Suspense>
+                  )}
+          />
+          <Route
+            path="deckCollection"
+            element={(
+              <React.Suspense fallback={<>...</>}>
+                <AuthRouteGuard>
+                  <DeckCollectionPage />
                 </AuthRouteGuard>
               </React.Suspense>
                   )}

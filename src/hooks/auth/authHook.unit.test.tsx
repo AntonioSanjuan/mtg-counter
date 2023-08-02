@@ -7,11 +7,13 @@ import * as appStatehooks from '../state/appStateHook';
 import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
 import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
+import * as mock_useDeckCollection from '../deckCollection/deckCollectionHook.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useUser from '../user/userHook.mock';
 import * as useUser from '../user/userHook';
 import * as useCurrentGame from '../currentGame/currentGameHook';
 import * as useHistoricGames from '../historicGames/historicGamesHook';
+import * as useDeckCollection from '../deckCollection/deckCollectionHook';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
@@ -44,9 +46,13 @@ describe('<useAuth />', () => {
     jest.spyOn(useHistoricGames, 'useHistoricGames')
       .mockImplementation(mock_useHistoricGames.mock)
 
+    jest.spyOn(useDeckCollection, 'useDeckCollection')
+      .mockImplementation(mock_useDeckCollection.mock)
+
     mock_firebaseAuthService.initializeMock();
     mock_useCurrentGame.initializeMock();
     mock_useHistoricGames.initializeMock();
+    mock_useDeckCollection.initializeMock();
     mock_useUser.initializeMock();
   });
 
@@ -182,6 +188,7 @@ describe('<useAuth />', () => {
   it('signUp should request setUserSettings hook function', async () => {
     const sutGameSettingsId = 'testGameSettingsId';
     const sutHistoricId = 'testHistoricGamesId';
+    const sutDeckCollectionId = 'testDeckCollectionId';
     const sutUserName = "testUserName";
 
     (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
@@ -201,7 +208,7 @@ describe('<useAuth />', () => {
       await result.current.signUp({ userEmail: '', userName: sutUserName, userPassword: '' });
     });
 
-    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId, sutUserName );
+    expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId, sutDeckCollectionId, sutUserName );
   });
 
   it('signUp should request setGameSettings hook function', async () => {

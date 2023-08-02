@@ -20,6 +20,7 @@ export function setUser(
   settings: FirebaseUserSettingsDto,
   gameId: string,
   historicId: string,
+  deckCollectionId: string,
   userName: string,
 ): Promise<any> {
   const docRef = doc(db, 'users', auth?.currentUser?.uid ?? '');
@@ -28,6 +29,7 @@ export function setUser(
     userSettings: settings,
     currentGame: doc(db, 'games', gameId),
     historicGames: doc(db, 'historicGames', historicId),
+    deckCollection: doc(db, 'deckCollection', deckCollectionId),
   } as FirebaseUserDto, { merge: true });
 }
 

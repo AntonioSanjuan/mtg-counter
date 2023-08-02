@@ -35,12 +35,21 @@ function Sidenav() {
               <i className="bi bi-plus" />
             </Section>
             {isLoggedIn && (
-            <Section
-              sectionName="History"
-              onClickCallback={() => { handleNavigation('/history'); }}
-            >
-              <i className="bi bi-bookmark-star-fill" />
-            </Section>
+            <>
+              <Section
+                sectionName="History"
+                onClickCallback={() => { handleNavigation('/history'); }}
+              >
+                <i className="bi bi-bookmark-star-fill" />
+              </Section>
+              <Section
+                sectionName="Deck Collection"
+                onClickCallback={() => { handleNavigation('/deckCollection'); }}
+              >
+                <i className="bi bi-collection" />
+              </Section>
+
+            </>
             )}
           </div>
 

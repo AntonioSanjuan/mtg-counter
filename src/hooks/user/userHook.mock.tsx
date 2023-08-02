@@ -14,6 +14,9 @@ const getUserResponseObj = {
       },
       historicGames: {
         id: 'testHistoricGamesId'
+      },
+      deckCollection: {
+        id: 'testDeckCollectionsId'
       }
     } as Partial<FirebaseUserDto>
 } } as DocumentSnapshot<DocumentData>;

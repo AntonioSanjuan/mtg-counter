@@ -16,6 +16,7 @@ import { TRANSLATIONS_FR } from '../../locales/fr';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useHistoricGames } from '../historicGames/historicGamesHook';
 import { useWakeLock } from '../wakeLock/wakeLockHook';
+import { useDeckCollection } from '../deckCollection/deckCollectionHook';
 
 const getBrowserTheme = (): Theme => (window
   .matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light);
@@ -41,6 +42,7 @@ export function useApp() {
   const { getUser, setAnonymousUser } = useUser();
   const { getGame, setAnonymousGame } = useCurrentGame();
   const { getHistoric, setAnonymousHistoric } = useHistoricGames();
+  const { getDeckCollection, setAnonymousDeckCollection } = useDeckCollection();
   const { lockScreen } = useWakeLock();
 
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
@@ -65,6 +67,7 @@ export function useApp() {
     const user = settings.data() as FirebaseUserDto;
     await getGame(user.currentGame.id);
     await getHistoric(user.historicGames.id);
+    await getDeckCollection(user.deckCollection.id);
   };
 
   const initializeAnonymousUser = () => {
@@ -72,6 +75,7 @@ export function useApp() {
     setAnonymousUser(getBrowserLanguage(), (getBrowserTheme() === Theme.Dark));
     setAnonymousGame();
     setAnonymousHistoric();
+    setAnonymousDeckCollection();
   };
 
   const formatterClb: FormatFunction | undefined = (value, format, lng): string => {

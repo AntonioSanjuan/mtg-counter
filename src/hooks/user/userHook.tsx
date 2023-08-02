@@ -47,10 +47,11 @@ export function useUser() {
     userSettings: FirebaseUserSettingsDto,
     gameId: string,
     historicId: string,
+    deckCollectionId: string,
     userName: string,
   ): Promise<any> => {
     setLoading(true);
-    return userSettingsService.setUser(userSettings, gameId, historicId, userName).then(() => {
+    return userSettingsService.setUser(userSettings, gameId, historicId, deckCollectionId, userName).then(() => {
       dispatch(setUserSettingsAction(userSettings, userName));
       setLoading(false);
       setError(false);

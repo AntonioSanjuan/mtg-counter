@@ -18,6 +18,9 @@ import { HistoricGamesState } from '../../state/historicGames/models/appHistoric
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { IError } from '../../models/internal/commons/error.model';
 import { ErrorAdapter } from '../../adapters/error/error.adapter';
+import { DeckCollectionState } from '../../state/deckCollection/models/appDeckCollection.state';
+import { selectDeckCollection } from '../../state/deckCollection/deckCollection.selectors';
+import { useDeckCollection } from '../deckCollection/deckCollectionHook';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -27,9 +30,11 @@ export function useAuth() {
   const { existsUserWithUserName, setUser } = useUser();
   const { setGame } = useCurrentGame();
   const { setHistoric } = useHistoricGames();
+  const { setDeckCollection } = useDeckCollection();
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const gameSettings = useAppSelector<GameState>(selectGame);
   const historicGames = useAppSelector<HistoricGamesState>(selectHistoricGames);
+  const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
 
   const setupInitialDataIfRequired = async (user: UserCredential, userName: string) => {
     const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
@@ -37,10 +42,12 @@ export function useAuth() {
     if (isNewUser) {
       const newGame = await setGame(gameSettings);
       const newHistoricGames = await setHistoric(historicGames);
+      const newDeckCollection = await setDeckCollection(deckCollection);
       await setUser(
         userSettings as FirebaseUserSettingsDto,
         newGame.id as string,
         newHistoricGames.id,
+        newDeckCollection.id,
         userName,
       );
     }

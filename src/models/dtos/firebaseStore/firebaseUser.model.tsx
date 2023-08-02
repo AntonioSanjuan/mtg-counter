@@ -9,5 +9,6 @@ export interface FirebaseUserDto {
     userSettings: FirebaseUserSettingsDto
     userName: string,
     currentGame: any;
+    deckCollection: any;
     historicGames: any;
 }

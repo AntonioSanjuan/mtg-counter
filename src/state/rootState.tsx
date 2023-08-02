@@ -8,12 +8,15 @@ import { layoutReducer } from './layout/layout.reducer';
 import { LayoutState } from './layout/models/appLayout.state';
 import { UserState } from './user/models/appUser.state';
 import { userReducer } from './user/user.reducer';
+import DeckCollectionReducer from './deckCollection/deckCollection.reducer';
+import { DeckCollectionState } from './deckCollection/models/appDeckCollection.state';
 
 export interface AppRootState {
     user: UserState;
     layout: LayoutState;
     game: GameState;
     historicGames: HistoricGamesState;
+    deckCollection: DeckCollectionState;
 }
 
 export const combinedReducers = combineReducers({
@@ -21,6 +24,8 @@ export const combinedReducers = combineReducers({
   layout: layoutReducer,
   game: gameReducer,
   historicGames: historicGamesReducer,
+  deckCollection: DeckCollectionReducer,
+
 });
 
 export const store = createStore(

@@ -60,8 +60,8 @@ describe('PlayerDetails', () => {
       </Provider>,
     );
 
-    const loginButton = screen.getByRole('button', { name: 'Save details' });
-    expect(loginButton).toBeDisabled();
+    const saveDetailsButton = screen.getByRole('button', { name: 'Save details' });
+    expect(saveDetailsButton).toBeDisabled();
 
   });
 
@@ -87,8 +87,8 @@ describe('PlayerDetails', () => {
       </Provider>,
     );
 
-    const loginButton = screen.getByRole('button', { name: 'Save details' });
-    expect(loginButton).toBeDisabled();
+    const saveDetailsButton = screen.getByRole('button', { name: 'Save details' });
+    expect(saveDetailsButton).toBeDisabled();
 
     const deckNameInput = screen.getByPlaceholderText(/Pium! Pium!/i);
 
@@ -96,7 +96,7 @@ describe('PlayerDetails', () => {
         fireEvent.change(deckNameInput, { target: { value: 'testDeckName' } });    
     });
 
-    expect(loginButton).not.toBeDisabled();
+    expect(saveDetailsButton).not.toBeDisabled();
   });
 
   it('form should be filled with playerDetails data', async () => {
@@ -134,7 +134,7 @@ describe('PlayerDetails', () => {
       </Provider>,
     );
 
-    const loginButton = screen.getByRole('button', { name: 'Save details' });
+    const saveDetailsButton = screen.getByRole('button', { name: 'Save details' });
 
     const deckNameInput = screen.getByPlaceholderText(/Pium! Pium!/i);
 
@@ -143,7 +143,7 @@ describe('PlayerDetails', () => {
     });
 
     await act(async () => {
-      loginButton.click()
+      saveDetailsButton.click()
     });
 
     const sut: PlayerDetailsModel = {

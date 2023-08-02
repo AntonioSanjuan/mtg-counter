@@ -10,6 +10,7 @@ import { AlertContent } from '../../state/layout/models/appLayout.state';
 import Notification from '../../components/common/notification/notification';
 import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
 import GameRestart from '../../components/common/gameRestart/gameRestart';
+import AddDeckToCollection from '../../components/common/addDeckToCollection/addDeckToCollection';
 
 export function useAlert() {
   const dispatch = useAppDispatch();
@@ -34,6 +35,9 @@ export function useAlert() {
         break;
       case DynamicAlertTypes.GameRestart:
         MyComponent = GameRestart;
+        break;
+      case DynamicAlertTypes.AddDeckToCollection:
+        MyComponent = AddDeckToCollection;
         break;
       default:
         break;

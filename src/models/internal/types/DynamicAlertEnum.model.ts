@@ -3,5 +3,6 @@ export enum DynamicAlertTypes {
     ProfileSettings = 'ProfileSettings',
     GameSettings = 'GameSettings',
     GameRestart = 'GameRestart',
+    AddDeckToCollection = 'AddDeckToCollection',
     PlayerDetails = 'PlayerDetails'
 }

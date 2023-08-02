@@ -79,7 +79,7 @@ describe('<useUser />', () => {
     const { result } = renderHook(() => useUser(), { wrapper });
 
     await act(async () => {
-      await result.current.setUser(inputSettings, 'gameId', 'historicId', 'username');
+      await result.current.setUser(inputSettings, 'gameId', 'historicId', 'deckCollectionId', 'username');
     });
 
     expect(userServiceMock.setUserSpy).toHaveBeenCalled();

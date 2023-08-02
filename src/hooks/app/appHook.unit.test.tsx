@@ -7,11 +7,14 @@ import * as userhooks from '../user/userHook';
 import * as useHistoricGames from '../historicGames/historicGamesHook';
 import * as useWakeLock from '../wakeLock/wakeLockHook';
 import * as currentGamehooks from '../currentGame/currentGameHook';
+import * as useDeckCollection from '../deckCollection/deckCollectionHook'
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import { useApp } from './appHook';
 import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
 import * as mock_useWakeLock from '../wakeLock/wakeLockHook.mock';
 import * as mock_useUser from '../user/userHook.mock';
+import * as mock_useDeckCollection from '../deckCollection/deckCollectionHook.mock';
+import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import { setUserAuthAction, setUserSettingsAction, unsetUserAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 import { createJsDomMatchMedia } from '../../utils/testsUtils/jsDomUnsupportedProps.util';
@@ -19,7 +22,6 @@ import { Theme } from '../../models/internal/types/ThemeEnum.model';
 import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
-import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 
 describe('<useApp />', () => {
   let useAppStore: any;
@@ -54,9 +56,13 @@ describe('<useApp />', () => {
     jest.spyOn(useWakeLock, 'useWakeLock')
       .mockImplementation(mock_useWakeLock.mock)
 
+    jest.spyOn(useDeckCollection, 'useDeckCollection')
+      .mockImplementation(mock_useDeckCollection.mock)
+
     mock_useCurrentGame.initializeMock()
     mock_useUser.initializeMock()
     mock_useHistoricGames.initializeMock()
+    mock_useDeckCollection.initializeMock()
   });
 
   afterEach(() => {
@@ -121,6 +127,7 @@ describe('<useApp />', () => {
     expect(mock_useUser.mock().getUser).toHaveBeenCalled()
     expect(mock_useCurrentGame.mock().getGame).toHaveBeenCalled()
     expect(mock_useHistoricGames.mock().getHistoric).toHaveBeenCalled()
+    expect(mock_useDeckCollection.mock().getDeckCollection).toHaveBeenCalled()
   });
 
 
@@ -137,5 +144,6 @@ describe('<useApp />', () => {
      expect(useAppDispatchMockResponse).toHaveBeenCalledWith(unsetUserAction());
      expect(mock_useUser.mock().setAnonymousUser).toHaveBeenCalled()
      expect(mock_useCurrentGame.mock().setAnonymousGame).toHaveBeenCalled()
+     expect(mock_useDeckCollection.mock().setAnonymousDeckCollection).toHaveBeenCalled()
   });
 });
