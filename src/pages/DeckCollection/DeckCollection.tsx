@@ -5,6 +5,7 @@ import { DeckCollectionState } from '../../state/deckCollection/models/appDeckCo
 import { FirebaseDeckDto } from '../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 import { useAlert } from '../../hooks/alert/alertHook';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
+import DeckInfo from '../../components/DeckInfo/DeckInfo';
 
 function DeckCollectionPage() {
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
@@ -31,7 +32,7 @@ function DeckCollectionPage() {
         <p>No decks</p>
       )}
       {deckCollection.decks.map((deck: FirebaseDeckDto) => (
-        <p>{deck.name}</p>
+        <DeckInfo key={deck.name} deck={deck} />
       ))}
     </div>
   );
