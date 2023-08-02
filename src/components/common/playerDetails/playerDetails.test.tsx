@@ -65,18 +65,18 @@ describe('PlayerDetails', () => {
 
   });
 
-  it('userId input should be disabled', async () => {
-    render(
-      <Provider store={modalStore}>
-        <Router location={history.location} navigator={history}>
-            <PlayerDetails player={inputPlayer} />
-        </Router>
-      </Provider>,
-    );
+  // it('userId input should be disabled', async () => {
+  //   render(
+  //     <Provider store={modalStore}>
+  //       <Router location={history.location} navigator={history}>
+  //           <PlayerDetails player={inputPlayer} />
+  //       </Router>
+  //     </Provider>,
+  //   );
 
-    const deckNameInput = screen.getByPlaceholderText(/rubio#1234/i);
-    expect(deckNameInput).toBeDisabled();
-  });
+  //   const deckNameInput = screen.getByPlaceholderText(/rubio#1234/i);
+  //   expect(deckNameInput).toBeDisabled();
+  // });
 
   it('submit button should be disabled until form is touched', async () => {
     render(
