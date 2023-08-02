@@ -13,13 +13,13 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
 
   const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
     initialValues: {
-      userId: player.userId ?? '',
+      // userId: player.userId ?? '',
       name: player.name ?? '',
       deckName: player.deckName ?? '',
     },
     validationSchema: Yup.object({
-      userId: Yup.string().test('VALID', 'Error!', async () => Promise.resolve(false)),
-      name: Yup.string().required(),
+      // userId: Yup.string().test('VALID', 'Error!', async () => Promise.resolve(false)),
+      name: Yup.string(),
       deckName: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
@@ -37,7 +37,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
   return (
     <div className="PlayerDetails_MainContainer">
       <form onSubmit={formik.handleSubmit}>
-        <div className="form-floating">
+        {/* <div className="form-floating">
 
           <label htmlFor="userId">
             userId
@@ -70,7 +70,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
           formik.touched.userId && formik.errors.userId
           && <span className="app_font_error">{formik.errors.userId}</span>
         }
-        </div>
+        </div> */}
         <div className="form-floating">
 
           <label htmlFor="name">

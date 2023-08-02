@@ -256,7 +256,7 @@ describe('<usePlayer />', () => {
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
     const playerDetails: PlayerDetailsModel = {
-      userId: 'testUserId',
+      // userId: 'testUserId',
       name: 'testName',
       deckName: 'testDeckName'
     }
@@ -273,7 +273,7 @@ describe('<usePlayer />', () => {
     const createdAtSut = new Date()
     
     const targetPlayerDetails: PlayerDetailsModel = {
-      userId: 'testUserId',
+      // userId: 'testUserId',
       name: 'testName',
       deckName: 'testDeckName'
     }    
