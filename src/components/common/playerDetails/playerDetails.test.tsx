@@ -149,7 +149,7 @@ describe('PlayerDetails', () => {
     const sut: PlayerDetailsModel = {
       deckName: playerDeckName,
       name: "",
-      // userId: ""
+      userId: ""
     }
     expect(mock_usePlayer.mock().updatePlayerDetails).toHaveBeenCalledWith(sut)
 

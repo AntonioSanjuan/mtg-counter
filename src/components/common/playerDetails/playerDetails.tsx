@@ -7,7 +7,9 @@ import { PlayerDetailsModel } from '../../../models/internal/models/playerDetail
 import { useAlert } from '../../../hooks/alert/alertHook';
 import SCPlayerDetails from './playerDetails.style';
 import Chip from '../chip/chip';
-import PlayerDetailsOwnerForm from '../playerDetailsOwnerForm/playerDetailsOwnerForm';
+import PlayerOwnerDetailsForm from '../playerOwnerDetailsForm/playerOwnerDetailsForm';
+import { auth } from '../../../utils/firebase.util';
+import PlayerGuestDetailsForm from '../playerGuestDetailsForm/playerGuestDetailsForm';
 
 function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
   const { updatePlayerDetails } = usePlayer(player);
@@ -16,37 +18,34 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
 
   const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
     initialValues: {
-      // userId: player.userId ?? '',
+      userId: player.userId ?? null,
       name: player.name ?? '',
       deckName: player.deckName ?? '',
     },
     validationSchema: Yup.object({
-      // userId: Yup.string().test('VALID', 'Error!', async () => Promise.resolve(false)),
+      userId: Yup.string().nullable(),
       name: Yup.string(),
       deckName: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
       resetForm();
-      handleSubmit(values).then(() => {
+      savePlayerDetails(values).then(() => {
         closeAlert();
       });
     },
   });
 
-  const handleSubmit = async (form: PlayerDetailsModel) => {
+  const savePlayerDetails = async (form: PlayerDetailsModel) => {
     await updatePlayerDetails(form);
   };
 
   const getPlayerDetailsForm = (): JSX.Element => {
-    if (player.owner && ) {
-      return <PlayerDetailsOwnerForm formik={formik} />;
-    } if (player.userId) {
-      // to-do
-      return <PlayerDetailsOwnerForm formik={formik} />;
+    if (auth.currentUser && player.owner) {
+      return <PlayerOwnerDetailsForm formik={formik} />;
     }
-    // to-do
-    return <PlayerDetailsOwnerForm formik={formik} />;
+    return <PlayerGuestDetailsForm formik={formik} save={savePlayerDetails} />;
   };
+
   return (
     <SCPlayerDetails>
       <div className="PlayerDetails_Header">
@@ -55,91 +54,6 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
         </Chip>
       </div>
       {getPlayerDetailsForm()}
-      {/* <form onSubmit={formik.handleSubmit}>
-        {/* <div className="form-floating">
-
-          <label htmlFor="userId">
-            userId
-            <div className="PlayerDetails_UserIdContainer">
-              <input
-                type="text"
-                id="userId"
-                name="userId"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.userId as string}
-                // disabled
-                className="form-control"
-                placeholder="rubio#1234"
-              />
-              <button
-                type="button"
-                aria-label="configButton"
-                className="btn btn-link Player_ConfigButton"
-                onClick={() => {
-                  // setIsPlayerConfigOpened(!isPlayerConfigOpened);
-                }}
-              >
-                <i className="bi bi-gear-fill" />
-              </button>
-            </div>
-          </label>
-
-          {
-          formik.touched.userId && formik.errors.userId
-          && <span className="app_font_error">{formik.errors.userId}</span>
-        }
-        </div> */}
-      {/* <div className="form-floating">
-
-          <label htmlFor="name">
-            Player name
-            <input
-              type="text"
-              id="name"
-              name="name"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.name}
-              className="form-control"
-              placeholder="rubio"
-            />
-          </label>
-          {
-          formik.touched.name && formik.errors.name
-          && <span className="app_font_error">{formik.errors.name}</span>
-        }
-        </div>
-        <div className="form-floating">
-
-          <label htmlFor="deckName">
-            Deck name
-            <input
-              type="text"
-              id="deckName"
-              name="deckName"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.deckName}
-              className="form-control"
-              placeholder="Pium! Pium!"
-            />
-          </label>
-          {
-          formik.touched.deckName && formik.errors.deckName
-          && <span className="app_font_error">{formik.errors.deckName}</span>
-        }
-        </div>
-        <div>
-          <button
-            disabled={!formik.dirty || !formik.isValid}
-            className="btn btn-primary w-100"
-            type="submit"
-          >
-            Save details
-          </button>
-        </div>
-      </form> } */}
     </SCPlayerDetails>
 
   );

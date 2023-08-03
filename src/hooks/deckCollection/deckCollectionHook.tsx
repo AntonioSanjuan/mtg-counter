@@ -12,10 +12,10 @@ export function useDeckCollection() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const getDeckCollection = async (historicId: string) => {
+  const getDeckCollection = async (deckCollectionId: string) => {
     setLoading(true);
 
-    return deckCollectionService.getDeckCollection(historicId)
+    return deckCollectionService.getDeckCollection(deckCollectionId)
       .then(async (deckCollectionResp) => {
         const deckCollectionData = deckCollectionResp.data() as FirebaseDeckCollectionDto;
 

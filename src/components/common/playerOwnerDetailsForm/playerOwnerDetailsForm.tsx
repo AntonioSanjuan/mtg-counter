@@ -5,7 +5,7 @@ import { DeckCollectionState } from '../../../state/deckCollection/models/appDec
 import { selectDeckCollection } from '../../../state/deckCollection/deckCollection.selectors';
 import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 
-function PlayerDetailsOwnerForm(
+function PlayerOwnerDetailsForm(
   { formik }:
   { formik: FormikProps<PlayerDetailsModel>},
 ) {
@@ -71,4 +71,4 @@ function PlayerDetailsOwnerForm(
 
   );
 }
-export default PlayerDetailsOwnerForm;
+export default PlayerOwnerDetailsForm;
