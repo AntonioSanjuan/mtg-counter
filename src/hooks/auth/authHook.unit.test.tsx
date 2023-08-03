@@ -19,6 +19,9 @@ import { Language } from '../../models/internal/types/LanguageEnum.model';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 import { getAdditionalUserInfo } from 'firebase/auth';
 import * as authFirebase from 'firebase/auth';
+import { setGameAction } from '../../state/game/game.actions';
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
+import { mapGameOwnerPlayerUserName } from '../../utils/mappers/gameMappers/gameMapper';
 
 describe('<useAuth />', () => {
   let useAuthStore: any;
@@ -226,6 +229,31 @@ describe('<useAuth />', () => {
     });
 
     expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
+  });
+
+  it('signUp should request setGameSettings hook function with user Player', async () => {
+    const userNameSut = 'userNameTest';
+    
+    (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
+      isNewUser: true
+    })
+
+    const newGame = getNewGame()
+    await act(async () => {
+      await useAuthStore.dispatch(setGameAction(newGame));
+    });
+
+    const { result } = renderHook(() => useAuth(), { wrapper });
+
+    expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
+
+    await act(async () => {
+      await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
+    });
+
+    const outputGame = mapGameOwnerPlayerUserName(newGame, userNameSut)
+
+    expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalledWith(outputGame);
   });
 
   it('signUp should request existsUserWithUserName hook function', async () => {

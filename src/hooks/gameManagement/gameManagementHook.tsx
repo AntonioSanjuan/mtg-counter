@@ -59,7 +59,7 @@ export function useGameManagement() {
     const newHistoric: HistoricGamesState = { ...historicGames };
     newHistoric.games.push(getFinishedGame(game));
 
-    updateHistoric(historicGames.id, newHistoric);
+    await updateHistoric(historicGames.id, newHistoric);
   };
 
   return {

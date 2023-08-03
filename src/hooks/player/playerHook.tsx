@@ -6,8 +6,10 @@ import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.m
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
+import { selectUserName } from '../../state/user/user.selectors';
+import { auth } from '../../utils/firebase.util';
 import {
-  mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner, mapPlayerWinner,
+  mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner, mapPlayerUserId, mapPlayerWinner,
 } from '../../utils/mappers/playersMappers/playersMappers';
 import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAppSelector } from '../state/appStateHook';
@@ -15,6 +17,7 @@ import { useAppSelector } from '../state/appStateHook';
 export function usePlayer(player: FirebasePlayerDto) {
   const { updateGame } = useCurrentGame();
   const game = useAppSelector<GameState>(selectGame);
+  const userName = useAppSelector<string>(selectUserName);
 
   const opponents = game.board.players.filter((boardPlayers) => boardPlayers.id !== player.id);
 
@@ -36,10 +39,18 @@ export function usePlayer(player: FirebasePlayerDto) {
   };
 
   const updatePlayerOwner = async () => {
-    const newPlayers = mapPlayerOwner(
+    let newPlayers = mapPlayerOwner(
       game.board.players,
       player.id,
     );
+
+    if (auth.currentUser) {
+      newPlayers = mapPlayerUserId(
+        newPlayers,
+        player.id,
+        userName,
+      );
+    }
     await updatePlayers(newPlayers);
   };
 

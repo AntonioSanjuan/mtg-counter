@@ -1,0 +1,15 @@
+.PlayerDetails_MainContainer {
+    form > div {
+    padding-bottom: 10px;
+  }
+  
+  .form-floating>label {
+    position: inherit;
+    padding: 0;
+    width: 100%;
+    pointer-events: auto;
+  }
+  .PlayerDetails_UserIdContainer {
+    display: flex;
+  }
+}

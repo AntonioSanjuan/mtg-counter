@@ -24,6 +24,26 @@ export const mapPlayerOwner = (
   return targetPlayer;
 });
 
+export const mapPlayerUserId = (
+  players: FirebasePlayerDto[],
+  playerIdToUpdate: string,
+  userName: string,
+): FirebasePlayerDto[] => players.map((player) => {
+  if (player.id === playerIdToUpdate) {
+    const targetPlayer = { ...player };
+    targetPlayer.userId = userName;
+    targetPlayer.name = userName;
+    return targetPlayer;
+  } if (player.userId === userName) {
+    const targetPlayer = { ...player };
+    targetPlayer.userId = null;
+    targetPlayer.name = '';
+    return targetPlayer;
+  }
+
+  return player;
+});
+
 export const mapPlayerWinner = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,

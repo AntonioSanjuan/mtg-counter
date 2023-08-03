@@ -11,10 +11,14 @@ import { usePlayer } from './playerHook';
 import { getDefaultPlayers } from '../../utils/factories/playerFactory/playerFactory';
 import { PlayerColors } from '../../models/internal/types/PlayerColorEnum.model';
 import { setGameAction } from '../../state/game/game.actions';
-import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner, mapPlayerWinner } from '../../utils/mappers/playersMappers/playersMappers';
+import { mapPlayerColor, mapPlayerCounter, mapPlayerDetails, mapPlayerOwner, mapPlayerUserId, mapPlayerWinner } from '../../utils/mappers/playersMappers/playersMappers';
 import { GameState } from '../../state/game/models/appGame.state';
 import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
 import { PlayerDetailsModel } from '../../models/internal/models/playerDetails.model';
+import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
+import { User } from 'firebase/auth';
+import { setUserSettingsAction } from '../../state/user/user.actions';
+import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;
@@ -44,63 +48,63 @@ describe('<usePlayer />', () => {
     mock_useCurrentGame.initializeMock();
   });
 
-  // it('should create', () => {
-  //   const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+  it('should create', () => {
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
-  //   expect(result.current).toBeDefined();
-  // });
+    expect(result.current).toBeDefined();
+  });
 
-  // it('updatePlayerCounter should request updateGameSettings', async () => {
-  //   expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
+  it('updatePlayerCounter should request updateGameSettings', async () => {
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
-  //   const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
-  //   const playerCounter: FirebaseCounterDto = usePlayerInputplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
+    const playerCounter: FirebaseCounterDto = usePlayerInputplayer.counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
     
-  //   await act(async () => {
-  //     await result.current.updatePlayerCounter(playerCounter, 25);
-  //   });
+    await act(async () => {
+      await result.current.updatePlayerCounter(playerCounter, 25);
+    });
     
-  //   expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
-  // });
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+  });
 
-  // it('updatePlayerOwner should request updateGameSettings', async () => {
-  //   expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
+  it('updatePlayerOwner should request updateGameSettings', async () => {
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
-  //   const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
     
-  //   await act(async () => {
-  //     await result.current.updatePlayerOwner();
-  //   });
+    await act(async () => {
+      await result.current.updatePlayerOwner();
+    });
     
-  //   expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
-  // });
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+  });
 
-  // it('updatePlayerWinner should request updateGameSettings', async () => {
-  //   expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
+  it('updatePlayerWinner should request updateGameSettings', async () => {
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
-  //   const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
     
-  //   await act(async () => {
-  //     await result.current.updatePlayerWinner();
-  //   });
+    await act(async () => {
+      await result.current.updatePlayerWinner();
+    });
     
-  //   expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
-  // });
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+  });
 
-  // it('updatePlayerColor should request updateGameSettings', async () => {
-  //   expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
+  it('updatePlayerColor should request updateGameSettings', async () => {
+    expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
-  //   const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
-  //   const playerColor: PlayerColors = PlayerColors.black
+    const playerColor: PlayerColors = PlayerColors.black
     
-  //   await act(async () => {
-  //     await result.current.updatePlayerColor(playerColor);
-  //   });
+    await act(async () => {
+      await result.current.updatePlayerColor(playerColor);
+    });
     
-  //   expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
-  // });
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+  });
 
   it('updatePlayerCounter should request updateGameSettings with the player counter updated', async () => {
     const targetCounterType = 'Life'
@@ -178,7 +182,7 @@ describe('<usePlayer />', () => {
     expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
   });
 
-  it('updatePlayerOwner should request updateGameSettings with the players ownser updated', async () => {
+  it('updatePlayerOwner should request updateGameSettings with the players owner updated', async () => {
     const createdAtSut = new Date();
 
     const inputGameSettings: GameState = { 
@@ -198,6 +202,48 @@ describe('<usePlayer />', () => {
       board: {
         ...inputGameSettings.board,
         players: mapPlayerOwner(usePlayerplayers, usePlayerInputplayer.id)
+      }
+    }
+
+    const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
+
+    await act(async () => {
+      usePlayerStore.dispatch(setGameAction(inputGameSettings));
+    });
+
+    await act(async () => {
+      await result.current.updatePlayerOwner();
+    });
+
+    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith( inputGameSettings.id, outputGameSettings);
+  });
+
+  it('updatePlayerOwner should request updateGameSettings with the player userId updated if user is logged', async () => {
+    mockFirebaseAuthUser({} as User)
+    
+    const userIdTest = 'userNameTest'
+    usePlayerStore.dispatch(setUserSettingsAction({} as FirebaseUserSettingsDto, userIdTest));
+    const createdAtSut = new Date();
+
+    const inputGameSettings: GameState = { 
+      id: 'testId',
+      finished: false,
+      createdAt: createdAtSut,
+      finishAt: undefined,
+      board: {
+        players: usePlayerplayers,
+        initialLifes: usePlayerPlayersInitialLifes,
+        numberOfPlayers: usePlayerplayers.length
+      }
+    };
+
+    let newOutputPlayers = mapPlayerOwner(usePlayerplayers, usePlayerInputplayer.id)
+    newOutputPlayers = mapPlayerUserId(newOutputPlayers, usePlayerInputplayer.id, userIdTest)
+    const outputGameSettings: GameState = {
+      ...inputGameSettings,
+      board: {
+        ...inputGameSettings.board,
+        players: newOutputPlayers
       }
     }
 

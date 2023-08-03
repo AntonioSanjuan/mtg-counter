@@ -21,6 +21,8 @@ import { ErrorAdapter } from '../../adapters/error/error.adapter';
 import { DeckCollectionState } from '../../state/deckCollection/models/appDeckCollection.state';
 import { selectDeckCollection } from '../../state/deckCollection/deckCollection.selectors';
 import { useDeckCollection } from '../deckCollection/deckCollectionHook';
+import { mapPlayerUserId } from '../../utils/mappers/playersMappers/playersMappers';
+import { mapGameOwnerPlayerUserName } from '../../utils/mappers/gameMappers/gameMapper';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
@@ -40,7 +42,9 @@ export function useAuth() {
     const { isNewUser } = getAdditionalUserInfo(user) as AdditionalUserInfo;
 
     if (isNewUser) {
-      const newGame = await setGame(gameSettings);
+      const gameSettingsModified: GameState = mapGameOwnerPlayerUserName(gameSettings, userName);
+
+      const newGame = await setGame(gameSettingsModified);
       const newHistoricGames = await setHistoric(historicGames);
       const newDeckCollection = await setDeckCollection(deckCollection);
       await setUser(
