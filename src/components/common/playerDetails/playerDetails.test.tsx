@@ -17,7 +17,7 @@ import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEn
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 
 describe('PlayerDetails', () => {
-  let modalStore: any;
+  let playerDetailsStore: any;
   let history: any;
   let inputPlayer: FirebasePlayerDto;
   const usePlayerPlayersInitialLifes = 40;
@@ -27,7 +27,7 @@ describe('PlayerDetails', () => {
     const usePlayerplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, NumberOfPlayers.Two);
     inputPlayer = usePlayerplayers[0];
 
-    modalStore = createTestStore();
+    playerDetailsStore = createTestStore();
     history = createMemoryHistory();
 
     jest.spyOn(alertHooks, 'useAlert')
@@ -41,7 +41,7 @@ describe('PlayerDetails', () => {
 
   it('should create', () => {
     const { container } = render(
-      <Provider store={modalStore}>
+      <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
           <PlayerDetails player={inputPlayer} />
         </Router>
@@ -53,7 +53,7 @@ describe('PlayerDetails', () => {
 
   it('initially submit button should be disabled', async () => {
     render(
-      <Provider store={modalStore}>
+      <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
         <PlayerDetails player={inputPlayer} />
         </Router>
@@ -80,7 +80,7 @@ describe('PlayerDetails', () => {
 
   it('submit button should be disabled until form is touched', async () => {
     render(
-      <Provider store={modalStore}>
+      <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
         <PlayerDetails player={inputPlayer} />
         </Router>
@@ -110,7 +110,7 @@ describe('PlayerDetails', () => {
         deckName: playerDeckNameSut
     }
     render(
-      <Provider store={modalStore}>
+      <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
           <PlayerDetails player={playerSut} />
         </Router>
@@ -127,7 +127,7 @@ describe('PlayerDetails', () => {
   it('submit should request updatePlayerDetails', async () => {
     const playerDeckName = 'testDeckName'
     render(
-      <Provider store={modalStore}>
+      <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
           <PlayerDetails player={inputPlayer} />
         </Router>

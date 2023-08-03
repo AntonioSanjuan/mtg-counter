@@ -1,14 +1,17 @@
 import { FormikProps, useFormik } from 'formik';
 import * as Yup from 'yup';
-import './playerDetails.scss';
 
 import { usePlayer } from '../../../hooks/player/playerHook';
 import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { useAlert } from '../../../hooks/alert/alertHook';
+import SCPlayerDetails from './playerDetails.style';
+import Chip from '../chip/chip';
+import PlayerDetailsOwnerForm from '../playerDetailsOwnerForm/playerDetailsOwnerForm';
 
 function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
   const { updatePlayerDetails } = usePlayer(player);
+
   const { closeAlert } = useAlert();
 
   const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
@@ -34,9 +37,25 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
     await updatePlayerDetails(form);
   };
 
+  const getPlayerDetailsForm = (): JSX.Element => {
+    if (player.owner && ) {
+      return <PlayerDetailsOwnerForm formik={formik} />;
+    } if (player.userId) {
+      // to-do
+      return <PlayerDetailsOwnerForm formik={formik} />;
+    }
+    // to-do
+    return <PlayerDetailsOwnerForm formik={formik} />;
+  };
   return (
-    <div className="PlayerDetails_MainContainer">
-      <form onSubmit={formik.handleSubmit}>
+    <SCPlayerDetails>
+      <div className="PlayerDetails_Header">
+        <Chip backgroundColor={player.color}>
+          <p className="app_font_l app_font_noMargin">{player?.name || '-'}</p>
+        </Chip>
+      </div>
+      {getPlayerDetailsForm()}
+      {/* <form onSubmit={formik.handleSubmit}>
         {/* <div className="form-floating">
 
           <label htmlFor="userId">
@@ -71,7 +90,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
           && <span className="app_font_error">{formik.errors.userId}</span>
         }
         </div> */}
-        <div className="form-floating">
+      {/* <div className="form-floating">
 
           <label htmlFor="name">
             Player name
@@ -120,8 +139,8 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
             Save details
           </button>
         </div>
-      </form>
-    </div>
+      </form> } */}
+    </SCPlayerDetails>
 
   );
 }
