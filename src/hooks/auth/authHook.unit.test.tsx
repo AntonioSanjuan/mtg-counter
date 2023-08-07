@@ -6,11 +6,13 @@ import { useAuth } from './authHook';
 import * as appStatehooks from '../state/appStateHook';
 import * as mock_firebaseAuthService from '../../services/firebaseAuth/firebaseAuth.service.mock';
 import * as mock_useCurrentGame from '../currentGame/currentGameHook.mock';
+import * as mock_useUsers from '../users/usersHook.mock'
 import * as mock_useHistoricGames from '../historicGames/historicGamesHook.mock';
 import * as mock_useDeckCollection from '../deckCollection/deckCollectionHook.mock';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useUser from '../user/userHook.mock';
 import * as useUser from '../user/userHook';
+import * as useUsers from '../users/usersHook'
 import * as useCurrentGame from '../currentGame/currentGameHook';
 import * as useHistoricGames from '../historicGames/historicGamesHook';
 import * as useDeckCollection from '../deckCollection/deckCollectionHook';
@@ -43,6 +45,9 @@ describe('<useAuth />', () => {
     jest.spyOn(useUser, 'useUser')
       .mockImplementation(mock_useUser.mock);
 
+    jest.spyOn(useUsers, 'useUsers')
+      .mockImplementation(mock_useUsers.mock);
+
     jest.spyOn(useCurrentGame, 'useCurrentGame')
       .mockImplementation(mock_useCurrentGame.mock)
 
@@ -53,6 +58,7 @@ describe('<useAuth />', () => {
       .mockImplementation(mock_useDeckCollection.mock)
 
     mock_firebaseAuthService.initializeMock();
+    mock_useUsers.initializeMock()
     mock_useCurrentGame.initializeMock();
     mock_useHistoricGames.initializeMock();
     mock_useDeckCollection.initializeMock();
@@ -188,7 +194,7 @@ describe('<useAuth />', () => {
     expect(mock_firebaseAuthService.firebaseSignUpSpy).toHaveBeenCalledWith(userEmail, userPass);
   });
 
-  it('signUp should request setUserSettings hook function', async () => {
+  it('signUp should request setUser hook function', async () => {
     const sutGameSettingsId = 'testGameSettingsId';
     const sutHistoricId = 'testHistoricGamesId';
     const sutDeckCollectionId = 'testDeckCollectionId';
@@ -214,7 +220,7 @@ describe('<useAuth />', () => {
     expect(mock_useUser.mock().setUser).toHaveBeenCalledWith(userSettings, sutGameSettingsId, sutHistoricId, sutDeckCollectionId, sutUserName );
   });
 
-  it('signUp should request setGameSettings hook function', async () => {
+  it('signUp should request setGame hook function', async () => {
     
     (getAdditionalUserInfo as jest.Mocked<any>).mockReturnValue({
       isNewUser: true
@@ -268,7 +274,7 @@ describe('<useAuth />', () => {
       await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
     });
 
-    expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
+    expect(mock_useUsers.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut)
   });
 
   it('if signUp existsUserWithUserName returns true, should not set user', async () => {
@@ -278,7 +284,8 @@ describe('<useAuth />', () => {
 
     expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
-    mock_useUser.mock().existsUserWithUserName.mockResolvedValue(true)
+    mock_useUsers.mock().existsUserWithUserName.mockResolvedValue(true)
+
 
     try {
       await act(async () => {
@@ -286,7 +293,7 @@ describe('<useAuth />', () => {
       })
     } catch {
       expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
-      expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
+      expect(mock_useUsers.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut)
     }
   });
 
@@ -301,12 +308,13 @@ describe('<useAuth />', () => {
 
     expect(mock_useCurrentGame.mock().setGame).not.toHaveBeenCalled();
 
-    mock_useUser.mock().existsUserWithUserName.mockResolvedValue(false)
+    mock_useUsers.mock().existsUserWithUserName.mockResolvedValue(false)
+
 
     await act(async () => {
       await result.current.signUp({ userEmail: '', userName: userNameSut, userPassword: '' });
     })
     expect(mock_useCurrentGame.mock().setGame).toHaveBeenCalled();
-    expect(mock_useUser.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut);
+    expect(mock_useUsers.mock().existsUserWithUserName).toHaveBeenCalledWith(userNameSut)
   });
 });

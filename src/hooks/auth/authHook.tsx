@@ -23,13 +23,15 @@ import { selectDeckCollection } from '../../state/deckCollection/deckCollection.
 import { useDeckCollection } from '../deckCollection/deckCollectionHook';
 import { mapPlayerUserId } from '../../utils/mappers/playersMappers/playersMappers';
 import { mapGameOwnerPlayerUserName } from '../../utils/mappers/gameMappers/gameMapper';
+import { useUsers } from '../users/usersHook';
 
 export function useAuth() {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<IError|undefined>(undefined);
-  const { existsUserWithUserName, setUser } = useUser();
+  const { existsUserWithUserName } = useUsers();
+  const { setUser } = useUser();
   const { setGame } = useCurrentGame();
   const { setHistoric } = useHistoricGames();
   const { setDeckCollection } = useDeckCollection();

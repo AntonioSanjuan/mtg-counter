@@ -27,6 +27,6 @@ export const mock = () => {
 }
 
 export const initializeMock = () => {
-  existsUserWithUserNameSpy.mockResolvedValue(true)
+  existsUserWithUserNameSpy.mockResolvedValue(false)
   getUserWithUserNameDecksSpy.mockResolvedValue(getUserDeckCollectionResponseObj)
 }

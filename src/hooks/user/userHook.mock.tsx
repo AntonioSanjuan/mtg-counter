@@ -29,7 +29,6 @@ const setUserSpy = jest.fn();
 const updateUserSpy = jest.fn();
 const updateUserCurrentGameSpy = jest.fn();
 const setAnonymousUserSpy = jest.fn();
-const existsUserWithUserNameSpy = jest.fn()
 
 const mockUserMockResponse = {
   getUser: getUserSpy,
@@ -37,7 +36,6 @@ const mockUserMockResponse = {
   setAnonymousUser: setAnonymousUserSpy,
   updateUser: updateUserSpy,
   updateUserCurrentGame: updateUserCurrentGameSpy,
-  existsUserWithUserName: existsUserWithUserNameSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }
@@ -52,5 +50,4 @@ export const initializeMock = () => {
   setAnonymousUserSpy.mockResolvedValue(undefined)
   updateUserSpy.mockResolvedValue(getUserResponseObj)
   updateUserCurrentGameSpy.mockResolvedValue(getUserResponseObj)
-  existsUserWithUserNameSpy.mockResolvedValue(false)
 }

@@ -13,34 +13,6 @@ export function useUser() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
-  const existsUserWithUserName = async (userName: string): Promise<boolean> => {
-    setLoading(true);
-    return userSettingsService.getUserByUsername(userName)
-      .then((userResp) => {
-        setLoading(false);
-        setError(false);
-        return userResp.size > 0;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      });
-  };
-
-  const getUserWithUserName = async (userName: string): Promise<FirebaseUserDto> => {
-    setLoading(true);
-    return userSettingsService.getUserByUsername(userName)
-      .then((userResp) => {
-        setLoading(false);
-        setError(false);
-        return userResp.docs[0].data() as FirebaseUserDto;
-      }).catch((e) => {
-        setLoading(false);
-        setError(true);
-        throw e;
-      });
-  };
-
   const getUser = async (): Promise<DocumentSnapshot<DocumentData>> => {
     setLoading(true);
     return userSettingsService.getUser()
@@ -129,8 +101,6 @@ export function useUser() {
 
   return {
     getUser,
-    existsUserWithUserName,
-    getUserWithUserName,
     setUser,
     setAnonymousUser,
     updateUser,
