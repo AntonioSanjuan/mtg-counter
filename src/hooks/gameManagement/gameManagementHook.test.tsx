@@ -30,7 +30,10 @@ describe('<useGameManagement />', () => {
   let wrapper: any;
 
   const createdAtSut = new Date();
-  let useGameManagementplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, 2);
+  let useGameManagementplayers = getDefaultPlayers(
+    usePlayerPlayersInitialLifes, 
+    2
+  );
   const playerCounter: FirebaseCounterDto = useGameManagementplayers[0].counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
   useGameManagementplayers = mapPlayerCounter(useGameManagementplayers, useGameManagementplayers[0].id,
     playerCounter, 5)

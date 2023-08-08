@@ -15,7 +15,7 @@ export const getNewGame = (
   board: {
     initialLifes,
     numberOfPlayers,
-    players: getDefaultPlayers(initialLifes, numberOfPlayers),
+    players: getDefaultPlayers(initialLifes, numberOfPlayers, ''),
   },
 });
 
@@ -42,6 +42,7 @@ export const getResizedGame = (
   gameSettings: GameState,
   initialLifes: Lifes,
   numberOfPlayers: NumberOfPlayers,
+  ownerUserName: string,
 ): GameState => ({
   id: gameSettings.id,
   createdAt: new Date(),
@@ -51,7 +52,7 @@ export const getResizedGame = (
   board: {
     initialLifes,
     numberOfPlayers,
-    players: getDefaultPlayers(initialLifes, numberOfPlayers),
+    players: getDefaultPlayers(initialLifes, numberOfPlayers, ownerUserName),
   },
 });
 

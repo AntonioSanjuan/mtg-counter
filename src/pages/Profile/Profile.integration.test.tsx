@@ -17,7 +17,7 @@ describe('Profile', () => {
     profileStore = createTestStore();
     history = createMemoryHistory();
     profileStore.dispatch(
-      setUserSettingsAction({ darkMode: true, lang: 'es' } as FirebaseUserSettingsDto, 'Anonymous'),
+      setUserSettingsAction({ darkMode: true, lang: 'es' } as FirebaseUserSettingsDto, ''),
     );
   });
 

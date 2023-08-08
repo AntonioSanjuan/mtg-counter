@@ -61,8 +61,8 @@ border: ${(props) => (props.isOwner ? '5px outset var(--OwnerPlayerBackground)' 
 
 .PlayerName {
   position: absolute;
-  top: 5px;
-  left: 5px;
+  top: 10px;
+  left: 25px;
   z-index: 3;
 
   color: ${(props) => textColors[props.backgroundColor]}

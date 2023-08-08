@@ -14,6 +14,7 @@ import { act } from 'react-dom/test-utils';
 import * as useAlertHooks from '../../hooks/alert/alertHook'
 import * as mock_useAlert from '../../hooks/alert/alertHook.mock'
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
+import { NumberOfPlayers } from '../../models/internal/types/NumberOfPlayerEnum.model';
 
 describe('PlayerConfig', () => {
   let playerConfigStore: any;
@@ -25,7 +26,7 @@ describe('PlayerConfig', () => {
     playerConfigStore = createTestStore();
     history = createMemoryHistory();
 
-    inputPlayer = getDefaultPlayers(40, 1)[0];
+    inputPlayer = getDefaultPlayers(40, NumberOfPlayers.Six)[0];
 
 
     jest.spyOn(usePlayerHooks, 'usePlayer')

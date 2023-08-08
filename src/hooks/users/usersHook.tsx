@@ -24,7 +24,7 @@ export function useUsers() {
       });
   };
 
-  const getUserWithUserNameDecks = async (userName: string): Promise<DeckCollectionState> => {
+  const getUserByUserNameDecks = async (userName: string): Promise<DeckCollectionState> => {
     setLoading(true);
     return userSettingsService.getUserByUsername(userName)
       .then((userResp) => {
@@ -43,7 +43,7 @@ export function useUsers() {
 
   return {
     existsUserWithUserName,
-    getUserWithUserNameDecks,
+    getUserByUserNameDecks,
     loading,
     error,
   };

@@ -70,6 +70,7 @@ describe('GameFactory', () => {
         const inputGameSut = getNewGame();
         const inputResizedInitialLifes: Lifes = Lifes.Fourty
         const inputResizedNumberOfPlayers: NumberOfPlayers = NumberOfPlayers.Six
+        const inputGameOwnerPlayerUserName: string = 'ownerPlayerUserNameTest'
 
         inputGameSut.id = 'gameIdTest',
         inputGameSut.createdAt = new Date()
@@ -77,10 +78,16 @@ describe('GameFactory', () => {
         inputGameSut.board.players[0].color = PlayerColors.blue;
         inputGameSut.board.players[0].winner = true,
         inputGameSut.board.players[0].death = true,
-        inputGameSut.board.players[0].name = 'PlayerName0',
+        inputGameSut.board.players[0].name = inputGameOwnerPlayerUserName,
+        inputGameSut.board.players[0].userId = inputGameOwnerPlayerUserName,
         inputGameSut.board.players[0].counters.map((counter: FirebaseCounterDto) => counter.value = 0)
 
-        const resizedGame = getResizedGame(inputGameSut, inputResizedInitialLifes, inputResizedNumberOfPlayers)
+        const resizedGame = getResizedGame(
+            inputGameSut, 
+            inputResizedInitialLifes, 
+            inputResizedNumberOfPlayers, 
+            inputGameOwnerPlayerUserName
+        )
 
         expect(resizedGame.id).toEqual(inputGameSut.id)
         expect(resizedGame.createdAt).not.toBe(inputGameSut.createdAt)
@@ -93,7 +100,8 @@ describe('GameFactory', () => {
         expect(resizedGame.board.players[0].color).not.toEqual(inputGameSut.board.players[0].color)
         expect(resizedGame.board.players[0].winner).toEqual(false)
         expect(resizedGame.board.players[0].death).toEqual(false)
-        expect(resizedGame.board.players[0].name).not.toEqual(inputGameSut.board.players[0].name)
+        expect(resizedGame.board.players[0].name).toEqual(inputGameSut.board.players[0].name)
+        expect(resizedGame.board.players[0].userId).toEqual(inputGameSut.board.players[0].userId)
         expect(resizedGame.board.players[0].counters).not.toEqual(inputGameSut.board.players[0].counters)
         expect(resizedGame.board.players[0].counters.find((counter) => counter.type ==="Life")).not.toEqual(inputGameSut.board.initialLifes)
     });

@@ -10,10 +10,13 @@ function PlayerGuestLinkedDetailsForm(
   return (
 
     <form onSubmit={formik.handleSubmit}>
+      <p className="app_font_l">Configura tu perfil vinculado a un perfil</p>
+
       <div className="form-floating">
 
         <label htmlFor="name">
-          Player name
+          <p className="app_font_m app_font_noMargin">Player name</p>
+
           <input
             type="text"
             id="name"
@@ -34,7 +37,7 @@ function PlayerGuestLinkedDetailsForm(
       <div className="form-floating">
 
         <label htmlFor="deckName">
-          Deck name
+          <p className="app_font_m app_font_noMargin">Deck name</p>
           <select
             className="form-select"
             id="deckName"

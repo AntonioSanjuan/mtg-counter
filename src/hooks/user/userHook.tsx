@@ -65,7 +65,7 @@ export function useUser() {
     }
     setLoading(false);
     setError(false);
-    dispatch(setUserSettingsAction(settings, 'Anonymous'));
+    dispatch(setUserSettingsAction(settings, ''));
     return {};
   };
 
@@ -94,7 +94,7 @@ export function useUser() {
           darkMode,
           lang,
         } as FirebaseUserSettingsDto,
-        'Anonymous',
+        '',
       ),
     );
   };

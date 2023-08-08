@@ -10,11 +10,20 @@ Required<PlayerDetailsStyleProps> // What comes out of .attrs()
   {} as Required<PlayerDetailsStyleProps>
 ))`
 
+display: flex;
+flex-direction: column;
+
 .PlayerDetails_Header {
   display: flex;
   justify-content: center;
 }
 
+form {
+  margin-top: 20px;
+  >p {
+    text-align: center;
+  }
+}
 form > div {
   padding-bottom: 10px;
 }
@@ -27,6 +36,8 @@ form > div {
 }
 .PlayerDetails_UserIdContainer {
   display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
 `;

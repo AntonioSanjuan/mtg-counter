@@ -21,7 +21,6 @@ import { ErrorAdapter } from '../../adapters/error/error.adapter';
 import { DeckCollectionState } from '../../state/deckCollection/models/appDeckCollection.state';
 import { selectDeckCollection } from '../../state/deckCollection/deckCollection.selectors';
 import { useDeckCollection } from '../deckCollection/deckCollectionHook';
-import { mapPlayerUserId } from '../../utils/mappers/playersMappers/playersMappers';
 import { mapGameOwnerPlayerUserName } from '../../utils/mappers/gameMappers/gameMapper';
 import { useUsers } from '../users/usersHook';
 

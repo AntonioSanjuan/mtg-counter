@@ -4,13 +4,14 @@ import { getDefaultPlayers, getRestartedPlayerCounters } from './playerFactory';
 import { FirebaseCounterDto, FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 
 describe('PlayerFactory', () => {
+    const ownerUserName: string = 'ownerUserNameTest'
     let sutNumberOfPlayers: NumberOfPlayers
     let sutCounters: FirebaseCounterDto[] = [];
     let sutPlayers: FirebasePlayerDto[] = [];
 
     beforeEach(() => {
         sutNumberOfPlayers = NumberOfPlayers.Four;
-        sutPlayers = getDefaultPlayers(Lifes.Thirty, NumberOfPlayers.Four)
+        sutPlayers = getDefaultPlayers(Lifes.Thirty, NumberOfPlayers.Four, ownerUserName)
         sutCounters = sutPlayers[0].counters
     });
   
@@ -48,6 +49,12 @@ describe('PlayerFactory', () => {
             expect(sutPlayer.id).toBeDefined()
             expect(sutPlayer.counters.find((counter) => {return counter.type === "Life"})?.value).toEqual(Lifes.Thirty)
         })
+    });
+
+    it('getDefaultPlayers call should return first player as owner with his own ownerUserName', () => {
+        expect(sutPlayers[0].owner).toBeTruthy()
+        expect(sutPlayers[0].name).toEqual(ownerUserName)
+        expect(sutPlayers[0].userId).toEqual(ownerUserName)
     });
 
     it('getRestartedPlayerCounters call should return restarted player counters', () => {

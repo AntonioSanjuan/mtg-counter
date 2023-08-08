@@ -2,6 +2,7 @@ import { selectGame } from '../../state/game/game.selectors';
 import { GameState } from '../../state/game/models/appGame.state';
 import { selectHistoricGames } from '../../state/historicGames/historicGames.selectors';
 import { HistoricGamesState } from '../../state/historicGames/models/appHistoricGames.state';
+import { selectUserName } from '../../state/user/user.selectors';
 import {
   getFinishedGame, getNamedGame, getResizedGame, getRestartedGame,
 } from '../../utils/factories/gameFactory/gameFactory';
@@ -12,6 +13,7 @@ import { useAppSelector } from '../state/appStateHook';
 import { useUser } from '../user/userHook';
 
 export function useGameManagement() {
+  const userName = useAppSelector<string>(selectUserName);
   const gameSettings = useAppSelector<GameState>(selectGame);
   const historicGames = useAppSelector<HistoricGamesState>(selectHistoricGames);
   const {
@@ -50,6 +52,7 @@ export function useGameManagement() {
       gameSettings,
       initialLifes,
       numberOfPlayers,
+      userName,
     );
 
     await updateGame(gameSettings.id, newGame);

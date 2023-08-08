@@ -1,27 +1,19 @@
 import { FormikProps } from 'formik';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
-import { useAppSelector } from '../../../hooks/state/appStateHook';
-import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
-import { selectDeckCollection } from '../../../state/deckCollection/deckCollection.selectors';
-import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 
-function PlayerOwnerDetailsForm(
+function PlayerGuestAnonymousDetailsForm(
   { formik }:
   { formik: FormikProps<PlayerDetailsModel>},
 ) {
-  const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
-
   return (
-
     <form onSubmit={formik.handleSubmit}>
+      <p className="app_font_l">Configura tu perfil sin vincular un usuario</p>
       <div className="form-floating">
-
         <label htmlFor="name">
-          Player name
+          <p className="app_font_m app_font_noMargin">Player name</p>
           <input
             type="text"
             id="name"
-            disabled
             name="name"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -31,32 +23,29 @@ function PlayerOwnerDetailsForm(
           />
         </label>
         {
-          formik.touched.name && formik.errors.name
-          && <span className="app_font_error">{formik.errors.name}</span>
-        }
+    formik.touched.name && formik.errors.name
+    && <span className="app_font_error">{formik.errors.name}</span>
+  }
       </div>
       <div className="form-floating">
 
         <label htmlFor="deckName">
-          Deck name
-          <select
-            className="form-select"
+          <p className="app_font_m app_font_noMargin">Deck name</p>
+
+          <input
+            className="form-control"
             id="deckName"
             aria-label="deckName"
             name="deckName"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
-          >
-            {deckCollection.decks.map((deck: FirebaseDeckDto) => (
-              <option value={deck.name}>{deck.name}</option>
-            ))}
-          </select>
+          />
         </label>
         {
-          formik.touched.deckName && formik.errors.deckName
-          && <span className="app_font_error">{formik.errors.deckName}</span>
-        }
+    formik.touched.deckName && formik.errors.deckName
+    && <span className="app_font_error">{formik.errors.deckName}</span>
+  }
       </div>
       <div>
         <button
@@ -71,4 +60,5 @@ function PlayerOwnerDetailsForm(
 
   );
 }
-export default PlayerOwnerDetailsForm;
+
+export default PlayerGuestAnonymousDetailsForm;

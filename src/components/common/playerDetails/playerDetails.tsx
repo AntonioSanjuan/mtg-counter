@@ -43,7 +43,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
     if (auth.currentUser && player.owner) {
       return <PlayerOwnerDetailsForm formik={formik} />;
     }
-    return <PlayerGuestDetailsForm formik={formik} save={savePlayerDetails} />;
+    return <PlayerGuestDetailsForm formik={formik} save={savePlayerDetails} playerUserId={player.userId} />;
   };
 
   return (
@@ -53,6 +53,7 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
           <p className="app_font_l app_font_noMargin">{player?.name || '-'}</p>
         </Chip>
       </div>
+      <hr />
       {getPlayerDetailsForm()}
     </SCPlayerDetails>
 

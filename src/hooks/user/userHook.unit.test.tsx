@@ -100,7 +100,7 @@ describe('<useUser />', () => {
       await result.current.updateUser(inputSettings, "");
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, "Anonymous"));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, ""));
     expect(userServiceMock.updateUserSpy).not.toHaveBeenCalled();
   });
 
@@ -171,6 +171,6 @@ describe('<useUser />', () => {
       result.current.setAnonymousUser(Language.English, true);
     });
 
-    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, 'Anonymous'));
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setUserSettingsAction(inputSettings, ''));
   });
 });

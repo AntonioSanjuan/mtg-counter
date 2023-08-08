@@ -24,7 +24,9 @@ describe('PlayerDetails', () => {
 
   beforeEach(() => {
 
-    const usePlayerplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, NumberOfPlayers.Two);
+    const usePlayerplayers = getDefaultPlayers(
+      usePlayerPlayersInitialLifes, 
+      NumberOfPlayers.Two);
     inputPlayer = usePlayerplayers[0];
 
     playerDetailsStore = createTestStore();

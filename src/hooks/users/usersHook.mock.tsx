@@ -13,11 +13,11 @@ let loadingResponseMock: boolean = false;
 let errorResponseMock: boolean = false;
 
 const existsUserWithUserNameSpy = jest.fn();
-const getUserWithUserNameDecksSpy = jest.fn();
+const getUserByUserNameDecksSpy = jest.fn();
 
 const mockUserMockResponse = {
   existsUserWithUserName: existsUserWithUserNameSpy,
-  getUserWithUserNameDecks: getUserWithUserNameDecksSpy,
+  getUserByUserNameDecks: getUserByUserNameDecksSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }
@@ -28,5 +28,5 @@ export const mock = () => {
 
 export const initializeMock = () => {
   existsUserWithUserNameSpy.mockResolvedValue(false)
-  getUserWithUserNameDecksSpy.mockResolvedValue(getUserDeckCollectionResponseObj)
+  getUserByUserNameDecksSpy.mockResolvedValue(getUserDeckCollectionResponseObj)
 }

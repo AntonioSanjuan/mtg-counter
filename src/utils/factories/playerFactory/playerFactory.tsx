@@ -45,12 +45,13 @@ const getDefaultPlayer = (
   playerId: string,
   initialLifes: Lifes,
   opponentsId: string[],
-  firstPlayer: boolean,
+  ownerPlayer: boolean,
+  ownerUserName?: string,
 ): FirebasePlayerDto => ({
   id: playerId,
-  name: '',
-  userId: null,
-  owner: firstPlayer,
+  name: ownerPlayer && ownerUserName ? ownerUserName as string : '',
+  userId: ownerPlayer && ownerUserName ? ownerUserName as string : null,
+  owner: ownerPlayer,
   winner: false,
   death: false,
   deckName: '',
@@ -61,12 +62,19 @@ const getDefaultPlayer = (
 export const getDefaultPlayers = (
   initialLifes: Lifes,
   numberOfPlayers: NumberOfPlayers,
+  ownerUserName?: string,
 ): FirebasePlayerDto[] => {
   const defaultPlayersId = new Array(numberOfPlayers).fill({}).map(() => uuidv4());
   const defaultPlayers = defaultPlayersId
     .map((targetPlayerId: string, index: number) => {
       const opponentsId = defaultPlayersId.filter((defaultPlayer) => targetPlayerId !== defaultPlayer);
-      return getDefaultPlayer(targetPlayerId, initialLifes, opponentsId, index === 0);
+      return getDefaultPlayer(
+        targetPlayerId,
+        initialLifes,
+        opponentsId,
+        index === 0,
+        ownerUserName,
+      );
     });
 
   return defaultPlayers;
