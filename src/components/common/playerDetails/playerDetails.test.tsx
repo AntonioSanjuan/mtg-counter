@@ -76,9 +76,7 @@ describe('PlayerDetails', () => {
     expect(container).toContainHTML(render(
       <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
-          <PlayerOwnerDetailsForm formik={{
-            values: {}
-          } as FormikProps<PlayerDetailsModel>}/>
+          <PlayerOwnerDetailsForm />
           </Router>
       </Provider>,
     ).container.innerHTML)  });
