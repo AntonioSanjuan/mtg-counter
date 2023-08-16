@@ -23,7 +23,7 @@ function PlayerConfig({ player, onPick }: {player: FirebasePlayerDto, onPick: an
         aria-label="detailsButton"
         className="btn btn-link PlayerConfig_DetailsButton"
         onClick={() => {
-          openAlert(DynamicAlertTypes.PlayerDetails, { player });
+          openAlert(DynamicAlertTypes.PlayerDetails, { playerId: player.id });
         }}
       >
         <i className="bi bi-pencil-fill" />

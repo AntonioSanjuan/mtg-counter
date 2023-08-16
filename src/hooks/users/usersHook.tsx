@@ -30,10 +30,15 @@ export function useUsers() {
       .then((userResp) => {
         const user = userResp.docs[0].data() as FirebaseUserDto;
         return deckCollectionService.getDeckCollection(user.deckCollection.id)
-          .then((deckCollection) => DeckCollectionAdapter.toState(
-            deckCollection.data() as FirebaseDeckCollectionDto,
-            deckCollection.id,
-          ));
+          .then((deckCollection) => {
+            setLoading(false);
+            setError(false);
+
+            return DeckCollectionAdapter.toState(
+              deckCollection.data() as FirebaseDeckCollectionDto,
+              deckCollection.id,
+            );
+          });
       }).catch((e) => {
         setLoading(false);
         setError(true);

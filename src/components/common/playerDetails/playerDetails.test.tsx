@@ -15,6 +15,12 @@ import { getDefaultPlayers } from '../../../utils/factories/playerFactory/player
 import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
+import { getNewGame } from '../../../utils/factories/gameFactory/gameFactory';
+import { setGameAction } from '../../../state/game/game.actions';
+import { mockFirebaseAuthUser } from '../../../utils/testsUtils/firebaseAuth.util';
+import { User } from 'firebase/auth';
+import PlayerOwnerDetailsForm from '../playerOwnerDetailsForm/playerOwnerDetailsForm';
+import { FormikProps } from 'formik';
 
 describe('PlayerDetails', () => {
   let playerDetailsStore: any;
@@ -23,10 +29,9 @@ describe('PlayerDetails', () => {
   const usePlayerPlayersInitialLifes = 40;
 
   beforeEach(() => {
-
-    const usePlayerplayers = getDefaultPlayers(
-      usePlayerPlayersInitialLifes, 
+    const usePlayersGame = getNewGame(usePlayerPlayersInitialLifes, 
       NumberOfPlayers.Two);
+    const usePlayerplayers = usePlayersGame.board.players
     inputPlayer = usePlayerplayers[0];
 
     playerDetailsStore = createTestStore();
@@ -37,6 +42,10 @@ describe('PlayerDetails', () => {
     jest.spyOn(playerHooks, 'usePlayer')
       .mockImplementation(mock_usePlayer.mock);
     
+    playerDetailsStore.dispatch(
+      setGameAction(usePlayersGame)
+    )
+    
     mock_useAlert.initializeMock()
     mock_usePlayer.initializeMock()
   });
@@ -45,13 +54,34 @@ describe('PlayerDetails', () => {
     const { container } = render(
       <Provider store={playerDetailsStore}>
         <Router location={history.location} navigator={history}>
-          <PlayerDetails player={inputPlayer} />
+          <PlayerDetails playerId={inputPlayer.id} />
         </Router>
       </Provider>,
     );
 
     expect(container).toBeDefined();
   });
+
+  it('owner player details for logged account should shown <PlayerOwnerDetailsForm />', () => {
+    mockFirebaseAuthUser({} as User)
+    const { container } = render(
+      <Provider store={playerDetailsStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerDetails playerId={inputPlayer.id} />
+        </Router>
+      </Provider>,
+    );
+
+
+    expect(container).toContainHTML(render(
+      <Provider store={playerDetailsStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerOwnerDetailsForm formik={{
+            values: {}
+          } as FormikProps<PlayerDetailsModel>}/>
+          </Router>
+      </Provider>,
+    ).container.innerHTML)  });
 
   // it('initially submit button should be disabled', async () => {
   //   render(

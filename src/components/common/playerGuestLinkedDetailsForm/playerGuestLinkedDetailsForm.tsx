@@ -4,8 +4,15 @@ import { DeckCollectionState } from '../../../state/deckCollection/models/appDec
 import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 
 function PlayerGuestLinkedDetailsForm(
-  { formik, playerDeckCollection }:
-  { formik: FormikProps<PlayerDetailsModel>, playerDeckCollection: DeckCollectionState},
+  {
+    formik,
+    playerDeckCollection,
+    unLinkPlayer,
+  }:
+  { formik: FormikProps<PlayerDetailsModel>,
+    playerDeckCollection: DeckCollectionState,
+    unLinkPlayer: any
+  },
 ) {
   return (
 
@@ -47,6 +54,7 @@ function PlayerGuestLinkedDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
           >
+            <option selected value="">Select deck</option>
             {playerDeckCollection.decks.map((deck: FirebaseDeckDto) => (
               <option value={deck.name}>{deck.name}</option>
             ))}
@@ -59,11 +67,19 @@ function PlayerGuestLinkedDetailsForm(
       </div>
       <div>
         <button
-          disabled={!formik.dirty || !formik.isValid}
+          disabled={!formik.isValid}
           className="btn btn-primary w-100"
           type="submit"
         >
           Save details
+        </button>
+        <button
+          disabled={!formik.isValid}
+          className="btn btn-danger w-100"
+          type="button"
+          onClick={unLinkPlayer}
+        >
+          Unlink
         </button>
       </div>
     </form>

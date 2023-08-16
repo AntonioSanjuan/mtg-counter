@@ -1,6 +1,7 @@
 import { FormikProps, useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { useEffect } from 'react';
 import { usePlayer } from '../../../hooks/player/playerHook';
 import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
@@ -10,26 +11,40 @@ import Chip from '../chip/chip';
 import PlayerOwnerDetailsForm from '../playerOwnerDetailsForm/playerOwnerDetailsForm';
 import { auth } from '../../../utils/firebase.util';
 import PlayerGuestDetailsForm from '../playerGuestDetailsForm/playerGuestDetailsForm';
+import { selectGamePlayersById } from '../../../state/game/game.selectors';
+import { useAppSelector } from '../../../hooks/state/appStateHook';
 
-function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
+function PlayerDetails({ playerId }: {playerId: string}) {
+  const player = useAppSelector<FirebasePlayerDto|undefined>(selectGamePlayersById(playerId)) as FirebasePlayerDto;
+
   const { updatePlayerDetails } = usePlayer(player);
 
   const { closeAlert } = useAlert();
 
-  const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
-    initialValues: {
+  const getPlayerDetails = (): PlayerDetailsModel => {
+    const playerDetails: PlayerDetailsModel = {
       userId: player.userId ?? null,
       name: player.name ?? '',
       deckName: player.deckName ?? '',
-    },
+    };
+    return playerDetails;
+  };
+
+  useEffect(() => {
+    formik.setValues(getPlayerDetails());
+  }, [player]);
+
+  const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
+    initialValues: getPlayerDetails(),
     validationSchema: Yup.object({
       userId: Yup.string().nullable(),
       name: Yup.string(),
       deckName: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
-      resetForm();
+      console.log('values', values);
       savePlayerDetails(values).then(() => {
+        resetForm();
         closeAlert();
       });
     },
@@ -43,7 +58,13 @@ function PlayerDetails({ player }: {player: FirebasePlayerDto}) {
     if (auth.currentUser && player.owner) {
       return <PlayerOwnerDetailsForm formik={formik} />;
     }
-    return <PlayerGuestDetailsForm formik={formik} save={savePlayerDetails} playerUserId={player.userId} />;
+    return (
+      <PlayerGuestDetailsForm
+        formik={formik}
+        save={savePlayerDetails}
+        playerUserId={player.userId}
+      />
+    );
   };
 
   return (

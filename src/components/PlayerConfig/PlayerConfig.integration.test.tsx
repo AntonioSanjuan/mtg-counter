@@ -108,7 +108,7 @@ describe('PlayerConfig', () => {
       fireEvent.click(detailsButton);
     });
 
-    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicAlertTypes.PlayerDetails, { player: inputPlayer });
+    expect(mock_useAlert.mock().openAlert).toHaveBeenCalledWith(DynamicAlertTypes.PlayerDetails, { playerId: inputPlayer.id });
 
   });
 });

@@ -1,16 +1,22 @@
 import { FormikProps } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { use } from 'i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
 import { useUsers } from '../../../hooks/users/usersHook';
 import PlayerGuestLinkedDetailsForm from '../playerGuestLinkedDetailsForm/playerGuestLinkedDetailsForm';
 import PlayerGuestAnonymousDetailsForm from '../playerGuestAnonymousDetailsForm/playerGuestAnonymousDetailsForm';
 import PlayerGuestLinkForm from '../playerGuestLinkForm/playerGuestLinkForm';
+import { Loading } from '../loading/loading';
 
 function PlayerGuestDetailsForm(
   { formik, save, playerUserId }:
   { formik: FormikProps<PlayerDetailsModel>, save: any, playerUserId: string | null},
 ) {
+  useEffect(() => {
+    linkPlayer();
+  }, []);
+
   const { getUserByUserNameDecks, loading: usersLoading } = useUsers();
   const [playerDecks, setPlayerDecks] = useState<DeckCollectionState|undefined>(undefined);
   const [isPlayerGuestLinkForm, setIsPlayerGuestLinkForm] = useState<boolean>(!!playerUserId);
@@ -18,11 +24,14 @@ function PlayerGuestDetailsForm(
   const isValidPlayerLink = (): boolean => !!(playerUserId && playerDecks);
 
   const linkPlayer = () => {
-    if (playerUserId) {
-      getUserByUserNameDecks(playerUserId).then((userDeckCollection) => {
+    if (formik.values.userId) {
+      getUserByUserNameDecks(formik.values.userId).then((userDeckCollection) => {
         setPlayerDecks(userDeckCollection);
-        formik.setFieldValue('name', playerUserId);
-        save(formik.values);
+        save({
+          userId: formik.values.userId,
+          name: formik.values.userId,
+          deckName: '',
+        } as PlayerDetailsModel);
       }).catch((e) => {
         console.log('e', e);
       });
@@ -32,8 +41,11 @@ function PlayerGuestDetailsForm(
   const unlinkPlayer = () => {
     if (playerUserId) {
       setPlayerDecks(undefined);
-      formik.setFieldValue('name', '');
-      save(formik.values);
+      save({
+        userId: null,
+        name: '',
+        deckName: '',
+      } as PlayerDetailsModel);
     }
   };
 
@@ -47,17 +59,18 @@ function PlayerGuestDetailsForm(
     <PlayerGuestLinkedDetailsForm
       formik={formik}
       playerDeckCollection={playerDecks as DeckCollectionState}
+      unLinkPlayer={unlinkPlayer}
     />
   ) : (
     <PlayerGuestLinkForm
       formik={formik}
-      isValidPlayerLink={isValidPlayerLink()}
       linkPlayer={linkPlayer}
     />
   ));
 
   return (
     <div>
+      {usersLoading && (<Loading />)}
       {!isValidPlayerLink() && (
         <div className="PlayerDetails_UserIdContainer">
           <button

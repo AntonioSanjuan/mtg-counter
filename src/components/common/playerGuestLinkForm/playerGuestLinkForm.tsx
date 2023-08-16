@@ -4,19 +4,15 @@ import { PlayerDetailsModel } from '../../../models/internal/models/playerDetail
 function PlayerGuestLinkForm(
   {
     formik,
-    isValidPlayerLink,
     linkPlayer,
   }:
   { formik: FormikProps<PlayerDetailsModel>,
-    isValidPlayerLink: boolean,
-    linkPlayer: any },
+    linkPlayer: any},
 ) {
   return (
     <form onSubmit={formik.handleSubmit}>
       <p className="app_font_l">Carga y valida tu perfil</p>
-
       <div className="form-floating">
-
         <label htmlFor="userId">
           <p className="app_font_m app_font_noMargin">userId</p>
           <div className="PlayerDetails_UserIdContainer">
