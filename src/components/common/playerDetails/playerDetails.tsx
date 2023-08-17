@@ -49,8 +49,8 @@ function PlayerDetails({ playerId }: {playerId: string}) {
     },
   });
 
-  const savePlayerDetails = async (form: PlayerDetailsModel) => {
-    await updatePlayerDetails(form);
+  const savePlayerDetails = async (playerDetails: PlayerDetailsModel) => {
+    await updatePlayerDetails(playerDetails);
   };
 
   const getPlayerDetailsForm = (): JSX.Element => {
