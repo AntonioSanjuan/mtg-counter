@@ -1,10 +1,28 @@
-import { FormikProps } from 'formik';
+import { FormikProps, useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useEffect } from 'react';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 
 function PlayerGuestAnonymousDetailsForm(
-  { formik }:
-  { formik: FormikProps<PlayerDetailsModel>},
+  { submit, playerDetails }:
+  { submit: any, playerDetails: PlayerDetailsModel},
 ) {
+  const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
+    initialValues: playerDetails,
+    validationSchema: Yup.object({
+      userId: Yup.string().nullable(),
+      name: Yup.string(),
+      deckName: Yup.string(),
+    }),
+    onSubmit: async (values) => {
+      await submit(values);
+    },
+  });
+
+  useEffect(() => {
+    formik.setValues(playerDetails);
+  }, [playerDetails]);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <p className="app_font_l">Configura tu perfil sin vincular un usuario</p>

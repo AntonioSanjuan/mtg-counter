@@ -1,7 +1,4 @@
-import { FormikProps, useFormik } from 'formik';
-import * as Yup from 'yup';
-
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { usePlayer } from '../../../hooks/player/playerHook';
 import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
@@ -17,51 +14,48 @@ import { useAppSelector } from '../../../hooks/state/appStateHook';
 function PlayerDetails({ playerId }: {playerId: string}) {
   const player = useAppSelector<FirebasePlayerDto|undefined>(selectGamePlayersById(playerId)) as FirebasePlayerDto;
 
-  const { updatePlayerDetails } = usePlayer(player);
+  const [playerDetails, setPlayerDetails] = useState<PlayerDetailsModel>(getPlayerDetails());
 
+  const { updatePlayerDetails } = usePlayer(player);
   const { closeAlert } = useAlert();
 
   const getPlayerDetails = (): PlayerDetailsModel => {
-    const playerDetails: PlayerDetailsModel = {
+    const details: PlayerDetailsModel = {
       userId: player.userId ?? null,
       name: player.name ?? '',
       deckName: player.deckName ?? '',
     };
-    return playerDetails;
+    return details;
+  };
+
+  const fetchPlayerDetails = (): void => {
+    const details = getPlayerDetails();
+    setPlayerDetails(details);
   };
 
   useEffect(() => {
-    formik.setValues(getPlayerDetails());
+    fetchPlayerDetails();
   }, [player]);
 
-  const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
-    initialValues: getPlayerDetails(),
-    validationSchema: Yup.object({
-      userId: Yup.string().nullable(),
-      name: Yup.string(),
-      deckName: Yup.string(),
-    }),
-    onSubmit: (values, { resetForm }) => {
-      savePlayerDetails(values).then(() => {
-        resetForm();
-        closeAlert();
-      });
-    },
-  });
-
-  const savePlayerDetails = async (playerDetails: PlayerDetailsModel) => {
-    await updatePlayerDetails(playerDetails);
+  const formSubmit = (playerDetails: PlayerDetailsModel) => {
+    updatePlayerDetails(playerDetails).then(() => {
+      closeAlert();
+    });
   };
 
   const getPlayerDetailsForm = (): JSX.Element => {
     if (auth.currentUser && player.owner) {
-      return <PlayerOwnerDetailsForm formik={formik} />;
+      return (
+        <PlayerOwnerDetailsForm
+          submit={formSubmit}
+          playerDetails={playerDetails}
+        />
+      );
     }
     return (
       <PlayerGuestDetailsForm
-        formik={formik}
-        save={savePlayerDetails}
-        playerUserId={player.userId}
+        submit={formSubmit}
+        playerDetails={playerDetails}
       />
     );
   };

@@ -1,4 +1,6 @@
-import { FormikProps } from 'formik';
+import { FormikProps, useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useEffect } from 'react';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
@@ -6,11 +8,26 @@ import { selectDeckCollection } from '../../../state/deckCollection/deckCollecti
 import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 
 function PlayerOwnerDetailsForm(
-  { formik }:
-  { formik: FormikProps<PlayerDetailsModel>},
+  { submit, playerDetails }:
+  {submit: any, playerDetails: PlayerDetailsModel},
 ) {
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
 
+  const formik: FormikProps<PlayerDetailsModel> = useFormik<PlayerDetailsModel>({
+    initialValues: playerDetails,
+    validationSchema: Yup.object({
+      userId: Yup.string().nullable(),
+      name: Yup.string(),
+      deckName: Yup.string(),
+    }),
+    onSubmit: async (values) => {
+      await submit(values);
+    },
+  });
+
+  useEffect(() => {
+    formik.setValues(playerDetails);
+  }, [playerDetails]);
   return (
 
     <form onSubmit={formik.handleSubmit}>

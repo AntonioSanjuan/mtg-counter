@@ -1,6 +1,7 @@
-import { FormikProps } from 'formik';
+import { FormikProps, useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { use } from 'i18next';
+import * as Yup from 'yup';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
 import { useUsers } from '../../../hooks/users/usersHook';
@@ -10,24 +11,24 @@ import PlayerGuestLinkForm from '../playerGuestLinkForm/playerGuestLinkForm';
 import { Loading } from '../loading/loading';
 
 function PlayerGuestDetailsForm(
-  { formik, save, playerUserId }:
-  { formik: FormikProps<PlayerDetailsModel>, save: any, playerUserId: string | null},
+  { submit, playerDetails }:
+  { submit: any, playerDetails: PlayerDetailsModel},
 ) {
   useEffect(() => {
-    linkPlayer();
+    tryToLinkPlayer();
   }, []);
 
   const { getUserByUserNameDecks, loading: usersLoading } = useUsers();
   const [playerDecks, setPlayerDecks] = useState<DeckCollectionState|undefined>(undefined);
-  const [isPlayerGuestLinkForm, setIsPlayerGuestLinkForm] = useState<boolean>(!!playerUserId);
+  const [showPlayerLinkForm, setShowPlayerLinkForm] = useState<boolean>(!!playerDetails.userId);
 
-  const isValidPlayerLink = (): boolean => !!(playerUserId && playerDecks);
+  const isValidPlayerLink = (): boolean => !!(playerDetails.userId && playerDecks);
 
-  const linkPlayer = () => {
+  const tryToLinkPlayer = () => {
     if (formik.values.userId) {
       getUserByUserNameDecks(formik.values.userId).then((userDeckCollection) => {
         setPlayerDecks(userDeckCollection);
-        save({
+        submit({
           userId: formik.values.userId,
           name: formik.values.userId,
           deckName: '',
@@ -39,9 +40,9 @@ function PlayerGuestDetailsForm(
   };
 
   const unlinkPlayer = () => {
-    if (playerUserId) {
+    if (playerDetails.userId) {
       setPlayerDecks(undefined);
-      save({
+      submit({
         userId: null,
         name: '',
         deckName: '',
@@ -49,10 +50,13 @@ function PlayerGuestDetailsForm(
     }
   };
 
-  const getPlayerGuestForm = () => (isPlayerGuestLinkForm ? (
+  const getPlayerGuestForm = () => (showPlayerLinkForm ? (
     getPlayerGuestLinkForm()
   ) : (
-    <PlayerGuestAnonymousDetailsForm formik={formik} />
+    <PlayerGuestAnonymousDetailsForm
+      submit={submit}
+      playerDetails={playerDetails}
+    />
   ));
 
   const getPlayerGuestLinkForm = () => (isValidPlayerLink() ? (
@@ -64,7 +68,7 @@ function PlayerGuestDetailsForm(
   ) : (
     <PlayerGuestLinkForm
       formik={formik}
-      linkPlayer={linkPlayer}
+      linkPlayer={tryToLinkPlayer}
     />
   ));
 
@@ -76,18 +80,18 @@ function PlayerGuestDetailsForm(
           <button
             type="button"
             aria-label="PlayerGuest_AnonymousButton"
-            disabled={!isPlayerGuestLinkForm}
+            disabled={!showPlayerLinkForm}
             className="btn btn-secondary"
-            onClick={() => setIsPlayerGuestLinkForm(false)}
+            onClick={() => setShowPlayerLinkForm(false)}
           >
             Anonymous
           </button>
           <button
             type="button"
             aria-label="PlayerGuest_LinkButton"
-            disabled={isPlayerGuestLinkForm}
+            disabled={showPlayerLinkForm}
             className="btn btn-secondary"
-            onClick={() => setIsPlayerGuestLinkForm(true)}
+            onClick={() => setShowPlayerLinkForm(true)}
           >
             Linked
           </button>
