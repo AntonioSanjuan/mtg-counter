@@ -42,7 +42,6 @@ function PlayerDetails({ playerId }: {playerId: string}) {
       deckName: Yup.string(),
     }),
     onSubmit: (values, { resetForm }) => {
-      console.log('values', values);
       savePlayerDetails(values).then(() => {
         resetForm();
         closeAlert();
