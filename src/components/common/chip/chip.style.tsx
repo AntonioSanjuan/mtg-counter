@@ -18,7 +18,7 @@ Required<ChipStyleProps> // What comes out of .attrs()
 display: flex;
 flex-direction: column;
 justify-content: center;
-align-items: center;
+align-items: flex-start;
 border-radius: 10px;
 border: 1px solid ${(props) => (textColors[props.backgroundColor])};
 width: fit-content;

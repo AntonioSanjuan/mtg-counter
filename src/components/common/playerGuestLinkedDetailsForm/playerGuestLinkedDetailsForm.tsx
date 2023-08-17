@@ -15,15 +15,11 @@ function PlayerGuestLinkedDetailsForm(
   },
 ) {
   return (
-
     <form onSubmit={formik.handleSubmit}>
       <p className="app_font_l">Configura tu perfil vinculado a un perfil</p>
-
       <div className="form-floating">
-
         <label htmlFor="name">
           <p className="app_font_m app_font_noMargin">Player name</p>
-
           <input
             type="text"
             id="name"
@@ -54,7 +50,7 @@ function PlayerGuestLinkedDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
           >
-            <option selected value="">Select deck</option>
+            <option disabled selected value="">Select deck</option>
             {playerDeckCollection.decks.map((deck: FirebaseDeckDto) => (
               <option value={deck.name}>{deck.name}</option>
             ))}

@@ -39,6 +39,8 @@ function Player({ player, rotation } : {player: FirebasePlayerDto, rotation: num
       <div className="PlayerName">
         <Chip backgroundColor={player.color}>
           <p className="app_font_l app_font_noMargin">{player?.name || '-'}</p>
+          {isPlayerConfigOpened && player?.deckName
+          && (<p className="app_font_l app_font_noMargin">{player?.deckName}</p>)}
         </Chip>
       </div>
       <button

@@ -11,10 +11,10 @@ function PlayerGuestLinkForm(
 ) {
   return (
     <form onSubmit={formik.handleSubmit}>
-      <p className="app_font_l">Carga y valida tu perfil</p>
+      <p className="app_font_l">Configura tu perfil vinculando un usuario</p>
       <div className="form-floating">
         <label htmlFor="userId">
-          <p className="app_font_m app_font_noMargin">userId</p>
+          <p className="app_font_m app_font_noMargin">User Name</p>
           <div className="PlayerDetails_UserIdContainer">
             <input
               type="text"
@@ -22,7 +22,6 @@ function PlayerGuestLinkForm(
               name="userId"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.userId as string}
               className="form-control"
               placeholder="rubio#1234"
             />

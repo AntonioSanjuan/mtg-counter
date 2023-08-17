@@ -13,25 +13,27 @@ function PlayerGuestDetailsForm(
   { formik, save, playerUserId }:
   { formik: FormikProps<PlayerDetailsModel>, save: any, playerUserId: string | null},
 ) {
-  useEffect(() => {
-    linkPlayer();
-  }, []);
-
   const { getUserByUserNameDecks, loading: usersLoading } = useUsers();
   const [playerDecks, setPlayerDecks] = useState<DeckCollectionState|undefined>(undefined);
   const [isPlayerGuestLinkForm, setIsPlayerGuestLinkForm] = useState<boolean>(!!playerUserId);
 
   const isValidPlayerLink = (): boolean => !!(playerUserId && playerDecks);
 
-  const linkPlayer = () => {
+  useEffect(() => {
+    linkPlayer(false);
+  }, []);
+
+  const linkPlayer = (submitChanges = true) => {
     if (formik.values.userId) {
       getUserByUserNameDecks(formik.values.userId).then((userDeckCollection) => {
         setPlayerDecks(userDeckCollection);
-        save({
-          userId: formik.values.userId,
-          name: formik.values.userId,
-          deckName: '',
-        } as PlayerDetailsModel);
+        if (submitChanges) {
+          save({
+            ...formik.values,
+            userId: formik.values.userId,
+            name: formik.values.userId,
+          } as PlayerDetailsModel);
+        }
       }).catch((e) => {
         console.log('e', e);
       });

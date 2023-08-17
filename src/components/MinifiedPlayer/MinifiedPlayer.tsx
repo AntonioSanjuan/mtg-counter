@@ -23,6 +23,7 @@ function MinifiedPlayer(
         <div className="Player_NameContainer">
           {player.winner && (<i className="bi bi-award-fill" />)}
           <p className="app_font_m app_font_noMargin">{player.name || '-'}</p>
+          <p className="app_font_m app_font_noMargin">{player.deckName || 'No deck assigned'}</p>
         </div>
       ) : (
         <CounterCarrousel player={player} isRotated={false} isResume />

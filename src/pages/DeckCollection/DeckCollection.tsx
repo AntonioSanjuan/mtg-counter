@@ -6,8 +6,12 @@ import { FirebaseDeckDto } from '../../models/dtos/firebaseStore/firebaseDeckCol
 import { useAlert } from '../../hooks/alert/alertHook';
 import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 import DeckInfo from '../../components/DeckInfo/DeckInfo';
+import { UserState } from '../../state/user/models/appUser.state';
+import { selectUser } from '../../state/user/user.selectors';
 
 function DeckCollectionPage() {
+  const user = useAppSelector<UserState>(selectUser);
+
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
   const { openAlert } = useAlert();
 

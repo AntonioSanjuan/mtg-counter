@@ -10,9 +10,9 @@ function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
   return (
     <SCCounterCarrouselItem playerColor={playerColor} counterOpponentColor={counterOpponent?.color}>
       {counter.type === 'Poison'
-        && (<i className="bi bi-radioactive" />)}
+        && (<i className="bi bi-droplet-half" />)}
       {counter.type === 'Life'
-        && (<i className="bi bi-heart-fill app_font_s" />)}
+        && (<i className="bi bi-heart-pulse-fill app_font_s" />)}
       {counter.type === 'CommanderDamage'
         && (
           <Chip backgroundColor={counterOpponent?.color}>

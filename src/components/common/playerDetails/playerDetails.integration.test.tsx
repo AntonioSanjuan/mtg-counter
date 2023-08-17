@@ -11,7 +11,6 @@ import * as playerHooks from '../../../hooks/player/playerHook';
 import * as mock_usePlayer from '../../../hooks/player/playerHook.mock';
 import { act } from '@testing-library/react-hooks';
 import PlayerDetails from './playerDetails';
-import { getDefaultPlayers } from '../../../utils/factories/playerFactory/playerFactory';
 import { FirebasePlayerDto } from '../../../models/dtos/firebaseStore/firebaseGame.model';
 import { NumberOfPlayers } from '../../../models/internal/types/NumberOfPlayerEnum.model';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
