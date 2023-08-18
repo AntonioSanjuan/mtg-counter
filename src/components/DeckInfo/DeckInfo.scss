@@ -7,7 +7,49 @@
     padding: 15px;
     border-radius: 5px;
 
-    .DeckInfo_Details {
+    .DeckInfo_InfoContainer {
         display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+
+        .DeckInfo_Info {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+    }
+
+    .DeckInfo_StatisticsContainer {
+        display: flex;
+        flex-direction: column;
+
+        > h3 {
+            text-align: center;
+        }
+
+        .DeckInfo_Statistics {
+            display: flex;
+            flex-direction: row;
+            
+            .DeckInfo_Statistic {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+    }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+    .DeckInfo_MainContainer {
+        .DeckInfo_InfoContainer {
+            .DeckInfo_Info {
+                > p {
+                    width: 50%;
+                }
+            }
+        }
     }
 }
