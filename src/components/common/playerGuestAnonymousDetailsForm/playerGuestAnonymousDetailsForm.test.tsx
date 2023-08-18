@@ -13,11 +13,16 @@ import PlayerGuestAnonymousDetailsForm from './playerGuestAnonymousDetailsForm';
 describe('PlayerGuestAnonymousDetailsForm', () => {
   let playerGuestAnonymousDetailsFormStore: any;
   let history: any;
-
+  let formik: FormikProps<PlayerDetailsModel>
   
   beforeEach(() => {
     playerGuestAnonymousDetailsFormStore = createTestStore();
     history = createMemoryHistory();
+    formik = { 
+      values: {} as PlayerDetailsModel,
+      errors: {},
+      touched: {},
+      } as FormikProps<PlayerDetailsModel>
   });
 
   it('should create', async () => {
@@ -25,13 +30,7 @@ describe('PlayerGuestAnonymousDetailsForm', () => {
       <Provider store={playerGuestAnonymousDetailsFormStore}>
         <Router location={history.location} navigator={history}>
           <PlayerGuestAnonymousDetailsForm              
-            formik={
-              { 
-              values: {} as PlayerDetailsModel,
-              errors: {},
-              touched: {},
-              } as FormikProps<PlayerDetailsModel>
-            } />
+            formik={formik} />
         </Router>
       </Provider>,
     );
@@ -39,22 +38,90 @@ describe('PlayerGuestAnonymousDetailsForm', () => {
     expect(container).toBeDefined();
   });
 
-  it('should create', async () => {
-    const { container } = render(
+  it('form submit should be available if form is valid & dirty', async () => {
+    render(
       <Provider store={playerGuestAnonymousDetailsFormStore}>
         <Router location={history.location} navigator={history}>
           <PlayerGuestAnonymousDetailsForm              
             formik={
               { 
-              values: {} as PlayerDetailsModel,
+              values: {
+              } as PlayerDetailsModel,
               errors: {},
               touched: {},
+              dirty: true,
+              isValid: true
               } as FormikProps<PlayerDetailsModel>
             } />
         </Router>
       </Provider>,
     );
 
-    expect(container).toBeDefined();
+    const submitButton = screen.getByRole('button', { name: 'PlayerGuestAnonymousDetailsFormSubmit' });
+
+    expect(submitButton).not.toBeDisabled()
+  });
+
+  it('form submit should be not available if form is !valid & dirty', async () => {
+    render(
+      <Provider store={playerGuestAnonymousDetailsFormStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerGuestAnonymousDetailsForm              
+            formik={
+              { 
+              values: {
+              } as PlayerDetailsModel,
+              errors: {},
+              touched: {},
+              dirty: true,
+              isValid: false
+              } as FormikProps<PlayerDetailsModel>
+            } />
+        </Router>
+      </Provider>,
+    );
+
+    const submitButton = screen.getByRole('button', { name: 'PlayerGuestAnonymousDetailsFormSubmit' });
+
+    expect(submitButton).toBeDisabled()
+  });
+
+  it('form submit should be not available if form is valid & !dirty', async () => {
+    render(
+      <Provider store={playerGuestAnonymousDetailsFormStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerGuestAnonymousDetailsForm              
+            formik={
+              { 
+              values: {
+              } as PlayerDetailsModel,
+              errors: {},
+              touched: {},
+              dirty: false,
+              isValid: true
+              } as FormikProps<PlayerDetailsModel>
+            } />
+        </Router>
+      </Provider>,
+    );
+
+    const submitButton = screen.getByRole('button', { name: 'PlayerGuestAnonymousDetailsFormSubmit' });
+
+    expect(submitButton).toBeDisabled()
+  });
+
+  it('form submit should be not available if form is valid & !dirty', async () => {
+    render(
+      <Provider store={playerGuestAnonymousDetailsFormStore}>
+        <Router location={history.location} navigator={history}>
+          <PlayerGuestAnonymousDetailsForm              
+            formik={formik} />
+        </Router>
+      </Provider>,
+    );
+
+    const submitButton = screen.getByRole('button', { name: 'PlayerGuestAnonymousDetailsFormSubmit' });
+
+    expect(submitButton).toBeDisabled()
   });
 });

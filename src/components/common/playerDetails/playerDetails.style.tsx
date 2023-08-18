@@ -34,10 +34,23 @@ form > div {
   width: 100%;
   pointer-events: auto;
 }
+
 .PlayerDetails_UserIdContainer {
   display: flex;
   justify-content: center;
+  
+  button {
+    width: 50%;
+  }
+
+}
+
+.PlayerDetails_ActionContainer {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
+
+  margin-top: 15px;
 }
 
 `;

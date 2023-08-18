@@ -47,11 +47,13 @@ function PlayerGuestAnonymousDetailsForm(
     && <span className="app_font_error">{formik.errors.deckName}</span>
   }
       </div>
-      <div>
+      <div className="PlayerDetails_ActionContainer">
         <button
           disabled={!formik.dirty || !formik.isValid}
           className="btn btn-primary w-100"
           type="submit"
+          aria-label="PlayerGuestAnonymousDetailsFormSubmit"
+          name="PlayerGuestAnonymousDetailsFormSubmit"
         >
           Save details
         </button>

@@ -15,7 +15,7 @@ function CounterCarrouselItem({ playerColor, counter, counterOpponent } : {
         && (<i className="bi bi-heart-pulse-fill app_font_s" />)}
       {counter.type === 'CommanderDamage'
         && (
-          <Chip backgroundColor={counterOpponent?.color}>
+          <Chip backgroundColor={counterOpponent?.color} width="100%">
             <p className="app_font_l app_font_noMargin">{counterOpponent?.name || '-'}</p>
           </Chip>
         )}

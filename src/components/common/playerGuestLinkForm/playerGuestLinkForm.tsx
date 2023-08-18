@@ -31,7 +31,7 @@ function PlayerGuestLinkForm(
               className="btn btn-link Player_ConfigButton"
               onClick={linkPlayer}
             >
-              <i className="bi bi-gear-fill" />
+              <i className="bi bi-plugin" />
             </button>
           </div>
         </label>

@@ -1,9 +1,9 @@
 import { PlayerColors } from '../../../models/internal/types/PlayerColorEnum.model';
 import SCChip from './chip.style';
 
-function Chip({ backgroundColor, children }: {backgroundColor?: PlayerColors, children: any}) {
+function Chip({ backgroundColor, children, width }: {backgroundColor?: PlayerColors, children: any, width?: string}) {
   return (
-    <SCChip backgroundColor={backgroundColor}>
+    <SCChip width={width} backgroundColor={backgroundColor}>
       {children}
     </SCChip>
   );

@@ -74,26 +74,21 @@ function PlayerGuestDetailsForm(
     <div>
       {usersLoading && (<Loading />)}
       {!isValidPlayerLink() && (
-        <div className="PlayerDetails_UserIdContainer">
+        <div className="btn-group PlayerDetails_UserIdContainer" role="group" aria-label="Basic outlined example">
           <button
             type="button"
-            aria-label="PlayerGuest_AnonymousButton"
-            disabled={!isPlayerGuestLinkForm}
-            className="btn btn-secondary"
+            className={!isPlayerGuestLinkForm ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}
             onClick={() => setIsPlayerGuestLinkForm(false)}
           >
             Anonymous
           </button>
           <button
             type="button"
-            aria-label="PlayerGuest_LinkButton"
-            disabled={isPlayerGuestLinkForm}
-            className="btn btn-secondary"
+            className={isPlayerGuestLinkForm ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}
             onClick={() => setIsPlayerGuestLinkForm(true)}
           >
             Linked
           </button>
-
         </div>
       )}
 

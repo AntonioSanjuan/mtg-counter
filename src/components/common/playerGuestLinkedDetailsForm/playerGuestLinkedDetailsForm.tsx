@@ -50,7 +50,7 @@ function PlayerGuestLinkedDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
           >
-            <option disabled selected value="">Select deck</option>
+            <option disabled value="">Select deck</option>
             {playerDeckCollection.decks.map((deck: FirebaseDeckDto) => (
               <option value={deck.name}>{deck.name}</option>
             ))}
@@ -61,7 +61,7 @@ function PlayerGuestLinkedDetailsForm(
           && <span className="app_font_error">{formik.errors.deckName}</span>
         }
       </div>
-      <div>
+      <div className="PlayerDetails_ActionContainer">
         <button
           disabled={!formik.isValid}
           className="btn btn-primary w-100"

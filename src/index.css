@@ -29,7 +29,7 @@ hr {
 /* override */
 .btn:focus,
 .form-select:focus {
-  box-shadow: none;
+  box-shadow: none !important;
 }
 
 .btn-link {

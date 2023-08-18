@@ -74,7 +74,7 @@ function PlayerOwnerDetailsForm(
         </Link>
       )}
 
-      <div>
+      <div className="PlayerDetails_ActionContainer">
         <button
           disabled={!formik.dirty || !formik.isValid}
           className="btn btn-primary w-100"
