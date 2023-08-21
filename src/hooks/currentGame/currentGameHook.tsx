@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
 import { useAppDispatch, useAppSelector } from '../state/appStateHook';
-import { FirebaseGameDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
-import { setGameAction } from '../../state/game/game.actions';
+import { FirebaseGameDto, FirebasePlayerDto } from '../../models/dtos/firebaseStore/firebaseGame.model';
+import { setGameAction, setGamePlayerAction } from '../../state/game/game.actions';
 import { auth } from '../../utils/firebase.util';
 import * as gameService from '../../services/firebaseStore/game/game.service';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
@@ -86,6 +86,38 @@ export function useCurrentGame() {
     return gameSettings;
   };
 
+  const updateGamePlayer = async (
+    gameSettingsId: string | undefined,
+    gameSettings: GameState,
+    gamePlayerToUpdate: FirebasePlayerDto,
+  ): Promise<GameState> => {
+    setLoading(true);
+    const gameSettingsInput = GameAdapter.toDto(
+      gameSettings,
+    );
+    if (auth.currentUser) {
+      return gameService.updateGamePlayer(
+        gameSettingsId as string,
+        gameSettingsInput,
+        gamePlayerToUpdate,
+      )
+        .then(() => {
+          dispatch(setGamePlayerAction(gamePlayerToUpdate));
+          setLoading(false);
+          setError(false);
+          return gameSettings;
+        }).catch((e) => {
+          setLoading(false);
+          setError(true);
+          throw e;
+        });
+    }
+    setLoading(false);
+    setError(false);
+    dispatch(setGameAction(gameSettings));
+    return gameSettings;
+  };
+
   const setAnonymousGame = () => {
     const gameSettingsOutput: GameState = {
       ...getNewGame(),
@@ -99,6 +131,7 @@ export function useCurrentGame() {
     setGame,
     setAnonymousGame,
     updateGame,
+    updateGamePlayer,
     loading,
     error,
   };

@@ -19,11 +19,13 @@ import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 import { setUserSettingsAction } from '../../state/user/user.actions';
 import { FirebaseUserSettingsDto } from '../../models/dtos/firebaseStore/firebaseUser.model';
+import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
 
 describe('<usePlayer />', () => {
   let usePlayerStore: any;
   let wrapper: any;
 
+  let usePlayerGame: GameState
   let usePlayerplayers: FirebasePlayerDto[];
   let usePlayerInputplayer: FirebasePlayerDto;
 
@@ -36,7 +38,8 @@ describe('<usePlayer />', () => {
       return <Provider store={usePlayerStore}>{children}</Provider>;
     };
 
-    usePlayerplayers = getDefaultPlayers(usePlayerPlayersInitialLifes, 2);
+    usePlayerGame = getNewGame(usePlayerPlayersInitialLifes, 2)
+    usePlayerplayers = usePlayerGame.board.players;
     usePlayerInputplayer = usePlayerplayers[0];
 
     jest.spyOn(hooks, 'useAppDispatch')
@@ -45,6 +48,12 @@ describe('<usePlayer />', () => {
     jest.spyOn(currentGamehooks, 'useCurrentGame')
       .mockImplementation(mock_useCurrentGame.mock);
 
+    usePlayerStore.dispatch(
+      setGameAction(
+        usePlayerGame
+      ),
+    );
+    
     mock_useCurrentGame.initializeMock();
   });
 
@@ -54,7 +63,7 @@ describe('<usePlayer />', () => {
     expect(result.current).toBeDefined();
   });
 
-  it('updatePlayerCounter should request updateGameSettings', async () => {
+  it('updatePlayerCounter should request updateGamePlayer', async () => {
     expect(mock_useCurrentGame.mock().updateGame).not.toHaveBeenCalled();
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
@@ -65,7 +74,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
     
-    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalled();
+    expect(mock_useCurrentGame.mock().updateGamePlayer).toHaveBeenCalled();
   });
 
   it('updatePlayerOwner should request updateGameSettings', async () => {
@@ -123,13 +132,7 @@ describe('<usePlayer />', () => {
       }
     };
 
-    const outputGameSettings: GameState = {
-      ...inputGameSettings,
-      board: {
-        ...inputGameSettings.board,
-        players: mapPlayerCounter(inputGameSettings.board.players, usePlayerInputplayer.id, playerCounter, 25)
-      }
-    }
+    const outputGamePlayer = mapPlayerCounter(inputGameSettings.board.players, usePlayerInputplayer.id, playerCounter, 25)
 
     const { result } = renderHook(() => usePlayer(usePlayerInputplayer), { wrapper });
 
@@ -141,7 +144,7 @@ describe('<usePlayer />', () => {
       await result.current.updatePlayerCounter(playerCounter, 25);
     });
 
-    expect(mock_useCurrentGame.mock().updateGame).toHaveBeenCalledWith(inputGameSettings.id, outputGameSettings);
+    expect(mock_useCurrentGame.mock().updateGamePlayer).toHaveBeenCalledWith(inputGameSettings.id, inputGameSettings, outputGamePlayer);
   });
 
   it('updatePlayerColor should request updateGameSettings with the player color updated', async () => {

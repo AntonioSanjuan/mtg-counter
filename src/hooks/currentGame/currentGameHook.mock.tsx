@@ -16,6 +16,7 @@ let errorResponseMock: boolean = false;
 const getGameSpy = jest.fn();
 const setGameSpy = jest.fn();
 const updateGameSpy = jest.fn();
+const updateGamePlayerSpy = jest.fn()
 const setAnonymousGameSpy = jest.fn();
 
 export const mockGameResponse = {
@@ -23,6 +24,7 @@ export const mockGameResponse = {
   setGame: setGameSpy,
   setAnonymousGame: setAnonymousGameSpy,
   updateGame: updateGameSpy,
+  updateGamePlayer: updateGamePlayerSpy,
   loading: loadingResponseMock,
   error: errorResponseMock,
 }
@@ -36,4 +38,5 @@ export const initializeMock = () => {
   setGameSpy.mockResolvedValue(getGameResponseObj)
   setAnonymousGameSpy.mockResolvedValue(undefined)
   updateGameSpy.mockResolvedValue(getGameResponseObj)
+  updateGamePlayerSpy.mockResolvedValue(getGameResponseObj)
 }

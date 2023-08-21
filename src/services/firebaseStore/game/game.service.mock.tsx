@@ -17,10 +17,12 @@ const getGameMock = () => new Promise<DocumentSnapshot<DocumentData>>((resolve) 
 ));
 const setGameMock = () => new Promise<any>((resolve) => resolve(setGameResponseObjMock));
 const updateGameMock = () => new Promise<any>((resolve) => resolve(updateGameResponseMock));
+const updateGamePlayerMock = () => new Promise<any>((resolve) => resolve(updateGameResponseMock));
 
 export const getGameSpy = jest.spyOn(gameSettingsService, 'getGame');
 export const setGameSpy = jest.spyOn(gameSettingsService, 'setGame');
 export const updateGameSpy = jest.spyOn(gameSettingsService, 'updateGame');
+export const updateGamePlayerSpy = jest.spyOn(gameSettingsService, 'updateGamePlayer')
 
 export const initializeMock = () => {
   getGameSpy
@@ -29,10 +31,13 @@ export const initializeMock = () => {
     .mockImplementation(setGameMock);
   updateGameSpy
     .mockImplementation(updateGameMock);
+  updateGamePlayerSpy
+    .mockImplementation(updateGamePlayerMock);
 };
 
 export const reset = () => {
   getGameSpy.mockClear();
   setGameSpy.mockClear();
   updateGameSpy.mockClear();
+  updateGamePlayerSpy.mockClear();
 };

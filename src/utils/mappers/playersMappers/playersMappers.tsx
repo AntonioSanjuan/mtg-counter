@@ -73,47 +73,45 @@ export const mapPlayerCounter = (
   playerIdToUpdate: string,
   counterToUpdate: FirebaseCounterDto,
   counterToUpdateValueModification: number,
-): FirebasePlayerDto[] => players.map((player) => {
-  if (player.id === playerIdToUpdate) {
-    const targetPlayer = { ...player };
-    targetPlayer.counters = targetPlayer.counters.map((counter) => {
-      switch (counterToUpdate.type) {
-        case 'Life':
-        case 'Poison':
-          if (counter.type === counterToUpdate.type) {
-            const targetCounter = {
-              ...counter,
-              value: counter.value + counterToUpdateValueModification,
-            };
-            return targetCounter;
-          }
-          break;
-        case 'CommanderDamage':
-          if (counter.type === 'Life') {
-            const targetCounter = {
-              ...counter,
-              value: counter.value + counterToUpdateValueModification,
-            };
-            return targetCounter;
-          }
-          if (counter.type === 'CommanderDamage' && counter.targetPlayerId === counterToUpdate.targetPlayerId) {
-            const targetCounter = {
-              ...counter,
-              value: counter.value + counterToUpdateValueModification,
-            };
-            return targetCounter;
-          }
-          break;
-        default:
-          return counter;
-      }
+): FirebasePlayerDto => {
+  const playerToUpdate = { ...players.filter((player) => player.id === playerIdToUpdate)[0] };
+  playerToUpdate.counters = playerToUpdate?.counters?.map((counter) => {
+    switch (counterToUpdate.type) {
+      case 'Life':
+      case 'Poison':
+        if (counter.type === counterToUpdate.type) {
+          const targetCounter = {
+            ...counter,
+            value: counter.value + counterToUpdateValueModification,
+          };
+          return targetCounter;
+        }
+        break;
+      case 'CommanderDamage':
+        if (counter.type === 'Life') {
+          const targetCounter = {
+            ...counter,
+            value: counter.value + counterToUpdateValueModification,
+          };
+          return targetCounter;
+        }
+        if (counter.type === 'CommanderDamage' && counter.targetPlayerId === counterToUpdate.targetPlayerId) {
+          const targetCounter = {
+            ...counter,
+            value: counter.value + counterToUpdateValueModification,
+          };
+          return targetCounter;
+        }
+        break;
+      default:
+        return counter;
+    }
 
-      return counter;
-    });
-    return {
-      ...targetPlayer,
-      death: targetPlayer.counters.some((counter) => counter.value <= 0),
-    };
-  }
-  return player;
-});
+    return counter;
+  });
+
+  return {
+    ...playerToUpdate,
+    death: playerToUpdate.counters.some((counter) => counter.value <= 0),
+  };
+};

@@ -111,113 +111,113 @@ describe('PlayerMappers', () => {
     });
 
     it('mapPlayerCounter should return same length of counters', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
             10);
 
-        expect(sutPlayers[0].counters.length).toEqual(sutGame.board.players[0].counters.length)
+        expect(sutPlayer.counters.length).toEqual(sutGame.board.players[0].counters.length)
     });
 
     it('mapPlayerCounter should change counter value of target player', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
             -10);
 
-            expect(sutPlayers[0].counters.find((counter) => { return counter.type === "Life"})?.value).toEqual(10)
+            expect(sutPlayer.counters.find((counter) => { return counter.type === "Life"})?.value).toEqual(10)
         });
 
     it('mapPlayerCounter should set player death to false if counter life value is more than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
             - 1);
 
-        expect(sutPlayers[0].death).toBeFalsy()
+        expect(sutPlayer.death).toBeFalsy()
     });
 
     it('mapPlayerCounter should set player death to true if counter life value is equal 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
             initialLifes * - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
 
     it('mapPlayerCounter should set player death to true if counter life value is less than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Life"}) as FirebaseCounterDto,
             (initialLifes * -1) - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
     
     it('mapPlayerCounter should set player death to false if counter poison value is more than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
             - 1);
 
-        expect(sutPlayers[0].death).toBeFalsy()
+        expect(sutPlayer.death).toBeFalsy()
     });
 
     it('mapPlayerCounter should set player death to true if counter poison value is equal 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
             MaxPoisonCounters * - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
 
     it('mapPlayerCounter should set player death to true if counter poison value is less than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "Poison"}) as FirebaseCounterDto,
             (MaxPoisonCounters * -1) - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
 
     it('mapPlayerCounter should set player death to false if counter CommanderDamage value is more than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
             - 1);
 
-        expect(sutPlayers[0].death).toBeFalsy()
+        expect(sutPlayer.death).toBeFalsy()
     });
 
     it('mapPlayerCounter should set player death to true if counter CommanderDamage value is equal 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
             MaxCommanderDamage * - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
 
     it('mapPlayerCounter should set player death to true if counter CommanderDamage value is less than 0', () => {
-        const sutPlayers = mapPlayerCounter(
+        const sutPlayer = mapPlayerCounter(
             sutGame.board.players, 
             sutGame.board.players[0].id, 
             sutGame.board.players[0].counters.find((counter) => { return counter.type === "CommanderDamage"}) as FirebaseCounterDto,
             (MaxCommanderDamage * -1) - 1);
 
-        expect(sutPlayers[0].death).toBeTruthy()
+        expect(sutPlayer.death).toBeTruthy()
     });
 
 

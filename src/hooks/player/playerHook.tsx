@@ -15,7 +15,7 @@ import { useCurrentGame } from '../currentGame/currentGameHook';
 import { useAppSelector } from '../state/appStateHook';
 
 export function usePlayer(player: FirebasePlayerDto) {
-  const { updateGame } = useCurrentGame();
+  const { updateGame, updateGamePlayer } = useCurrentGame();
   const game = useAppSelector<GameState>(selectGame);
   const userName = useAppSelector<string>(selectUserName);
 
@@ -64,13 +64,14 @@ export function usePlayer(player: FirebasePlayerDto) {
   };
 
   const updatePlayerCounter = async (currentCounter: FirebaseCounterDto, counterValueModification: number) => {
-    const newPlayers = mapPlayerCounter(
+    const newPlayer = mapPlayerCounter(
       game.board.players,
       player.id,
       currentCounter,
       counterValueModification,
     );
-    await updatePlayers(newPlayers);
+    // await updatePlayers(newPlayers);
+    await updatePlayer(newPlayer);
   };
 
   const updatePlayers = async (newPlayers: FirebasePlayerDto[]) => {
@@ -82,6 +83,10 @@ export function usePlayer(player: FirebasePlayerDto) {
       },
     };
     await updateGame(game.id, newGame);
+  };
+
+  const updatePlayer = async (newPlayer: FirebasePlayerDto) => {
+    await updateGamePlayer(game.id, game, newPlayer);
   };
   return {
     updatePlayerCounter,

@@ -35,7 +35,7 @@ describe('<useGameManagement />', () => {
     2
   );
   const playerCounter: FirebaseCounterDto = useGameManagementplayers[0].counters.filter((counter: FirebaseCounterDto) => counter.type === 'Life')[0]
-  useGameManagementplayers = mapPlayerCounter(useGameManagementplayers, useGameManagementplayers[0].id,
+  useGameManagementplayers[0] = mapPlayerCounter(useGameManagementplayers, useGameManagementplayers[0].id,
     playerCounter, 5)
     
   const inputGameSettings: GameState = { 
