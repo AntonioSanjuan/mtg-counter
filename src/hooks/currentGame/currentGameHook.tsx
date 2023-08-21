@@ -97,6 +97,8 @@ export function useCurrentGame() {
       gameSettings,
     );
 
+    dispatch(setGamePlayerAction(gamePlayerToUpdate));
+
     if (auth.currentUser) {
       return gameService.updateGamePlayer(
         gameSettingsId as string,
@@ -104,11 +106,12 @@ export function useCurrentGame() {
         gamePlayerToUpdate,
       )
         .then(() => {
-          dispatch(setGamePlayerAction(gamePlayerToUpdate));
           setLoading(false);
           setError(false);
           return gameSettings;
         }).catch((e) => {
+          dispatch(setGameAction(gameSettings));
+
           setLoading(false);
           setError(true);
           throw e;
