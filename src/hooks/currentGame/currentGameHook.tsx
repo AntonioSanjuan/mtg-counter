@@ -92,9 +92,11 @@ export function useCurrentGame() {
     gamePlayerToUpdate: FirebasePlayerDto,
   ): Promise<GameState> => {
     setLoading(true);
+
     const gameSettingsInput = GameAdapter.toDto(
       gameSettings,
     );
+
     if (auth.currentUser) {
       return gameService.updateGamePlayer(
         gameSettingsId as string,
@@ -114,7 +116,7 @@ export function useCurrentGame() {
     }
     setLoading(false);
     setError(false);
-    dispatch(setGameAction(gameSettings));
+    dispatch(setGamePlayerAction(gamePlayerToUpdate));
     return gameSettings;
   };
 

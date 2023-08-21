@@ -8,7 +8,7 @@ import { useCurrentGame } from './currentGameHook';
 import * as userServiceMock from '../../services/firebaseStore/user/user.service.mock';
 import * as gameServiceMock from '../../services/firebaseStore/game/game.service.mock';
 import { DocumentData, DocumentSnapshot } from 'firebase/firestore';
-import { setGameAction } from '../../state/game/game.actions';
+import { setGameAction, setGamePlayerAction } from '../../state/game/game.actions';
 import { mockFirebaseAuthUser } from '../../utils/testsUtils/firebaseAuth.util';
 import { User } from 'firebase/auth';
 import { getNewGame } from '../../utils/factories/gameFactory/gameFactory';
@@ -122,7 +122,7 @@ describe('<useCurrentGame />', () => {
     expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalledWith(gameSettingsState.id, gameSettings);
   });
   
-  it('updateGameSettings should not request updateUserSettings if user is logged', async () => {
+  it('updateGameSettings should request updateUserSettings if user is logged', async () => {
     mockFirebaseAuthUser({} as User)
 
     expect(gameServiceMock.updateGameSpy).not.toHaveBeenCalled();
@@ -142,6 +142,45 @@ describe('<useCurrentGame />', () => {
     expect(gameServiceMock.updateGameSpy).toHaveBeenCalledWith(gameSettingsState.id, GameAdapter.toDto(gameSettings));
   });
 
+  //start
+  it('updateGamePlayer should not request updateGamePlayer if user is not logged', async () => {
+    expect(gameServiceMock.updateGamePlayerSpy).not.toHaveBeenCalled();
+    const gameSettings = getNewGame();
+    const gameSettingsState: GameState = {
+      ...gameSettings,
+      id: undefined,
+    }
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateGamePlayer(gameSettingsState.id, gameSettings, gameSettings.board.players[0]);
+    });
+
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGamePlayerAction(gameSettings.board.players[0]));
+    expect(gameServiceMock.updateGamePlayerSpy).not.toHaveBeenCalledWith(gameSettingsState.id, gameSettings);
+  });
+  
+  it('updateGamePlayer should request updateGamePlayer if user is logged', async () => {
+    mockFirebaseAuthUser({} as User)
+
+    expect(gameServiceMock.updateGamePlayerSpy).not.toHaveBeenCalled();
+    const gameSettings = getNewGame();
+    const gameSettingsState: GameState = {
+      ...gameSettings,
+      id: "gameSettingsId",
+    }
+
+    const { result } = renderHook(() => useCurrentGame(), { wrapper });
+
+    await act(async () => {
+      await result.current.updateGamePlayer(gameSettingsState.id, gameSettingsState, gameSettings.board.players[0]);
+    });
+
+    expect(useAppDispatchMockResponse).toHaveBeenCalledWith(setGamePlayerAction(gameSettings.board.players[0]));
+    expect(gameServiceMock.updateGamePlayerSpy).toHaveBeenCalledWith(gameSettingsState.id, GameAdapter.toDto(gameSettings),gameSettings.board.players[0]);
+  });
+  //end
   it('setAnonymousGame should not request updateUserSettings', async () => {
     mockFirebaseAuthUser({} as User)
 
