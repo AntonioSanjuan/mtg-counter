@@ -17,7 +17,7 @@ const getGameMock = () => new Promise<DocumentSnapshot<DocumentData>>((resolve) 
 ));
 const setGameMock = () => new Promise<any>((resolve) => resolve(setGameResponseObjMock));
 const updateGameMock = () => new Promise<any>((resolve) => resolve(updateGameResponseMock));
-const updateGamePlayerMock = () => new Promise<any>((resolve) => resolve(updateGameResponseMock));
+const updateGamePlayerMock = () => new Promise<void>((resolve) => resolve());
 
 export const getGameSpy = jest.spyOn(gameSettingsService, 'getGame');
 export const setGameSpy = jest.spyOn(gameSettingsService, 'setGame');

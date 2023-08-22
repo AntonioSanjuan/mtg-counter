@@ -12,25 +12,6 @@ describe('PlayerMappers', () => {
     beforeEach(() => {
         sutGame = getNewGame(initialLifes, NumberOfPlayers.Five);
     });
-  
-    it('mapPlayerColor should return same length of players', () => {
-        const sut = mapPlayerColor(
-            sutGame.board.players, 
-            sutGame.board.players[0].id, 
-            PlayerColors.green);
-
-        expect(sut.length).toEqual(sutGame.board.players.length)
-    });
-
-    it('mapPlayerColor should keep players', () => {
-        const sut = mapPlayerColor(
-            sutGame.board.players, 
-            sutGame.board.players[1].id, 
-            PlayerColors.green);
-
-        expect(sut[1].id).toEqual(sutGame.board.players[1].id)
-        expect(sut[0].id).toEqual(sutGame.board.players[0].id)
-    });
 
     it('mapPlayerColor should change color of target player', () => {
         const sut = mapPlayerColor(
@@ -38,8 +19,7 @@ describe('PlayerMappers', () => {
             sutGame.board.players[1].id, 
             PlayerColors.green);
 
-        expect(sut[1].color).toEqual(PlayerColors.green)
-        expect(sut[0].color).toEqual(sutGame.board.players[0].color)
+        expect(sut.color).toEqual(PlayerColors.green)
     });
 
     it('mapPlayerOwner should keep players', () => {

@@ -22,12 +22,12 @@ export function usePlayer(player: FirebasePlayerDto) {
   const opponents = game.board.players.filter((boardPlayers) => boardPlayers.id !== player.id);
 
   const updatePlayerColor = async (newPlayerColor: PlayerColors) => {
-    const newPlayers = mapPlayerColor(
+    const newPlayer = mapPlayerColor(
       game.board.players,
       player.id,
       newPlayerColor,
     );
-    await updatePlayers(newPlayers);
+    await updatePlayer(newPlayer);
   };
 
   const updatePlayerWinner = async () => {
@@ -55,12 +55,12 @@ export function usePlayer(player: FirebasePlayerDto) {
   };
 
   const updatePlayerDetails = async (newPlayerDetails: PlayerDetailsModel) => {
-    const newPlayers = mapPlayerDetails(
+    const newPlayer = mapPlayerDetails(
       game.board.players,
       player.id,
       newPlayerDetails,
     );
-    await updatePlayers(newPlayers);
+    await updatePlayer(newPlayer);
   };
 
   const updatePlayerCounter = async (currentCounter: FirebaseCounterDto, counterValueModification: number) => {
@@ -70,7 +70,6 @@ export function usePlayer(player: FirebasePlayerDto) {
       currentCounter,
       counterValueModification,
     );
-    // await updatePlayers(newPlayers);
     await updatePlayer(newPlayer);
   };
 
@@ -88,6 +87,7 @@ export function usePlayer(player: FirebasePlayerDto) {
   const updatePlayer = async (newPlayer: FirebasePlayerDto) => {
     await updateGamePlayer(game.id, game, newPlayer);
   };
+
   return {
     updatePlayerCounter,
     updatePlayerOwner,

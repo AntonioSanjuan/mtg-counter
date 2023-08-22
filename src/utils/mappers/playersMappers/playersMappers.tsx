@@ -6,14 +6,13 @@ export const mapPlayerColor = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,
   newPlayerColor: PlayerColors,
-): FirebasePlayerDto[] => players.map((player) => {
-  if (player.id === playerIdToUpdate) {
-    const targetPlayer = { ...player };
-    targetPlayer.color = newPlayerColor;
-    return targetPlayer;
-  }
-  return player;
-});
+): FirebasePlayerDto => {
+  const playerToUpdate = { ...players.filter((player) => player.id === playerIdToUpdate)[0] };
+  return {
+    ...playerToUpdate,
+    color: newPlayerColor,
+  };
+};
 
 export const mapPlayerOwner = (
   players: FirebasePlayerDto[],
@@ -30,15 +29,17 @@ export const mapPlayerUserId = (
   userName: string,
 ): FirebasePlayerDto[] => players.map((player) => {
   if (player.id === playerIdToUpdate) {
-    const targetPlayer = { ...player };
-    targetPlayer.userId = userName;
-    targetPlayer.name = userName;
-    return targetPlayer;
+    return {
+      ...player,
+      userId: userName,
+      name: userName,
+    };
   } if (player.userId === userName) {
-    const targetPlayer = { ...player };
-    targetPlayer.userId = null;
-    targetPlayer.name = '';
-    return targetPlayer;
+    return {
+      ...player,
+      userId: null,
+      name: '',
+    };
   }
 
   return player;
@@ -57,16 +58,13 @@ export const mapPlayerDetails = (
   players: FirebasePlayerDto[],
   playerIdToUpdate: string,
   newPlayerDetails: PlayerDetailsModel,
-): FirebasePlayerDto[] => players.map((player) => {
-  if (player.id === playerIdToUpdate) {
-    const targetPlayer = {
-      ...player,
-      ...newPlayerDetails,
-    };
-    return targetPlayer;
-  }
-  return player;
-});
+): FirebasePlayerDto => {
+  const playerToUpdate = { ...players.filter((player) => player.id === playerIdToUpdate)[0] };
+  return {
+    ...playerToUpdate,
+    ...newPlayerDetails,
+  };
+};
 
 export const mapPlayerCounter = (
   players: FirebasePlayerDto[],
