@@ -1,12 +1,159 @@
 export const TRANSLATIONS_ES = {
-  welcome: 'spanish',
   common: {
     date: '{{val, datetime}}',
     dateTime: '{{val, datetime}}',
+    error: 'Ha habido un error',
+  },
+  layouts: {
+    base: {
+      topNav: {
+        actions: {
+          logOut: 'cerrar sesión',
+          logIn: 'iniciar sesión',
+        },
+      },
+      sideNav: {
+        sections: {
+          newGame: 'Nueva partida',
+          historic: 'Histórico',
+          deckCollection: 'Colección de mazos',
+          settings: 'Ajustes',
+        },
+        info: {
+          version: 'Versión: ',
+        },
+      },
+    },
   },
   views: {
     historic: {
+      noHistoricGames: 'No tienes historico de partidas aún',
+      historicGame: {
+        info: {
+          gameName: 'Nombre de la partida',
+          status: {
+            label: 'Estado',
+            options: {
+              finished: 'Finalizada',
+              ongoing: 'En curso',
+            },
+          },
+          createdAt: 'Creada',
+          finishedAt: 'Finalizada',
+          duration: 'Duración en minutos',
+        },
+        actions: {
+          changeView: 'Cambiar vista',
+        },
+      },
+    },
+    deckCollection: {
+      noDeckCollection: 'No tienes mazos guardados',
+      deck: {
+        info: {
+          deckName: 'Mazo: ',
+          commanderDeckName: 'Comandante: ',
+        },
+        stadistics: {
+          title: 'Partidas',
+          played: 'Jugadas: ',
+          winned: 'Ganadas: ',
+        },
+      },
+      actions: {
+        addDeck: 'Añade un nuevo mazo',
+      },
+    },
+    profile: {
+      info: {
+        title: 'Información de usuario',
+        form: {
+          email: {
+            label: 'Email del usuario',
+            placeholder: 'ejemplo@gmail.com',
+          },
+          userName: {
+            label: 'Nombre de usuario',
+            placeholder: 'rubio#1234',
+          },
+        },
+      },
+      settings: {
+        title: 'Ajustes de usuario',
+        form: {
+          darkMode: {
+            label: 'Modo oscuro',
+          },
+          language: {
+            label: 'Idioma',
+            options: {
+              es: 'Español',
+              en: 'Inglés',
+              fr: 'Frances',
+            },
+          },
+        },
+      },
+    },
+    login: {
+      form: {
+        email: {
+          label: 'Email del usuario',
+          placeholder: 'ejemplo@gmail.com',
+        },
+        password: {
+          label: 'Contraseña',
+          placeholder: '****',
+        },
+        actions: {
+          login: 'Iniciar sesión',
+          loginWithGoogle: 'Iniciar sesión con Google',
+          goToSignUp: '¿No tienes cuenta? Regístrate aqui.',
+        },
+      },
+    },
+    signUp: {
+      form: {
+        email: {
+          label: 'Email del usuario',
+          placeholder: 'ejemplo@gmail.com',
+        },
+        userName: {
+          label: 'Nombre de usuario',
+          placeholder: 'rubio#1234',
+        },
+        password: {
+          label: 'Contraseña',
+          placeholder: '****',
+        },
+        actions: {
+          signUp: 'Registrate',
+          signUpWithGoogle: 'Registrate con Google',
+          goToLogin: '¿Ya tienes cuenta? Inicia sesion aqui.',
+        },
+      },
+    },
+    home: {
 
+    },
+  },
+  modals: {
+    gameSettings: {
+      title: 'Configura la partida',
+      form: {
+        players: {
+          label: 'Jugadores',
+        },
+        lifes: {
+          label: 'Vidas iniciales',
+        },
+      },
+      actions: {
+        apply: 'Aplicar',
+      },
+    },
+    loading: {
+      title: 'CARGANDO...',
     },
   },
 };

@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useSidenavLayer } from '../../hooks/sidenav/sidenavHook';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
@@ -10,6 +11,7 @@ import { SearchInput } from '../common/searchInput/searchInput';
 function Sidenav() {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { switchSidenavStatus } = useSidenavLayer();
 
@@ -29,7 +31,7 @@ function Sidenav() {
           <div className="Sidenav_SectionContainer">
             {/* <ProfileSection /> */}
             <Section
-              sectionName="New Game"
+              sectionName={t('layouts.base.sideNav.sections.newGame')}
               onClickCallback={() => { handleNavigation('/'); }}
             >
               <i className="bi bi-plus" />
@@ -37,13 +39,13 @@ function Sidenav() {
             {isLoggedIn && (
             <>
               <Section
-                sectionName="History"
+                sectionName={t('layouts.base.sideNav.sections.historic')}
                 onClickCallback={() => { handleNavigation('/history'); }}
               >
                 <i className="bi bi-bookmark-star-fill" />
               </Section>
               <Section
-                sectionName="Deck Collection"
+                sectionName={t('layouts.base.sideNav.sections.deckCollection')}
                 onClickCallback={() => { handleNavigation('/deckCollection'); }}
               >
                 <i className="bi bi-collection" />
@@ -57,7 +59,7 @@ function Sidenav() {
         <div className="Sidenav_FooterContainer">
           <hr />
           <Section
-            sectionName="Profile Settings"
+            sectionName={t('layouts.base.sideNav.sections.settings')}
             onClickCallback={() => { handleNavigation('/Profile'); }}
           >
             <i className="bi bi-gear-fill" />
@@ -67,8 +69,7 @@ function Sidenav() {
           <SearchInput onSearch={undefined} />
 
           <p className="app_font_m app_font_noMargin">
-            Version:
-            {}
+            {t('layouts.base.sideNav.info.version')}
           </p>
         </div>
       </div>

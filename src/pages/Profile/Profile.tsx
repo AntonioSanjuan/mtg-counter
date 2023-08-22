@@ -13,15 +13,14 @@ function ProfilePage() {
     <div className="Profile_MainContainer">
       {isLoggedIn && (
       <div className="Profile_SettingsContainer">
-        <p className="app_font_xl">User Info</p>
+        <p className="app_font_xl">{t('views.profile.info.title')}</p>
         <ProfileInfo />
       </div>
       )}
       <div className="Profile_SettingsContainer">
-        <p className="app_font_xl">User Settings</p>
+        <p className="app_font_xl">{t('views.profile.settings.title')}</p>
         <ProfileSettings />
       </div>
-      {t('welcome')}
     </div>
   );
 }

@@ -2,6 +2,7 @@ import './Login.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import ColoredLogo from '../../assets/ColoredLogo.png';
 import { useAuth } from '../../hooks/auth/authHook';
 import { Loading } from '../../components/common/loading/loading';
@@ -16,6 +17,7 @@ function LoginPage() {
     login, loginWithGoogle, loading, error,
   } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik: FormikProps<LoginFormModel> = useFormik<LoginFormModel>({
     initialValues: {
@@ -60,16 +62,17 @@ function LoginPage() {
             <div className="form-floating">
 
               <label htmlFor="userEmail">
-                Email
+                {t('views.login.form.email.label')}
                 <input
                   type="email"
                   id="userEmail"
                   name="userEmail"
+                  aria-label="userEmail"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.userEmail}
                   className="form-control"
-                  placeholder="email@example.com"
+                  placeholder={t('views.login.form.email.placeholder')}
                 />
               </label>
               {
@@ -80,16 +83,17 @@ function LoginPage() {
 
             <div className="form-floating">
               <label htmlFor="password">
-                Password
+                {t('views.login.form.password.label')}
                 <input
                   type="password"
                   id="password"
+                  aria-label="password"
                   name="password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                   className="form-control"
-                  placeholder="****"
+                  placeholder={t('views.login.form.password.placeholder')}
                 />
               </label>
               {
@@ -101,9 +105,10 @@ function LoginPage() {
               <button
                 disabled={!formik.dirty || !formik.isValid}
                 className="btn btn-primary w-100"
+                aria-label="LoginButton"
                 type="submit"
               >
-                Login
+                {t('views.login.form.actions.login')}
               </button>
 
               <button
@@ -116,7 +121,8 @@ function LoginPage() {
                   alt="Google sign-in"
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                 />
-                Login with Google
+                {' '}
+                {t('views.login.form.actions.loginWithGoogle')}
               </button>
 
               <Link to="/signUp">
@@ -124,7 +130,7 @@ function LoginPage() {
                   className="btn btn-link w-100"
                   type="button"
                 >
-                  ¿No tienes cuenta? Regístrate aqui.
+                  {t('views.login.form.actions.goToSignUp')}
                 </button>
               </Link>
 
@@ -135,7 +141,7 @@ function LoginPage() {
           && (
           <div className="Login_ErrorContainer">
             <p className="app_font_error">
-              Error!, try it again
+              {t('common.error')}
             </p>
           </div>
           )

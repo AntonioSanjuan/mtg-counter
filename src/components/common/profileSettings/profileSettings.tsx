@@ -1,5 +1,6 @@
 import './profileSettings.scss';
 import { FormikProps, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { useUser } from '../../../hooks/user/userHook';
 import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
@@ -10,6 +11,8 @@ function ProfileSettings() {
   const userSettings = useAppSelector<FirebaseUserSettingsDto | undefined>(selectUserSettings);
   const userName = useAppSelector<string>(selectUserName);
   const { updateUser, loading } = useUser();
+  const { t } = useTranslation();
+
   const formik: FormikProps<FirebaseUserSettingsDto> = useFormik<FirebaseUserSettingsDto>({
     initialValues: userSettings as FirebaseUserSettingsDto,
     onSubmit: async () => {
@@ -36,7 +39,7 @@ function ProfileSettings() {
         <form onChange={formik.handleSubmit}>
           <div className="ProfileSettings_Settings">
             <div className="ProfileSettings_Setting">
-              <p className="app_font_l">Dark Mode</p>
+              <p className="app_font_l">{t('views.profile.settings.form.darkMode.label')}</p>
               <div className="form-check form-switch">
 
                 <input
@@ -52,7 +55,7 @@ function ProfileSettings() {
               </div>
             </div>
             <div className="ProfileSettings_Setting">
-              <p className="app_font_l">Language</p>
+              <p className="app_font_l">{t('views.profile.settings.form.language.label')}</p>
               <select
                 className="form-select"
                 id="lang"
@@ -62,9 +65,9 @@ function ProfileSettings() {
                 onBlur={formik.handleBlur}
                 value={formik.values.lang}
               >
-                <option value="es">Spanish</option>
-                <option value="en">English</option>
-                <option value="fr">French</option>
+                <option value="es">{t('views.profile.settings.form.language.options.es')}</option>
+                <option value="en">{t('views.profile.settings.form.language.options.en')}</option>
+                <option value="fr">{t('views.profile.settings.form.language.options.fr')}</option>
               </select>
             </div>
           </div>

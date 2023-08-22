@@ -1,6 +1,7 @@
 import './profileInfo.scss';
 import { FormikProps, useFormik } from 'formik';
 import { User } from 'firebase/auth';
+import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { useUser } from '../../../hooks/user/userHook';
 import { selectUserData, selectUserName } from '../../../state/user/user.selectors';
@@ -15,6 +16,7 @@ function profileInfo() {
   const userName = useAppSelector<string>(selectUserName);
   const userData = useAppSelector<User | null>(selectUserData);
   const { updateUser, loading } = useUser();
+  const { t } = useTranslation();
 
   const formik: FormikProps<ProfileInfoFormModel> = useFormik<ProfileInfoFormModel>({
     initialValues: {
@@ -34,7 +36,7 @@ function profileInfo() {
         <form onChange={formik.handleSubmit}>
           <div className="profileInfo_Settings">
             <div className="profileInfo_Setting">
-              <p className="app_font_l">User Email</p>
+              <p className="app_font_l">{t('views.profile.info.form.email.label')}</p>
               <div className="form-check form-switch">
                 <input
                   type="text"
@@ -45,12 +47,12 @@ function profileInfo() {
                   onBlur={formik.handleBlur}
                   value={formik.values.userEmail}
                   className="form-control"
-                  placeholder="user name"
+                  placeholder={t('views.profile.info.form.email.placeholder')}
                 />
               </div>
             </div>
             <div className="profileInfo_Setting">
-              <p className="app_font_l">User Name</p>
+              <p className="app_font_l">{t('views.profile.info.form.userName.label')}</p>
               <div className="form-check form-switch">
                 <input
                   type="text"
@@ -61,7 +63,7 @@ function profileInfo() {
                   onBlur={formik.handleBlur}
                   value={formik.values.userName}
                   className="form-control"
-                  placeholder="user name"
+                  placeholder={t('views.profile.info.form.userName.placeholder')}
                 />
               </div>
             </div>

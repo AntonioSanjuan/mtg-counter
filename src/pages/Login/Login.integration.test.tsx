@@ -47,11 +47,11 @@ describe('Login', () => {
     );
 
     expect(mock_useAuth.mock().login).not.toHaveBeenCalled();
-    const usernameInput = screen.getByPlaceholderText(/email@example.com/i);
+    const usernameInput = screen.getByLabelText('userEmail');
     fireEvent.change(usernameInput, { target: { value: userEmail } });
-    const passwordInput = screen.getByPlaceholderText('****');
+    const passwordInput = screen.getByLabelText('password');
     fireEvent.change(passwordInput, { target: { value: userPassword } });
-    const loginButton = screen.getByRole('button', { name: 'Login' });
+    const loginButton = screen.getByLabelText('LoginButton');
     expect(loginButton).not.toBeDisabled();
 
     await act(async () => {
@@ -71,10 +71,10 @@ describe('Login', () => {
         </Router>
       </Provider>,
     );
-    const usernameInput = screen.getByPlaceholderText(/email@example.com/i);
+    const usernameInput = screen.getByLabelText('userEmail');
     fireEvent.change(usernameInput, { target: { value: username } });
 
-    const loginButton = screen.getByRole('button', { name: 'Login' });
+    const loginButton = screen.getByLabelText('LoginButton' );
 
     await act(async () => {
       fireEvent.click(loginButton);
@@ -95,16 +95,16 @@ describe('Login', () => {
     );
 
     expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
-    const usernameInput = screen.getByPlaceholderText(/email@example.com/i);
-    const passwordInput = screen.getByPlaceholderText('****');
+    const usernameInput = screen.getByLabelText('userEmail');
+    const passwordInput = screen.getByLabelText('password');
 
     await act(async () => {
       fireEvent.change(usernameInput, { target: { value: userEmail } });
       fireEvent.change(passwordInput, { target: { value: userPassword } });
     });
 
-    const registerButton = screen.getByRole('button', { name: "Login" });
-    expect(registerButton).toBeDisabled();
+    const loginButton = screen.getByLabelText('LoginButton' );
+    expect(loginButton).toBeDisabled();
   });
 
   it('Login should request to login useUser function', async () => {
@@ -120,12 +120,12 @@ describe('Login', () => {
     );
 
     expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
-    const usernameInput = screen.getByPlaceholderText(/email@example.com/i);
-    const passwordInput = screen.getByPlaceholderText('****');
+    const usernameInput = screen.getByLabelText('userEmail');
+    const passwordInput = screen.getByLabelText('password');
     fireEvent.change(usernameInput, { target: { value: userEmail } });
     fireEvent.change(passwordInput, { target: { value: userPassword } });
 
-    const loginButton = screen.getByRole('button', { name: "Login" });
+    const loginButton = screen.getByLabelText('LoginButton');
 
     expect(loginButton).not.toBeDisabled();
 

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import Whitelogo from '../../assets/WhiteLogo.png';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectUserIsLogged } from '../../state/user/user.selectors';
@@ -11,6 +12,7 @@ import { useAuth } from '../../hooks/auth/authHook';
 function Topnav({ hideLoginButton, hideSidenavButton } :
   {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean}) {
   const isLoggedIn = useAppSelector<boolean>(selectUserIsLogged);
+  const { t } = useTranslation();
 
   const { switchSidenavStatus } = useSidenavLayer();
   const { logout } = useAuth();
@@ -49,7 +51,7 @@ function Topnav({ hideLoginButton, hideSidenavButton } :
             aria-label="logout"
             onClick={() => logout()}
           >
-            Logout
+            {t('layouts.base.topNav.actions.logOut')}
           </button>
           )}
           {!isLoggedIn && !hideLoginButton && (
@@ -59,7 +61,7 @@ function Topnav({ hideLoginButton, hideSidenavButton } :
                 className="btn btn-primary"
                 aria-label="login"
               >
-                Login
+                {t('layouts.base.topNav.actions.logIn')}
               </button>
             </Link>
           )}

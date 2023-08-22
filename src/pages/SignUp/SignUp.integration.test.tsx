@@ -36,7 +36,7 @@ describe('SignUp', () => {
   });
 
 
-  it('Login on submit should not be possible if password is not defined', async () => {
+  it('SignUp on submit should not be possible if password is not defined', async () => {
     const username = 'myUser';
     const userName = 'username';
     render(
@@ -46,10 +46,10 @@ describe('SignUp', () => {
         </Router>
       </Provider>,
     );
-    const usernameInput = screen.getByPlaceholderText(/email@example.com/i);
+    const usernameInput = screen.getByLabelText('userName');
     fireEvent.change(usernameInput, { target: { value: username } });
 
-    const loginButton = screen.getByRole('button', { name: 'Sign Up' });
+    const loginButton = screen.getByLabelText('SignUpButton');
 
     await act(async () => {
       fireEvent.click(loginButton);
@@ -71,9 +71,9 @@ describe('SignUp', () => {
     );
 
     expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
-    const userEmailInput = screen.getByPlaceholderText(/email@example.com/i);
-    const passwordInput = screen.getByPlaceholderText('****');
-    const userNameInput = screen.getByPlaceholderText('user name');
+    const userEmailInput = screen.getByLabelText('userEmail');
+    const passwordInput = screen.getByLabelText('password');
+    const userNameInput = screen.getByLabelText('userName');
 
     await act(async () => {
       fireEvent.change(userEmailInput, { target: { value: userEmail } });
@@ -81,7 +81,7 @@ describe('SignUp', () => {
       fireEvent.change(userNameInput, { target: { value: userName } });
     });
 
-    const registerButton = screen.getByRole('button', { name: "Sign Up" });
+    const registerButton = screen.getByLabelText('SignUpButton');
     expect(registerButton).toBeDisabled();
   });
 
@@ -99,14 +99,14 @@ describe('SignUp', () => {
     );
 
     expect(mock_useAuth.mock().signUp).not.toHaveBeenCalled();
-    const userEmailInput = screen.getByPlaceholderText(/email@example.com/i);
-    const passwordInput = screen.getByPlaceholderText('****');
-    const userNameInput = screen.getByPlaceholderText('user name');
+    const userEmailInput = screen.getByLabelText('userEmail');
+    const passwordInput = screen.getByLabelText('password');
+    const userNameInput = screen.getByLabelText('userName');
     fireEvent.change(userEmailInput, { target: { value: userEmail } });
     fireEvent.change(userNameInput, { target: { value: userName } });
     fireEvent.change(passwordInput, { target: { value: userPassword } });
 
-    const registerButton = screen.getByRole('button', { name: "Sign Up" });
+    const registerButton = screen.getByLabelText('SignUpButton');
 
     expect(registerButton).not.toBeDisabled();
 

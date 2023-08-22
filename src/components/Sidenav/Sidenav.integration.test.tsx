@@ -62,7 +62,7 @@ describe('Sidenav', () => {
     expect(mock_useSidenavLayer.mock().switchSidenavStatus).not.toHaveBeenCalled();
 
     fireEvent.click(
-      screen.getByText('New Game'),
+      screen.getByText('layouts.base.sideNav.sections.newGame'),
     );
 
     expect(history.location.pathname).toEqual('/');
@@ -96,6 +96,10 @@ describe('Sidenav', () => {
   });
 
   it('Sidenav History should appear if user is logged', () => {
+    sidenavStore.dispatch(
+      setUserAuthAction({} as User),
+    );
+
     const { container } = render(
       <Provider store={sidenavStore}>
         <Router location={history.location} navigator={history}>
@@ -104,18 +108,45 @@ describe('Sidenav', () => {
       </Provider>,
     );
 
-    sidenavStore.dispatch(
-      setUserAuthAction({} as User),
-    );
+ 
 
     expect(container).toContainHTML(render(
       <Provider store={sidenavStore}>
         <Router location={history.location} navigator={history}>
         <Section
-            sectionName="History"
+            sectionName="layouts.base.sideNav.sections.historic"
             onClickCallback={() => {} }
           >
             <i className="bi bi-bookmark-star-fill" />
+          </Section>        
+        </Router>
+      </Provider>,
+    ).container.innerHTML)
+  });
+
+  it('Sidenav DeckCollection should appear if user is logged', () => {
+    sidenavStore.dispatch(
+      setUserAuthAction({} as User),
+    );
+
+    const { container } = render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+          <Sidenav />
+        </Router>
+      </Provider>,
+    );
+
+ 
+
+    expect(container).toContainHTML(render(
+      <Provider store={sidenavStore}>
+        <Router location={history.location} navigator={history}>
+        <Section
+            sectionName="layouts.base.sideNav.sections.deckCollection"
+            onClickCallback={() => {} }
+          >
+                <i className="bi bi-collection" />
           </Section>        
         </Router>
       </Provider>,

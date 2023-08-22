@@ -1,4 +1,5 @@
 import './DeckCollection.scss';
+import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '../../hooks/state/appStateHook';
 import { selectDeckCollection } from '../../state/deckCollection/deckCollection.selectors';
 import { DeckCollectionState } from '../../state/deckCollection/models/appDeckCollection.state';
@@ -10,6 +11,7 @@ import DeckInfo from '../../components/DeckInfo/DeckInfo';
 function DeckCollectionPage() {
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
   const { openAlert } = useAlert();
+  const { t } = useTranslation();
 
   const addNewDeck = () => {
     openAlert(DynamicAlertTypes.AddDeckToCollection);
@@ -25,11 +27,11 @@ function DeckCollectionPage() {
           className="btn btn-danger"
           onClick={addNewDeck}
         >
-          Add new decks
+          {t('views.deckCollection.actions.addDeck')}
         </button>
       </div>
       {deckCollection.decks.length === 0 && (
-        <p>No decks</p>
+        <p>{t('views.deckCollection.noDeckCollection')}</p>
       )}
       {deckCollection.decks.map((deck: FirebaseDeckDto) => (
         <DeckInfo key={deck.name} deck={deck} />

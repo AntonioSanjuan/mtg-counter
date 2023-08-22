@@ -1,4 +1,5 @@
 import { FormikProps, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { useAlert } from '../../../hooks/alert/alertHook';
 import { useGameManagement } from '../../../hooks/gameManagement/gameManagementHook';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
@@ -17,6 +18,7 @@ function GameSettings() {
   const {
     restartGame, resizeGame, loading,
   } = useGameManagement();
+  const { t } = useTranslation();
 
   const { openAlert, closeAlert } = useAlert();
   const formik: FormikProps<FirebaseBoardDto> = useFormik<FirebaseBoardDto>({
@@ -48,12 +50,12 @@ function GameSettings() {
             && <Loading />}
       <div className="GameSettings_MainContainer">
         <h3 className="app_font_xl">
-          Configure your game
+          {t('modals.gameSettings.title')}
         </h3>
         <form onChange={formik.handleSubmit}>
           <div className="GameSettings_Settings">
             <div className="GameSettings_Setting">
-              <p className="app_font_m">Players</p>
+              <p className="app_font_m">{t('modals.gameSettings.form.players.label')}</p>
               <select
                 className="form-select"
                 id="numberOfPlayers"
@@ -71,7 +73,7 @@ function GameSettings() {
               </select>
             </div>
             <div className="GameSettings_Setting">
-              <p className="app_font_m">Lifes</p>
+              <p className="app_font_m">{t('modals.gameSettings.form.lifes.label')}</p>
               <select
                 className="form-select"
                 id="initialLifes"
@@ -93,7 +95,7 @@ function GameSettings() {
               className="btn btn-danger"
               onClick={restartGameClb}
             >
-              Restart
+              {t('modals.gameSettings.actions.apply')}
             </button>
           </div>
         </form>

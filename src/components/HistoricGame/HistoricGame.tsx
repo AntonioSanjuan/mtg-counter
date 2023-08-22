@@ -25,7 +25,7 @@ function HistoricGame({ game } : {game: GameState}) {
       <div className="HistoricGame_InfoContainer">
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Nombre de la partida</p>
+            <p className="app_font_l">{t('views.historic.historicGame.info.gameName')}</p>
           </div>
           <div className="HistoricGame_InfoValue">
             <p className="app_font_m">{game.name || '-'}</p>
@@ -33,15 +33,20 @@ function HistoricGame({ game } : {game: GameState}) {
         </div>
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Estado</p>
+            <p className="app_font_l">{t('views.historic.historicGame.info.status.label')}</p>
           </div>
           <div className="HistoricGame_InfoValue">
-            <p className="app_font_m">{game.finished ? 'Finalizada' : 'En curso'}</p>
+            <p className="app_font_m">
+              {game.finished
+                ? t('views.historic.historicGame.info.status.options.finished')
+                : t('views.historic.historicGame.info.status.options.ongoing')}
+
+            </p>
           </div>
         </div>
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Creada</p>
+            <p className="app_font_l">{t('views.historic.historicGame.info.createdAt')}</p>
           </div>
           <div className="HistoricGame_InfoValue">
             <p className="app_font_m">
@@ -58,7 +63,7 @@ function HistoricGame({ game } : {game: GameState}) {
 
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Finalizada</p>
+            <p className="app_font_l">{t('views.historic.historicGame.info.finishedAt')}</p>
           </div>
           <div className="HistoricGame_InfoValue">
             <p className="app_font_m">
@@ -75,7 +80,7 @@ function HistoricGame({ game } : {game: GameState}) {
 
         <div className="HistoricGame_Info">
           <div className="HistoricGame_InfoKey">
-            <p className="app_font_l">Duración en minutos</p>
+            <p className="app_font_l">{t('views.historic.historicGame.info.duration')}</p>
           </div>
           <div className="HistoricGame_InfoValue">
             <p className="app_font_m">
@@ -92,7 +97,7 @@ function HistoricGame({ game } : {game: GameState}) {
           className="btn btn-danger"
           onClick={() => setEx(!ex)}
         >
-          Cambiar vista
+          {t('views.historic.historicGame.actions.changeView')}
         </button>
       </div>
     </div>

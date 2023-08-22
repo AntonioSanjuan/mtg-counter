@@ -2,6 +2,7 @@ import './SignUp.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { FormikProps, useFormik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import ColoredLogo from '../../assets/ColoredLogo.png';
 import { useAuth } from '../../hooks/auth/authHook';
 import { Loading } from '../../components/common/loading/loading';
@@ -17,6 +18,7 @@ function SignUpPage() {
     loginWithGoogle, signUp, loading, error: authError,
   } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const formik: FormikProps<SignUpPageFormModel> = useFormik<SignUpPageFormModel>({
     initialValues: {
@@ -73,16 +75,17 @@ function SignUpPage() {
             <div className="form-floating">
 
               <label htmlFor="userEmail">
-                Email
+                {t('views.signUp.form.email.label')}
                 <input
                   type="email"
                   id="userEmail"
+                  aria-label="userEmail"
                   name="userEmail"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.userEmail}
                   className="form-control"
-                  placeholder="email@example.com"
+                  placeholder={t('views.signUp.form.email.placeholder')}
                 />
               </label>
               {
@@ -92,16 +95,17 @@ function SignUpPage() {
             </div>
             <div className="form-floating">
               <label htmlFor="userName">
-                Username
+                {t('views.signUp.form.userName.label')}
                 <input
                   type="text"
                   id="userName"
+                  aria-label="userName"
                   name="userName"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.userName}
                   className="form-control"
-                  placeholder="user name"
+                  placeholder={t('views.signUp.form.userName.placeholder')}
                 />
               </label>
               {
@@ -113,16 +117,17 @@ function SignUpPage() {
             <div className="form-floating">
 
               <label htmlFor="password">
-                Password
+                {t('views.signUp.form.password.label')}
                 <input
                   type="password"
                   id="password"
                   name="password"
+                  aria-label="password"
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.password}
                   className="form-control"
-                  placeholder="****"
+                  placeholder={t('views.signUp.form.password.placeholder')}
                 />
               </label>
               {
@@ -135,9 +140,10 @@ function SignUpPage() {
                 disabled={!formik.dirty || !formik.isValid}
                 className="btn btn-secondary w-100"
                 type="submit"
-                name="Sign Up"
+                aria-label="SignUpButton"
+                name="SignUpButton"
               >
-                Sign Up
+                {t('views.signUp.form.actions.signUp')}
               </button>
 
               <button
@@ -150,14 +156,15 @@ function SignUpPage() {
                   alt="Google sign-in"
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
                 />
-                Sign up with Google
+                {' '}
+                {t('views.signUp.form.actions.signUpWithGoogle')}
               </button>
               <Link to="/login">
                 <button
                   className="btn btn-link w-100"
                   type="button"
                 >
-                  ¿Ya tienes cuenta? Inicia sesion aqui.
+                  {t('views.signUp.form.actions.goToLogin')}
                 </button>
               </Link>
             </div>
