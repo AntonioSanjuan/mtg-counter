@@ -3,13 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import { Layout } from './layouts/BaseLayout/BaseLayout';
 import { LoginLayout } from './layouts/LoginLayout/LoginLayout';
 import Alert from './components/Alert/Alert';
-import HomePage from './pages/Home/Home';
-import LoginPage from './pages/Login/Login';
-import ProfilePage from './pages/Profile/Profile';
-import HistoricPage from './pages/Historic/Historic';
 import { AuthRouteGuard } from './guards/authGuard/auth.guard';
-import SignUpPage from './pages/SignUp/SignUp';
-import DeckCollectionPage from './pages/DeckCollection/DeckCollection';
+
+const HomePageLazy = React.lazy(() => import('./pages/Home/Home'));
+const ProfilePageLazy = React.lazy(() => import('./pages/Profile/Profile'));
+const HistoricPageLazy = React.lazy(() => import('./pages/Historic/Historic'));
+const SignUpPageLazy = React.lazy(() => import('./pages/SignUp/SignUp'));
+const LoginPageLazy = React.lazy(() => import('./pages/Login/Login'));
+const DeckCollectionPageLazy = React.lazy(() => import('./pages/DeckCollection/DeckCollection'));
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
             path=""
             element={(
               <React.Suspense fallback={<>...</>}>
-                <HomePage />
+                <HomePageLazy />
               </React.Suspense>
                   )}
           />
@@ -34,7 +35,7 @@ function App() {
             path="profile"
             element={(
               <React.Suspense fallback={<>...</>}>
-                <ProfilePage />
+                <ProfilePageLazy />
               </React.Suspense>
                   )}
           />
@@ -43,7 +44,7 @@ function App() {
             element={(
               <React.Suspense fallback={<>...</>}>
                 <AuthRouteGuard>
-                  <HistoricPage />
+                  <HistoricPageLazy />
                 </AuthRouteGuard>
               </React.Suspense>
                   )}
@@ -53,7 +54,7 @@ function App() {
             element={(
               <React.Suspense fallback={<>...</>}>
                 <AuthRouteGuard>
-                  <DeckCollectionPage />
+                  <DeckCollectionPageLazy />
                 </AuthRouteGuard>
               </React.Suspense>
                   )}
@@ -62,7 +63,7 @@ function App() {
             path="*"
             element={(
               <React.Suspense fallback={<>...</>}>
-                <HomePage />
+                <HomePageLazy />
               </React.Suspense>
                   )}
           />
@@ -77,7 +78,7 @@ function App() {
             index
             element={(
               <React.Suspense fallback={<>...</>}>
-                <LoginPage />
+                <LoginPageLazy />
               </React.Suspense>
           )}
           />
@@ -92,7 +93,7 @@ function App() {
             index
             element={(
               <React.Suspense fallback={<>...</>}>
-                <SignUpPage />
+                <SignUpPageLazy />
               </React.Suspense>
           )}
           />
