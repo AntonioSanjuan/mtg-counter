@@ -18,8 +18,7 @@ display: flex;
 place-content: flex-start;
 align-items: flex-start;
 
-width: var(--app-sidenav-width);
-min-width: var(--app-sidenav-width);
+width: 100%;
 height: 100%;
 
 .Sidenav_NavContainer {
@@ -40,6 +39,10 @@ height: 100%;
     background-color: var(--app-sidenav-background-color);
     box-shadow: var(--app-hight-contrast) 0px 0px 20px;
 
+    width: var(--app-sidenav-width);
+    min-width: var(--app-sidenav-width);
+    z-index: 7;
+    
     hr {
       height: 2px;
       color: var(--app-sidenav-section-font-color)

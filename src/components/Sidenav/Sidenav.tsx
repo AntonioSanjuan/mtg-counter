@@ -21,8 +21,14 @@ function Sidenav() {
   };
 
   return (
-    <SCSidenav>
-      <div className="Sidenav_NavContainer">
+    <SCSidenav onClick={switchSidenavStatus}>
+      <div
+        className="Sidenav_NavContainer"
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        aria-hidden="true"
+      >
         <div className="Sidenav_BodyContainer">
           <div className="Sidenav_HeaderContainer">
             <img src={Coloredlogo} alt="logo" />
