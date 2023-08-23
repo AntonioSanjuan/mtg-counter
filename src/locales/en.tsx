@@ -7,6 +7,11 @@ export const TRANSLATIONS_EN = {
   layouts: {
     base: {
       topNav: {
+        signOut: {
+          title: 'Sign Out?',
+          ok: 'Continue',
+          cancel: 'Cancel',
+        },
         actions: {
           logOut: 'Log out',
           logIn: 'Log in',

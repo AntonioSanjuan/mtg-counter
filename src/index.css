@@ -32,6 +32,10 @@ hr {
   box-shadow: none !important;
 }
 
+.form-switch .form-check-input:checked {
+  /* background-position: inherit; */
+}
+
 .btn-link {
   color: var(--app-main-color)
 }

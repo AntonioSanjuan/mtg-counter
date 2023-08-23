@@ -8,6 +8,8 @@ import './Topnav.scss';
 import { SearchInput } from '../common/searchInput/searchInput';
 import { ProfileSection } from '../common/profileSection/profileSection';
 import { useAuth } from '../../hooks/auth/authHook';
+import { useAlert } from '../../hooks/alert/alertHook';
+import { DynamicAlertTypes } from '../../models/internal/types/DynamicAlertEnum.model';
 
 function Topnav({ hideLoginButton, hideSidenavButton } :
   {hideLoginButton?: boolean | undefined, hideSidenavButton?: boolean}) {
@@ -16,6 +18,7 @@ function Topnav({ hideLoginButton, hideSidenavButton } :
 
   const { switchSidenavStatus } = useSidenavLayer();
   const { logout } = useAuth();
+  const { openAlert, closeAlert } = useAlert();
 
   const handleSidenavChange = (e: any) => {
     e.preventDefault();
@@ -49,7 +52,16 @@ function Topnav({ hideLoginButton, hideSidenavButton } :
             type="button"
             className="btn btn-danger"
             aria-label="logout"
-            onClick={() => logout()}
+            onClick={() => openAlert(DynamicAlertTypes.Notification, {
+              title: '¿Cerrar sesión?',
+              okButtonText: 'Continuar',
+              cancelButtonText: 'Cancelar',
+              onOkButtonClick: async () => {
+                await logout();
+                closeAlert();
+              },
+              onCancelButtonClick: closeAlert,
+            })}
           >
             {t('layouts.base.topNav.actions.logOut')}
           </button>

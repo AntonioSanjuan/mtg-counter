@@ -7,6 +7,11 @@ export const TRANSLATIONS_ES = {
   layouts: {
     base: {
       topNav: {
+        signOut: {
+          title: '¿Cerrar sesión?',
+          ok: 'Continuar',
+          cancel: 'Cancelar',
+        },
         actions: {
           logOut: 'cerrar sesión',
           logIn: 'iniciar sesión',
@@ -135,6 +140,10 @@ export const TRANSLATIONS_ES = {
     },
   },
   modals: {
+    notification: {
+      defaultOkButtonText: 'Ok',
+      defaultCancelButtonText: 'Cancelar',
+    },
     addDeckToCollection: {
       title: 'Añadir nuevo mazo',
       form: {

@@ -1,13 +1,16 @@
+import { useTranslation } from 'react-i18next';
 import { NotificationAlertPropsModel } from '../../../models/internal/models/alertProps.model';
 import './notification.scss';
 
 function Notification({
-  title, description, onOkButtonClick, onCancelButtonClick,
+  title, description, okButtonText, cancelButtonText, onOkButtonClick, onCancelButtonClick,
 }: NotificationAlertPropsModel) {
+  const { t } = useTranslation();
+
   return (
     <div className="Notification_MainContainer">
       <div className="Notification_HeaderContainer">
-        <p className="app_font_m">{title}</p>
+        <h3 className="app_font_xl">{title}</h3>
       </div>
       <div className="Notification_ContentContainer">
         <p className="app_font_s">{description}</p>
@@ -19,7 +22,7 @@ function Notification({
           className="btn btn-primary"
           onClick={onOkButtonClick}
         >
-          OK
+          {okButtonText || t('modals.notification.defaultOkButtonText')}
         </button>
         <button
           type="button"
@@ -27,7 +30,7 @@ function Notification({
           className="btn btn-danger"
           onClick={onCancelButtonClick}
         >
-          Cancel
+          {cancelButtonText || t('modals.notification.defaultCancelButtonText')}
         </button>
       </div>
     </div>

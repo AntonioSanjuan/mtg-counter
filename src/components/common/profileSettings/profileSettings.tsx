@@ -1,6 +1,7 @@
 import './profileSettings.scss';
 import { FormikProps, useFormik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { useEffect } from 'react';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { useUser } from '../../../hooks/user/userHook';
 import { FirebaseUserSettingsDto } from '../../../models/dtos/firebaseStore/firebaseUser.model';
@@ -15,6 +16,7 @@ function ProfileSettings() {
 
   const formik: FormikProps<FirebaseUserSettingsDto> = useFormik<FirebaseUserSettingsDto>({
     initialValues: userSettings as FirebaseUserSettingsDto,
+    validateOnChange: true,
     onSubmit: async () => {
       await updateSettings();
     },
@@ -47,9 +49,13 @@ function ProfileSettings() {
                   id="darkMode"
                   aria-label="Dark Mode"
                   name="darkMode"
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    formik.handleChange(e);
+                    e.preventDefault();
+                  }}
                   onBlur={formik.handleBlur}
-                  checked={formik.values.darkMode}
+                  checked={formik?.values?.darkMode ?? false}
+                  // defaultChecked={formik?.values?.darkMode ?? false}
                 />
               </div>
             </div>

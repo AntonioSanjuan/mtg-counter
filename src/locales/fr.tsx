@@ -7,6 +7,11 @@ export const TRANSLATIONS_FR = {
   layouts: {
     base: {
       topNav: {
+        signOut: {
+          title: 'Déconnexion?',
+          ok: 'Continuer',
+          cancel: 'Annuler',
+        },
         actions: {
           logOut: 'Déconnexion',
           logIn: 'Connexion',
