@@ -36,36 +36,42 @@ function profileInfo() {
         <form onChange={formik.handleSubmit}>
           <div className="profileInfo_Settings">
             <div className="profileInfo_Setting">
-              <p className="app_font_l">{t('views.profile.info.form.email.label')}</p>
-              <div className="form-check form-switch">
-                <input
-                  type="text"
-                  id="userEmail"
-                  name="userEmail"
-                  disabled
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.userEmail}
-                  className="form-control"
-                  placeholder={t('views.profile.info.form.email.placeholder')}
-                />
-              </div>
+              <label htmlFor="userEmail">
+                <p className="app_font_l app_font_noMargin">{t('views.profile.info.form.email.label')}</p>
+                <div className="form-check form-switch">
+                  <input
+                    type="text"
+                    id="userEmail"
+                    name="userEmail"
+                    disabled
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.userEmail}
+                    className="form-control"
+                    placeholder={t('views.profile.info.form.email.placeholder')}
+                  />
+                </div>
+              </label>
+
             </div>
             <div className="profileInfo_Setting">
-              <p className="app_font_l">{t('views.profile.info.form.userName.label')}</p>
-              <div className="form-check form-switch">
-                <input
-                  type="text"
-                  id="userName"
-                  name="userName"
-                  disabled
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.userName}
-                  className="form-control"
-                  placeholder={t('views.profile.info.form.userName.placeholder')}
-                />
-              </div>
+              <label htmlFor="userName">
+                <p className="app_font_l app_font_noMargin">{t('views.profile.info.form.userName.label')}</p>
+                <div className="form-check form-switch">
+                  <input
+                    type="text"
+                    id="userName"
+                    name="userName"
+                    disabled
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.userName}
+                    className="form-control"
+                    placeholder={t('views.profile.info.form.userName.placeholder')}
+                  />
+                </div>
+              </label>
+
             </div>
           </div>
         </form>

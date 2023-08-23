@@ -23,3 +23,9 @@
         --app-modal-height: fit-content;
     }
 }
+
+@media only screen and (min-device-width: 480px) and (max-device-width: 1300px) {
+    :root {
+        --app-sidenav-width: 50%;
+    }
+}

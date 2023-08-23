@@ -133,11 +133,47 @@ export const TRANSLATIONS_ES = {
         },
       },
     },
-    home: {
-
-    },
   },
   modals: {
+    addDeckToCollection: {
+      title: 'Añadir nuevo mazo',
+      form: {
+        deckName: {
+          label: 'Nombre del mazo',
+          placeholder: 'Pinardos',
+        },
+        commanderName: {
+          label: 'Comandante',
+          placeholder: 'Saheeli',
+        },
+      },
+      actions: {
+        save: 'Guardar',
+      },
+    },
+    gameSave: {
+      title: 'Guardar partida',
+      form: {
+        gameName: {
+          label: 'Nombre de la partida',
+          placeholder: 'Malditos soldados',
+        },
+      },
+      wantChooseWinnerQ: 'Selecciona al ganador',
+      actions: {
+        restartAndSave: 'Guardar y reiniciar',
+        restart: 'Reiniciar',
+      },
+    },
+    gameRestart: {
+      title: 'Reiniciar partida',
+      desc: '¿Quieres reiniciar la partida?',
+      actions: {
+        restartAndSave: 'Guardar y reiniciar',
+        restart: 'Reiniciar',
+
+      },
+    },
     gameSettings: {
       title: 'Configura la partida',
       form: {
@@ -189,7 +225,6 @@ export const TRANSLATIONS_ES = {
             deckName: {
               label: 'Nombre del mazo',
               placeholder: 'Vampiros',
-
             },
           },
           actions: {
@@ -220,6 +255,8 @@ export const TRANSLATIONS_ES = {
             userName: {
               label: 'Nombre de usuario',
               placeholder: 'rubio#1234',
+              error: 'Error vinculando usuario',
+
             },
           },
           actions: {

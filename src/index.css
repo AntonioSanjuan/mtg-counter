@@ -36,7 +36,12 @@ hr {
   color: var(--app-main-color)
 }
 .btn-link:hover {
-  color: var(--app-low-contrast);
+  color: var(--app-main-color)
+}
+
+select {
+  text-align-last:center;
+  text-align-last: center;
 }
 
 

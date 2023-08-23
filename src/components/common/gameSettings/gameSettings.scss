@@ -4,10 +4,7 @@
     place-content: center;
     align-items: center; 
     height: 100%;
-
-    h3 {
-        margin-bottom: 40px;
-    }
+    gap: 20px;
 
     form {
         width: 100%;
@@ -35,10 +32,10 @@
     width: 100%;
     padding: 0px 10px;
 
-    .form-check {
-        width: fit-content;
+    label {
+        .form-select {
+            width: 180px;
+        }
     }
-    .form-select {
-        width: 180px;
-    }
+
 }

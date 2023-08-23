@@ -2,6 +2,7 @@ import { FormikProps, useFormik } from 'formik';
 import * as Yup from 'yup';
 import './addDeckToCollection.scss';
 
+import { useTranslation } from 'react-i18next';
 import { useAlert } from '../../../hooks/alert/alertHook';
 import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
 import { useDeckCollection } from '../../../hooks/deckCollection/deckCollectionHook';
@@ -13,6 +14,7 @@ function AddDeckToCollection() {
   const { closeAlert } = useAlert();
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
   const { updateDeckCollection } = useDeckCollection();
+  const { t } = useTranslation();
 
   const alreadyExistsDeckWithName = ((value?: string) => !deckCollection.decks.find((deck) => deck.name === value));
 
@@ -41,20 +43,26 @@ function AddDeckToCollection() {
 
   return (
     <div className="AddDeckToCollection_MainContainer">
+      <h3 className="app_font_xl">
+        {t('modals.addDeckToCollection.title')}
+      </h3>
       <form onSubmit={formik.handleSubmit}>
         <div className="form-floating">
 
           <label htmlFor="name">
-            Deck name
+            <p className="app_font_l app_font_noMargin">
+              {t('modals.addDeckToCollection.form.deckName.label')}
+            </p>
             <input
               type="text"
               id="name"
               name="name"
+              aria-label="name"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.name}
               className="form-control"
-              placeholder="Vampires!"
+              placeholder={t('modals.addDeckToCollection.form.deckName.placeholder')}
             />
           </label>
           {
@@ -65,16 +73,17 @@ function AddDeckToCollection() {
         <div className="form-floating">
 
           <label htmlFor="commanderName">
-            Commander name
+            <p className="app_font_l app_font_noMargin">{t('modals.addDeckToCollection.form.commanderName.label')}</p>
             <input
               type="text"
               id="commanderName"
               name="commanderName"
+              aria-label="commanderName"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.commanderName}
               className="form-control"
-              placeholder="Markov"
+              placeholder={t('modals.addDeckToCollection.form.commanderName.placeholder')}
             />
           </label>
           {
@@ -86,9 +95,10 @@ function AddDeckToCollection() {
           <button
             disabled={!formik.dirty || !formik.isValid}
             className="btn btn-primary w-100"
+            aria-label="saveNewDeck"
             type="submit"
           >
-            Save new deck
+            {t('modals.addDeckToCollection.actions.save')}
           </button>
         </div>
       </form>

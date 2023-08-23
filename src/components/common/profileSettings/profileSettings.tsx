@@ -41,7 +41,6 @@ function ProfileSettings() {
             <div className="ProfileSettings_Setting">
               <p className="app_font_l">{t('views.profile.settings.form.darkMode.label')}</p>
               <div className="form-check form-switch">
-
                 <input
                   className="form-check-input"
                   type="checkbox"

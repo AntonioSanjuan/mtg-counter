@@ -27,28 +27,28 @@ export const TRANSLATIONS_FR = {
   },
   views: {
     historic: {
-      noHistoricGames: "Vous n'avez pas encore d'historique de parties",
+      noHistoricGames: 'Vous n\'avez pas encore d\'historique de parties',
       historicGame: {
         info: {
           gameName: 'Nom de la partie',
           status: {
-            label: 'Statut',
+            label: 'État',
             options: {
               finished: 'Terminée',
               ongoing: 'En cours',
             },
           },
-          createdAt: 'Créé à',
-          finishedAt: 'Terminé à',
+          createdAt: 'Créée',
+          finishedAt: 'Terminée à',
           duration: 'Durée en minutes',
         },
         actions: {
-          changeView: 'Changer de vue',
+          changeView: 'Changer la vue',
         },
       },
     },
     deckCollection: {
-      noDeckCollection: "Vous n'avez pas de decks enregistrés",
+      noDeckCollection: 'Vous n\'avez pas de decks enregistrés',
       deck: {
         info: {
           deckName: 'Deck : ',
@@ -69,7 +69,7 @@ export const TRANSLATIONS_FR = {
         title: 'Informations utilisateur',
         form: {
           email: {
-            label: 'Email de l\'utilisateur',
+            label: 'Adresse e-mail de l\'utilisateur',
             placeholder: 'exemple@gmail.com',
           },
           userName: {
@@ -98,7 +98,7 @@ export const TRANSLATIONS_FR = {
     login: {
       form: {
         email: {
-          label: 'Email de l\'utilisateur',
+          label: 'Adresse e-mail de l\'utilisateur',
           placeholder: 'exemple@gmail.com',
         },
         password: {
@@ -106,16 +106,16 @@ export const TRANSLATIONS_FR = {
           placeholder: '****',
         },
         actions: {
-          login: 'Connexion',
-          loginWithGoogle: 'Connexion avec Google',
-          goToSignUp: 'Pas de compte ? Inscrivez-vous ici.',
+          login: 'Se connecter',
+          loginWithGoogle: 'Se connecter avec Google',
+          goToSignUp: 'Vous n\'avez pas de compte ? Inscrivez-vous ici.',
         },
       },
     },
     signUp: {
       form: {
         email: {
-          label: 'Email de l\'utilisateur',
+          label: 'Adresse e-mail de l\'utilisateur',
           placeholder: 'exemple@gmail.com',
         },
         userName: {
@@ -129,13 +129,50 @@ export const TRANSLATIONS_FR = {
         actions: {
           signUp: 'S\'inscrire',
           signUpWithGoogle: 'S\'inscrire avec Google',
-          goToLogin: 'Déjà un compte ? Connectez-vous ici.',
+          goToLogin: 'Vous avez déjà un compte ? Connectez-vous ici.',
         },
       },
     },
-    home: {},
   },
   modals: {
+    addDeckToCollection: {
+      title: 'Ajouter un nouveau deck',
+      form: {
+        deckName: {
+          label: 'Nom du deck',
+          placeholder: 'Pinardos',
+        },
+        commanderName: {
+          label: 'Commandant',
+          placeholder: 'Saheeli',
+        },
+      },
+      actions: {
+        save: 'sauvegarder',
+      },
+    },
+    gameSave: {
+      title: 'Enregistrer la partie',
+      form: {
+        gameName: {
+          label: 'Nom de la partie',
+          placeholder: 'Maudits soldats',
+        },
+      },
+      wantChooseWinnerQ: 'Sélectionnez le gagnant',
+      actions: {
+        restartAndSave: 'Enregistrer et redémarrer',
+        restart: 'Redémarrer',
+      },
+    },
+    gameRestart: {
+      title: 'Redémarrer la partie',
+      desc: 'Voulez-vous redémarrer la partie ?',
+      actions: {
+        restartAndSave: 'Enregistrer et redémarrer',
+        restart: 'Redémarrer',
+      },
+    },
     gameSettings: {
       title: 'Configurer la partie',
       form: {
@@ -169,16 +206,16 @@ export const TRANSLATIONS_FR = {
           },
         },
         actions: {
-          goToDeckCollection: "Vous n'avez pas de decks. Pour les ajouter, cliquez ici",
+          goToDeckCollection: 'Vous n\'avez pas de decks. Cliquez ici pour en ajouter.',
         },
       },
       guest: {
         typeSelector: {
           anonymous: 'Anonyme',
-          linked: 'Lien',
+          linked: 'Lier',
         },
         anonymous: {
-          title: 'Configurer votre profil sans lier d\'utilisateur',
+          title: 'Configurer votre profil sans liaison d\'utilisateur',
           form: {
             playerName: {
               label: 'Nom du joueur',
@@ -190,7 +227,7 @@ export const TRANSLATIONS_FR = {
             },
           },
           actions: {
-            goToDeckCollection: "Vous n'avez pas de decks. Pour les ajouter, cliquez ici",
+            goToDeckCollection: 'Vous n\'avez pas de decks. Cliquez ici pour en ajouter.',
           },
         },
         linked: {
@@ -217,6 +254,7 @@ export const TRANSLATIONS_FR = {
             userName: {
               label: 'Nom d\'utilisateur',
               placeholder: 'rubio#1234',
+              error: 'Erreur lors de la liaison de l\'utilisateur',
             },
           },
           actions: {

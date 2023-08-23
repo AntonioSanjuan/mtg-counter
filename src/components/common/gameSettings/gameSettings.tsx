@@ -55,38 +55,46 @@ function GameSettings() {
         <form onChange={formik.handleSubmit}>
           <div className="GameSettings_Settings">
             <div className="GameSettings_Setting">
-              <p className="app_font_m">{t('modals.gameSettings.form.players.label')}</p>
-              <select
-                className="form-select"
-                id="numberOfPlayers"
-                aria-label="NumberOfPlayers"
-                name="numberOfPlayers"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.numberOfPlayers}
-              >
-                <option value={NumberOfPlayers.Two}>2</option>
-                <option value={NumberOfPlayers.Three}>3</option>
-                <option value={NumberOfPlayers.Four}>4</option>
-                <option value={NumberOfPlayers.Five}>5</option>
-                <option value={NumberOfPlayers.Six}>6</option>
-              </select>
+              <label htmlFor="numberOfPlayers">
+                <p className="app_font_m app_font_noMargin">
+                  {t('modals.gameSettings.form.players.label')}
+                </p>
+                <select
+                  className="form-select"
+                  id="numberOfPlayers"
+                  aria-label="NumberOfPlayers"
+                  name="numberOfPlayers"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.numberOfPlayers}
+                >
+                  <option value={NumberOfPlayers.Two}>2</option>
+                  <option value={NumberOfPlayers.Three}>3</option>
+                  <option value={NumberOfPlayers.Four}>4</option>
+                  <option value={NumberOfPlayers.Five}>5</option>
+                  <option value={NumberOfPlayers.Six}>6</option>
+                </select>
+              </label>
+
             </div>
             <div className="GameSettings_Setting">
-              <p className="app_font_m">{t('modals.gameSettings.form.lifes.label')}</p>
-              <select
-                className="form-select"
-                id="initialLifes"
-                aria-label="InitialLifes"
-                name="initialLifes"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.initialLifes}
-              >
-                <option value={Lifes.Twenty}>20</option>
-                <option value={Lifes.Thirty}>30</option>
-                <option value={Lifes.Fourty}>40</option>
-              </select>
+              <label htmlFor="initialLifes">
+                <p className="app_font_m app_font_noMargin">{t('modals.gameSettings.form.lifes.label')}</p>
+                <select
+                  className="form-select"
+                  id="initialLifes"
+                  aria-label="InitialLifes"
+                  name="initialLifes"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.initialLifes}
+                >
+                  <option value={Lifes.Twenty}>20</option>
+                  <option value={Lifes.Thirty}>30</option>
+                  <option value={Lifes.Fourty}>40</option>
+                </select>
+              </label>
+
             </div>
             <button
               type="button"

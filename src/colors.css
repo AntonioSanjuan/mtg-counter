@@ -17,9 +17,9 @@
 
   
   /*fonts*/
-  --big-fontColor: #4b4a4a;
-  --small-fontColor: #777777;
-  --normal-fontColor: #ABABAB;
+  --big-fontColor: #353535;
+  --small-fontColor: #4d4d4d;
+  --normal-fontColor: #6a6a6a;
   --error-fontColor: var(--app-error-color);
 
   /* PlayerBackgroundColor */

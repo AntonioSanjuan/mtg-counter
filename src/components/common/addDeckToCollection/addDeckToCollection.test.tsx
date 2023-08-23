@@ -74,7 +74,7 @@ describe('addDeckToCollection', () => {
       </Provider>,
     );
 
-    const saveNewDeckButton = screen.getByRole('button', { name: 'Save new deck' });
+    const saveNewDeckButton = screen.getByLabelText('saveNewDeck');
     expect(saveNewDeckButton).toBeDisabled();
 
   });
@@ -89,15 +89,15 @@ describe('addDeckToCollection', () => {
     );
 
 
-    const deckNameInput = screen.getByPlaceholderText<HTMLInputElement>("Vampires!");
-    const commanderNameInput = screen.getByPlaceholderText<HTMLInputElement>("Markov");
+    const deckNameInput = screen.getByLabelText<HTMLInputElement>("name");
+    const commanderNameInput = screen.getByLabelText<HTMLInputElement>("commanderName");
 
     await act(async () => {
         fireEvent.change(deckNameInput, { target: { value: 'testDeckName' } });
         fireEvent.change(commanderNameInput, { target: { value: 'testCommanderName' } });   
     });
 
-    const saveNewDeckButton = screen.getByRole('button', { name: 'Save new deck' });
+    const saveNewDeckButton = screen.getByLabelText('saveNewDeck');
     expect(saveNewDeckButton).not.toBeDisabled();
 
   });
@@ -116,15 +116,15 @@ describe('addDeckToCollection', () => {
     );
 
 
-    const deckNameInput = screen.getByPlaceholderText<HTMLInputElement>("Vampires!");
-    const commanderNameInput = screen.getByPlaceholderText<HTMLInputElement>("Markov");
+    const deckNameInput = screen.getByLabelText<HTMLInputElement>("name");
+    const commanderNameInput = screen.getByLabelText<HTMLInputElement>("commanderName");
 
     await act(async () => {
       fireEvent.change(deckNameInput, { target: { value: 'testDeckName' } });
       fireEvent.change(commanderNameInput, { target: { value: 'testCommanderName' } });   
     });
 
-    const saveNewDeckButton = screen.getByRole('button', { name: 'Save new deck' });
+    const saveNewDeckButton = screen.getByLabelText('saveNewDeck');
     await act(async () => {
       saveNewDeckButton.click()
     });

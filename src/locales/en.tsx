@@ -8,15 +8,15 @@ export const TRANSLATIONS_EN = {
     base: {
       topNav: {
         actions: {
-          logOut: 'Log Out',
-          logIn: 'Log In',
+          logOut: 'Log out',
+          logIn: 'Log in',
         },
       },
       sideNav: {
         sections: {
-          newGame: 'New Game',
+          newGame: 'New game',
           historic: 'Historic',
-          deckCollection: 'Deck Collection',
+          deckCollection: 'Deck collection',
           settings: 'Settings',
         },
         info: {
@@ -27,7 +27,7 @@ export const TRANSLATIONS_EN = {
   },
   views: {
     historic: {
-      noHistoricGames: "You don't have any game history yet",
+      noHistoricGames: 'You do not have any game history yet',
       historicGame: {
         info: {
           gameName: 'Game Name',
@@ -38,17 +38,17 @@ export const TRANSLATIONS_EN = {
               ongoing: 'Ongoing',
             },
           },
-          createdAt: 'Created At',
-          finishedAt: 'Finished At',
+          createdAt: 'Created at',
+          finishedAt: 'Finished at',
           duration: 'Duration in minutes',
         },
         actions: {
-          changeView: 'Change View',
+          changeView: 'Change view',
         },
       },
     },
     deckCollection: {
-      noDeckCollection: "You don't have any saved decks",
+      noDeckCollection: 'You do not have any saved decks',
       deck: {
         info: {
           deckName: 'Deck: ',
@@ -61,7 +61,7 @@ export const TRANSLATIONS_EN = {
         },
       },
       actions: {
-        addDeck: 'Add a New Deck',
+        addDeck: 'Add a new deck',
       },
     },
     profile: {
@@ -69,7 +69,7 @@ export const TRANSLATIONS_EN = {
         title: 'User Information',
         form: {
           email: {
-            label: 'User Email',
+            label: 'User email',
             placeholder: 'example@gmail.com',
           },
           userName: {
@@ -98,7 +98,7 @@ export const TRANSLATIONS_EN = {
     login: {
       form: {
         email: {
-          label: 'User Email',
+          label: 'User email',
           placeholder: 'example@gmail.com',
         },
         password: {
@@ -106,8 +106,8 @@ export const TRANSLATIONS_EN = {
           placeholder: '****',
         },
         actions: {
-          login: 'Log In',
-          loginWithGoogle: 'Log In with Google',
+          login: 'Log in',
+          loginWithGoogle: 'Log in with Google',
           goToSignUp: "Don't have an account? Sign up here.",
         },
       },
@@ -115,7 +115,7 @@ export const TRANSLATIONS_EN = {
     signUp: {
       form: {
         email: {
-          label: 'User Email',
+          label: 'User email',
           placeholder: 'example@gmail.com',
         },
         userName: {
@@ -127,23 +127,62 @@ export const TRANSLATIONS_EN = {
           placeholder: '****',
         },
         actions: {
-          signUp: 'Sign Up',
-          signUpWithGoogle: 'Sign Up with Google',
+          signUp: 'Sign up',
+          signUpWithGoogle: 'Sign up with Google',
           goToLogin: 'Already have an account? Log in here.',
         },
       },
     },
-    home: {},
   },
   modals: {
+    addDeckToCollection: {
+      title: 'Add a new deck',
+      form: {
+        deckName: {
+          label: 'Deck name',
+          placeholder: 'Pinardos',
+        },
+        commanderName: {
+          label: 'Commander',
+          placeholder: 'Saheeli',
+        },
+      },
+      actions: {
+        save: 'Save',
+
+      },
+    },
+    gameSave: {
+      title: 'Save game',
+      form: {
+        gameName: {
+          label: 'Game name',
+          placeholder: 'Cursed Soldiers',
+        },
+      },
+      wantChooseWinnerQ: 'Select the winner',
+      actions: {
+        restartAndSave: 'Save and restart',
+        restart: 'Restart',
+      },
+    },
+    gameRestart: {
+      title: 'Restart game',
+      desc: 'Do you want to restart the game?',
+      actions: {
+        restartAndSave: 'Save and restart',
+        restart: 'Restart',
+
+      },
+    },
     gameSettings: {
-      title: 'Configure the Game',
+      title: 'Configure the game',
       form: {
         players: {
           label: 'Players',
         },
         lifes: {
-          label: 'Initial Lives',
+          label: 'Initial lives',
         },
       },
       actions: {
@@ -155,21 +194,21 @@ export const TRANSLATIONS_EN = {
     },
     playerDetails: {
       owner: {
-        title: 'Configure Your Profile',
+        title: 'Configure your profile',
         form: {
           userName: {
             label: 'Username',
             placeholder: 'rubio#1234',
           },
           deckName: {
-            label: 'Deck Name',
+            label: 'Deck name',
             options: {
-              default: 'Select a Deck',
+              default: 'Select a deck',
             },
           },
         },
         actions: {
-          goToDeckCollection: "You don't have decks. To add them, click here",
+          goToDeckCollection: 'You have no decks. Add them here',
         },
       },
       guest: {
@@ -178,32 +217,32 @@ export const TRANSLATIONS_EN = {
           linked: 'Link',
         },
         anonymous: {
-          title: 'Configure Your Profile without Linking a User',
+          title: 'Configure your profile without linking a user',
           form: {
             playerName: {
-              label: 'Player Name',
+              label: 'Player name',
               placeholder: 'Faku',
             },
             deckName: {
-              label: 'Deck Name',
+              label: 'Deck name',
               placeholder: 'Vampires',
             },
           },
           actions: {
-            goToDeckCollection: "You don't have decks. To add them, click here",
+            goToDeckCollection: 'You have no decks. Add them here',
           },
         },
         linked: {
-          title: 'Configure Your Profile Linked to a User',
+          title: 'Configure your profile linked to a user',
           form: {
             playerName: {
-              label: 'Player Name',
+              label: 'Player name',
               placeholder: 'Faku',
             },
             deckName: {
-              label: 'Deck Name',
+              label: 'Deck name',
               options: {
-                default: 'Select a Deck',
+                default: 'Select a deck',
               },
             },
           },
@@ -212,11 +251,12 @@ export const TRANSLATIONS_EN = {
           },
         },
         linking: {
-          title: 'Link Your Profile with a User',
+          title: 'Link your profile with a user',
           form: {
             userName: {
               label: 'Username',
               placeholder: 'rubio#1234',
+              error: 'Error linking user',
             },
           },
           actions: {

@@ -11,11 +11,12 @@ import Notification from '../../components/common/notification/notification';
 import { NotificationAlertPropsModel } from '../../models/internal/models/alertProps.model';
 import GameRestart from '../../components/common/gameRestart/gameRestart';
 import AddDeckToCollection from '../../components/common/addDeckToCollection/addDeckToCollection';
+import GameSave from '../../components/common/gameSave/gameSave';
 
 export function useAlert() {
   const dispatch = useAppDispatch();
   const alertContent = useAppSelector<AlertContent>(selectLayoutAlertContent);
-  const canBeClosed = alertContent?.type !== DynamicAlertTypes.GameRestart;
+  const canBeClosed = alertContent?.type !== DynamicAlertTypes.GameSave;
 
   const getAlertContent = () => {
     let MyComponent: any;
@@ -35,6 +36,9 @@ export function useAlert() {
         break;
       case DynamicAlertTypes.GameRestart:
         MyComponent = GameRestart;
+        break;
+      case DynamicAlertTypes.GameSave:
+        MyComponent = GameSave;
         break;
       case DynamicAlertTypes.AddDeckToCollection:
         MyComponent = AddDeckToCollection;

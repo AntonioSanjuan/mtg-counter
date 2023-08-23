@@ -1,0 +1,29 @@
+.GameSave_MainContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  .GameSave_Board {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .GameSave_HeaderContainer {
+    text-align: center;
+  }
+  .GameSave_ContentContainer {
+    text-align: center;
+  }
+  .GameSave_ActionsContainer {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+
+    button {
+      width: fit-content;
+    }
+  }
+}

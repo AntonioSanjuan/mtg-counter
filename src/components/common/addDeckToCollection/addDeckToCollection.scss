@@ -1,15 +1,23 @@
 .AddDeckToCollection_MainContainer {
-    form > div {
-    padding-bottom: 10px;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
   
-  .form-floating>label {
-    position: inherit;
-    padding: 0;
-    width: 100%;
-    pointer-events: auto;
-  }
-  .AddDeckToCollection_UserIdContainer {
+  form {
     display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    .form-floating>label {
+      position: inherit;
+      padding: 0;
+      width: 100%;
+      pointer-events: auto;
+    }
+    .AddDeckToCollection_UserIdContainer {
+      display: flex;
+    }
   }
+
 }

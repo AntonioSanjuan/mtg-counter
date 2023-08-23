@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAlert } from '../../../hooks/alert/alertHook';
 import { useGameManagement } from '../../../hooks/gameManagement/gameManagementHook';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
@@ -6,19 +7,15 @@ import { FirebaseBoardDto } from '../../../models/dtos/firebaseStore/firebaseGam
 import { selectGameBoard } from '../../../state/game/game.selectors';
 import MinifiedBoard from '../../MinifiedBoard/MinifiedBoard';
 import './gameRestart.scss';
+import { DynamicAlertTypes } from '../../../models/internal/types/DynamicAlertEnum.model';
 
 function GameRestart() {
-  const { closeAlert } = useAlert();
-  const board = useAppSelector<FirebaseBoardDto>(selectGameBoard);
-  const [gameName, setGameName] = useState<string|undefined>(undefined);
-
-  const {
-    restartGame, saveAndRestartGame,
-  } = useGameManagement();
+  const { closeAlert, openAlert } = useAlert();
+  const { t } = useTranslation();
+  const { restartGame } = useGameManagement();
 
   const save = async () => {
-    await saveAndRestartGame(gameName);
-    closeAlert();
+    openAlert(DynamicAlertTypes.GameSave);
   };
 
   const dontSave = async () => {
@@ -28,26 +25,10 @@ function GameRestart() {
 
   return (
     <div className="GameRestart_MainContainer">
-      <div className="GameRestart_HeaderContainer">
-        <p className="app_font_m app_font_noMargin">¿Quieres guardar la partida?</p>
-      </div>
-      <div className="GameRestart_Board">
-        <label htmlFor="name">
-          Game name
-          <input
-            type="text"
-            id="name"
-            name="name"
-            onChange={(e) => setGameName(e.target.value)}
-            value={gameName}
-            className="form-control"
-            placeholder="Malditos soldados"
-          />
-        </label>
-        <p className="app_font_m app_font_noMargin">¿Quieres elegir quien ha sido el ganador?</p>
+      <h3 className="app_font_xl">
+        {t('modals.gameRestart.title')}
+      </h3>
 
-        <MinifiedBoard board={board} winnerSelection showWinner />
-      </div>
       <div className="GameRestart_ActionsContainer">
         <button
           type="button"
@@ -55,7 +36,7 @@ function GameRestart() {
           className="btn btn-primary"
           onClick={save}
         >
-          OK
+          {t('modals.gameRestart.actions.restartAndSave')}
         </button>
         <button
           type="button"
@@ -63,7 +44,7 @@ function GameRestart() {
           className="btn btn-danger"
           onClick={dontSave}
         >
-          Cancel
+          {t('modals.gameRestart.actions.restart')}
         </button>
       </div>
     </div>

@@ -37,6 +37,7 @@ function PlayerGuestDetailsForm(
           } as PlayerDetailsModel);
         }
       }).catch((e) => {
+        formik.setFieldError('userId', t('modals.playerDetails.guest.linking.form.userName.error'));
         console.log('e', e);
       });
     }
