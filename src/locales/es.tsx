@@ -149,11 +149,87 @@ export const TRANSLATIONS_ES = {
         },
       },
       actions: {
-        apply: 'Aplicar',
+        restart: 'Reiniciar',
       },
     },
     loading: {
       title: 'CARGANDO...',
+    },
+    playerDetails: {
+      owner: {
+        title: 'Configura tu perfil',
+        form: {
+          userName: {
+            label: 'Nombre de usuario',
+            placeholder: 'rubio#1234',
+          },
+          deckName: {
+            label: 'Nombre del mazo',
+            options: {
+              default: 'Selecciona un mazo',
+            },
+          },
+        },
+        actions: {
+          goToDeckCollection: 'No tienes decks, Para añadirlos pulsa aqui',
+        },
+      },
+      guest: {
+        typeSelector: {
+          anonymous: 'Anónimo',
+          linked: 'Vincular',
+        },
+        anonymous: {
+          title: 'Configura tu perfil sin vincular un usuario',
+          form: {
+            playerName: {
+              label: 'Nombre del jugador',
+              placeholder: 'Faku',
+            },
+            deckName: {
+              label: 'Nombre del mazo',
+              placeholder: 'Vampiros',
+
+            },
+          },
+          actions: {
+            goToDeckCollection: 'No tienes decks, Para añadirlos pulsa aqui',
+          },
+        },
+        linked: {
+          title: 'Configura tu perfil vinculado a un usuario',
+          form: {
+            playerName: {
+              label: 'Nombre del jugador',
+              placeholder: 'Faku',
+            },
+            deckName: {
+              label: 'Nombre del mazo',
+              options: {
+                default: 'Selecciona un mazo',
+              },
+            },
+          },
+          actions: {
+            unlink: 'Desvincular',
+          },
+        },
+        linking: {
+          title: 'Vincular tu perfil con un usuario',
+          form: {
+            userName: {
+              label: 'Nombre de usuario',
+              placeholder: 'rubio#1234',
+            },
+          },
+          actions: {
+            unlink: 'Desvincular',
+          },
+        },
+      },
+      commonActions: {
+        saveDetails: 'Guardar',
+      },
     },
   },
 };

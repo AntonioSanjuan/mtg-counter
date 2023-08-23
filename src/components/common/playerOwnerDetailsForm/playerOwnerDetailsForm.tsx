@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { useAppSelector } from '../../../hooks/state/appStateHook';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
@@ -13,14 +14,15 @@ function PlayerOwnerDetailsForm(
 ) {
   const deckCollection = useAppSelector<DeckCollectionState>(selectDeckCollection);
   const { closeAlert } = useAlert();
-  return (
+  const { t } = useTranslation();
 
+  return (
     <form onSubmit={formik.handleSubmit}>
-      <p className="app_font_l">Configura tu perfil</p>
+      <p className="app_font_l">{t('modals.playerDetails.owner.title')}</p>
       <div className="form-floating">
 
         <label htmlFor="name">
-          <p className="app_font_m app_font_noMargin">Player name</p>
+          <p className="app_font_m app_font_noMargin">{t('modals.playerDetails.owner.form.userName.label')}</p>
           <input
             type="text"
             id="name"
@@ -30,7 +32,7 @@ function PlayerOwnerDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.name}
             className="form-control"
-            placeholder="rubio"
+            placeholder={t('modals.playerDetails.owner.form.userName.placeholder')}
           />
         </label>
         {
@@ -41,7 +43,7 @@ function PlayerOwnerDetailsForm(
       {deckCollection.decks.length > 0 ? (
         <div className="form-floating">
           <label htmlFor="deckName">
-            <p className="app_font_m app_font_noMargin">Deck name</p>
+            <p className="app_font_m app_font_noMargin">{t('modals.playerDetails.owner.form.deckName.label')}</p>
             <select
               className="form-select"
               id="deckName"
@@ -51,7 +53,7 @@ function PlayerOwnerDetailsForm(
               onBlur={formik.handleBlur}
               value={formik.values.deckName}
             >
-              <option disabled value="">Select deck</option>
+              <option disabled value="">{t('modals.playerDetails.owner.form.deckName.options.default')}</option>
               {deckCollection.decks.map((deck: FirebaseDeckDto) => (
                 <option value={deck.name}>{deck.name}</option>
               ))}
@@ -69,7 +71,7 @@ function PlayerOwnerDetailsForm(
             onClick={closeAlert}
             type="button"
           >
-            No tienes decks, Para añadirlos pulsa aqui
+            {t('modals.playerDetails.owner.actions.goToDeckCollection')}
           </button>
         </Link>
       )}
@@ -80,7 +82,7 @@ function PlayerOwnerDetailsForm(
           className="btn btn-primary w-100"
           type="submit"
         >
-          Save details
+          {t('modals.playerDetails.commonActions.saveDetails')}
         </button>
       </div>
     </form>

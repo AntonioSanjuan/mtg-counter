@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { useEffect, useState } from 'react';
 import { use } from 'i18next';
+import { useTranslation } from 'react-i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
 import { useUsers } from '../../../hooks/users/usersHook';
@@ -18,6 +19,7 @@ function PlayerGuestDetailsForm(
   const [isPlayerGuestLinkForm, setIsPlayerGuestLinkForm] = useState<boolean>(!!playerUserId);
 
   const isValidPlayerLink = (): boolean => !!(playerUserId && playerDecks);
+  const { t } = useTranslation();
 
   useEffect(() => {
     linkPlayer(false);
@@ -80,14 +82,14 @@ function PlayerGuestDetailsForm(
             className={!isPlayerGuestLinkForm ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}
             onClick={() => setIsPlayerGuestLinkForm(false)}
           >
-            Anonymous
+            {t('modals.playerDetails.guest.typeSelector.anonymous')}
           </button>
           <button
             type="button"
             className={isPlayerGuestLinkForm ? 'btn btn-outline-primary active' : 'btn btn-outline-primary'}
             onClick={() => setIsPlayerGuestLinkForm(true)}
           >
-            Linked
+            {t('modals.playerDetails.guest.typeSelector.linked')}
           </button>
         </div>
       )}

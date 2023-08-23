@@ -1,16 +1,21 @@
 import { FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 
 function PlayerGuestAnonymousDetailsForm(
   { formik }:
   { formik: FormikProps<PlayerDetailsModel>},
 ) {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={formik.handleSubmit}>
-      <p className="app_font_l">Configura tu perfil sin vincular un usuario</p>
+      <p className="app_font_l">{t('modals.playerDetails.guest.anonymous.title')}</p>
       <div className="form-floating">
         <label htmlFor="name">
-          <p className="app_font_m app_font_noMargin">Player name</p>
+          <p className="app_font_m app_font_noMargin">
+            {t('modals.playerDetails.guest.anonymous.form.playerName.label')}
+          </p>
           <input
             type="text"
             id="name"
@@ -19,7 +24,7 @@ function PlayerGuestAnonymousDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.name}
             className="form-control"
-            placeholder="rubio"
+            placeholder={t('modals.playerDetails.guest.anonymous.form.playerName.placeholder')}
           />
         </label>
         {
@@ -30,7 +35,9 @@ function PlayerGuestAnonymousDetailsForm(
       <div className="form-floating">
 
         <label htmlFor="deckName">
-          <p className="app_font_m app_font_noMargin">Deck name</p>
+          <p className="app_font_m app_font_noMargin">
+            {t('modals.playerDetails.guest.anonymous.form.deckName.label')}
+          </p>
 
           <input
             className="form-control"
@@ -40,6 +47,7 @@ function PlayerGuestAnonymousDetailsForm(
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
+            placeholder={t('modals.playerDetails.guest.anonymous.form.deckName.placeholder')}
           />
         </label>
         {
@@ -55,7 +63,7 @@ function PlayerGuestAnonymousDetailsForm(
           aria-label="PlayerGuestAnonymousDetailsFormSubmit"
           name="PlayerGuestAnonymousDetailsFormSubmit"
         >
-          Save details
+          {t('modals.playerDetails.commonActions.saveDetails')}
         </button>
       </div>
     </form>

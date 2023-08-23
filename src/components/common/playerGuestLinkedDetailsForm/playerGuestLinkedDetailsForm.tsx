@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 import { DeckCollectionState } from '../../../state/deckCollection/models/appDeckCollection.state';
 import { FirebaseDeckDto } from '../../../models/dtos/firebaseStore/firebaseDeckCollection.model';
@@ -14,12 +15,14 @@ function PlayerGuestLinkedDetailsForm(
     unLinkPlayer: any
   },
 ) {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={formik.handleSubmit}>
-      <p className="app_font_l">Configura tu perfil vinculado a un perfil</p>
+      <p className="app_font_l">{t('modals.playerDetails.guest.linked.title')}</p>
       <div className="form-floating">
         <label htmlFor="name">
-          <p className="app_font_m app_font_noMargin">Player name</p>
+          <p className="app_font_m app_font_noMargin">{t('modals.playerDetails.guest.linked.form.playerName.label')}</p>
           <input
             type="text"
             id="name"
@@ -29,7 +32,7 @@ function PlayerGuestLinkedDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.name}
             className="form-control"
-            placeholder="rubio"
+            placeholder={t('modals.playerDetails.guest.linked.form.playerName.placeholder')}
           />
         </label>
         {
@@ -40,7 +43,7 @@ function PlayerGuestLinkedDetailsForm(
       <div className="form-floating">
 
         <label htmlFor="deckName">
-          <p className="app_font_m app_font_noMargin">Deck name</p>
+          <p className="app_font_m app_font_noMargin">{t('modals.playerDetails.guest.linked.form.deckName.label')}</p>
           <select
             className="form-select"
             id="deckName"
@@ -50,7 +53,7 @@ function PlayerGuestLinkedDetailsForm(
             onBlur={formik.handleBlur}
             value={formik.values.deckName}
           >
-            <option disabled value="">Select deck</option>
+            <option disabled value="">{t('modals.playerDetails.guest.linked.form.deckName.options.default')}</option>
             {playerDeckCollection.decks.map((deck: FirebaseDeckDto) => (
               <option value={deck.name}>{deck.name}</option>
             ))}
@@ -67,7 +70,7 @@ function PlayerGuestLinkedDetailsForm(
           className="btn btn-primary w-100"
           type="submit"
         >
-          Save details
+          {t('modals.playerDetails.commonActions.saveDetails')}
         </button>
         <button
           disabled={!formik.isValid}
@@ -75,7 +78,7 @@ function PlayerGuestLinkedDetailsForm(
           type="button"
           onClick={unLinkPlayer}
         >
-          Unlink
+          {t('modals.playerDetails.guest.linked.actions.unlink')}
         </button>
       </div>
     </form>

@@ -95,7 +95,7 @@ function GameSettings() {
               className="btn btn-danger"
               onClick={restartGameClb}
             >
-              {t('modals.gameSettings.actions.apply')}
+              {t('modals.gameSettings.actions.restart')}
             </button>
           </div>
         </form>

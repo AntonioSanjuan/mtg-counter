@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { PlayerDetailsModel } from '../../../models/internal/models/playerDetails.model';
 
 function PlayerGuestLinkForm(
@@ -9,12 +10,14 @@ function PlayerGuestLinkForm(
   { formik: FormikProps<PlayerDetailsModel>,
     linkPlayer: any},
 ) {
+  const { t } = useTranslation();
+
   return (
     <form onSubmit={formik.handleSubmit}>
-      <p className="app_font_l">Configura tu perfil vinculando un usuario</p>
+      <p className="app_font_l">{t('modals.playerDetails.guest.linking.title')}</p>
       <div className="form-floating">
         <label htmlFor="userId">
-          <p className="app_font_m app_font_noMargin">User Name</p>
+          <p className="app_font_m app_font_noMargin">{t('modals.playerDetails.guest.linking.form.userName.label')}</p>
           <div className="PlayerDetails_UserIdContainer">
             <input
               type="text"
@@ -23,7 +26,7 @@ function PlayerGuestLinkForm(
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               className="form-control"
-              placeholder="rubio#1234"
+              placeholder={t('modals.playerDetails.guest.linking.form.userName.placeholder')}
             />
             <button
               type="button"
