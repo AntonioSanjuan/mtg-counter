@@ -8,12 +8,14 @@ import { Router } from 'react-router-dom';
 import React from 'react';
 import { User } from 'firebase/auth';
 import * as sidenavhooks from '../../hooks/sidenav/sidenavHook';
+import * as alerthooks from '../../hooks/alert/alertHook';
 import * as userHook from '../../hooks/auth/authHook';
 import { Topnav } from './Topnav';
 import { setUserAuthAction } from '../../state/user/user.actions';
 import { createTestStore } from '../../utils/testsUtils/createTestStore.util';
 import * as mock_useSidenavLayer from '../../hooks/sidenav/sidenavHook.mock';
 import * as mock_useAuth from '../../hooks/auth/authHook.mock';
+import * as mock_useAlert from '../../hooks/alert/alertHook.mock';
 
 describe('Topnav', () => {
   let topnavStore: any;
@@ -34,7 +36,11 @@ describe('Topnav', () => {
     jest.spyOn(sidenavhooks, 'useSidenavLayer')
       .mockImplementation(mock_useSidenavLayer.mock);
 
+    jest.spyOn(alerthooks, 'useAlert')
+      .mockImplementation(mock_useAlert.mock);
+
     mock_useSidenavLayer.initializeMock();
+    mock_useAlert.initializeMock()
     mock_useAuth.initializeMock()
     expect(setLoginButtonHiddenMock).toHaveBeenCalledTimes(0);
   });
@@ -141,7 +147,7 @@ describe('Topnav', () => {
       })[0]
     )
       
-    expect(mock_useAuth.mock().logout).toHaveBeenCalled();
+    expect(mock_useAlert.mock().openAlert).toHaveBeenCalled();
   });
 
 });

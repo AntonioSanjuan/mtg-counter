@@ -53,9 +53,9 @@ function Topnav({ hideLoginButton, hideSidenavButton } :
             className="btn btn-danger"
             aria-label="logout"
             onClick={() => openAlert(DynamicAlertTypes.Notification, {
-              title: '¿Cerrar sesión?',
-              okButtonText: 'Continuar',
-              cancelButtonText: 'Cancelar',
+              title: t('layouts.base.topNav.signOut.title'),
+              okButtonText: t('layouts.base.topNav.signOut.ok'),
+              cancelButtonText: t('layouts.base.topNav.signOut.cancel'),
               onOkButtonClick: async () => {
                 await logout();
                 closeAlert();
